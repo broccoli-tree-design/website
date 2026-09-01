@@ -275,17 +275,19 @@ a:hover { color: var(--ink); }
 
 .case {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: auto 1fr;
+  height: 440px;
   border-radius: 16px;
   overflow: hidden;
 }
 .case.flip {
-  grid-template-columns: 1fr 2fr;
+  grid-template-columns: 1fr auto;
 }
 .case.flip .case-screenshot { order: 1; }
 
 .case-screenshot {
-  min-height: 440px;
+  height: 100%;
+  aspect-ratio: 1728 / 1117;
   overflow: hidden;
 }
 .case-screenshot img {
@@ -297,6 +299,7 @@ a:hover { color: var(--ink); }
 
 .case-info {
   padding: 36px;
+  min-width: 320px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -392,9 +395,9 @@ a:hover { color: var(--ink); }
   .case-studies { margin-top: 56px; }
   .work-heading { font-size: 24px; margin-bottom: 12px; }
   .work-intro { font-size: 15px; margin-bottom: 32px; }
-  .case, .case.flip { grid-template-columns: 1fr; }
+  .case, .case.flip { grid-template-columns: 1fr; height: auto; }
   .case.flip .case-screenshot { order: unset; }
-  .case-screenshot { min-height: 260px; }
+  .case-screenshot { height: auto; aspect-ratio: 1728 / 1117; }
   .stat-value { font-size: 24px; }
 
   .cta { padding: 48px 32px; gap: 24px; }
