@@ -23,6 +23,7 @@ const display = Montserrat_Alternates({
 
 export const metadata: Metadata = {
   title: 'Aiqi Li — UX for Legal Tech',
+  icons: { icon: '/logo.svg' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
