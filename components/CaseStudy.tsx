@@ -1,37 +1,25 @@
-interface Stat {
-  value: string
-  label: string
-}
-
 interface Props {
   flip?: boolean
-  image: { src: string; alt: string; objectPosition?: string }
-  stats: [Stat, Stat]
-  title: string
+  frame: 1 | 2 | 3
+  image: { src: string; alt: string }
+  eyebrow: string
+  heading: React.ReactNode
+  body: string
+  stat: string
 }
 
-export default function CaseStudy({ flip, image, stats, title }: Props) {
+export default function CaseStudy({ flip, frame, image, eyebrow, heading, body, stat }: Props) {
   return (
-    <div className={`case${flip ? ' flip' : ''}`}>
-      <div className="case-screenshot">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={image.src}
-          alt={image.alt}
-          style={image.objectPosition ? { objectPosition: image.objectPosition } : undefined}
-        />
+    <div className={`case-row${flip ? ' flip' : ''}`}>
+      <div className="case-text">
+        <p className="case-eyebrow">{eyebrow}</p>
+        <h3 className="case-heading">{heading}</h3>
+        <p className="case-body">{body}</p>
+        <p className="case-stat">{stat}</p>
       </div>
-      <div className="case-info">
-        {stats.map((s) => (
-          <div key={s.label}>
-            <div className="stat-value">{s.value}</div>
-            <div className="stat-label">{s.label}</div>
-          </div>
-        ))}
-        <div className="case-divider">
-          <h3 className="case-title">{title}</h3>
-          <a href="#" className="case-link">Case study coming soon</a>
-        </div>
+      <div className={`case-frame case-frame-${frame}`}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={image.src} alt={image.alt} />
       </div>
     </div>
   )

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import { Source_Serif_4, Work_Sans, Montserrat_Alternates } from 'next/font/google'
+import { Source_Serif_4, Work_Sans, Montserrat_Alternates, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
 
 const serif = Source_Serif_4({
@@ -21,6 +21,12 @@ const display = Montserrat_Alternates({
   weight: ['500', '600', '700'],
 })
 
+const mono = IBM_Plex_Mono({
+  subsets: ['latin'],
+  variable: '--mono',
+  weight: ['400', '500'],
+})
+
 export const metadata: Metadata = {
   title: 'Aiqi Li — UX for Legal Tech',
   icons: { icon: '/logo.svg' },
@@ -28,7 +34,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable} ${display.variable}`}>
+    <html lang="en" className={`${serif.variable} ${sans.variable} ${display.variable} ${mono.variable}`}>
       <body>{children}</body>
     </html>
   )
