@@ -45,7 +45,7 @@ const CASES = [
   {
     frame: 3 as const,
     image: { src: "/reporting.jpg", alt: "Reporting Hub screenshot" },
-    eyebrow: "03 — Expanding internal reporting capabilities",
+    eyebrow: "03 — Expanding reporting capabilities",
     heading: (
       <>
         A shared vocabulary
@@ -53,8 +53,8 @@ const CASES = [
         for messy data
       </>
     ),
-    body: "Design highlight: Admin and user-side taxonomy tools gave dozens of data sources and client accounts a single source of truth to report against.",
-    stat: "10+ data sources centralized",
+    body: "Design highlight: taxonomy tools for admin and analysts to form a single source of truth for reporting.",
+    stat: "XX data sources centralized; XXX client accounts distributed",
   },
 ];
 
@@ -111,22 +111,20 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ABOUT — water marks the section */}
+      {/* ABOUT */}
       <section className="panel panel-about" id="about">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/water.svg" alt="" className="motif-water" />
         <div className="panel-inner">
           <h2 className="display-m about-h2">
             A designer who speaks some <em>legalese</em>
           </h2>
           <p className="body body-invert about-body">
-            As a Paralegal turned Designer, I&rsquo;ve experienced first-hand the
-            stress and fulfillment operating within legal systems in U.S. and
-            China — from managing trademark portfolios for tech companies, to
-            conducting site visits for insurance due diligence, to helping state
-            attorneys enforce immigrant children&rsquo;s rights to education. I
-            understand when technology can make legal systems easier to deal
-            with, and when humans should make the judgment.
+            As a Paralegal turned Designer, I&rsquo;ve experienced first-hand
+            the stress and fulfillment operating within legal systems in U.S.
+            and China — from managing trademark portfolios for tech companies,
+            to conducting site visits for insurance due diligence, to helping
+            state attorneys enforce immigrant children&rsquo;s rights to
+            education. I understand when technology can make legal systems
+            easier to deal with, and when humans should make the judgment.
           </p>
           <div className="thinking">
             <p className="thinking-quote">
@@ -163,8 +161,7 @@ export default function Home() {
 
       {/* HINGE — sun rising over the horizon, services → case studies */}
       <div className="hinge">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/earth-terracotta.svg" alt="" />
+        <div className="hinge-leaf" aria-hidden="true" />
       </div>
 
       {/* CASE STUDIES */}
@@ -173,7 +170,7 @@ export default function Home() {
         <p className="body work-intro">
           Examples from my past life designing enterprise software that help
           humans overwhelmed by datageddon and fragmented tools make informed
-          decisions and develop shared understanding
+          decisions and develop shared understanding.
         </p>
         <div className="case-list">
           {CASES.map((c, i) => (
@@ -196,7 +193,7 @@ export default function Home() {
       {/* CTA — fire closes the page */}
       <footer className="panel panel-cta" id="cta">
         <div className="panel-inner">
-          <h2 className="display-l">Let&rsquo;s talk about your product.</h2>
+          <h2 className="display-m">Let&rsquo;s talk about your product.</h2>
           <a
             href="https://www.linkedin.com/in/liaiqi/"
             target="_blank"
@@ -206,8 +203,6 @@ export default function Home() {
             Chat on LinkedIn
           </a>
         </div>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/fire-terracotta.svg" alt="" className="motif-fire" />
       </footer>
 
       <Analytics />
