@@ -18,6 +18,9 @@
 
   --gutter: 56px;
   --max: 1280px;
+
+  --ring: #5b8c42; /* growth-ring outline */
+  --leaf-radius: 4px 62% 4px 62% / 4px 62% 4px 62%;
 }
 
 html {
@@ -163,34 +166,44 @@ a:hover {
 }
 
 /* ── HERO ── */
+.hero-wrap {
+  overflow: hidden; /* clips the outer growth rings */
+}
 .hero {
   position: relative;
   max-width: var(--max);
   margin: 0 auto;
-  padding: clamp(40px, 8svh, 96px) var(--gutter) clamp(72px, 12svh, 140px);
+  padding: 72px var(--gutter) 110px;
   display: grid;
-  grid-template-columns: 1.45fr 1fr;
+  /* photo caps at 440px but yields to the text column on tablets */
+  grid-template-columns: minmax(0, 1fr) min(440px, 40%);
   gap: 64px;
-  align-items: center;
 }
 .hero-text {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  align-self: center;
+  gap: 48px;
+}
+.hero-title {
+  line-height: 1;
+  font-size: clamp(60px, 10.3vw, 132px);
+  letter-spacing: -0.025em;
+  max-width: 14ch;
 }
 .hero-name {
   font-family: var(--display), sans-serif;
   font-weight: 600;
   color: var(--primary);
 }
+.hero .lede {
+  max-width: 34ch;
+}
 
-/* organic leaf frame + hand-drawn contour.
-   Width is capped by viewport height (photo is 3:4) so the whole hero
-   fits above the fold on short laptop screens. */
+/* leaf-shaped photo + growth rings */
 .leaf-frame {
   position: relative;
-  justify-self: end;
-  width: min(100%, max(200px, calc((100svh - 200px) * 0.75)));
+  width: 100%;
   aspect-ratio: 3 / 4;
 }
 .leaf-frame img {
@@ -199,15 +212,33 @@ a:hover {
   height: 100%;
   display: block;
   object-fit: cover;
-  border-radius: 4px 62% 4px 62% / 4px 62% 4px 62%;
+  border-radius: var(--leaf-radius);
 }
-.leaf-frame::before {
-  content: "";
+.ring-layer {
   position: absolute;
-  inset: -14px 10px 10px -14px;
-  border: 1px solid var(--primary);
-  border-radius: 4px 62% 4px 62% / 4px 62% 4px 62%;
+  inset: 0;
+  pointer-events: none;
+}
+.hero-ring {
+  position: absolute;
+  border: 1px solid var(--ring);
+  border-radius: var(--leaf-radius);
+}
+.hero-ring-0 {
+  inset: -26px;
   opacity: 0.55;
+}
+.hero-ring-1 {
+  inset: -54px;
+  opacity: 0.4;
+}
+.hero-ring-2 {
+  inset: -84px;
+  opacity: 0.28;
+}
+.hero-ring-3 {
+  inset: -116px;
+  opacity: 0.18;
 }
 
 /* ── LEAF — masked div, takes any color via --c ── */
@@ -226,6 +257,73 @@ a:hover {
   rotate: var(--r, 0deg);
   -webkit-mask: url("/leaf.svg") no-repeat center / contain;
   mask: url("/leaf.svg") no-repeat center / contain;
+}
+
+/* leaf placements — mobile values live in the 560px block */
+.about-leaf-1 {
+  right: -40px;
+  top: -60px;
+  width: 320px;
+}
+.about-leaf-2 {
+  right: 12%;
+  top: 40%;
+  width: 120px;
+}
+.about-leaf-3 {
+  right: 4%;
+  bottom: -40px;
+  width: 220px;
+}
+.about-leaf-4 {
+  right: 26%;
+  top: 12%;
+  width: 46px;
+}
+.ribbon-leaf-1 {
+  left: 7%;
+  top: 56px;
+  width: 130px;
+}
+.ribbon-leaf-2 {
+  left: 24%;
+  top: 120px;
+  width: 80px;
+}
+.ribbon-leaf-3 {
+  left: 46%;
+  top: 50px;
+  width: 120px;
+}
+.ribbon-leaf-4 {
+  left: 62%;
+  top: 100px;
+  width: 48px;
+}
+.ribbon-leaf-5 {
+  left: 77%;
+  top: 44px;
+  width: 160px;
+}
+.ribbon-leaf-6 {
+  left: 35%;
+  top: 160px;
+  width: 60px;
+}
+.cta-leaf-1 {
+  left: -50px;
+  top: -40px;
+  width: 260px;
+}
+.cta-leaf-2 {
+  left: 14%;
+  bottom: 20px;
+  width: 100px;
+}
+.cta-leaf-3 {
+  left: 22%;
+  top: 24%;
+  width: 44px;
 }
 
 /* ── ORGANIC FIELDS — wavy sage panels ── */
@@ -442,7 +540,7 @@ a:hover {
   margin: 6px 0 0;
 }
 
-/* image contour — direction alternates so the three don't stamp */
+/* growth rings — offset direction alternates so the three don't stamp */
 .case-frame {
   position: relative;
 }
@@ -453,21 +551,36 @@ a:hover {
   display: block;
   border-radius: 16px;
 }
-.case-frame::before {
-  content: "";
+.case-ring {
   position: absolute;
-  border: 1px solid var(--primary);
-  border-radius: 16px;
+  border: 1px solid var(--ring);
+  pointer-events: none;
+}
+.case-ring-0 {
+  border-radius: 24px;
   opacity: 0.55;
 }
-.case-frame-1::before {
+.case-ring-1 {
+  border-radius: 32px;
+  opacity: 0.18;
+}
+.case-frame-1 .case-ring-0 {
   inset: -14px -14px 10px 10px;
 }
-.case-frame-2::before {
+.case-frame-1 .case-ring-1 {
+  inset: -30px -30px 26px 26px;
+}
+.case-frame-2 .case-ring-0 {
   inset: -14px 10px 10px -14px;
 }
-.case-frame-3::before {
+.case-frame-2 .case-ring-1 {
+  inset: -30px 26px 26px -30px;
+}
+.case-frame-3 .case-ring-0 {
   inset: 10px -14px -14px 10px;
+}
+.case-frame-3 .case-ring-1 {
+  inset: 26px -30px -30px 26px;
 }
 
 /* ── CTA ── */
@@ -504,10 +617,10 @@ a:hover {
   color: var(--terracotta-text); /* was --tertiary, 3.81:1 */
 }
 .service-num {
-  color: var(--primary-text); /* was --primary, 3.40:1 */
+  color: #9e4220eb; /* terracotta @ 92% */
 }
 .lede .accent {
-  color: var(--primary-text); /* 19px on mobile needs 4.5:1 */
+  color: var(--terracotta-text); /* 19px on mobile needs 4.5:1 */
 }
 
 /* ── TABLET — baseline 768/834px ── */
@@ -556,7 +669,7 @@ a:hover {
   .case-row,
   .case-row.flip {
     grid-template-columns: 1fr;
-    gap: 32px;
+    gap: 52px; /* outer ring clears the stat line */
   }
   .case-row.flip .case-frame {
     order: unset;
@@ -590,17 +703,128 @@ a:hover {
   .nav-links li:first-child {
     display: none;
   }
+
+  /* hero: h1 → photo → lede */
   .hero {
-    grid-template-columns: 1fr;
-    padding: 56px var(--gutter) 72px;
-    gap: 48px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 20px 88px;
+    gap: 56px;
   }
   .hero-text {
-    gap: 28px;
+    display: contents;
+  }
+  .hero-title,
+  .hero .lede {
+    position: relative;
+    z-index: 2; /* outer rings pass behind */
+  }
+  .hero-title {
+    font-size: 64px;
   }
   .leaf-frame {
-    justify-self: stretch;
-    width: auto;
+    order: 1;
+  }
+  .hero .lede {
+    order: 2;
+    font-size: 19px;
+  }
+  .hero-ring-0 {
+    inset: -8px;
+  }
+  .hero-ring-1 {
+    inset: -42px;
+  }
+  .hero-ring-2 {
+    inset: -64px;
+  }
+  .hero-ring-3 {
+    inset: -86px;
+  }
+
+  .work {
+    overflow-x: clip; /* outer case rings are cropped by design */
+  }
+  .case-frame .case-ring-0 {
+    border-radius: 22px;
+  }
+  .case-frame-1 .case-ring-0 {
+    inset: -8px -8px 4px 4px;
+  }
+  .case-frame-1 .case-ring-1 {
+    inset: -32px -32px 28px 28px;
+  }
+  .case-frame-2 .case-ring-0 {
+    inset: -8px 4px 4px -8px;
+  }
+  .case-frame-2 .case-ring-1 {
+    inset: -32px 28px 28px -32px;
+  }
+  .case-frame-3 .case-ring-0 {
+    inset: 4px -8px -8px 4px;
+  }
+  .case-frame-3 .case-ring-1 {
+    inset: 28px -32px -32px 28px;
+  }
+
+  /* leaves respaced — desktop positions pile up on phones */
+  .about-leaf-1 {
+    right: -60px;
+    top: -50px;
+    width: 190px;
+  }
+  .about-leaf-2 {
+    right: auto;
+    left: -24px;
+    top: 52%;
+    width: 72px;
+  }
+  .about-leaf-3 {
+    right: -40px;
+    bottom: -30px;
+    width: 130px;
+  }
+  .about-leaf-4 {
+    right: 150px;
+    top: 14px;
+    width: 30px;
+  }
+  .ribbon-leaf-1 {
+    left: 4%;
+    top: 30px;
+  }
+  .ribbon-leaf-3 {
+    left: 34%;
+    top: 52px;
+  }
+  .ribbon-leaf-4 {
+    left: 62%;
+    top: 70px;
+  }
+  .ribbon-leaf-5 {
+    left: 74%;
+    top: 18px;
+  }
+  .ribbon-leaf-2,
+  .ribbon-leaf-6 {
+    display: none;
+  }
+  .cta-leaf-1 {
+    left: -50px;
+    top: -30px;
+    width: 150px;
+  }
+  .cta-leaf-2 {
+    left: auto;
+    right: -10px;
+    bottom: 16px;
+    width: 70px;
+  }
+  .cta-leaf-3 {
+    left: auto;
+    right: 26%;
+    top: 18px;
+    width: 30px;
   }
 }
 

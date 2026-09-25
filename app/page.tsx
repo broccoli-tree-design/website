@@ -1,6 +1,10 @@
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Drift from "@/components/Drift";
+import Rings from "@/components/Rings";
+
+/** pointer-parallax depth per hero ring, inner → outer */
+const HERO_RINGS = [0.08, 0.16, 0.24, 0.32];
 
 const SERVICES = [
   {
@@ -93,27 +97,38 @@ export default function Home() {
       </nav>
 
       {/* HERO */}
-      <section className="hero">
-        <div className="hero-text">
-          <h1 className="display-xl" style={{ maxWidth: "14ch" }}>
-            Hi, I&rsquo;m <span className="hero-name">Aiqi</span>
-          </h1>
-          <p className="lede">
-            I help early-stage legal tech teams transform complex workflows into{" "}
-            <span className="accent">intuitive designs</span> —{" "}
-            <span className="muted">
-              sourced from personal legal experience, not a generic UX playbook.
-            </span>
-          </p>
-        </div>
-        <div className="leaf-frame">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/profile.png"
-            alt="Aiqi sitting on the roots of a large tree"
-          />
-        </div>
-      </section>
+      <div className="hero-wrap">
+        <section className="hero">
+          <div className="hero-text">
+            <h1 className="display-xl hero-title">
+              Hi, I&rsquo;m
+              <br />
+              <span className="hero-name">Aiqi</span>
+            </h1>
+            <p className="lede">
+              I help early-stage legal tech teams transform complex workflows
+              into <span className="accent">intuitive designs</span> —{" "}
+              <span className="muted">
+                sourced from personal legal experience, not a generic UX
+                playbook.
+              </span>
+            </p>
+          </div>
+          <div className="leaf-frame">
+            {/* growth rings — parallax on the wrapper, breathing on the ring */}
+            {HERO_RINGS.map((depth, i) => (
+              <div className="ring-layer" data-parallax={depth} key={i}>
+                <div className={`hero-ring hero-ring-${i}`} data-ring={i} />
+              </div>
+            ))}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/profile.png"
+              alt="Aiqi sitting on the roots of a large tree"
+            />
+          </div>
+        </section>
+      </div>
 
       {/* ABOUT */}
       <section className="field" id="about" data-sec="">
@@ -129,28 +144,22 @@ export default function Home() {
         <div className="field-body">
           {/* leaves — right edge */}
           <div
-            className="leaf"
+            className="leaf about-leaf-1"
             data-depth="0.2"
             aria-hidden="true"
             style={
               {
-                right: -40,
-                top: -60,
-                width: 320,
                 "--o": 0.35,
                 "--r": "-150deg",
               } as React.CSSProperties
             }
           />
           <div
-            className="leaf"
+            className="leaf about-leaf-2"
             data-depth="0.34"
             aria-hidden="true"
             style={
               {
-                right: "12%",
-                top: "40%",
-                width: 120,
                 "--c": "var(--text)",
                 "--o": 0.18,
                 "--r": "30deg",
@@ -158,28 +167,22 @@ export default function Home() {
             }
           />
           <div
-            className="leaf"
+            className="leaf about-leaf-3"
             data-depth="0.12"
             aria-hidden="true"
             style={
               {
-                right: "4%",
-                bottom: -40,
-                width: 220,
                 "--o": 0.28,
                 "--r": "80deg",
               } as React.CSSProperties
             }
           />
           <div
-            className="leaf"
+            className="leaf about-leaf-4"
             data-depth="0.4"
             aria-hidden="true"
             style={
               {
-                right: "26%",
-                top: "12%",
-                width: 46,
                 "--c": "var(--tertiary)",
                 "--o": 0.7,
                 "--r": "-20deg",
@@ -252,79 +255,49 @@ export default function Home() {
           <path d="M0 50C260 10 460 80 720 50C980 20 1200 10 1440 40V170C1200 240 980 130 720 180C460 230 240 140 0 200Z" />
         </svg>
         <div
-          className="leaf"
+          className="leaf ribbon-leaf-1"
           data-depth="0.18"
-          style={
-            {
-              left: "7%",
-              top: 56,
-              width: 130,
-              "--r": "-12deg",
-            } as React.CSSProperties
-          }
+          style={{ "--r": "-12deg" } as React.CSSProperties}
         />
         <div
-          className="leaf"
+          className="leaf ribbon-leaf-2"
           data-depth="0.3"
           style={
             {
-              left: "24%",
-              top: 120,
-              width: 80,
               "--c": "var(--surface)",
               "--r": "70deg",
             } as React.CSSProperties
           }
         />
         <div
-          className="leaf"
+          className="leaf ribbon-leaf-3"
           data-depth="0.12"
           style={
             {
-              left: "46%",
-              top: 50,
-              width: 120,
               "--c": "var(--leaf-deep)",
               "--r": "160deg",
             } as React.CSSProperties
           }
         />
         <div
-          className="leaf"
+          className="leaf ribbon-leaf-4"
           data-depth="0.38"
           style={
             {
-              left: "62%",
-              top: 100,
-              width: 48,
               "--c": "var(--tertiary)",
               "--r": "-30deg",
             } as React.CSSProperties
           }
         />
         <div
-          className="leaf"
+          className="leaf ribbon-leaf-5"
           data-depth="0.22"
-          style={
-            {
-              left: "77%",
-              top: 44,
-              width: 160,
-              "--r": "24deg",
-            } as React.CSSProperties
-          }
+          style={{ "--r": "24deg" } as React.CSSProperties}
         />
         <div
-          className="leaf"
+          className="leaf ribbon-leaf-6"
           data-depth="0.34"
-          style={
-            {
-              left: "35%",
-              top: 160,
-              width: 60,
-              "--r": "110deg",
-            } as React.CSSProperties
-          }
+          style={{ "--r": "110deg" } as React.CSSProperties}
         />
       </div>
 
@@ -346,6 +319,8 @@ export default function Home() {
                 <p className="case-stat">{c.stat}</p>
               </div>
               <div className={`case-frame case-frame-${c.frame}`}>
+                <div className="case-ring case-ring-1" data-ring={1} />
+                <div className="case-ring case-ring-0" data-ring={0} />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={c.image.src} alt={c.image.alt} />
               </div>
@@ -367,28 +342,22 @@ export default function Home() {
         </svg>
         <div className="field-body cta-body">
           <div
-            className="leaf"
+            className="leaf cta-leaf-1"
             data-depth="0.18"
             aria-hidden="true"
             style={
               {
-                left: -50,
-                top: -40,
-                width: 260,
                 "--o": 0.3,
                 "--r": "30deg",
               } as React.CSSProperties
             }
           />
           <div
-            className="leaf"
+            className="leaf cta-leaf-2"
             data-depth="0.32"
             aria-hidden="true"
             style={
               {
-                left: "14%",
-                bottom: 20,
-                width: 100,
                 "--c": "var(--text)",
                 "--o": 0.16,
                 "--r": "-60deg",
@@ -396,14 +365,11 @@ export default function Home() {
             }
           />
           <div
-            className="leaf"
+            className="leaf cta-leaf-3"
             data-depth="0.4"
             aria-hidden="true"
             style={
               {
-                left: "22%",
-                top: "24%",
-                width: 44,
                 "--c": "var(--tertiary)",
                 "--o": 0.7,
                 "--r": "140deg",
@@ -425,6 +391,7 @@ export default function Home() {
       </footer>
 
       <Drift />
+      <Rings />
       <Analytics />
       <SpeedInsights />
     </>
