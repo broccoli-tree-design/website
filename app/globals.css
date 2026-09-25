@@ -12,6 +12,10 @@
   --primary: #5b8c42; /* logo green */
   --tertiary: #c4562a; /* terracotta */
 
+  --terracotta-text: #9e4220; /* terracotta for text / hover — 5.5:1 on beige, 4.6:1 on sage */
+  --primary-text: #476f33; /* green for small text — 5.0:1 on beige */
+  --leaf-deep: #2e6a4a; /* mid-forest leaf tone (decorative only) */
+
   --gutter: 56px;
   --max: 1280px;
 }
@@ -78,9 +82,6 @@ a:hover {
   color: var(--text-muted);
   margin: 0;
   text-wrap: pretty;
-}
-.body-invert {
-  color: var(--surface);
 }
 
 .mono {
@@ -209,20 +210,41 @@ a:hover {
   opacity: 0.55;
 }
 
-/* ── FOREST PANELS — curved top and bottom ── */
-.panel {
-  background: var(--text);
-  color: var(--background);
+/* ── LEAF — masked div, takes any color via --c ── */
+.leaf {
+  position: absolute;
+  aspect-ratio: 308 / 288;
+  pointer-events: none;
+  will-change: transform;
+}
+.leaf::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--c, var(--primary));
+  opacity: var(--o, 1);
+  rotate: var(--r, 0deg);
+  -webkit-mask: url("/leaf.svg") no-repeat center / contain;
+  mask: url("/leaf.svg") no-repeat center / contain;
+}
+
+/* ── ORGANIC FIELDS — wavy sage panels ── */
+.field {
   position: relative;
   overflow: hidden;
 }
-.panel-about {
-  border-radius: 50% / 120px;
-  padding: 140px 0;
+.field-edge {
+  display: block;
+  width: 100%;
+  height: 100px;
 }
-.panel-cta {
-  border-radius: 50% 50% 0 0 / 140px 140px 0 0;
-  padding: 112px 0 88px;
+.field-edge path {
+  fill: var(--surface);
+}
+.field-body {
+  position: relative;
+  background: var(--surface);
+  padding: 80px 0 90px;
 }
 .panel-inner {
   max-width: var(--max);
@@ -232,13 +254,6 @@ a:hover {
   flex-direction: column;
   gap: 44px;
   position: relative;
-}
-.panel-cta .panel-inner {
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 40px;
-  flex-wrap: wrap;
 }
 
 /* motifs keep clear of the text column */
@@ -277,6 +292,35 @@ a:hover {
   padding-bottom: 3px;
   white-space: nowrap;
   text-decoration: none;
+}
+
+/* ── ABOUT — field-specific overrides ── */
+#about .panel-inner {
+  gap: 40px;
+}
+.about-h2 {
+  max-width: 18ch;
+}
+.about-body {
+  max-width: 68ch;
+}
+#about .thinking {
+  border-top-color: rgba(23, 63, 53, 0.2);
+  padding-top: 36px;
+  margin-top: 8px;
+  max-width: 68ch;
+}
+#about .thinking-quote {
+  font-size: clamp(22px, 2.2vw, 30px);
+  color: var(--text);
+}
+.thinking-link {
+  color: var(--text) !important;
+  border-bottom-color: var(--text);
+}
+.thinking-link:hover {
+  color: var(--terracotta-text) !important;
+  border-bottom-color: var(--terracotta-text);
 }
 
 /* ── SERVICES — hairline list, no cards ── */
@@ -321,21 +365,22 @@ a:hover {
   max-width: 40ch;
 }
 
-/* ── HINGE — sun over the horizon ── */
-.hinge {
-  max-width: var(--max);
-  margin: 56px auto 96px;
-  padding: 0 var(--gutter);
+/* ── RIBBON — dark leaf ribbon, services → case studies ── */
+.ribbon {
+  position: relative;
+  height: 240px;
+  margin: 96px 0 112px;
+  overflow: hidden;
 }
-.hinge-leaf {
+.ribbon svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   display: block;
-  width: 66px;
-  aspect-ratio: 308 / 288;
-  margin: 0 auto;
-  background-color: var(--text);
-  opacity: 0.3;
-  -webkit-mask: url("/leaf.svg") no-repeat center / contain;
-  mask: url("/leaf.svg") no-repeat center / contain;
+}
+.ribbon path {
+  fill: var(--text);
 }
 
 /* ── CASE STUDIES ── */
@@ -426,11 +471,21 @@ a:hover {
 }
 
 /* ── CTA ── */
+.cta-body {
+  padding: 90px 0 130px;
+}
+.cta-body .panel-inner {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  flex-wrap: wrap;
+}
 .cta-btn {
   display: inline-block;
   flex-shrink: 0;
-  background: var(--background);
-  color: var(--text) !important;
+  background: var(--text);
+  color: var(--background) !important;
   padding: 16px 36px;
   border-radius: 28px;
   font-size: 16px;
@@ -440,8 +495,19 @@ a:hover {
   transition: background 0.15s, color 0.15s;
 }
 .cta-btn:hover {
-  background: var(--tertiary);
+  background: var(--terracotta-text);
   color: var(--background) !important;
+}
+
+/* ── CONTRAST / A11Y FIXES ── */
+.case-eyebrow {
+  color: var(--terracotta-text); /* was --tertiary, 3.81:1 */
+}
+.service-num {
+  color: var(--primary-text); /* was --primary, 3.40:1 */
+}
+.lede .accent {
+  color: var(--primary-text); /* 19px on mobile needs 4.5:1 */
 }
 
 /* ── TABLET — baseline 768/834px ── */
@@ -449,13 +515,11 @@ a:hover {
   :root {
     --gutter: 32px;
   }
-  .panel-about {
-    padding: 104px 0;
-    border-radius: 50% / 80px;
+  .field-edge {
+    height: 60px;
   }
-  .panel-cta {
-    padding: 88px 0 72px;
-    border-radius: 50% 50% 0 0 / 90px 90px 0 0;
+  .field-body {
+    padding: 56px 0 64px;
   }
   .about-h2,
   .about-body {
@@ -471,8 +535,20 @@ a:hover {
   .services-grid {
     grid-template-columns: 1fr;
   }
-  .hinge {
-    margin: 40px auto 64px;
+  .ribbon {
+    height: 150px;
+    margin: 64px 0 72px;
+  }
+  .ribbon .leaf {
+    scale: 0.55;
+  }
+  .cta-body {
+    padding: 56px 0 96px;
+  }
+  .cta-body .panel-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 28px;
   }
   .case-list {
     gap: 72px;
@@ -495,6 +571,19 @@ a:hover {
    ~520px, so this is set with margin above that, not just at the
    375/390px design baseline below. ── */
 @media (max-width: 560px) {
+  .nav-links a {
+    display: inline-block;
+    padding: 13px 6px;
+  }
+  .nav-cta {
+    padding: 13px 20px;
+  }
+  .nav-logo {
+    min-height: 44px;
+  }
+  .thinking-link {
+    padding-top: 12px;
+  }
   .nav-logo-text {
     display: none;
   }
