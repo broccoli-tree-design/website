@@ -13,7 +13,7 @@
   --tertiary: #c4562a; /* terracotta */
 
   --gutter: 56px;
-  --max: 1180px;
+  --max: 1280px;
 }
 
 html {
@@ -69,7 +69,6 @@ a:hover {
   font-weight: 400;
   line-height: 1.35;
   margin: 0;
-  max-width: 40ch;
   text-wrap: pretty;
 }
 
@@ -167,17 +166,16 @@ a:hover {
   position: relative;
   max-width: var(--max);
   margin: 0 auto;
-  padding: 96px var(--gutter) 140px;
+  padding: clamp(40px, 8svh, 96px) var(--gutter) clamp(72px, 12svh, 140px);
   display: grid;
   grid-template-columns: 1.45fr 1fr;
   gap: 64px;
-  align-items: end;
+  align-items: center;
 }
 .hero-text {
   display: flex;
   flex-direction: column;
   gap: 40px;
-  padding-bottom: 24px;
 }
 .hero-name {
   font-family: var(--display), sans-serif;
@@ -185,15 +183,22 @@ a:hover {
   color: var(--primary);
 }
 
-/* organic leaf frame + hand-drawn contour */
+/* organic leaf frame + hand-drawn contour.
+   Width is capped by viewport height (photo is 3:4) so the whole hero
+   fits above the fold on short laptop screens. */
 .leaf-frame {
   position: relative;
+  justify-self: end;
+  width: 100%;
+  max-height: calc(100svh - 200px);
+  aspect-ratio: 3 / 4;
 }
 .leaf-frame img {
   position: relative;
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
+  object-fit: cover;
   border-radius: 4px 62% 4px 62% / 4px 62% 4px 62%;
 }
 .leaf-frame::before {
@@ -440,8 +445,8 @@ a:hover {
   color: var(--background) !important;
 }
 
-/* ── TABLET ── */
-@media (max-width: 900px) {
+/* ── TABLET — baseline 768/834px ── */
+@media (max-width: 768px) {
   :root {
     --gutter: 32px;
   }
@@ -452,7 +457,10 @@ a:hover {
   }
   .hero-text {
     gap: 28px;
-    padding-bottom: 0;
+  }
+  .leaf-frame {
+    justify-self: stretch;
+    width: auto;
   }
   .panel-about {
     padding: 104px 0;
@@ -495,8 +503,8 @@ a:hover {
   }
 }
 
-/* ── MOBILE ── */
-@media (max-width: 500px) {
+/* ── MOBILE — baseline 375/390px ── */
+@media (max-width: 390px) {
   :root {
     --gutter: 20px;
   }
