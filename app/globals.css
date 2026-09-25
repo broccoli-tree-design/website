@@ -189,8 +189,7 @@ a:hover {
 .leaf-frame {
   position: relative;
   justify-self: end;
-  width: 100%;
-  max-height: calc(100svh - 200px);
+  width: min(100%, max(200px, calc((100svh - 200px) * 0.75)));
   aspect-ratio: 3 / 4;
 }
 .leaf-frame img {
