@@ -63,10 +63,13 @@ export default function Home() {
     <>
       {/* NAV — logo pinned top-left, actions top-right */}
       <nav className="nav">
-        <a href="#" className="nav-logo">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.svg" alt="" />
-          <span>Broccoli Tree Design</span>
+        <a href="#" className="nav-logo" aria-label="Broccoli Tree Design">
+          <picture>
+            <source media="(max-width: 560px)" srcSet="/logo-mark.svg" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.svg" alt="" />
+          </picture>
+          <span className="nav-logo-text">Broccoli Tree Design</span>
         </a>
         <ul className="nav-links">
           <li>

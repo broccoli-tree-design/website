@@ -450,18 +450,6 @@ a:hover {
   :root {
     --gutter: 32px;
   }
-  .hero {
-    grid-template-columns: 1fr;
-    padding: 56px var(--gutter) 72px;
-    gap: 48px;
-  }
-  .hero-text {
-    gap: 28px;
-  }
-  .leaf-frame {
-    justify-self: stretch;
-    width: auto;
-  }
   .panel-about {
     padding: 104px 0;
     border-radius: 50% / 80px;
@@ -503,6 +491,31 @@ a:hover {
   }
 }
 
+/* ── NAV COMPACT — kicks in wherever the nav actually stops fitting.
+   Measured empirically: full logo+text+About+Work+CTA overflows up to
+   ~520px, so this is set with margin above that, not just at the
+   375/390px design baseline below. ── */
+@media (max-width: 560px) {
+  .nav-logo-text {
+    display: none;
+  }
+  .nav-links li:first-child {
+    display: none;
+  }
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 56px var(--gutter) 72px;
+    gap: 48px;
+  }
+  .hero-text {
+    gap: 28px;
+  }
+  .leaf-frame {
+    justify-self: stretch;
+    width: auto;
+  }
+}
+
 /* ── MOBILE — baseline 375/390px ── */
 @media (max-width: 390px) {
   :root {
@@ -513,9 +526,6 @@ a:hover {
   }
   .nav-links {
     gap: 14px;
-  }
-  .nav-links li:first-child {
-    display: none;
   }
   .thinking {
     gap: 16px;
