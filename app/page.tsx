@@ -65,9 +65,9 @@ export default function Home() {
       <nav className="nav">
         <a href="#" className="nav-logo" aria-label="Broccoli Tree Design">
           <picture>
-            <source media="(max-width: 560px)" srcSet="/logo-mark.svg" />
+            <source media="(max-width: 560px)" srcSet="/logo-icon.svg" />
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.svg" alt="" />
+            <img src="/logo-text.svg" alt="" />
           </picture>
           <span className="nav-logo-text">Broccoli Tree Design</span>
         </a>

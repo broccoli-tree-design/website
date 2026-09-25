@@ -29,7 +29,7 @@ const mono = IBM_Plex_Mono({
 
 export const metadata: Metadata = {
   title: 'Aiqi Li — UX for Legal Tech',
-  icons: { icon: '/logo.svg' },
+  icons: { icon: '/logo-text.svg' },
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
