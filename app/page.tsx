@@ -1,10 +1,24 @@
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Drift from "@/components/Drift";
+import Eye from "@/components/Eye";
+import Eyes from "@/components/Eyes";
 import Rings from "@/components/Rings";
 
 /** pointer-parallax depth per hero ring, inner → outer */
 const HERO_RINGS = [0.08, 0.16, 0.24, 0.32];
+
+/** dotless ı with the logo's eye as its dot */
+function EyeI() {
+  return (
+    <span className="eye-i">
+      {"ı"}
+      <span className="eye-i-dot">
+        <Eye />
+      </span>
+    </span>
+  );
+}
 
 const SERVICES = [
   {
@@ -59,7 +73,7 @@ const CASES = [
       </>
     ),
     body: "Design highlight: taxonomy tools for admin and analysts to form a single source of truth for reporting.",
-    stat: "XX data sources centralized; XXX client accounts distributed",
+    stat: "50+ data sources centralized; 100+ client accounts distributed",
   },
 ];
 
@@ -69,11 +83,17 @@ export default function Home() {
       {/* NAV — logo pinned top-left, actions top-right */}
       <nav className="nav" aria-label="Main">
         <a href="#" className="nav-logo" aria-label="Broccoli Tree Design">
-          <picture>
-            <source media="(max-width: 560px)" srcSet="/logo-icon.svg" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo-text.svg" alt="" />
-          </picture>
+          <span className="nav-logo-mark">
+            <picture>
+              <source media="(max-width: 560px)" srcSet="/logo-icon.svg" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/logo-text.svg" alt="" />
+            </picture>
+            {/* live eye laid over the logo's own */}
+            <span className="nav-logo-eye" aria-hidden="true">
+              <Eye />
+            </span>
+          </span>
           <span className="nav-logo-text">Broccoli Tree Design</span>
         </a>
         <ul className="nav-links">
@@ -103,11 +123,16 @@ export default function Home() {
             <h1 className="display-xl hero-title">
               Hi, I&rsquo;m
               <br />
-              <span className="hero-name">Aiqi</span>
+              <span className="hero-name">
+                <span className="visually-hidden">Aiqi</span>
+                <span aria-hidden="true">
+                  A<EyeI />q<EyeI />
+                </span>
+              </span>
             </h1>
             <p className="lede">
               I help early-stage legal tech teams transform complex workflows
-              into <span className="accent">intuitive designs</span> —{" "}
+              into <em className="accent">intuitive designs</em> —{" "}
               <span className="muted">
                 sourced from personal legal experience, not a generic UX
                 playbook.
@@ -191,7 +216,7 @@ export default function Home() {
           />
           <div className="panel-inner">
             <h2 className="display-m about-h2">
-              A designer who speaks some <em>legalese</em>
+              A designer who speaks some <em className="accent">legalese</em>
             </h2>
             <p className="body about-body">
               As a Paralegal turned Designer, I&rsquo;ve experienced first-hand
@@ -392,6 +417,7 @@ export default function Home() {
 
       <Drift />
       <Rings />
+      <Eyes />
       <Analytics />
       <SpeedInsights />
     </>

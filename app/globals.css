@@ -120,7 +120,20 @@ a:hover {
   width: auto;
   display: block;
 }
-.nav-logo span {
+/* 26×26 box so the eye's % offsets map onto the logo's viewBox */
+.nav-logo-mark {
+  position: relative;
+  display: block;
+  width: 26px;
+  height: 26px;
+}
+.nav-logo-eye {
+  position: absolute;
+  left: 56.3%;
+  top: 22.9%;
+  width: 20.7%;
+}
+.nav-logo-text {
   font-family: var(--display), sans-serif;
   font-size: 14px;
   font-weight: 600;
@@ -200,11 +213,71 @@ a:hover {
   max-width: 34ch;
 }
 
+/* ── EYE — the logo's almond + a pupil that Eyes.tsx moves ── */
+.eye {
+  position: relative;
+  display: block;
+  aspect-ratio: 2 / 1;
+  cursor: pointer;
+}
+.eye-white {
+  position: absolute;
+  inset: 0;
+  background: var(--background);
+  -webkit-mask: url("/eye.svg") center / 100% 100% no-repeat;
+  mask: url("/eye.svg") center / 100% 100% no-repeat;
+}
+.eye-pupil {
+  position: absolute;
+  left: 40%;
+  top: 0;
+  width: 20%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--text);
+}
+
+/* "Aiqi" i-dots: dotless ı + a green disc holding the eye */
+.eye-i {
+  position: relative;
+  display: inline-block;
+}
+.eye-i-dot {
+  position: absolute;
+  left: 50%;
+  top: -0.03em; /* centering on the real dot crowds the stem; this keeps a gap */
+  /* + half the title's -0.025em letter-spacing, which narrows the ı box */
+  translate: calc(-50% + 0.0125em) 0;
+  width: 0.3em;
+  height: 0.3em;
+  border-radius: 50%;
+  background: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.eye-i-dot .eye {
+  width: 78%;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* leaf-shaped photo + growth rings */
 .leaf-frame {
   position: relative;
   width: 100%;
   aspect-ratio: 3 / 4;
+  rotate: -3deg;
 }
 .leaf-frame img {
   position: relative;
@@ -213,6 +286,15 @@ a:hover {
   display: block;
   object-fit: cover;
   border-radius: var(--leaf-radius);
+}
+/* springy wiggle on hover */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .leaf-frame img {
+    transition: rotate 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
+  }
+  .leaf-frame img:hover {
+    rotate: 5deg;
+  }
 }
 .ring-layer {
   position: absolute;
@@ -699,6 +781,12 @@ a:hover {
   }
   .nav-logo-text {
     display: none;
+  }
+  /* logo-icon.svg's eye sits a hair differently */
+  .nav-logo-eye {
+    left: 56.2%;
+    top: 22.8%;
+    width: 20.8%;
   }
   .nav-links li:first-child {
     display: none;
