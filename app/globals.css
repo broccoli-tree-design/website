@@ -77,6 +77,7 @@ a:hover {
   line-height: 1.35;
   margin: 0;
   text-wrap: pretty;
+  max-width: 42ch;
 }
 
 .body {
@@ -209,10 +210,6 @@ a:hover {
   font-weight: 600;
   color: var(--primary);
 }
-.hero .lede {
-  max-width: 34ch;
-}
-
 /* ── EYE — the logo's almond + a pupil that Eyes.tsx moves ── */
 .eye {
   position: relative;
@@ -278,6 +275,11 @@ a:hover {
   width: 100%;
   aspect-ratio: 3 / 4;
   rotate: -3deg;
+}
+/* <picture> wrappers (webp + jpg fallback) stay out of layout */
+.leaf-frame picture,
+.case-frame picture {
+  display: contents;
 }
 .leaf-frame img {
   position: relative;
