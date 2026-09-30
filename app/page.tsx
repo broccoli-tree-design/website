@@ -4,6 +4,67 @@ import Drift from "@/components/Drift";
 import Eye from "@/components/Eye";
 import Eyes from "@/components/Eyes";
 import Rings from "@/components/Rings";
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, LINKEDIN_URL } from "./site";
+
+/** structured data: who Aiqi is and what the studio offers (schema.org) */
+const JSON_LD = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#aiqi`,
+      name: "Aiqi Li",
+      jobTitle: "UX Designer",
+      description:
+        "Paralegal-turned UX designer specializing in product design for legal tech.",
+      url: SITE_URL,
+      image: `${SITE_URL}/profile.jpg`,
+      sameAs: [LINKEDIN_URL],
+      worksFor: { "@id": `${SITE_URL}/#studio` },
+      knowsAbout: [
+        "UX design",
+        "Legal tech",
+        "Product design",
+        "User research",
+        "Design systems",
+        "Legal workflows",
+        "Intellectual property",
+      ],
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": `${SITE_URL}/#studio`,
+      name: SITE_NAME,
+      description: SITE_DESCRIPTION,
+      url: SITE_URL,
+      logo: `${SITE_URL}/logo-icon.svg`,
+      image: `${SITE_URL}/opengraph-image.jpg`,
+      founder: { "@id": `${SITE_URL}/#aiqi` },
+      sameAs: [LINKEDIN_URL],
+      knowsAbout: ["UX design for legal tech", "Legal tech product design"],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "UX design services for legal tech",
+        itemListElement: [
+          "0→1 product design",
+          "Redesign & consolidation",
+          "Research & strategy",
+          "Design systems",
+        ].map((name) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name },
+        })),
+      },
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: SITE_URL,
+      name: SITE_NAME,
+      publisher: { "@id": `${SITE_URL}/#studio` },
+    },
+  ],
+};
 
 /** pointer-parallax depth per hero ring, inner → outer */
 const HERO_RINGS = [0.08, 0.16, 0.24, 0.32];
@@ -46,7 +107,10 @@ const SERVICES = [
 const CASES = [
   {
     frame: 1 as const,
-    image: { src: "/geolift.jpg", alt: "GeoLift tool screenshot" },
+    image: {
+      src: "/geolift",
+      alt: "GeoLift no-code data experimentation workflow, UX case study",
+    },
     eyebrow: "01 — Productizing an underutilized data science methodology",
     heading: "No-code data experimentation workflow",
     body: "Design highlight: surfacing the model\u2019s reasoning so scientists can discuss, compare, and make tradeoffs. When metrics can be reviewed and explained, scientists gained the confidence to make rapid decisions that are defensible in front of clients.",
@@ -55,7 +119,10 @@ const CASES = [
   {
     flip: true,
     frame: 2 as const,
-    image: { src: "/omnicom.jpg", alt: "Omnicom Marketing OS screenshot" },
+    image: {
+      src: "/omnicom",
+      alt: "Omnicom Marketing OS modular workflow redesign, UX case study",
+    },
     eyebrow: "02 — Redesigning a monolithic software into customizable modules",
     heading: "One workflow for teams with competing needs",
     body: "Design highlight: modules that pull data from various internal workspaces to consist a unified workflow so teams can still present a cohesive front to clients.",
@@ -63,7 +130,10 @@ const CASES = [
   },
   {
     frame: 3 as const,
-    image: { src: "/reporting.jpg", alt: "Reporting Hub screenshot" },
+    image: {
+      src: "/reporting",
+      alt: "Reporting Hub taxonomy tools for centralized data reporting, UX case study",
+    },
     eyebrow: "03 — Expanding reporting capabilities",
     heading: (
       <>
@@ -82,7 +152,7 @@ export default function Home() {
     <>
       {/* NAV — logo pinned top-left, actions top-right */}
       <nav className="nav" aria-label="Main">
-        <a href="#" className="nav-logo" aria-label="Broccoli Tree Design">
+        <a href="/" className="nav-logo" aria-label="Broccoli Tree Design">
           <span className="nav-logo-mark">
             <picture>
               <source media="(max-width: 560px)" srcSet="/logo-icon.svg" />
@@ -132,10 +202,12 @@ export default function Home() {
             </h1>
             <p className="lede">
               I help early-stage legal tech teams transform complex workflows
-              into <em className="accent">intuitive designs</em> —{" "}
+              into <em className="accent">intuitive</em> designs.
+              <br></br>
+              <br></br>
               <span className="muted">
-                sourced from personal legal experience, not a generic UX
-                playbook.
+                Drawn from <em className="accent">personal </em>legal
+                experience, not a generic playbook.
               </span>
             </p>
           </div>
@@ -146,11 +218,17 @@ export default function Home() {
                 <div className={`hero-ring hero-ring-${i}`} data-ring={i} />
               </div>
             ))}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/profile.png"
-              alt="Aiqi sitting on the roots of a large tree"
-            />
+            <picture>
+              <source srcSet="/profile.webp" type="image/webp" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/profile.jpg"
+                alt="Aiqi Li, UX designer for legal tech, sitting on the roots of a large tree"
+                width={800}
+                height={1067}
+                fetchPriority="high"
+              />
+            </picture>
           </div>
         </section>
       </div>
@@ -346,8 +424,18 @@ export default function Home() {
               <div className={`case-frame case-frame-${c.frame}`}>
                 <div className="case-ring case-ring-1" data-ring={1} />
                 <div className="case-ring case-ring-0" data-ring={0} />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={c.image.src} alt={c.image.alt} />
+                <picture>
+                  <source srcSet={`${c.image.src}.webp`} type="image/webp" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={`${c.image.src}.jpg`}
+                    alt={c.image.alt}
+                    width={1728}
+                    height={1117}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </picture>
               </div>
             </div>
           ))}
@@ -415,6 +503,12 @@ export default function Home() {
         </div>
       </footer>
 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(JSON_LD).replace(/</g, "\\u003c"),
+        }}
+      />
       <Drift />
       <Rings />
       <Eyes />
