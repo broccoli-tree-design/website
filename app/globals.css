@@ -224,26 +224,20 @@ a:hover {
   background: #173f35;
 }
 
-/* ── HERO — name either side of the portrait, stopping at the third ring ── */
+/* ── HERO — oversized portrait bleeds off the right and bottom ── */
 .hero {
-  /* grows with width, never wider than the gap between ring 3 and the edge */
-  --hero-fs: min(
-    calc(6.2cqw * 1.6),
-    calc((50cqw - min(13.9cqw, 21.75svh) - min(5.8cqw, 9.1svh) - 2.8cqw) / 3.5)
-  );
-  --hero-x: calc(50% + min(13.9cqw, 21.75svh) + min(5.8cqw, 9.1svh));
   position: relative;
   height: 100svh;
-  min-height: 520px;
-  overflow: hidden;
+  min-height: 560px;
+  /* no clip: the leaf runs past the fold and finishes as you scroll;
+     sideways .page trims it at the viewport */
 }
 .hero-photo {
   position: absolute;
-  left: 50%;
-  top: 46%;
-  width: min(27.8cqw, 43.5svh);
+  right: -3cqw;
+  top: max(76px, 12svh); /* clears the fixed nav */
+  width: min(46cqw, 72svh); /* 3:4, so it runs off the bottom */
   aspect-ratio: 3 / 4;
-  translate: -50% -50%;
   rotate: -3deg;
   z-index: 2;
 }
@@ -260,13 +254,13 @@ a:hover {
   object-fit: cover;
   border-radius: var(--leaf-radius);
 }
-/* springy wiggle on hover */
+/* springy wiggle on hover — small, the photo is big */
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
   .hero-photo img {
     transition: rotate 0.5s cubic-bezier(0.3, 1.6, 0.5, 1);
   }
   .hero-photo img:hover {
-    rotate: 5deg;
+    rotate: 2deg;
   }
 }
 .ring-layer {
@@ -280,70 +274,129 @@ a:hover {
   border-radius: var(--leaf-radius);
 }
 .hero-ring-0 {
-  inset: calc(-1 * min(1.8cqw, 2.8svh));
+  inset: calc(-1 * min(2.2cqw, 3.4svh));
   opacity: 0.6;
 }
 .hero-ring-1 {
-  inset: calc(-1 * min(3.75cqw, 5.9svh));
-  opacity: 0.45;
+  inset: calc(-1 * min(4.6cqw, 7.2svh));
+  opacity: 0.42;
 }
 .hero-ring-2 {
-  inset: calc(-1 * min(5.8cqw, 9.1svh));
-  opacity: 0.32;
+  inset: calc(-1 * min(7.4cqw, 11.5svh));
+  opacity: 0.28;
 }
 .hero-ring-3 {
-  inset: calc(-1 * min(8cqw, 12.5svh));
-  opacity: 0.2;
+  inset: calc(-1 * min(10.6cqw, 16.5svh));
+  opacity: 0.16;
 }
-.hero-h1,
-.hero-slogan {
+.hero-text {
+  --name-fs: min(25cqw, 38svh);
   position: absolute;
-  inset: 0;
+  left: max(28px, 4cqw);
+  top: 54%;
+  translate: 0 -50%;
+  z-index: 3;
+  pointer-events: none;
+}
+.hero-h1 {
   margin: 0;
   font-family: var(--serif), serif;
-  pointer-events: none;
-  z-index: 3;
+  font-weight: 600;
+  line-height: 0.86;
+  letter-spacing: -0.035em;
 }
 .hero-h1 > span,
 .hero-slogan > span {
-  position: absolute;
+  display: block;
   white-space: nowrap;
 }
-.hero-h1 {
-  font-weight: 600;
-  font-size: var(--hero-fs);
-  line-height: 0.9;
-  letter-spacing: -0.035em;
-}
 .hero-hi {
-  right: var(--hero-x);
-  top: calc(46% - 1.4cqw);
-  translate: 0 -50%;
+  font-size: min(7cqw, 11svh);
+  margin-bottom: 0.12em;
 }
 .hero-name {
-  left: var(--hero-x);
-  top: calc(46% - 1.4cqw);
-  translate: 0 -50%;
+  font-size: var(--name-fs);
   font-style: italic;
   font-weight: 700;
+  letter-spacing: -0.05em;
+  margin-left: -0.04em; /* optical alignment of the italic A */
   color: var(--accent);
 }
 .hero-slogan {
+  /* steps down and right, along the leaf: indented past the "q", dropped
+     clear of its italic descender (~0.18em below the name's line box) */
+  margin: calc(var(--name-fs) * 0.24) 0 0 var(--name-fs);
+  font-family: var(--serif), serif;
   font-style: italic;
   font-weight: 500;
-  font-size: max(15px, calc(var(--hero-fs) * 0.355));
+  font-size: clamp(18px, 2.4cqw, 38px);
   line-height: 1.1;
   letter-spacing: -0.01em;
 }
 .hero-s1 {
-  right: var(--hero-x);
-  top: calc(46% + 2.6cqw);
   color: var(--accent);
 }
 .hero-s2 {
-  left: var(--hero-x);
-  top: calc(46% + 2.6cqw);
   font-style: normal;
+}
+
+/* entrance — CSS rather than Rings.tsx so it starts on first paint instead
+   of flashing in after hydration. Ring layers animate `scale`, leaving
+   `transform` free for parallax; the photo animates `transform`, keeping
+   its `rotate`. */
+@media (prefers-reduced-motion: no-preference) {
+  .hero-photo {
+    animation: hero-photo-in 1100ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  }
+  .hero-photo .ring-layer {
+    animation: hero-ring-in 1600ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+  }
+  .hero-photo .ring-layer:nth-child(1) {
+    animation-delay: 250ms;
+  }
+  .hero-photo .ring-layer:nth-child(2) {
+    animation-delay: 360ms;
+  }
+  .hero-photo .ring-layer:nth-child(3) {
+    animation-delay: 470ms;
+  }
+  .hero-photo .ring-layer:nth-child(4) {
+    animation-delay: 580ms;
+  }
+  .hero-hi,
+  .hero-name {
+    animation: hero-rise 1200ms cubic-bezier(0.2, 0.7, 0.2, 1) 380ms backwards;
+  }
+  .hero-name {
+    animation-delay: 540ms;
+  }
+  .hero-slogan {
+    animation: hero-fade 1200ms cubic-bezier(0.2, 0.7, 0.2, 1) 700ms backwards;
+  }
+}
+@keyframes hero-photo-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+@keyframes hero-ring-in {
+  from {
+    opacity: 0;
+    scale: 0.6;
+  }
+}
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.35em);
+  }
+}
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
 }
 
 /* ── ABOUT — legalese ── */
@@ -805,38 +858,25 @@ a:hover {
   }
 
   .hero-photo {
-    width: 58vw;
-    top: 47%;
+    /* on short phones, shrink so the photo ends above the text block
+       (~69vw tall, 5svh off the bottom) instead of running under it */
+    width: min(84vw, calc((95svh - 69vw - 88px) * 0.75));
+    right: -12vw;
+    top: 72px;
   }
-  .hero-h1 {
-    font-size: 16vw;
-  }
-  .hero-slogan {
-    font-size: 6vw;
+  .hero-text {
+    --name-fs: 38vw;
+    left: 6vw;
+    top: auto;
+    bottom: 5svh;
+    translate: none;
   }
   .hero-hi {
-    right: auto;
-    left: 6vw;
-    top: 13%;
-    translate: none;
+    font-size: 13vw;
   }
-  .hero-name {
-    left: auto;
-    right: 6vw;
-    top: auto;
-    bottom: 19%;
-    translate: none;
-  }
-  .hero-s1 {
-    right: auto;
-    left: 6vw;
-    top: auto;
-    bottom: calc(7% + 1.3em);
-  }
-  .hero-s2 {
-    left: 6vw;
-    top: auto;
-    bottom: 7%;
+  .hero-slogan {
+    font-size: 6.4vw;
+    margin-top: calc(var(--name-fs) * 0.3);
   }
 
   .about {

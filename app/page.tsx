@@ -187,14 +187,16 @@ export default function Home() {
               />
             </picture>
           </div>
-          <h1 className="hero-h1">
-            <span className="hero-hi">Hi, I&rsquo;m</span>{" "}
-            <span className="hero-name">Aiqi</span>
-          </h1>
-          <p className="hero-slogan">
-            <span className="hero-s1">Intuitive design</span>{" "}
-            <span className="hero-s2">for legal tech</span>
-          </p>
+          <div className="hero-text">
+            <h1 className="hero-h1">
+              <span className="hero-hi">Hi, I&rsquo;m</span>{" "}
+              <span className="hero-name">Aiqi</span>
+            </h1>
+            <p className="hero-slogan">
+              <span className="hero-s1">Intuitive design</span>{" "}
+              <span className="hero-s2">for legal tech</span>
+            </p>
+          </div>
         </section>
 
         {/* ABOUT — legalese */}
