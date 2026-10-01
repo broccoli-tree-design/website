@@ -16,7 +16,7 @@ const JSON_LD = {
       name: "Aiqi Li",
       jobTitle: "UX Designer",
       description:
-        "Paralegal-turned UX designer specializing in product design for legal tech.",
+        "Paralegal-turned UX designer making intuitive design for legal tech, drawing on first-hand work inside legal systems in the U.S. and China.",
       url: SITE_URL,
       image: `${SITE_URL}/profile.jpg`,
       sameAs: [LINKEDIN_URL],
