@@ -1,25 +1,25 @@
-import type { Metadata } from 'next'
-import { Source_Serif_4, Work_Sans, Montserrat_Alternates, IBM_Plex_Mono } from 'next/font/google'
+import type { Metadata, Viewport } from 'next'
+import { Bodoni_Moda, Work_Sans, Montserrat_Alternates, IBM_Plex_Mono } from 'next/font/google'
 import './globals.css'
 import { SITE_URL, SITE_NAME, SITE_TITLE, SITE_DESCRIPTION } from './site'
 
-const serif = Source_Serif_4({
+const serif = Bodoni_Moda({
   subsets: ['latin'],
   variable: '--serif',
-  weight: ['400', '500', '600'],
+  axes: ['opsz'],
   style: ['normal', 'italic'],
 })
 
 const sans = Work_Sans({
   subsets: ['latin'],
   variable: '--sans',
-  weight: ['400', '500', '600', '700'],
+  weight: ['400', '500', '600'],
 })
 
 const display = Montserrat_Alternates({
   subsets: ['latin'],
   variable: '--display',
-  weight: ['500', '600', '700'],
+  weight: ['600'],
 })
 
 const mono = IBM_Plex_Mono({
@@ -51,6 +51,10 @@ export const metadata: Metadata = {
     description: SITE_DESCRIPTION,
   },
   robots: { index: true, follow: true },
+}
+
+export const viewport: Viewport = {
+  themeColor: '#173f35',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

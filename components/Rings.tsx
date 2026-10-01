@@ -9,7 +9,7 @@ const EASE = "cubic-bezier(.2,.7,.2,1)";
 export default function Rings() {
   useEffect(() => {
     const reduce = matchMedia("(prefers-reduced-motion: reduce)");
-    const desktop = matchMedia("(min-width: 561px) and (hover: hover)");
+    const desktop = matchMedia("(min-width: 641px) and (hover: hover)");
     let teardown: (() => void) | null = null;
 
     const setup = () => {
@@ -37,7 +37,7 @@ export default function Rings() {
       });
 
       // 2. hero pointer parallax — transform lives on the wrapper, not the ring
-      const hero = document.querySelector<HTMLElement>(".hero-wrap");
+      const hero = document.querySelector<HTMLElement>(".hero");
       const layers = document.querySelectorAll<HTMLElement>("[data-parallax]");
       if (hero && layers.length) {
         layers.forEach((l) => (l.style.transition = `transform .8s ${EASE}`));
@@ -79,7 +79,7 @@ export default function Rings() {
               el.animate(
                 [
                   { scale: "0.97", opacity: 0 },
-                  { scale: "1.015", opacity: Math.min(base * 2, 0.7) },
+                  { scale: "1.015", opacity: Math.min(base * 2, 0.8) },
                   { scale: "1", opacity: base },
                 ],
                 { duration: 1600, easing: EASE, fill: "backwards", delay: i * 260 },
@@ -97,9 +97,9 @@ export default function Rings() {
         rings.forEach(({ el }) => (el.style.transition = `scale .9s ${EASE}, opacity .9s`));
         const onEnter = () => {
           if (!desktop.matches) return;
-          rings.forEach(({ el, i, base }) => {
+          rings.forEach(({ el, i }) => {
             el.style.scale = String(1 + (i + 1) * 0.012);
-            el.style.opacity = String(Math.min(base * 1.6, 0.7));
+            el.style.opacity = "0.8";
           });
         };
         const onLeave = () =>

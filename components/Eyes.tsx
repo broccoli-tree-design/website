@@ -59,7 +59,7 @@ export default function Eyes() {
     addEventListener("scroll", schedule, { passive: true });
     addEventListener("resize", schedule);
     addEventListener("click", onClick);
-    // web font swap shifts the i-dot eyes
+    // web font swap can shift the nav eye
     document.fonts?.ready.then(schedule);
     schedule();
 
