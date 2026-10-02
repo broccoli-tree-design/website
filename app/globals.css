@@ -658,12 +658,6 @@ a:hover {
   border-radius: 32px;
   opacity: 0.22;
 }
-.case-frame-1 .case-ring-0 {
-  inset: -14px -14px 10px 10px;
-}
-.case-frame-1 .case-ring-1 {
-  inset: -30px -30px 26px 26px;
-}
 .case-frame-2 .case-ring-0 {
   inset: -14px 10px 10px -14px;
 }
@@ -675,50 +669,6 @@ a:hover {
 }
 .case-frame-3 .case-ring-1 {
   inset: 26px -30px -30px 26px;
-}
-
-/* case 01 — sticky text beside the image */
-.case-1 {
-  padding: 20vh 28px 16vh;
-}
-.case-1-grid {
-  align-items: start;
-}
-.case-1-text {
-  grid-column: 1 / span 4;
-  position: sticky;
-  top: 14vh;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-.case-1-h3 {
-  margin: 0;
-  font-family: var(--serif), serif;
-  font-weight: 600;
-  font-size: clamp(34px, 3.6cqw, 64px);
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  text-wrap: balance;
-}
-.case-1-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin-top: 14px;
-}
-.case-1-stat-value {
-  font-family: var(--serif), serif;
-  font-style: italic;
-  font-weight: 700;
-  font-size: clamp(40px, 4.4cqw, 80px);
-  line-height: 0.95;
-  letter-spacing: -0.03em;
-  color: var(--accent);
-}
-.case-1-fig {
-  grid-column: 6 / span 7;
 }
 
 /* case — module accordion; curves flow from each tab into the 400%.
@@ -1106,6 +1056,238 @@ a:hover {
   }
 }
 
+/* case — black-box deck. Laid out on the 1384-wide artboard in --u units,
+   so the stack, rings and curves scale together. Desktop ≥ 900px, a
+   vertical stack below. Title and brief reuse the .mod-* classes */
+.case-deck {
+  --u: calc((100cqw - 56px) / 1384);
+  padding: 20vh 28px 8vh;
+}
+.deck-frame {
+  margin-top: 96px;
+  height: calc(816 * var(--u));
+  isolation: isolate;
+}
+.deck-flow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0;
+  width: 100%;
+  height: auto;
+}
+.deck-frame .case-ring {
+  width: calc(960 * var(--u));
+  height: calc(600 * var(--u));
+}
+.deck-frame .case-ring-0 {
+  left: calc(300 * var(--u));
+  top: calc(180 * var(--u));
+  z-index: 2;
+}
+.deck-frame .case-ring-1 {
+  left: calc(356 * var(--u));
+  top: calc(216 * var(--u));
+  z-index: 1;
+}
+/* every card in one grid cell; depth --d slides it down the diagonal */
+.deck-stack {
+  position: relative;
+  z-index: 3;
+  display: grid;
+}
+.deck-card {
+  grid-area: 1 / 1;
+  margin-left: calc(20 * var(--u));
+  width: calc(960 * var(--u));
+  height: calc(600 * var(--u));
+  display: flex;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid #102e27;
+  background: #efeede;
+  cursor: pointer;
+  transform: translate(
+    calc(var(--d) * 56 * var(--u)),
+    calc(var(--d) * 36 * var(--u))
+  );
+}
+.deck-black {
+  border-color: #1a2a24;
+  background: #050d0a;
+}
+.deck-body {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(24 * var(--u));
+}
+.deck-body img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+.deck-face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 0 calc(60 * var(--u));
+  text-align: center;
+}
+.deck-face-title {
+  margin: 0;
+  max-width: 16ch;
+  font-family: var(--serif), serif;
+  font-weight: 600;
+  font-size: calc(52 * var(--u));
+  line-height: 1;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  color: #efeede;
+}
+.deck-face .mod-label {
+  color: var(--warm);
+}
+/* the strip that shows on every card behind; 56 wide = the x step */
+.deck-tab {
+  appearance: none;
+  margin: 0;
+  border: 0;
+  border-left: 1px solid #102e27;
+  font: inherit;
+  flex: 0 0 calc(56 * var(--u));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 0;
+  background: var(--c);
+  color: var(--fg);
+  cursor: pointer;
+}
+.deck-black .deck-tab {
+  border-left-color: #1a2a24;
+}
+.deck-tab:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -6px;
+}
+.deck-name {
+  writing-mode: vertical-rl;
+  font-size: 17px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.deck-num {
+  font-family: var(--mono), monospace;
+  font-size: 12px;
+}
+.deck-flow-mobile {
+  display: none;
+  height: 90px;
+}
+.deck-result {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  margin: calc(170 * var(--u)) 0 0 calc(480 * var(--u));
+  padding-top: 20px;
+}
+.deck-stat {
+  font-family: var(--serif), serif;
+  font-style: italic;
+  font-weight: 700;
+  font-size: calc(112 * var(--u));
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .deck-card {
+    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+}
+
+/* stacked: the steps peek out above the front card as top bars */
+@media (max-width: 899.98px) {
+  .case-deck {
+    --bar: 44px;
+    padding: 14vh 24px 8vh;
+  }
+  .deck-frame {
+    margin-top: 56px;
+    height: auto;
+  }
+  .deck-flow,
+  .deck-frame .case-ring-1 {
+    display: none;
+  }
+  .deck-frame .case-ring-0 {
+    inset: -8px 6px 6px -8px;
+    width: auto;
+    height: auto;
+    border-radius: 20px;
+  }
+  .deck-card {
+    margin: calc(4 * var(--bar)) 0 0;
+    width: auto;
+    height: auto;
+    flex-direction: column;
+    border-radius: 14px;
+    transform: translateY(calc(var(--d) * -1 * var(--bar)));
+  }
+  .deck-body {
+    aspect-ratio: 4 / 3;
+    flex: none;
+    padding: 8px;
+  }
+  .deck-face {
+    gap: 16px;
+    padding: 0 20px;
+  }
+  .deck-face-title {
+    font-size: clamp(26px, 7.5vw, 44px);
+  }
+  .deck-tab {
+    order: -1;
+    flex: none;
+    height: var(--bar);
+    flex-direction: row;
+    padding: 0 18px;
+    border-left: 0;
+    border-bottom: 1px solid #102e27;
+  }
+  .deck-black .deck-tab {
+    border-bottom-color: #1a2a24;
+  }
+  .deck-name {
+    writing-mode: horizontal-tb;
+    font-size: 16px;
+  }
+  .deck-num {
+    font-size: 11px;
+  }
+  .deck-flow-mobile {
+    display: block;
+  }
+  .deck-result {
+    margin: 0 0 0 34.7%;
+    padding-top: 14px;
+  }
+  .deck-stat {
+    font-size: clamp(72px, 22vw, 140px);
+  }
+}
+
 /* case 03 — headline, image, then the numbers */
 .case-3 {
   padding-top: 20vh;
@@ -1302,12 +1484,10 @@ a:hover {
     padding: 0;
   }
 
-  .case-1-text,
   .case-3-p {
     grid-column: 1 / -1;
     position: static;
   }
-  .case-1-fig,
   .case-3-stats {
     grid-column: 1 / -1;
     margin-top: 8vh;

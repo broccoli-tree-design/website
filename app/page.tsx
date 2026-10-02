@@ -2,6 +2,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Eye from "@/components/Eye";
 import Eyes from "@/components/Eyes";
+import CaseDeck from "@/components/CaseDeck";
 import CaseModules from "@/components/CaseModules";
 import Rings from "@/components/Rings";
 import ThemeGates from "@/components/ThemeGates";
@@ -101,7 +102,7 @@ function CaseFrame({
   alt,
   className = "",
 }: {
-  frame: 1 | 3;
+  frame: 3;
   src: string;
   alt: string;
   className?: string;
@@ -269,11 +270,44 @@ export default function Home() {
           </p>
         </section>
 
+        {/* CASE — black-box deck; the four steps sit behind the answer */}
+        <section className="case case-deck" data-gate="5">
+          <div className="grid">
+            <div className="mod-title">
+              <span className="case-eyebrow">0&rarr;1 Product design</span>
+              <h3 className="mod-h3">
+                Increasing efficiency with human-in-the-lead
+              </h3>
+            </div>
+          </div>
+          <div className="grid mod-brief">
+            <div className="mod-problem">
+              <span className="mod-label">Problem</span>
+              <p className="body">
+                In response to GDPR, the client needed to adopt GeoLift
+                methodology to choose campaign locations. Its command-line
+                interface took Marketing Scientists 20+ hours to learn and run,
+                and worked like a black box.
+              </p>
+            </div>
+            <div className="mod-solution">
+              <span className="mod-label">Solution</span>
+              <p className="body">
+                A no-code, self-explanatory workflow that runs in 10+ minutes
+                and surfaces the model&rsquo;s reasoning, so Marketing
+                Scientists can discuss, compare, and make tradeoffs with the
+                client.
+              </p>
+            </div>
+          </div>
+          <CaseDeck />
+        </section>
+
         {/* CASE — module accordion, curves flow into the 400% */}
         <section className="case case-mod" data-gate="5">
           <div className="grid">
             <div className="mod-title">
-              <span className="case-eyebrow">01 REDESIGN</span>
+              <span className="case-eyebrow">REDESIGN LEGACY APP</span>
               <h3 className="mod-h3">From monolith to modular workflow</h3>
             </div>
           </div>
@@ -297,37 +331,6 @@ export default function Home() {
             </div>
           </div>
           <CaseModules />
-        </section>
-
-        {/* CASE 01 — sticky text beside the image */}
-        <section className="case case-1" data-gate="5">
-          <div className="grid case-1-grid">
-            <div className="case-1-text">
-              <span className="case-eyebrow">
-                01 — Productizing an underutilized data science methodology
-              </span>
-              <h3 className="case-1-h3">
-                No-code data experimentation workflow
-              </h3>
-              <p className="body">
-                Design highlight: surfacing the model&rsquo;s reasoning so
-                scientists can discuss, compare, and make tradeoffs. When
-                metrics can be reviewed and explained, scientists gained the
-                confidence to make rapid decisions that are defensible in front
-                of clients.
-              </p>
-              <div className="case-1-stat">
-                <span className="stat-label">Experiment runtime</span>
-                <span className="case-1-stat-value">weeks &rarr; minutes</span>
-              </div>
-            </div>
-            <CaseFrame
-              frame={1}
-              src="/geolift"
-              alt="GeoLift no-code data experimentation workflow, UX case study"
-              className="case-1-fig"
-            />
-          </div>
         </section>
 
         {/* CASE 03 — headline, image, then the numbers */}
