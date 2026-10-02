@@ -637,7 +637,7 @@ a:hover {
   position: relative;
   margin: 0;
 }
-.case-frame img {
+.case-frame picture img {
   position: relative;
   width: 100%;
   height: auto;
@@ -720,57 +720,391 @@ a:hover {
   grid-column: 6 / span 7;
 }
 
-/* case 02 — full-width image, 400% bleeds off the right */
-.case-2 {
-  padding: 14vh 28px 8vh;
+/* case — module accordion; curves flow from each tab into the 400%.
+   Desktop ≥ 900px, stacked accordion below (its own breakpoint) */
+.case-mod {
+  padding: 20vh 28px 8vh;
 }
-.case-2-fig {
-  margin-bottom: 72px;
-}
-.case-2-grid {
-  row-gap: 24px;
-  align-items: end;
-}
-.case-2-text {
-  grid-column: 1 / span 7;
+.mod-title {
+  grid-column: 1 / span 8;
   display: flex;
   flex-direction: column;
   gap: 22px;
 }
-.case-2-h3 {
+.mod-h3 {
   margin: 0;
   font-family: var(--serif), serif;
   font-weight: 600;
-  font-size: clamp(40px, 5.4cqw, 100px);
-  line-height: 0.9;
+  font-size: clamp(42px, 5.3cqw, 100px);
+  line-height: 0.92;
   letter-spacing: -0.035em;
+  text-wrap: balance;
 }
-.case-2-h3 em {
+.mod-h3 em {
   font-weight: 700;
   color: var(--warm);
 }
-.case-2-p {
-  grid-column: 9 / span 4;
+.mod-brief {
+  margin-top: 48px;
 }
-.case-2-stat {
+.mod-problem,
+.mod-solution {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.mod-problem {
+  grid-column: 1 / span 4;
+}
+.mod-solution {
+  grid-column: 6 / span 4;
+}
+.mod-label {
+  font-family: var(--mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.mod-problem .mod-label {
+  color: var(--warm);
+}
+.mod-solution .mod-label {
+  color: var(--accent);
+}
+
+.mod-frame {
+  margin-top: 96px;
+}
+.mod-track {
   position: relative;
-  margin: 12vh -28px 0 0;
-  text-align: right;
+  display: flex;
+  height: clamp(440px, 43cqw, 620px);
+  border-radius: 16px;
+  overflow: hidden;
 }
-.case-2-stat .stat-label {
+.mod-item {
+  flex: 0 0 84px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--c);
+  color: var(--fg);
+  border-right: 1px solid #102e27;
+}
+.mod-item.is-open {
+  flex: 1 1 0;
+  background: #efeede;
+}
+.mod-tab {
+  appearance: none;
+  margin: 0;
+  border: 0;
+  font: inherit;
+  color: var(--fg);
+  background: var(--c);
+  text-align: left;
+  cursor: pointer;
+  /* collapsed: vertical name, number at the foot */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 0;
+}
+.mod-tab:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -6px;
+}
+.mod-num {
+  order: 2;
+  font-family: var(--mono), monospace;
+  font-size: 12px;
+}
+.mod-name {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-size: 18px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.mod-sign {
+  display: none;
+}
+/* open: header bar in the module colour */
+.is-open .mod-tab {
+  flex: none;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 18px 28px;
+  cursor: default;
+}
+.is-open .mod-num {
+  order: 0;
+}
+.is-open .mod-name {
+  writing-mode: horizontal-tb;
+  transform: none;
+  font-size: 20px;
+}
+.mod-client.is-open .mod-tab {
+  display: none;
+}
+.mod-panel {
+  flex: 1;
+  min-height: 0;
+}
+.mod-panel[hidden] {
+  display: none;
+}
+.mod-shot {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.mod-shot img {
   display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+.mod-client-view {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 3.3cqw, 48px);
+  padding: clamp(28px, 3.3cqw, 48px);
+  align-items: end;
+  color: #102e27;
+}
+.mod-client-head {
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.mod-client-head .mod-label {
+  color: #3c4a3f;
+}
+.mod-client-title {
+  font-family: var(--serif), serif;
+  font-weight: 600;
+  font-size: clamp(32px, 3.3cqw, 48px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+.mod-client-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: 17px;
+}
+.mod-client-list li {
+  display: flex;
+  gap: 14px;
+  border-top: 1px solid #d7dccb;
+  padding-top: 14px;
+}
+.mod-client-num {
+  font-family: var(--mono), monospace;
+  font-size: 12px;
+  color: #9e4220;
+}
+
+.mod-flow {
+  display: block;
+  width: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: var(--ring);
+  stroke-width: 1.25;
+  stroke-linecap: round;
+}
+.mod-flow-desktop {
+  height: 170px;
+}
+.mod-flow-mobile {
+  display: none;
+  height: 90px;
+}
+
+.mod-result {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 18px;
+  padding-top: 20px;
+  margin-right: -28px;
+}
+/* 400px wide, so its centre sits 200px in — where the curves meet */
+.mod-result .stat-label {
+  width: 400px;
   margin-right: 28px;
+  text-align: center;
+  font-weight: 600;
 }
-.case-2-stat-value {
-  display: block;
+.mod-stat {
   font-family: var(--serif), serif;
   font-weight: 700;
-  font-size: 34cqw;
+  font-size: 20.8cqw;
   line-height: 0.8;
   letter-spacing: -0.06em;
   color: var(--accent);
-  margin-right: -5cqw;
+  margin-right: -2.8cqw;
   white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mod-item {
+    transition: flex 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .mod-flow path {
+    transition: d 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+}
+
+/* stacked accordion; one row open at most */
+@media (max-width: 899.98px) {
+  .case-mod {
+    padding: 14vh 24px 8vh;
+  }
+  .mod-title,
+  .mod-problem,
+  .mod-solution {
+    grid-column: 1 / -1;
+  }
+  .mod-title {
+    gap: 16px;
+  }
+  .mod-h3 {
+    font-size: clamp(42px, 6.5cqw, 60px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+  }
+  .mod-brief {
+    margin-top: 36px;
+    row-gap: 28px;
+  }
+  .mod-problem,
+  .mod-solution {
+    gap: 10px;
+  }
+  .mod-brief .body {
+    line-height: 1.7;
+  }
+
+  .mod-frame {
+    margin-top: 56px;
+  }
+  .mod-frame .case-ring-0 {
+    inset: -8px 6px 6px -8px;
+    border-radius: 20px;
+  }
+  .mod-frame .case-ring-1 {
+    display: none;
+  }
+  .mod-track {
+    flex-direction: column;
+    height: auto;
+    border-radius: 14px;
+  }
+  .mod-item,
+  .mod-item.is-open {
+    flex: none;
+    background: #efeede;
+    color: #102e27;
+    border-right: 0;
+    border-bottom: 1px solid #102e27;
+  }
+  .mod-tab,
+  .is-open .mod-tab,
+  .mod-client.is-open .mod-tab {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    min-height: 56px;
+    padding: 0 18px;
+    cursor: pointer;
+  }
+  .mod-num,
+  .is-open .mod-num {
+    order: 0;
+    flex: none;
+    width: 16px;
+    font-size: 11px;
+  }
+  .mod-name,
+  .is-open .mod-name {
+    flex: 1;
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: 16px;
+  }
+  .mod-sign {
+    display: block;
+    font-family: var(--mono), monospace;
+    font-size: 18px;
+    line-height: 1;
+  }
+  .mod-shot {
+    padding: 8px 4px;
+  }
+  .mod-shot img {
+    width: 100%;
+  }
+  .mod-client-view {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    padding: 22px 18px 24px;
+  }
+  .mod-client-head .mod-label {
+    display: none;
+  }
+  .mod-client-title {
+    font-size: 28px;
+    letter-spacing: -0.02em;
+  }
+  .mod-client-list {
+    gap: 10px;
+    font-size: 15px;
+  }
+  .mod-client-list li {
+    gap: 12px;
+    padding-top: 10px;
+  }
+
+  .mod-flow-desktop {
+    display: none;
+  }
+  .mod-flow-mobile {
+    display: block;
+  }
+  .mod-result {
+    gap: 14px;
+    padding-top: 14px;
+    margin-right: -24px;
+  }
+  .mod-result .stat-label {
+    width: 200px;
+    margin-right: 24px;
+  }
+  .mod-stat {
+    font-size: min(38.5cqw, 300px);
+    margin-right: -6cqw;
+  }
 }
 
 /* case 03 — headline, image, then the numbers */
@@ -970,8 +1304,6 @@ a:hover {
   }
 
   .case-1-text,
-  .case-2-text,
-  .case-2-p,
   .case-3-p {
     grid-column: 1 / -1;
     position: static;

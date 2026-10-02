@@ -2,6 +2,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Eye from "@/components/Eye";
 import Eyes from "@/components/Eyes";
+import CaseModules from "@/components/CaseModules";
 import Rings from "@/components/Rings";
 import ThemeGates from "@/components/ThemeGates";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, LINKEDIN_URL } from "./site";
@@ -100,7 +101,7 @@ function CaseFrame({
   alt,
   className = "",
 }: {
-  frame: 1 | 2 | 3;
+  frame: 1 | 3;
   src: string;
   alt: string;
   className?: string;
@@ -268,6 +269,39 @@ export default function Home() {
           </p>
         </section>
 
+        {/* CASE — module accordion, curves flow into the 400% */}
+        <section className="case case-mod" data-gate="5">
+          <div className="grid">
+            <div className="mod-title">
+              <span className="case-eyebrow">01</span>
+              <h3 className="mod-h3">
+                Redesigning monolithic software into <em>customizable</em>{" "}
+                modules
+              </h3>
+            </div>
+          </div>
+          <div className="grid mod-brief">
+            <div className="mod-problem">
+              <span className="mod-label">Problem</span>
+              <p className="body">
+                One rigid system had to serve teams with competing needs. Each
+                team worked around it differently, and the client saw the
+                inconsistency.
+              </p>
+            </div>
+            <div className="mod-solution">
+              <span className="mod-label">Solution</span>
+              <p className="body">
+                Customizable modules that pull data from each team&rsquo;s
+                internal workspace into one unified workflow, so every team
+                works its own way while the client still sees one cohesive
+                front.
+              </p>
+            </div>
+          </div>
+          <CaseModules />
+        </section>
+
         {/* CASE 01 — sticky text beside the image */}
         <section className="case case-1" data-gate="5">
           <div className="grid case-1-grid">
@@ -296,35 +330,6 @@ export default function Home() {
               alt="GeoLift no-code data experimentation workflow, UX case study"
               className="case-1-fig"
             />
-          </div>
-        </section>
-
-        {/* CASE 02 — full-width image, 400% bleeds off the right */}
-        <section className="case case-2" data-gate="5">
-          <CaseFrame
-            frame={2}
-            src="/omnicom"
-            alt="Omnicom Marketing OS modular workflow redesign, UX case study"
-            className="case-2-fig"
-          />
-          <div className="grid case-2-grid">
-            <div className="case-2-text">
-              <span className="case-eyebrow">
-                02 — Redesigning a monolithic software into customizable modules
-              </span>
-              <h3 className="case-2-h3">
-                One workflow for teams with <em>competing</em> needs
-              </h3>
-            </div>
-            <p className="body case-2-p">
-              Design highlight: modules that pull data from various internal
-              workspaces to consist a unified workflow so teams can still
-              present a cohesive front to clients.
-            </p>
-          </div>
-          <div className="case-2-stat">
-            <span className="stat-label">User base increased</span>
-            <span className="case-2-stat-value">400%</span>
           </div>
         </section>
 
