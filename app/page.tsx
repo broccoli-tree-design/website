@@ -273,11 +273,8 @@ export default function Home() {
         <section className="case case-mod" data-gate="5">
           <div className="grid">
             <div className="mod-title">
-              <span className="case-eyebrow">01</span>
-              <h3 className="mod-h3">
-                Redesigning monolithic software into <em>customizable</em>{" "}
-                modules
-              </h3>
+              <span className="case-eyebrow">01 REDESIGN</span>
+              <h3 className="mod-h3">From monolith to modular workflow</h3>
             </div>
           </div>
           <div className="grid mod-brief">
