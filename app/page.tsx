@@ -187,7 +187,7 @@ export default function Home() {
               />
             </picture>
           </div>
-          <div className="hero-text">
+          <div className="grid hero-text">
             <h1 className="hero-h1">
               <span className="hero-hi">Hi, I&rsquo;m</span>{" "}
               <span className="hero-name">Aiqi</span>
@@ -202,20 +202,21 @@ export default function Home() {
         {/* ABOUT — legalese */}
         <section className="about" id="about" data-gate="1">
           <h2 className="about-h2">
-            A designer
+            A designer who
             <br />
-            who speaks
+            sees the <em>human </em>
             <br />
-            some <em>legalese</em>
+            behind the law
           </h2>
           <p className="body about-p">
-            As a Paralegal turned Designer, I&rsquo;ve experienced first-hand
-            the stress and fulfillment operating within legal systems in U.S.
-            and China — from managing trademark portfolios for tech companies,
-            to conducting site visits for insurance due diligence, to helping
-            state attorneys enforce immigrant children&rsquo;s rights to
-            education. I understand when technology can make legal systems
-            easier to deal with, and when humans should make the judgment.
+            As a Paralegal turned Designer, I’ve experienced first-hand the
+            stress and fulfillment operating within legal systems in the U.S.
+            and China — from working late nights alongside attorneys on urgent
+            trademark prosecution, to negotiating with county clerks for the
+            records behind an insurance litigation, to translating for immigrant
+            families fighting for their children's right to go to school. I know
+            when technology makes legal systems easier to deal with, and when
+            humans should make the judgment.
           </p>
         </section>
 

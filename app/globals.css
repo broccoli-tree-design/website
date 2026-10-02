@@ -285,14 +285,22 @@ a:hover {
 .hero-text {
   --name-fs: min(25cqw, 38svh);
   position: absolute;
-  left: max(28px, 4cqw);
+  left: 0;
+  right: 0;
   top: 54%;
   translate: 0 -50%;
+  padding: 0 28px;
   z-index: 3;
   pointer-events: none;
 }
+/* the four lines zigzag across the grid like the service cards
+   (right → left → middle → further right), squeezed into the columns
+   left of the photo */
+.hero-h1,
+.hero-slogan {
+  display: contents;
+}
 .hero-h1 {
-  margin: 0;
   font-family: var(--serif), serif;
   font-weight: 600;
   line-height: 0.86;
@@ -304,10 +312,13 @@ a:hover {
   white-space: nowrap;
 }
 .hero-hi {
+  grid-area: 1 / 1 / auto / span 4;
   font-size: min(7cqw, 11svh);
-  margin-bottom: 0.12em;
 }
 .hero-name {
+  grid-area: 2 / 1 / auto / span 6;
+  /* pulled up so the name's cap tops run into "Hi, I'm" */
+  margin-top: calc(var(--name-fs) * 0.01);
   font-size: var(--name-fs);
   font-style: italic;
   font-weight: 700;
@@ -316,11 +327,6 @@ a:hover {
   color: var(--accent);
 }
 .hero-slogan {
-  /* steps down and right, along the leaf: indented past the "q", dropped
-     clear of its italic descender (~0.18em below the name's line box) */
-  margin: calc(var(--name-fs) * 0.24) 0 0 var(--name-fs);
-  width: fit-content;
-  text-align: right;
   font-family: var(--serif), serif;
   font-style: italic;
   font-weight: 500;
@@ -329,9 +335,15 @@ a:hover {
   letter-spacing: -0.01em;
 }
 .hero-s1 {
+  grid-area: 3 / 3 / auto / span 5;
+  /* dropped clear of the "q"'s italic descender (~0.18em below the
+     name's line box) */
+  margin-top: calc(var(--name-fs) * 0.42);
   color: var(--accent);
 }
 .hero-s2 {
+  grid-area: 4 / 6 / auto / span 3;
+  margin-top: 0.2em;
   font-style: normal;
 }
 
@@ -417,6 +429,11 @@ a:hover {
   line-height: 0.8;
   color: var(--accent);
   margin-left: -1cqw;
+  /* trims the em's line box so "human" rises into the line above */
+  margin-top: 0.2em;
+  /* room below too, so "behind the law" sits as far under "human" as
+     "human" cuts into the line above */
+  margin-bottom: 0.4em;
   white-space: nowrap;
 }
 .about-p {
@@ -868,17 +885,28 @@ a:hover {
   }
   .hero-text {
     --name-fs: 38vw;
-    left: 6vw;
+    padding: 0 24px;
     top: auto;
     bottom: 5svh;
     translate: none;
   }
+  /* like the stacked service cards: full width, alternate lines indented */
   .hero-hi {
+    grid-column: 1 / -1;
     font-size: 13vw;
   }
+  .hero-name {
+    grid-column: 1 / -1;
+  }
   .hero-slogan {
-    font-size: 6.4vw;
-    margin-top: calc(var(--name-fs) * 0.3);
+    font-size: 5.6vw;
+  }
+  .hero-s1 {
+    grid-column: 2 / -1;
+    margin-top: calc(var(--name-fs) * 0.45);
+  }
+  .hero-s2 {
+    grid-column: 8 / -1;
   }
 
   .about {
