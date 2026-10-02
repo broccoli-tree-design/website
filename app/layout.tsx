@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#173f35',
+  themeColor: '#173f35', // --green-800; meta tags can't read CSS variables
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

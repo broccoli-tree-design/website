@@ -4,8 +4,29 @@
   box-sizing: border-box;
 }
 
-/* ── THEME — registered so the colours can fade; ThemeGates.tsx swaps them
-   per section (dark → sage at Services → deep forest from Case studies) ── */
+/* ── COLOUR ──
+   Palette: every colour on the page. (The logo SVGs also use #5b8c42,
+   and layout.tsx repeats --green-800 for the browser bar.) */
+:root {
+  --green-950: #050d0a;
+  --green-900: #102e27;
+  --green-800: #173f35;
+  --green-600: #476f33;
+  --green-300: #a8cf8a;
+  --neutral-700: #3c4a3f;
+  --neutral-200: #d7dccb;
+  --neutral-100: #efeede;
+  --orange-700: #9e4220;
+  --orange-400: #fb7e4f;
+
+  --button: var(--orange-700); /* button text 5.5:1 */
+  --button-hover: color-mix(in oklab, var(--orange-700), black 20%);
+  --leaf-radius: 4px 62% 4px 62% / 4px 62% 4px 62%;
+}
+
+/* Roles: swapped per section by ThemeGates.tsx (dark → sage at Services →
+   deep from Case studies). Registered so they fade, which needs literal
+   initial values: the dark theme's. */
 @property --bg {
   syntax: "<color>";
   inherits: true;
@@ -31,27 +52,24 @@
   inherits: true;
   initial-value: #fb7e4f;
 }
-@property --ring {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #9cc47e;
-}
-
 :root {
-  --bg: #173f35;
-  --ink: #efeede;
-  --muted: #d7dccb;
-  --accent: #a8cf8a;
-  --warm: #fb7e4f;
-  --ring: #9cc47e;
-
-  --button: #a8461f; /* button text 5.5:1 */
-  --button-hover: #86350f; /* 7.8:1 */
-  --button-text: #fbf7ec;
-  --leaf-radius: 4px 62% 4px 62% / 4px 62% 4px 62%;
-
+  --bg: var(--green-800);
+  --ink: var(--neutral-100);
+  --muted: var(--neutral-200);
+  --accent: var(--green-300);
+  --warm: var(--orange-400);
   transition: --bg 1.1s ease, --ink 1.1s ease, --muted 1.1s ease,
-    --accent 1.1s ease, --warm 1.1s ease, --ring 1.1s ease;
+    --accent 1.1s ease, --warm 1.1s ease;
+}
+:root[data-theme="sage"] {
+  --bg: var(--neutral-200);
+  --ink: var(--green-800);
+  --muted: var(--neutral-700);
+  --accent: var(--green-600);
+  --warm: var(--orange-700);
+}
+:root[data-theme="deep"] {
+  --bg: var(--green-900);
 }
 
 html {
@@ -68,8 +86,8 @@ body {
 }
 
 ::selection {
-  background: #a8cf8a;
-  color: #173f35;
+  background: var(--green-300);
+  color: var(--green-800);
 }
 
 a {
@@ -256,7 +274,7 @@ a:hover {
   display: inline-block;
   background: var(--button);
   border: 1.5px solid var(--button);
-  color: var(--button-text);
+  color: var(--neutral-100);
   padding: 8px 20px;
   border-radius: 24px;
   font-weight: 600;
@@ -265,7 +283,7 @@ a:hover {
 .nav-links .nav-cta:hover {
   background: var(--button-hover);
   border-color: var(--button-hover);
-  color: var(--button-text);
+  color: var(--neutral-100);
 }
 
 /* ── EYE — the logo's almond + a pupil that Eyes.tsx moves ── */
@@ -278,7 +296,7 @@ a:hover {
 .eye-white {
   position: absolute;
   inset: 0;
-  background: #efeede;
+  background: var(--neutral-100);
   -webkit-mask: url("/eye.svg") center / 100% 100% no-repeat;
   mask: url("/eye.svg") center / 100% 100% no-repeat;
 }
@@ -289,7 +307,7 @@ a:hover {
   width: 20%;
   height: 100%;
   border-radius: 50%;
-  background: #173f35;
+  background: var(--green-800);
 }
 
 /* ── HERO — oversized portrait bleeds off the right and bottom ── */
@@ -337,7 +355,7 @@ a:hover {
 }
 .hero-ring {
   position: absolute;
-  border: 1px solid var(--ring);
+  border: 1px solid var(--accent);
   border-radius: var(--leaf-radius);
 }
 .hero-ring-0 {
@@ -636,7 +654,7 @@ a:hover {
 }
 .case-ring {
   position: absolute;
-  border: 1px solid var(--ring);
+  border: 1px solid var(--accent);
   pointer-events: none;
 }
 .case-ring-0 {
@@ -709,11 +727,11 @@ a:hover {
   overflow: hidden;
   background: var(--c);
   color: var(--fg);
-  border-right: 1px solid #102e27;
+  border-right: 1px solid var(--green-900);
 }
 .mod-item.is-open {
   flex: 1 1 0;
-  background: #efeede;
+  background: var(--neutral-100);
 }
 .mod-tab {
   appearance: none;
@@ -797,7 +815,7 @@ a:hover {
   gap: clamp(28px, 3.3cqw, 48px);
   padding: clamp(28px, 3.3cqw, 48px);
   align-items: end;
-  color: #102e27;
+  color: var(--green-900);
 }
 .mod-client-head {
   align-self: start;
@@ -806,7 +824,7 @@ a:hover {
   gap: 10px;
 }
 .mod-client-head .text-label {
-  color: #3c4a3f;
+  color: var(--neutral-700);
 }
 .mod-client-title {
   font-size: var(--display-1);
@@ -823,11 +841,11 @@ a:hover {
 .mod-client-list li {
   display: flex;
   gap: 14px;
-  border-top: 1px solid #d7dccb;
+  border-top: 1px solid var(--neutral-200);
   padding-top: 14px;
 }
 .mod-client-list .text-num {
-  color: #9e4220;
+  color: var(--orange-700);
 }
 
 .mod-flow {
@@ -835,7 +853,7 @@ a:hover {
   width: 100%;
   overflow: visible;
   fill: none;
-  stroke: var(--ring);
+  stroke: var(--accent);
   stroke-width: 1.25;
   stroke-linecap: round;
 }
@@ -920,10 +938,10 @@ a:hover {
   .mod-item,
   .mod-item.is-open {
     flex: none;
-    background: #efeede;
-    color: #102e27;
+    background: var(--neutral-100);
+    color: var(--green-900);
     border-right: 0;
-    border-bottom: 1px solid #102e27;
+    border-bottom: 1px solid var(--green-900);
   }
   .mod-tab,
   .is-open .mod-tab,
@@ -1044,8 +1062,8 @@ a:hover {
   display: flex;
   overflow: hidden;
   border-radius: 16px;
-  border: 1px solid #102e27;
-  background: #efeede;
+  border: 1px solid var(--green-900);
+  background: var(--neutral-100);
   cursor: pointer;
   transform: translate(
     calc(var(--d) * 56 * var(--u)),
@@ -1053,8 +1071,7 @@ a:hover {
   );
 }
 .deck-black {
-  border-color: #1a2a24;
-  background: #050d0a;
+  background: var(--green-950);
 }
 .deck-body {
   flex: 1;
@@ -1084,7 +1101,7 @@ a:hover {
   max-width: 16ch;
   font-size: var(--display-1);
   text-wrap: balance;
-  color: #efeede;
+  color: var(--neutral-100);
 }
 .deck-face .text-label {
   color: var(--warm);
@@ -1094,7 +1111,7 @@ a:hover {
   appearance: none;
   margin: 0;
   border: 0;
-  border-left: 1px solid #102e27;
+  border-left: 1px solid var(--green-900);
   font: inherit;
   flex: 0 0 calc(56 * var(--u));
   display: flex;
@@ -1105,9 +1122,6 @@ a:hover {
   background: var(--c);
   color: var(--fg);
   cursor: pointer;
-}
-.deck-black .deck-tab {
-  border-left-color: #1a2a24;
 }
 .deck-tab:focus-visible {
   outline: 2px solid currentColor;
@@ -1182,10 +1196,7 @@ a:hover {
     flex-direction: row;
     padding: 0 18px;
     border-left: 0;
-    border-bottom: 1px solid #102e27;
-  }
-  .deck-black .deck-tab {
-    border-bottom-color: #1a2a24;
+    border-bottom: 1px solid var(--green-900);
   }
   .deck-name {
     writing-mode: horizontal-tb;

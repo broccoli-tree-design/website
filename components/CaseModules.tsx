@@ -4,34 +4,34 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 /** Client view, then the four modules it is built from */
 const MODULES = [
-  { name: "Client view", color: "#e6e5dc", fg: "#102e27" },
+  { name: "Client view", color: "var(--neutral-100)", fg: "var(--green-900)" },
   {
     name: "Audience insights",
     img: "/case2/m-audience.png",
     h: 725,
-    color: "#a8cf8a",
-    fg: "#102e27",
+    color: "var(--green-300)",
+    fg: "var(--green-900)",
   },
   {
     name: "Channel planning",
     img: "/case2/m-channel.png",
     h: 729,
-    color: "#fb7e4f",
-    fg: "#102e27",
+    color: "var(--orange-400)",
+    fg: "var(--green-900)",
   },
   {
     name: "Investment planning",
     img: "/case2/m-investment.png",
     h: 729,
-    color: "#d7dccb",
-    fg: "#102e27",
+    color: "var(--neutral-200)",
+    fg: "var(--green-900)",
   },
   {
     name: "Performance reporting",
     img: "/case2/m-performance.png",
     h: 729,
-    color: "#173f35",
-    fg: "#efeede",
+    color: "var(--green-800)",
+    fg: "var(--neutral-100)",
   },
 ];
 const num = (i: number) => (i ? `0${i}` : "");
