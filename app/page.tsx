@@ -16,7 +16,7 @@ const JSON_LD = {
       name: "Aiqi Li",
       jobTitle: "UX Designer",
       description:
-        "Paralegal-turned UX designer making intuitive design for legal tech, drawing on first-hand work inside legal systems in the U.S. and China.",
+        "Paralegal-turned UX designer creating intuitive design for legal tech, drawing on first-hand experience inside legal systems in the U.S. and China.",
       url: SITE_URL,
       image: `${SITE_URL}/profile.jpg`,
       sameAs: [LINKEDIN_URL],
@@ -193,7 +193,7 @@ export default function Home() {
               <span className="hero-name">Aiqi</span>
             </h1>
             <p className="hero-slogan">
-              <span className="hero-s1">Intuitive design</span>{" "}
+              <span className="hero-s1">Designing intuitive experience</span>{" "}
               <span className="hero-s2">for legal tech</span>
             </p>
           </div>
@@ -221,6 +221,7 @@ export default function Home() {
 
         {/* QUESTION */}
         <section className="question" data-gate="2">
+          <p className="question-label">RECENT THOUGHTS</p>
           <p className="question-p">
             How does AI reshape the way clients engage with and evaluate legal
             services?
@@ -273,7 +274,9 @@ export default function Home() {
               <span className="case-eyebrow">
                 01 — Productizing an underutilized data science methodology
               </span>
-              <h3 className="case-1-h3">No-code data experimentation workflow</h3>
+              <h3 className="case-1-h3">
+                No-code data experimentation workflow
+              </h3>
               <p className="body">
                 Design highlight: surfacing the model&rsquo;s reasoning so
                 scientists can discuss, compare, and make tradeoffs. When
