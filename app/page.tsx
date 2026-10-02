@@ -158,11 +158,11 @@ export default function Home() {
             </picture>
           </div>
           <div className="grid hero-text">
-            <h1 className="hero-h1">
+            <h1 className="text-display hero-h1">
               <span className="hero-hi">Hi, I&rsquo;m</span>{" "}
-              <span className="hero-name">Aiqi</span>
+              <span className="text-stat hero-name">Aiqi</span>
             </h1>
-            <p className="hero-slogan">
+            <p className="text-sub hero-slogan">
               <span className="hero-s1">Designing intuitive experience</span>{" "}
               <span className="hero-s2">for legal tech</span>
             </p>
@@ -171,12 +171,12 @@ export default function Home() {
 
         {/* ABOUT — legalese */}
         <section className="about" id="about" data-gate="1">
-          <h2 className="about-h2">
+          <h2 className="text-display about-h2">
             A designer who
             <br />
-            sees the <em>human </em>
+            sees the <em>human</em>
             <br />
-            behind the law
+            behind the system
           </h2>
           <p className="body about-p">
             As a Paralegal turned Designer, I’ve experienced first-hand the
@@ -192,8 +192,8 @@ export default function Home() {
 
         {/* QUESTION */}
         <section className="question" data-gate="2">
-          <p className="question-label">RECENT THOUGHTS</p>
-          <p className="question-p">
+          <p className="text-label question-label">RECENT THOUGHTS</p>
+          <p className="text-sub question-p">
             How does AI reshape the way clients engage with and evaluate legal
             services?
           </p>
@@ -201,7 +201,7 @@ export default function Home() {
             href="https://lnkd.in/p/gPGaJ2Sa"
             target="_blank"
             rel="noopener"
-            className="question-link"
+            className="text-label question-link"
           >
             Read the article &rarr;
           </a>
@@ -209,15 +209,15 @@ export default function Home() {
 
         {/* SERVICES — sage theme */}
         <section className="services" id="work" data-gate="3">
-          <h2 className="services-h2">
+          <h2 className="text-display services-h2">
             <span className="services-title">Where I help</span>{" "}
-            <span className="services-sub">early-stage teams</span>
+            <span className="text-stat services-sub">early-stage teams</span>
           </h2>
           <div className="grid services-grid">
             {SERVICES.map((s, i) => (
               <div className={`svc-card svc-card-${i + 1}`} key={s.num}>
-                <span className="svc-num">{s.num}</span>
-                <h3 className="svc-title">{s.title}</h3>
+                <span className="text-stat svc-num">{s.num}</span>
+                <h3 className="text-title svc-title">{s.title}</h3>
                 <p className="svc-desc">{s.desc}</p>
               </div>
             ))}
@@ -226,10 +226,10 @@ export default function Home() {
 
         {/* CASE STUDIES — header */}
         <section className="cs" data-gate="4">
-          <h2 className="cs-h2">
-            <span className="cs-case">Case</span>{" "}
+          <h2 className="text-display cs-h2">
+            <span className="text-stat cs-case">Case</span>{" "}
             <span className="cs-studies">studies</span>{" "}
-            <span className="cs-sub">of data and workflow apps</span>
+            <span className="text-sub cs-sub">of data and workflow apps</span>
           </h2>
           <p className="body cs-p">
             Examples from my past life designing enterprise software that help
@@ -242,15 +242,17 @@ export default function Home() {
         <section className="case case-deck" data-gate="5">
           <div className="grid">
             <div className="mod-title">
-              <span className="case-eyebrow">0&rarr;1 Product design</span>
-              <h3 className="mod-h3">
+              <span className="text-label case-eyebrow">
+                0&rarr;1 Product design
+              </span>
+              <h3 className="text-display mod-h3">
                 Increasing efficiency with human-in-the-lead
               </h3>
             </div>
           </div>
           <div className="grid mod-brief">
             <div className="mod-problem">
-              <span className="mod-label">Problem</span>
+              <span className="text-label">Problem</span>
               <p className="body">
                 In response to GDPR, the client needed to adopt GeoLift
                 methodology to choose campaign locations. Its command-line
@@ -259,7 +261,7 @@ export default function Home() {
               </p>
             </div>
             <div className="mod-solution">
-              <span className="mod-label">Solution</span>
+              <span className="text-label">Solution</span>
               <p className="body">
                 A no-code, self-explanatory workflow that runs in 10+ minutes
                 and surfaces the model&rsquo;s reasoning, so Marketing
@@ -275,13 +277,17 @@ export default function Home() {
         <section className="case case-mod" data-gate="5">
           <div className="grid">
             <div className="mod-title">
-              <span className="case-eyebrow">REDESIGN LEGACY APP</span>
-              <h3 className="mod-h3">From monolith to modular workflow</h3>
+              <span className="text-label case-eyebrow">
+                REDESIGN LEGACY APP
+              </span>
+              <h3 className="text-display mod-h3">
+                From monolith to modular workflow
+              </h3>
             </div>
           </div>
           <div className="grid mod-brief">
             <div className="mod-problem">
-              <span className="mod-label">Problem</span>
+              <span className="text-label">Problem</span>
               <p className="body">
                 One rigid system had to serve teams with competing needs. Each
                 team worked around it differently, and the client saw the
@@ -289,7 +295,7 @@ export default function Home() {
               </p>
             </div>
             <div className="mod-solution">
-              <span className="mod-label">Solution</span>
+              <span className="text-label">Solution</span>
               <p className="body">
                 Customizable modules that pull data from each team&rsquo;s
                 internal workspace into one unified workflow, so every team
@@ -303,7 +309,7 @@ export default function Home() {
 
         {/* CTA — the nav's LinkedIn pill is the action */}
         <footer className="cta" data-gate="6">
-          <h2 className="cta-h2">
+          <h2 className="text-display cta-h2">
             Let&rsquo;s talk about
             <br />
             <em>your product.</em>

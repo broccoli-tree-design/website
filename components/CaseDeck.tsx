@@ -121,10 +121,10 @@ export default function CaseDeck() {
                     />
                   ) : (
                     <div className="deck-face">
-                      <p className="deck-face-title">
+                      <p className="text-title deck-face-title">
                         Milwaukee, Orlando, Daytona Beach, Melbourne
                       </p>
-                      <span className="mod-label">
+                      <span className="text-label">
                         Why these campaign locations?
                       </span>
                     </div>
@@ -139,7 +139,7 @@ export default function CaseDeck() {
                   aria-pressed={front}
                 >
                   <span className="deck-name">{c.name}</span>
-                  <span className="deck-num">{num(i)}</span>
+                  <span className="text-num deck-num">{num(i)}</span>
                 </button>
               </div>
             );
@@ -159,10 +159,10 @@ export default function CaseDeck() {
       </svg>
 
       <div className="deck-result">
-        <span className="stat-label">
+        <span className="text-sub result-label">
           Increase in funding after MVP delivery
         </span>
-        <span className="deck-stat">50%</span>
+        <span className="text-stat result-stat">50%</span>
       </div>
     </>
   );

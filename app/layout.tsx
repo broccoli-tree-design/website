@@ -25,7 +25,7 @@ const display = Montserrat_Alternates({
 const mono = IBM_Plex_Mono({
   subsets: ['latin'],
   variable: '--mono',
-  weight: ['400', '500', '600'],
+  weight: ['400', '500'],
 })
 
 export const metadata: Metadata = {
