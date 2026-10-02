@@ -4,8 +4,29 @@
   box-sizing: border-box;
 }
 
-/* ── THEME — registered so the colours can fade; ThemeGates.tsx swaps them
-   per section (dark → sage at Services → deep forest from Case studies) ── */
+/* ── COLOUR ──
+   Palette: every colour on the page. (The logo SVGs also use #5b8c42,
+   and layout.tsx repeats --green-800 for the browser bar.) */
+:root {
+  --green-950: #050d0a;
+  --green-900: #102e27;
+  --green-800: #173f35;
+  --green-600: #476f33;
+  --green-300: #a8cf8a;
+  --neutral-700: #3c4a3f;
+  --neutral-200: #d7dccb;
+  --neutral-100: #efeede;
+  --orange-700: #9e4220;
+  --orange-400: #fb7e4f;
+
+  --button: var(--orange-700); /* button text 5.5:1 */
+  --button-hover: color-mix(in oklab, var(--orange-700), black 20%);
+  --leaf-radius: 4px 62% 4px 62% / 4px 62% 4px 62%;
+}
+
+/* Roles: swapped per section by ThemeGates.tsx (dark → sage at Services →
+   deep from Case studies). Registered so they fade, which needs literal
+   initial values: the dark theme's. */
 @property --bg {
   syntax: "<color>";
   inherits: true;
@@ -31,27 +52,24 @@
   inherits: true;
   initial-value: #fb7e4f;
 }
-@property --ring {
-  syntax: "<color>";
-  inherits: true;
-  initial-value: #9cc47e;
-}
-
 :root {
-  --bg: #173f35;
-  --ink: #efeede;
-  --muted: #d7dccb;
-  --accent: #a8cf8a;
-  --warm: #fb7e4f;
-  --ring: #9cc47e;
-
-  --button: #a8461f; /* button text 5.5:1 */
-  --button-hover: #86350f; /* 7.8:1 */
-  --button-text: #fbf7ec;
-  --leaf-radius: 4px 62% 4px 62% / 4px 62% 4px 62%;
-
+  --bg: var(--green-800);
+  --ink: var(--neutral-100);
+  --muted: var(--neutral-200);
+  --accent: var(--green-300);
+  --warm: var(--orange-400);
   transition: --bg 1.1s ease, --ink 1.1s ease, --muted 1.1s ease,
-    --accent 1.1s ease, --warm 1.1s ease, --ring 1.1s ease;
+    --accent 1.1s ease, --warm 1.1s ease;
+}
+:root[data-theme="sage"] {
+  --bg: var(--neutral-200);
+  --ink: var(--green-800);
+  --muted: var(--neutral-700);
+  --accent: var(--green-600);
+  --warm: var(--orange-700);
+}
+:root[data-theme="deep"] {
+  --bg: var(--green-900);
 }
 
 html {
@@ -68,8 +86,8 @@ body {
 }
 
 ::selection {
-  background: #a8cf8a;
-  color: #173f35;
+  background: var(--green-300);
+  color: var(--green-800);
 }
 
 a {
@@ -98,29 +116,96 @@ a:hover {
   column-gap: 2cqw;
 }
 
+/* ── TYPE ──
+   UI text sits on four even sizes. Display text sits on a √2 scale in
+   column widths; phones enlarge the four smallest steps, while the big
+   words already span the screen. Classes carry font, weight, spacing and
+   leading; each use sets only its size (and colour). */
+:root {
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-md: 16px;
+  --text-lg: 18px;
+
+  --display-0: 2.5cqw;
+  --display-1: 3.5cqw;
+  --display-2: 5cqw;
+  --display-3: 7cqw;
+  --display-4: 10cqw;
+  --display-5: 14cqw;
+  --display-6: 20cqw;
+  --display-7: 28cqw;
+  --display-8: 40cqw;
+}
+@media (max-width: 640px) {
+  :root {
+    --display-0: 6vw;
+    --display-1: 6vw;
+    --display-2: 9vw;
+    --display-3: 13vw;
+    --display-4: 14vw;
+    --display-7: 38vw;
+  }
+}
+
 .body {
   margin: 0;
-  font-size: 16px;
-  line-height: 1.75;
+  font-size: var(--text-md);
+  line-height: 1.7;
   color: var(--muted);
   text-wrap: pretty;
 }
 
-.stat-label {
-  color: var(--muted);
+/* roman headlines; their italic accents are .text-stat */
+.text-display {
+  margin: 0;
+  font-family: var(--serif), serif;
+  font-weight: 600;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
 }
-
-/* small mono labels — colour is set per use */
-.stat-label,
-.question-label,
-.case-eyebrow,
-.mod-label {
+.text-display em {
+  font-weight: 700;
+  color: var(--accent);
+}
+.text-title {
+  margin: 0;
+  font-family: var(--serif), serif;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+.text-sub {
+  margin: 0;
+  font-family: var(--serif), serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: var(--display-1);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+/* italic accents: big numbers and the giant words */
+.text-stat {
+  font-family: var(--serif), serif;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+  white-space: nowrap;
+}
+/* small mono caps — colour is set per use */
+.text-label {
   font-family: var(--mono), monospace;
-  font-size: 13px;
+  font-size: var(--text-sm);
   font-weight: 500;
   letter-spacing: 0.03em;
   line-height: 1.35;
   text-transform: uppercase;
+}
+.text-num {
+  font-family: var(--mono), monospace;
+  font-size: var(--text-xs);
 }
 
 /* ── NAV ── */
@@ -162,7 +247,7 @@ a:hover {
 }
 .nav-logo-text {
   font-family: var(--display), sans-serif;
-  font-size: 14px;
+  font-size: var(--text-sm);
   font-weight: 600;
   color: var(--ink);
   white-space: nowrap;
@@ -177,7 +262,7 @@ a:hover {
 }
 .nav-links a {
   position: relative;
-  font-size: 14px;
+  font-size: var(--text-sm);
   font-weight: 500;
   color: var(--ink);
   white-space: nowrap;
@@ -189,17 +274,16 @@ a:hover {
   display: inline-block;
   background: var(--button);
   border: 1.5px solid var(--button);
-  color: var(--button-text);
+  color: var(--neutral-100);
   padding: 8px 20px;
   border-radius: 24px;
-  font-size: 13px;
   font-weight: 600;
   transition: background 0.15s, border-color 0.15s;
 }
 .nav-links .nav-cta:hover {
   background: var(--button-hover);
   border-color: var(--button-hover);
-  color: var(--button-text);
+  color: var(--neutral-100);
 }
 
 /* ── EYE — the logo's almond + a pupil that Eyes.tsx moves ── */
@@ -212,7 +296,7 @@ a:hover {
 .eye-white {
   position: absolute;
   inset: 0;
-  background: #efeede;
+  background: var(--neutral-100);
   -webkit-mask: url("/eye.svg") center / 100% 100% no-repeat;
   mask: url("/eye.svg") center / 100% 100% no-repeat;
 }
@@ -223,7 +307,7 @@ a:hover {
   width: 20%;
   height: 100%;
   border-radius: 50%;
-  background: #173f35;
+  background: var(--green-800);
 }
 
 /* ── HERO — oversized portrait bleeds off the right and bottom ── */
@@ -271,7 +355,7 @@ a:hover {
 }
 .hero-ring {
   position: absolute;
-  border: 1px solid var(--ring);
+  border: 1px solid var(--accent);
   border-radius: var(--leaf-radius);
 }
 .hero-ring-0 {
@@ -291,7 +375,7 @@ a:hover {
   opacity: 0.16;
 }
 .hero-text {
-  --name-fs: min(25cqw, 38svh);
+  --name-fs: min(var(--display-7), 38svh);
   position: absolute;
   left: 0;
   right: 0;
@@ -308,12 +392,6 @@ a:hover {
 .hero-slogan {
   display: contents;
 }
-.hero-h1 {
-  font-family: var(--serif), serif;
-  font-weight: 600;
-  line-height: 0.86;
-  letter-spacing: -0.035em;
-}
 .hero-h1 > span,
 .hero-slogan > span {
   display: block;
@@ -321,26 +399,18 @@ a:hover {
 }
 .hero-hi {
   grid-area: 1 / 1 / auto / span 4;
-  font-size: min(7cqw, 11svh);
+  font-size: min(var(--display-3), 11svh);
 }
 .hero-name {
   grid-area: 2 / 1 / auto / span 6;
   /* pulled up so the name's cap tops run into "Hi, I'm" */
   margin-top: calc(var(--name-fs) * 0.01);
   font-size: var(--name-fs);
-  font-style: italic;
-  font-weight: 700;
   letter-spacing: -0.05em;
   margin-left: -0.04em; /* optical alignment of the italic A */
-  color: var(--accent);
 }
 .hero-slogan {
-  font-family: var(--serif), serif;
-  font-style: italic;
-  font-weight: 500;
-  font-size: clamp(18px, 2.4cqw, 38px);
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  font-size: var(--display-0);
 }
 .hero-s1 {
   grid-area: 3 / 3 / auto / span 5;
@@ -423,25 +493,15 @@ a:hover {
 .about-h2 {
   margin: 0;
   padding-left: 4cqw;
-  font-family: var(--serif), serif;
-  font-weight: 600;
-  font-size: 7cqw;
-  line-height: 1.3;
-  letter-spacing: -0.035em;
+  font-size: var(--display-3);
+  line-height: 1;
 }
+/* a negative top margin lets "human" rise into the line above; the bottom
+   margin keeps the third line clear of it */
 .about-h2 em {
   display: inline-block;
-  font-style: italic;
-  font-weight: 700;
-  font-size: 14cqw;
-  line-height: 0.7;
-  color: var(--accent);
-  margin-left: 0cqw;
-  /* trims the em's line box so "human" rises into the line above */
-  margin-top: 0.1 em;
-  /* room below too, so "behind the law" sits as far under "human" as
-     "human" cuts into the line above */
-  margin-bottom: 0.3em;
+  font-size: var(--display-5);
+  margin-block: -0.12em 0.1em;
   white-space: nowrap;
 }
 .about-p {
@@ -461,21 +521,12 @@ a:hover {
   margin: 0 0 12px;
 }
 .question-p {
-  margin: 0;
   max-width: 15ch;
-  font-family: var(--serif), serif;
-  font-style: italic;
-  font-weight: 500;
-  font-size: clamp(28px, 3.4cqw, 58px);
-  line-height: 1.12;
-  letter-spacing: -0.01em;
   text-wrap: balance;
 }
 .question-link {
   margin-top: 36px;
   align-self: flex-start;
-  font-family: var(--mono), monospace;
-  font-size: 13px;
   color: var(--warm);
   border-bottom: 1px solid currentColor;
   padding-bottom: 4px;
@@ -487,27 +538,16 @@ a:hover {
   min-height: 190vh;
   padding-top: 12vh;
 }
-.services-h2 {
-  margin: 0;
-  font-family: var(--serif), serif;
-  font-weight: 600;
-  line-height: 0.82;
-  letter-spacing: -0.04em;
-}
 .services-title {
   display: block;
-  font-size: 16.5cqw;
+  font-size: var(--display-5);
   margin-left: -1.2cqw;
   white-space: nowrap;
 }
 .services-sub {
   display: block;
-  font-size: 6cqw;
-  font-style: italic;
-  font-weight: 700;
-  color: var(--accent);
-  margin: 1vh 0 0 46cqw;
-  letter-spacing: -0.02em;
+  font-size: var(--display-3);
+  margin: 1vh 0 0 42cqw;
 }
 .services-grid {
   padding: 14vh 28px 0;
@@ -517,24 +557,13 @@ a:hover {
   flex-direction: column;
   gap: 12px;
 }
-.svc-num {
-  font-family: var(--serif), serif;
-  font-style: italic;
-  font-weight: 700;
-  line-height: 0.8;
-  color: var(--accent);
-}
 .svc-title {
-  margin: 0;
-  font-family: var(--serif), serif;
-  font-weight: 600;
   font-size: clamp(20px, 2cqw, 32px);
-  line-height: 1.05;
 }
 .svc-desc {
   margin: 0;
   max-width: 30ch;
-  font-size: 15px;
+  font-size: var(--text-sm);
   line-height: 1.7;
   color: var(--muted);
 }
@@ -542,14 +571,14 @@ a:hover {
   grid-column: 2 / span 4;
 }
 .svc-card-1 .svc-num {
-  font-size: clamp(56px, 8cqw, 140px);
+  font-size: var(--display-4);
 }
 .svc-card-2 {
   grid-column: 8 / span 4;
   margin-top: 26vh;
 }
 .svc-card-2 .svc-num {
-  font-size: clamp(40px, 4cqw, 72px);
+  font-size: var(--display-2);
   color: var(--warm);
 }
 .svc-card-3 {
@@ -557,7 +586,7 @@ a:hover {
   margin-top: 12vh;
 }
 .svc-card-3 .svc-num {
-  font-size: clamp(80px, 13cqw, 230px);
+  font-size: var(--display-5);
   margin-left: -1cqw;
 }
 .svc-card-4 {
@@ -566,7 +595,7 @@ a:hover {
   gap: 10px;
 }
 .svc-card-4 .svc-num {
-  font-size: 32px;
+  font-size: var(--display-1);
   color: var(--warm);
 }
 .svc-card-4 .svc-title {
@@ -574,7 +603,6 @@ a:hover {
 }
 .svc-card-4 .svc-desc {
   max-width: 26ch;
-  font-size: 14.5px;
 }
 
 /* ── CASE STUDIES — header ── */
@@ -584,38 +612,25 @@ a:hover {
   padding-top: 20vh;
 }
 .cs-h2 {
-  margin: 0;
   position: relative;
-  font-family: var(--serif), serif;
-  font-weight: 600;
-  line-height: 0.78;
 }
 .cs-case {
   display: block;
-  font-size: 36cqw;
-  font-style: italic;
-  font-weight: 800;
-  letter-spacing: -0.06em;
+  font-size: var(--display-8);
+  letter-spacing: -0.05em;
   margin-left: -3cqw;
-  color: var(--accent);
-  white-space: nowrap;
 }
 /* overlaps "Case" on purpose */
 .cs-studies {
   display: block;
   position: relative;
   z-index: 2;
-  font-size: 12cqw;
-  letter-spacing: -0.04em;
-  margin: -12cqw 0 0 34cqw;
+  font-size: var(--display-5);
+  margin: -14.5cqw 0 0 34cqw;
   white-space: nowrap;
 }
 .cs-sub {
   display: block;
-  font-size: 3.4cqw;
-  font-style: italic;
-  font-weight: 500;
-  letter-spacing: -0.01em;
   margin: 3vh 0 0 36cqw;
 }
 .cs-p {
@@ -639,7 +654,7 @@ a:hover {
 }
 .case-ring {
   position: absolute;
-  border: 1px solid var(--ring);
+  border: 1px solid var(--accent);
   pointer-events: none;
 }
 .case-ring-0 {
@@ -669,17 +684,8 @@ a:hover {
   gap: 22px;
 }
 .mod-h3 {
-  margin: 0;
-  font-family: var(--serif), serif;
-  font-weight: 600;
-  font-size: clamp(42px, 5.3cqw, 100px);
-  line-height: 0.92;
-  letter-spacing: -0.035em;
+  font-size: var(--display-2);
   text-wrap: balance;
-}
-.mod-h3 em {
-  font-weight: 700;
-  color: var(--warm);
 }
 .mod-brief {
   margin-top: 48px;
@@ -696,10 +702,10 @@ a:hover {
 .mod-solution {
   grid-column: 6 / span 4;
 }
-.mod-problem .mod-label {
+.mod-problem .text-label {
   color: var(--warm);
 }
-.mod-solution .mod-label {
+.mod-solution .text-label {
   color: var(--accent);
 }
 
@@ -721,11 +727,11 @@ a:hover {
   overflow: hidden;
   background: var(--c);
   color: var(--fg);
-  border-right: 1px solid #102e27;
+  border-right: 1px solid var(--green-900);
 }
 .mod-item.is-open {
   flex: 1 1 0;
-  background: #efeede;
+  background: var(--neutral-100);
 }
 .mod-tab {
   appearance: none;
@@ -750,13 +756,11 @@ a:hover {
 }
 .mod-num {
   order: 2;
-  font-family: var(--mono), monospace;
-  font-size: 12px;
 }
 .mod-name {
   writing-mode: vertical-rl;
   transform: rotate(180deg);
-  font-size: 18px;
+  font-size: var(--text-lg);
   font-weight: 600;
   white-space: nowrap;
 }
@@ -779,7 +783,6 @@ a:hover {
 .is-open .mod-name {
   writing-mode: horizontal-tb;
   transform: none;
-  font-size: 20px;
 }
 .mod-client.is-open .mod-tab {
   display: none;
@@ -812,7 +815,7 @@ a:hover {
   gap: clamp(28px, 3.3cqw, 48px);
   padding: clamp(28px, 3.3cqw, 48px);
   align-items: end;
-  color: #102e27;
+  color: var(--green-900);
 }
 .mod-client-head {
   align-self: start;
@@ -820,15 +823,11 @@ a:hover {
   flex-direction: column;
   gap: 10px;
 }
-.mod-client-head .mod-label {
-  color: #3c4a3f;
+.mod-client-head .text-label {
+  color: var(--neutral-700);
 }
 .mod-client-title {
-  font-family: var(--serif), serif;
-  font-weight: 600;
-  font-size: clamp(32px, 3.3cqw, 48px);
-  line-height: 1;
-  letter-spacing: -0.025em;
+  font-size: var(--display-1);
 }
 .mod-client-list {
   margin: 0;
@@ -837,18 +836,16 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  font-size: 17px;
+  font-size: var(--text-md);
 }
 .mod-client-list li {
   display: flex;
   gap: 14px;
-  border-top: 1px solid #d7dccb;
+  border-top: 1px solid var(--neutral-200);
   padding-top: 14px;
 }
-.mod-client-num {
-  font-family: var(--mono), monospace;
-  font-size: 12px;
-  color: #9e4220;
+.mod-client-list .text-num {
+  color: var(--orange-700);
 }
 
 .mod-flow {
@@ -856,7 +853,7 @@ a:hover {
   width: 100%;
   overflow: visible;
   fill: none;
-  stroke: var(--ring);
+  stroke: var(--accent);
   stroke-width: 1.25;
   stroke-linecap: round;
 }
@@ -879,24 +876,17 @@ a:hover {
   gap: 18px;
   padding-top: 20px;
 }
-/* type follows .cs-sub / .cs-studies, italics swapped */
-.mod-result .stat-label {
-  font-family: var(--serif), serif;
-  font-size: 3.4cqw;
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  text-transform: none;
+/* a roman subtitle over an italic number, shared by both cases */
+.result-label {
+  max-width: 20ch;
+  font-style: normal;
+  text-wrap: balance;
 }
-.mod-stat {
-  font-family: var(--serif), serif;
-  font-style: italic;
-  font-weight: 600;
-  font-size: 12cqw;
-  line-height: 0.78;
-  letter-spacing: -0.04em;
-  color: var(--accent);
+.result-stat {
+  font-size: var(--display-4);
+}
+.mod-result .result-stat {
   margin-right: -2.8cqw;
-  white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -921,11 +911,6 @@ a:hover {
   .mod-title {
     gap: 16px;
   }
-  .mod-h3 {
-    font-size: clamp(42px, 6.5cqw, 60px);
-    line-height: 0.95;
-    letter-spacing: -0.03em;
-  }
   .mod-brief {
     margin-top: 36px;
     row-gap: 28px;
@@ -933,9 +918,6 @@ a:hover {
   .mod-problem,
   .mod-solution {
     gap: 10px;
-  }
-  .mod-brief .body {
-    line-height: 1.7;
   }
 
   .mod-frame {
@@ -956,10 +938,10 @@ a:hover {
   .mod-item,
   .mod-item.is-open {
     flex: none;
-    background: #efeede;
-    color: #102e27;
+    background: var(--neutral-100);
+    color: var(--green-900);
     border-right: 0;
-    border-bottom: 1px solid #102e27;
+    border-bottom: 1px solid var(--green-900);
   }
   .mod-tab,
   .is-open .mod-tab,
@@ -978,19 +960,18 @@ a:hover {
     order: 0;
     flex: none;
     width: 16px;
-    font-size: 11px;
   }
   .mod-name,
   .is-open .mod-name {
     flex: 1;
     writing-mode: horizontal-tb;
     transform: none;
-    font-size: 16px;
+    font-size: var(--text-md);
   }
   .mod-sign {
     display: block;
     font-family: var(--mono), monospace;
-    font-size: 18px;
+    font-size: var(--text-lg);
     line-height: 1;
   }
   .mod-shot {
@@ -1006,16 +987,11 @@ a:hover {
     gap: 20px;
     padding: 22px 18px 24px;
   }
-  .mod-client-head .mod-label {
+  .mod-client-head .text-label {
     display: none;
-  }
-  .mod-client-title {
-    font-size: 28px;
-    letter-spacing: -0.02em;
   }
   .mod-client-list {
     gap: 10px;
-    font-size: 15px;
   }
   .mod-client-list li {
     gap: 12px;
@@ -1033,11 +1009,7 @@ a:hover {
     gap: 14px;
     padding-top: 14px;
   }
-  .mod-result .stat-label {
-    font-size: 6vw;
-  }
-  .mod-stat {
-    font-size: min(38.5cqw, 300px);
+  .mod-result .result-stat {
     margin-right: -6cqw;
   }
 }
@@ -1090,8 +1062,8 @@ a:hover {
   display: flex;
   overflow: hidden;
   border-radius: 16px;
-  border: 1px solid #102e27;
-  background: #efeede;
+  border: 1px solid var(--green-900);
+  background: var(--neutral-100);
   cursor: pointer;
   transform: translate(
     calc(var(--d) * 56 * var(--u)),
@@ -1099,8 +1071,7 @@ a:hover {
   );
 }
 .deck-black {
-  border-color: #1a2a24;
-  background: #050d0a;
+  background: var(--green-950);
 }
 .deck-body {
   flex: 1;
@@ -1127,17 +1098,12 @@ a:hover {
   text-align: center;
 }
 .deck-face-title {
-  margin: 0;
   max-width: 16ch;
-  font-family: var(--serif), serif;
-  font-weight: 600;
-  font-size: calc(52 * var(--u));
-  line-height: 1;
-  letter-spacing: -0.025em;
+  font-size: var(--display-1);
   text-wrap: balance;
-  color: #efeede;
+  color: var(--neutral-100);
 }
-.deck-face .mod-label {
+.deck-face .text-label {
   color: var(--warm);
 }
 /* the strip that shows on every card behind; 56 wide = the x step */
@@ -1145,7 +1111,7 @@ a:hover {
   appearance: none;
   margin: 0;
   border: 0;
-  border-left: 1px solid #102e27;
+  border-left: 1px solid var(--green-900);
   font: inherit;
   flex: 0 0 calc(56 * var(--u));
   display: flex;
@@ -1157,22 +1123,15 @@ a:hover {
   color: var(--fg);
   cursor: pointer;
 }
-.deck-black .deck-tab {
-  border-left-color: #1a2a24;
-}
 .deck-tab:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: -6px;
 }
 .deck-name {
   writing-mode: vertical-rl;
-  font-size: 17px;
+  font-size: var(--text-lg);
   font-weight: 600;
   white-space: nowrap;
-}
-.deck-num {
-  font-family: var(--mono), monospace;
-  font-size: 12px;
 }
 .deck-flow-mobile {
   display: none;
@@ -1185,16 +1144,6 @@ a:hover {
   gap: 14px;
   margin: calc(170 * var(--u)) 0 0 calc(480 * var(--u));
   padding-top: 20px;
-}
-.deck-stat {
-  font-family: var(--serif), serif;
-  font-style: italic;
-  font-weight: 700;
-  font-size: calc(112 * var(--u));
-  line-height: 0.85;
-  letter-spacing: -0.03em;
-  color: var(--accent);
-  white-space: nowrap;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -1240,9 +1189,6 @@ a:hover {
     gap: 16px;
     padding: 0 20px;
   }
-  .deck-face-title {
-    font-size: clamp(26px, 7.5vw, 44px);
-  }
   .deck-tab {
     order: -1;
     flex: none;
@@ -1250,17 +1196,11 @@ a:hover {
     flex-direction: row;
     padding: 0 18px;
     border-left: 0;
-    border-bottom: 1px solid #102e27;
-  }
-  .deck-black .deck-tab {
-    border-bottom-color: #1a2a24;
+    border-bottom: 1px solid var(--green-900);
   }
   .deck-name {
     writing-mode: horizontal-tb;
-    font-size: 16px;
-  }
-  .deck-num {
-    font-size: 11px;
+    font-size: var(--text-md);
   }
   .deck-flow-mobile {
     display: block;
@@ -1268,9 +1208,6 @@ a:hover {
   .deck-result {
     margin: 0 0 0 34.7%;
     padding-top: 14px;
-  }
-  .deck-stat {
-    font-size: clamp(72px, 22vw, 140px);
   }
 }
 
@@ -1282,15 +1219,9 @@ a:hover {
 }
 .cta-h2 {
   margin: 0 0 0 18cqw;
-  font-family: var(--serif), serif;
-  font-weight: 600;
-  font-size: 9cqw;
-  line-height: 0.86;
-  letter-spacing: -0.04em;
+  font-size: var(--display-4);
 }
 .cta-h2 em {
-  font-weight: 700;
-  color: var(--accent);
   margin-left: 12cqw;
 }
 
@@ -1331,7 +1262,6 @@ a:hover {
     top: 72px;
   }
   .hero-text {
-    --name-fs: 38vw;
     padding: 0 24px;
     top: auto;
     bottom: 5svh;
@@ -1340,13 +1270,9 @@ a:hover {
   /* like the stacked service cards: full width, alternate lines indented */
   .hero-hi {
     grid-column: 1 / -1;
-    font-size: 13vw;
   }
   .hero-name {
     grid-column: 1 / -1;
-  }
-  .hero-slogan {
-    font-size: 5.6vw;
   }
   .hero-s1 {
     grid-column: 2 / -1;
@@ -1360,11 +1286,9 @@ a:hover {
     min-height: auto;
     padding: 20vh 0 14vh;
   }
-  .about-h2 {
-    font-size: 13vw;
-  }
   .about-h2 em {
-    font-size: 23vw;
+    font-size: var(--display-6);
+    margin-block: 0;
   }
   .about-p {
     margin: 8vh 24px 0;
@@ -1376,7 +1300,6 @@ a:hover {
     padding: 14vh 24px;
   }
   .question-p {
-    font-size: 8vw;
     max-width: none;
   }
 
@@ -1384,8 +1307,9 @@ a:hover {
     min-height: auto;
     padding: 14vh 0 10vh;
   }
+  /* wraps rather than running off the screen */
   .services-sub {
-    font-size: 9vw;
+    white-space: normal;
     margin: 2vh 0 0 22vw;
   }
   .services-grid {
@@ -1407,7 +1331,6 @@ a:hover {
     padding: 16vh 0 4vh;
   }
   .cs-sub {
-    font-size: 6vw;
     margin: 2vh 0 0 20vw;
   }
   .cs-p {
@@ -1422,7 +1345,9 @@ a:hover {
   }
   .cta-h2 {
     margin: 0;
-    font-size: 14vw;
+  }
+  .result-stat {
+    font-size: var(--display-6);
   }
   .cta-h2 em {
     margin-left: 8vw;

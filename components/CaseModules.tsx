@@ -4,34 +4,34 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 
 /** Client view, then the four modules it is built from */
 const MODULES = [
-  { name: "Client view", color: "#e6e5dc", fg: "#102e27" },
+  { name: "Client view", color: "var(--neutral-100)", fg: "var(--green-900)" },
   {
     name: "Audience insights",
     img: "/case2/m-audience.png",
     h: 725,
-    color: "#a8cf8a",
-    fg: "#102e27",
+    color: "var(--green-300)",
+    fg: "var(--green-900)",
   },
   {
     name: "Channel planning",
     img: "/case2/m-channel.png",
     h: 729,
-    color: "#fb7e4f",
-    fg: "#102e27",
+    color: "var(--orange-400)",
+    fg: "var(--green-900)",
   },
   {
     name: "Investment planning",
     img: "/case2/m-investment.png",
     h: 729,
-    color: "#d7dccb",
-    fg: "#102e27",
+    color: "var(--neutral-200)",
+    fg: "var(--green-900)",
   },
   {
     name: "Performance reporting",
     img: "/case2/m-performance.png",
     h: 729,
-    color: "#173f35",
-    fg: "#efeede",
+    color: "var(--green-800)",
+    fg: "var(--neutral-100)",
   },
 ];
 const num = (i: number) => (i ? `0${i}` : "");
@@ -132,7 +132,7 @@ export default function CaseModules() {
                   aria-controls={`mod-panel-${i}`}
                   onClick={() => toggle(i)}
                 >
-                  <span className="mod-num">{num(i)}</span>
+                  <span className="text-num mod-num">{num(i)}</span>
                   <span className="mod-name">{m.name}</span>
                   <span className="mod-sign" aria-hidden="true">
                     {open ? "–" : "+"}
@@ -158,15 +158,15 @@ export default function CaseModules() {
                   ) : (
                     <div className="mod-client-view">
                       <div className="mod-client-head">
-                        <span className="mod-label">Client view</span>
-                        <span className="mod-client-title">
+                        <span className="text-label">Client view</span>
+                        <span className="text-title mod-client-title">
                           Super Plate campaign Spring 2027
                         </span>
                       </div>
                       <ol className="mod-client-list">
                         {MODULES.slice(1).map((s, j) => (
                           <li key={s.name}>
-                            <span className="mod-client-num">{num(j + 1)}</span>
+                            <span className="text-num">{num(j + 1)}</span>
                             {s.name}
                           </li>
                         ))}
@@ -202,8 +202,8 @@ export default function CaseModules() {
       </svg>
 
       <div className="mod-result" ref={result}>
-        <span className="stat-label">User base grew</span>
-        <span className="mod-stat">400%</span>
+        <span className="text-sub result-label">User base grew</span>
+        <span className="text-stat result-stat">400%</span>
       </div>
     </>
   );

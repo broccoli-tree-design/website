@@ -4,38 +4,38 @@ import { useState, type CSSProperties } from "react";
 
 /** The black box in front, then the four steps behind it */
 const CARDS = [
-  { name: "Black box", color: "#050d0a", fg: "#efeede" },
+  { name: "Black box", color: "var(--green-950)", fg: "var(--neutral-100)" },
   {
     name: "Set parameters",
     img: "/case1/parameter.png",
     w: 1293,
     h: 969,
-    color: "#a8cf8a",
-    fg: "#102e27",
+    color: "var(--green-300)",
+    fg: "var(--green-900)",
   },
   {
     name: "Generate",
     img: "/case1/loading.png",
     w: 1054,
     h: 544,
-    color: "#fb7e4f",
-    fg: "#102e27",
+    color: "var(--orange-400)",
+    fg: "var(--green-900)",
   },
   {
     name: "Compare reasoning",
     img: "/case1/reasoning.png",
     w: 1366,
     h: 734,
-    color: "#d7dccb",
-    fg: "#102e27",
+    color: "var(--neutral-200)",
+    fg: "var(--green-900)",
   },
   {
     name: "Review summary",
     img: "/case1/summary.png",
     w: 1366,
     h: 1021,
-    color: "#173f35",
-    fg: "#efeede",
+    color: "var(--green-800)",
+    fg: "var(--neutral-100)",
   },
 ];
 const N = CARDS.length;
@@ -121,10 +121,10 @@ export default function CaseDeck() {
                     />
                   ) : (
                     <div className="deck-face">
-                      <p className="deck-face-title">
+                      <p className="text-title deck-face-title">
                         Milwaukee, Orlando, Daytona Beach, Melbourne
                       </p>
-                      <span className="mod-label">
+                      <span className="text-label">
                         Why these campaign locations?
                       </span>
                     </div>
@@ -139,7 +139,7 @@ export default function CaseDeck() {
                   aria-pressed={front}
                 >
                   <span className="deck-name">{c.name}</span>
-                  <span className="deck-num">{num(i)}</span>
+                  <span className="text-num deck-num">{num(i)}</span>
                 </button>
               </div>
             );
@@ -159,10 +159,10 @@ export default function CaseDeck() {
       </svg>
 
       <div className="deck-result">
-        <span className="stat-label">
+        <span className="text-sub result-label">
           Increase in funding after MVP delivery
         </span>
-        <span className="deck-stat">50%</span>
+        <span className="text-stat result-stat">50%</span>
       </div>
     </>
   );
