@@ -16,7 +16,7 @@ const JSON_LD = {
       name: "Aiqi Li",
       jobTitle: "UX Designer",
       description:
-        "Paralegal-turned UX designer making intuitive design for legal tech, drawing on first-hand work inside legal systems in the U.S. and China.",
+        "Paralegal-turned UX designer creating intuitive design for legal tech, drawing on first-hand experience inside legal systems in the U.S. and China.",
       url: SITE_URL,
       image: `${SITE_URL}/profile.jpg`,
       sameAs: [LINKEDIN_URL],
@@ -187,13 +187,13 @@ export default function Home() {
               />
             </picture>
           </div>
-          <div className="hero-text">
+          <div className="grid hero-text">
             <h1 className="hero-h1">
               <span className="hero-hi">Hi, I&rsquo;m</span>{" "}
               <span className="hero-name">Aiqi</span>
             </h1>
             <p className="hero-slogan">
-              <span className="hero-s1">Intuitive design</span>{" "}
+              <span className="hero-s1">Designing intuitive experience</span>{" "}
               <span className="hero-s2">for legal tech</span>
             </p>
           </div>
@@ -202,25 +202,27 @@ export default function Home() {
         {/* ABOUT — legalese */}
         <section className="about" id="about" data-gate="1">
           <h2 className="about-h2">
-            A designer
+            A designer who
             <br />
-            who speaks
+            sees the <em>human </em>
             <br />
-            some <em>legalese</em>
+            behind the law
           </h2>
           <p className="body about-p">
-            As a Paralegal turned Designer, I&rsquo;ve experienced first-hand
-            the stress and fulfillment operating within legal systems in U.S.
-            and China — from managing trademark portfolios for tech companies,
-            to conducting site visits for insurance due diligence, to helping
-            state attorneys enforce immigrant children&rsquo;s rights to
-            education. I understand when technology can make legal systems
-            easier to deal with, and when humans should make the judgment.
+            As a Paralegal turned Designer, I’ve experienced first-hand the
+            stress and fulfillment operating within legal systems in the U.S.
+            and China — from working late nights alongside attorneys on urgent
+            trademark prosecution, to negotiating with county clerks for the
+            records behind an insurance litigation, to translating for immigrant
+            families fighting for their children's right to go to school. I know
+            when technology makes legal systems easier to deal with, and when
+            humans should make the judgment.
           </p>
         </section>
 
         {/* QUESTION */}
         <section className="question" data-gate="2">
+          <p className="question-label">RECENT THOUGHTS</p>
           <p className="question-p">
             How does AI reshape the way clients engage with and evaluate legal
             services?
@@ -273,7 +275,9 @@ export default function Home() {
               <span className="case-eyebrow">
                 01 — Productizing an underutilized data science methodology
               </span>
-              <h3 className="case-1-h3">No-code data experimentation workflow</h3>
+              <h3 className="case-1-h3">
+                No-code data experimentation workflow
+              </h3>
               <p className="body">
                 Design highlight: surfacing the model&rsquo;s reasoning so
                 scientists can discuss, compare, and make tradeoffs. When
