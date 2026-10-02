@@ -95,38 +95,6 @@ const SERVICES = [
   },
 ];
 
-/** case image with two offset growth rings; Rings.tsx animates them */
-function CaseFrame({
-  frame,
-  src,
-  alt,
-  className = "",
-}: {
-  frame: 3;
-  src: string;
-  alt: string;
-  className?: string;
-}) {
-  return (
-    <figure className={`case-frame case-frame-${frame} ${className}`}>
-      <div className="case-ring case-ring-1" data-ring={1} aria-hidden="true" />
-      <div className="case-ring case-ring-0" data-ring={0} aria-hidden="true" />
-      <picture>
-        <source srcSet={`${src}.webp`} type="image/webp" />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={`${src}.jpg`}
-          alt={alt}
-          width={1728}
-          height={1117}
-          loading="lazy"
-          decoding="async"
-        />
-      </picture>
-    </figure>
-  );
-}
-
 export default function Home() {
   return (
     <div className="page">
@@ -331,42 +299,6 @@ export default function Home() {
             </div>
           </div>
           <CaseModules />
-        </section>
-
-        {/* CASE 03 — headline, image, then the numbers */}
-        <section className="case case-3" data-gate="6">
-          <div className="case-3-head">
-            <span className="case-eyebrow">
-              03 — Expanding reporting capabilities
-            </span>
-            <h3 className="case-3-h3">
-              A shared <em>vocabulary</em>
-              <br />
-              for messy data
-            </h3>
-          </div>
-          <CaseFrame
-            frame={3}
-            src="/reporting"
-            alt="Reporting Hub taxonomy tools for centralized data reporting, UX case study"
-            className="case-3-fig"
-          />
-          <div className="grid case-3-grid">
-            <p className="body case-3-p">
-              Design highlight: taxonomy tools for admin and analysts to form a
-              single source of truth for reporting.
-            </p>
-            <div className="case-3-stats">
-              <div className="case-3-stat">
-                <span className="case-3-stat-value">50+</span>
-                <span className="stat-label">data sources centralized;</span>
-              </div>
-              <div className="case-3-stat">
-                <span className="case-3-stat-value">100+</span>
-                <span className="stat-label">client accounts distributed</span>
-              </div>
-            </div>
-          </div>
         </section>
 
         {/* CTA — the nav's LinkedIn pill is the action */}

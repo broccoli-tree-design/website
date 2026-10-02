@@ -244,8 +244,7 @@ a:hover {
   z-index: 2;
 }
 /* <picture> wrappers (webp + jpg fallback) stay out of layout */
-.hero-photo picture,
-.case-frame picture {
+.hero-photo picture {
   display: contents;
 }
 .hero-photo img {
@@ -633,17 +632,10 @@ a:hover {
   color: var(--warm);
 }
 
-/* growth rings — offset direction alternates so the three don't stamp */
+/* growth rings around a case frame */
 .case-frame {
   position: relative;
   margin: 0;
-}
-.case-frame picture img {
-  position: relative;
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 16px;
 }
 .case-ring {
   position: absolute;
@@ -663,12 +655,6 @@ a:hover {
 }
 .case-frame-2 .case-ring-1 {
   inset: -30px 26px 26px -30px;
-}
-.case-frame-3 .case-ring-0 {
-  inset: 10px -14px -14px 10px;
-}
-.case-frame-3 .case-ring-1 {
-  inset: 26px -30px -30px 26px;
 }
 
 /* case — module accordion; curves flow from each tab into the 400%.
@@ -1288,60 +1274,6 @@ a:hover {
   }
 }
 
-/* case 03 — headline, image, then the numbers */
-.case-3 {
-  padding-top: 20vh;
-}
-.case-3-head {
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-  padding: 0 28px;
-}
-.case-3-h3 {
-  margin: 0 0 0 -1cqw;
-  font-family: var(--serif), serif;
-  font-weight: 600;
-  font-size: 11.5cqw;
-  line-height: 0.82;
-  letter-spacing: -0.045em;
-}
-.case-3-h3 em {
-  font-weight: 800;
-  color: var(--accent);
-}
-.case-3-fig {
-  margin: 10vh 28px 0;
-}
-.case-3-grid {
-  padding: 12vh 28px 0;
-}
-.case-3-p {
-  grid-column: 1 / span 4;
-}
-.case-3-stats {
-  grid-column: 7 / span 6;
-  display: flex;
-  flex-direction: column;
-  gap: 5vh;
-}
-.case-3-stat {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.case-3-stat + .case-3-stat {
-  margin-left: 8cqw;
-}
-.case-3-stat-value {
-  font-family: var(--serif), serif;
-  font-style: italic;
-  font-weight: 700;
-  font-size: clamp(64px, 11cqw, 200px);
-  line-height: 0.8;
-  color: var(--accent);
-}
-
 /* ── CTA ── */
 .cta {
   position: relative;
@@ -1482,15 +1414,6 @@ a:hover {
     margin: 8vh 24px 0;
     max-width: none;
     padding: 0;
-  }
-
-  .case-3-p {
-    grid-column: 1 / -1;
-    position: static;
-  }
-  .case-3-stats {
-    grid-column: 1 / -1;
-    margin-top: 8vh;
   }
 
   .cta {
