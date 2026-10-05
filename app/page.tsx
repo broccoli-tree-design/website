@@ -51,7 +51,7 @@ const JSON_LD = {
           "0→1 product design",
           "Redesign & consolidation",
           "Research & strategy",
-          "Design systems",
+          "Branding & design system",
         ].map((name) => ({
           "@type": "Offer",
           itemOffered: { "@type": "Service", name },
@@ -90,8 +90,8 @@ const SERVICES = [
   },
   {
     num: "04",
-    title: "Design systems",
-    desc: "Reusable components and patterns so your product scales without a redesign every quarter",
+    title: "Branding & Design system",
+    desc: "From brand identity to component library, a cohesive visual language so your product and marketing scale without a redesign every quarter",
   },
 ];
 
@@ -163,7 +163,7 @@ export default function Home() {
               <span className="text-stat hero-name">Aiqi</span>
             </h1>
             <p className="text-sub hero-slogan">
-              <span className="hero-s1">Designing intuitive experience</span>{" "}
+              <span className="hero-s1">I design intuitive experience</span>{" "}
               <span className="hero-s2">for legal tech</span>
             </p>
           </div>
@@ -172,11 +172,11 @@ export default function Home() {
         {/* ABOUT — legalese */}
         <section className="about" id="about" data-gate="1">
           <h2 className="text-display about-h2">
-            A designer who
+            <em>Seeing</em> both
             <br />
-            sees the <em>human</em>
+            human
             <br />
-            behind the system
+            and system
           </h2>
           <p className="body about-p">
             As a Paralegal turned Designer, I’ve experienced first-hand the
@@ -184,9 +184,10 @@ export default function Home() {
             and China — from working late nights alongside attorneys on urgent
             trademark prosecution, to negotiating with county clerks for the
             records behind an insurance litigation, to translating for immigrant
-            families fighting for their children's right to go to school. I know
-            when technology makes legal systems easier to deal with, and when
-            humans should make the judgment.
+            families fighting for their children's right to go to school.
+            <br />
+            <br />I know when technology makes legal systems easier to deal
+            with, and when humans should make the judgment.
           </p>
         </section>
 
@@ -312,7 +313,7 @@ export default function Home() {
           <h2 className="text-display cta-h2">
             Let&rsquo;s talk about
             <br />
-            <em>your product.</em>
+            <em>your product</em>
           </h2>
         </footer>
       </main>
