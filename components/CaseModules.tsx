@@ -39,18 +39,14 @@ const num = (i: number) => (i ? `0${i}` : "");
 const DESKTOP = "(min-width: 900px)";
 const TAB = 84; // collapsed tab width, matches .mod-item
 
-/** One curve per tab, from its centre down to the result label's start. Tab centres
- *  come from the layout rule (collapsed 84px, open tab takes the rest), so the
- *  paths land where the flex transition ends and CSS animates `d` there. */
+/** One curve from the open tab's centre down to the result label's start.
+ *  The centre comes from the layout rule (collapsed 84px, open tab takes the
+ *  rest), so the path lands where the flex transition ends and CSS animates
+ *  `d` there. */
 function desktopFlow(w: number, ex: number, active: number) {
   const open = w - (MODULES.length - 1) * TAB;
-  let x = 0;
-  return MODULES.map((_, i) => {
-    const tw = i === active ? open : TAB;
-    const cx = (x + tw / 2).toFixed(1);
-    x += tw;
-    return `M ${cx} 0 C ${cx} 110, ${ex} 60, ${ex} 170`;
-  });
+  const cx = (Math.max(active, 0) * TAB + open / 2).toFixed(1);
+  return `M ${cx} 0 C ${cx} 110, ${ex} 60, ${ex} 170`;
 }
 
 /** three static curves, drawn on a 350-wide frame and stretched to fit */
@@ -95,6 +91,8 @@ export default function CaseModules() {
       mq.removeEventListener("change", onChange);
     };
   }, []);
+
+  const flow = desktopFlow(width, labelX, active);
 
   // desktop opens; mobile toggles, so tapping the open row closes it
   const toggle = (i: number) =>
@@ -186,9 +184,7 @@ export default function CaseModules() {
         preserveAspectRatio="none"
         aria-hidden="true"
       >
-        {desktopFlow(width, labelX, active).map((d, i) => (
-          <path key={i} d={d} style={{ d: `path("${d}")` } as CSSProperties} />
-        ))}
+        <path d={flow} style={{ d: `path("${flow}")` } as CSSProperties} />
       </svg>
       <svg
         className="mod-flow mod-flow-mobile"

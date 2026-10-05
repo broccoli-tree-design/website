@@ -163,7 +163,10 @@ export default function Home() {
               <span className="text-stat hero-name">Aiqi</span>
             </h1>
             <p className="text-sub hero-slogan">
-              <span className="hero-s1">I design intuitive experience</span>{" "}
+              <span className="hero-s1">
+                <span className="hero-s1-lead">I design</span> intuitive
+                experience
+              </span>{" "}
               <span className="hero-s2">for legal tech</span>
             </p>
           </div>
