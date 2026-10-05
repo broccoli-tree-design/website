@@ -191,9 +191,9 @@ a:hover {
   color: var(--accent);
   white-space: nowrap;
 }
-/* small mono caps — colour is set per use */
+/* small uppercase labels — colour is set per use */
 .text-label {
-  font-family: var(--mono), monospace;
+  font-family: var(--sans), system-ui, sans-serif;
   font-size: var(--text-sm);
   font-weight: 500;
   letter-spacing: 0.03em;
@@ -201,7 +201,8 @@ a:hover {
   text-transform: uppercase;
 }
 .text-num {
-  font-family: var(--mono), monospace;
+  font-family: var(--sans), system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
   font-size: var(--text-xs);
 }
 
@@ -979,7 +980,6 @@ a:hover {
   }
   .mod-sign {
     display: block;
-    font-family: var(--mono), monospace;
     font-size: var(--text-lg);
     line-height: 1;
   }
@@ -1114,8 +1114,10 @@ a:hover {
   text-wrap: balance;
   color: var(--neutral-100);
 }
+/* the card is always near-black, so the bright orange whatever the theme
+   (--warm turns dark terracotta in the light theme: 3.05:1) */
 .deck-face .text-label {
-  color: var(--warm);
+  color: var(--orange-400);
 }
 /* the strip that shows on every card behind; 56 wide = the x step */
 .deck-tab {
