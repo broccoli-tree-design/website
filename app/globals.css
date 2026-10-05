@@ -304,7 +304,7 @@ button:focus-visible {
   color: var(--neutral-100);
 }
 
-/* ── EYE — the logo's almond + a pupil that Eyes.tsx moves ── */
+/* ── EYE — the logo's almond + a pupil that EyeTracker.tsx moves ── */
 .eye {
   position: relative;
   display: block;
@@ -429,17 +429,20 @@ button:focus-visible {
 }
 .hero-slogan {
   font-size: var(--display-0);
+  /* heavier than .text-sub's 500: Bodoni's hairlines thin out at phone and
+     tablet sizes, where the terracotta has only 4.56:1 to spare */
+  font-weight: 600;
 }
 .hero-s1 {
   grid-area: 3 / 3 / auto / span 5;
   /* dropped clear of the "q"'s italic descender (~0.18em below the
      name's line box) */
   margin-top: calc(var(--name-fs) * 0.42);
-  color: var(--accent);
-}
-.hero-s1-lead {
-  color: var(--ink);
   font-style: normal;
+}
+.hero-s1-em {
+  font-style: italic;
+  color: var(--warm);
 }
 .hero-s2 {
   grid-area: 4 / 6 / auto / span 3;
@@ -515,14 +518,14 @@ button:focus-visible {
 .about-h2 {
   margin: 0;
   padding-left: 4cqw;
-  font-size: var(--display-3);
+  font-size: var(--display-2);
   line-height: 1;
 }
 /* a negative top margin lets "human" rise into the line above; the bottom
    margin keeps the third line clear of it */
 .about-h2 em {
   display: inline-block;
-  font-size: var(--display-5);
+  font-size: var(--display-3);
   margin-block: -0.12em 0.1em;
   white-space: nowrap;
 }
@@ -868,7 +871,9 @@ button:focus-visible {
   padding-top: 14px;
 }
 .mod-client-list .text-num {
-  color: var(--orange-700); /* the panel is always neutral-100, whatever the theme */
+  color: var(
+    --orange-700
+  ); /* the panel is always neutral-100, whatever the theme */
 }
 
 .mod-flow {
