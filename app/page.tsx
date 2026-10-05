@@ -133,7 +133,7 @@ export default function Home() {
 
       <main className="column">
         {/* HERO */}
-        <section className="hero" id="top" data-gate="0">
+        <section className="hero" id="top" data-gate="dark">
           <div className="hero-photo">
             {/* growth rings — parallax on the wrapper, breathing on the ring */}
             {HERO_RINGS.map((depth, i) => (
@@ -170,7 +170,7 @@ export default function Home() {
         </section>
 
         {/* ABOUT — legalese */}
-        <section className="about" id="about" data-gate="1">
+        <section className="about" id="about" data-gate="dark">
           <h2 className="text-display about-h2">
             <em>Seeing</em> both
             <br />
@@ -191,42 +191,8 @@ export default function Home() {
           </p>
         </section>
 
-        {/* QUESTION */}
-        <section className="question" data-gate="2">
-          <p className="text-label question-label">RECENT THOUGHTS</p>
-          <p className="text-sub question-p">
-            How does AI reshape the way clients engage with and evaluate legal
-            services?
-          </p>
-          <a
-            href="https://lnkd.in/p/gPGaJ2Sa"
-            target="_blank"
-            rel="noopener"
-            className="text-label question-link"
-          >
-            Read the article &rarr;
-          </a>
-        </section>
-
-        {/* SERVICES — sage theme */}
-        <section className="services" id="work" data-gate="3">
-          <h2 className="text-display services-h2">
-            <span className="services-title">Where I help</span>{" "}
-            <span className="text-stat services-sub">early-stage teams</span>
-          </h2>
-          <div className="grid services-grid">
-            {SERVICES.map((s, i) => (
-              <div className={`svc-card svc-card-${i + 1}`} key={s.num}>
-                <span className="text-stat svc-num">{s.num}</span>
-                <h3 className="text-title svc-title">{s.title}</h3>
-                <p className="svc-desc">{s.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
         {/* CASE STUDIES — header */}
-        <section className="cs" data-gate="4">
+        <section className="cs" id="work" data-gate="light">
           <h2 className="text-display cs-h2">
             <span className="text-stat cs-case">Case</span>{" "}
             <span className="cs-studies">studies</span>{" "}
@@ -240,7 +206,7 @@ export default function Home() {
         </section>
 
         {/* CASE — black-box deck; the four steps sit behind the answer */}
-        <section className="case case-deck" data-gate="5">
+        <section className="case case-deck" data-gate="light">
           <div className="grid">
             <div className="mod-title">
               <span className="text-label case-eyebrow">
@@ -275,7 +241,7 @@ export default function Home() {
         </section>
 
         {/* CASE — module accordion, curves flow into the 400% */}
-        <section className="case case-mod" data-gate="5">
+        <section className="case case-mod" data-gate="light">
           <div className="grid">
             <div className="mod-title">
               <span className="text-label case-eyebrow">
@@ -308,8 +274,42 @@ export default function Home() {
           <CaseModules />
         </section>
 
+        {/* QUESTION */}
+        <section className="question" data-gate="light">
+          <p className="text-label question-label">RECENT THOUGHTS</p>
+          <p className="text-sub question-p">
+            How does AI reshape the way clients engage with and evaluate legal
+            services?
+          </p>
+          <a
+            href="https://lnkd.in/p/gPGaJ2Sa"
+            target="_blank"
+            rel="noopener"
+            className="text-label question-link"
+          >
+            Read the article &rarr;
+          </a>
+        </section>
+
+        {/* SERVICES */}
+        <section className="services" data-gate="light">
+          <h2 className="text-display services-h2">
+            <span className="services-title">Where I help</span>{" "}
+            <span className="text-stat services-sub">early-stage teams</span>
+          </h2>
+          <div className="grid services-grid">
+            {SERVICES.map((s, i) => (
+              <div className={`svc-card svc-card-${i + 1}`} key={s.num}>
+                <span className="text-stat svc-num">{s.num}</span>
+                <h3 className="text-title svc-title">{s.title}</h3>
+                <p className="svc-desc">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* CTA — the nav's LinkedIn pill is the action */}
-        <footer className="cta" data-gate="6">
+        <footer className="cta" data-gate="dark">
           <h2 className="text-display cta-h2">
             Let&rsquo;s talk about
             <br />
