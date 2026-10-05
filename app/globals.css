@@ -121,6 +121,15 @@ button:focus-visible {
   column-gap: 2cqw;
 }
 
+/* Breakpoints (media queries can't read custom properties, so they are
+   written out):
+   - phone, max-width 640px: page layout and the display scale
+   - case frame, max-width 899.98px: the deck and modules stack. They need
+     it sooner than the page: at 700px the deck's tabs would be ~26px wide,
+     too narrow for their 18px vertical names, while everything else still
+     scales with the column. Between the two, only the case frames are
+     stacked, on purpose. */
+
 /* ── TYPE ──
    UI text sits on four even sizes. Display text sits on a √2 scale in
    column widths; phones enlarge the four smallest steps, while the big
@@ -131,6 +140,9 @@ button:focus-visible {
   --text-sm: 14px;
   --text-md: 16px;
   --text-lg: 18px;
+
+  /* card titles sit between the UI sizes and the display scale */
+  --title-card: clamp(20px, 2cqw, 32px);
 
   --display-0: 2.5cqw;
   --display-1: 3.5cqw;
@@ -568,7 +580,7 @@ button:focus-visible {
   gap: 12px;
 }
 .svc-title {
-  font-size: clamp(20px, 2cqw, 32px);
+  font-size: var(--title-card);
 }
 .svc-desc {
   margin: 0;
@@ -607,9 +619,6 @@ button:focus-visible {
 .svc-card-4 .svc-num {
   font-size: var(--display-1);
   color: var(--warm);
-}
-.svc-card-4 .svc-title {
-  font-size: clamp(18px, 1.5cqw, 24px);
 }
 .svc-card-4 .svc-desc {
   max-width: 26ch;
@@ -913,7 +922,7 @@ button:focus-visible {
   }
 }
 
-/* stacked accordion; one row open at most */
+/* stacked accordion; one row open at most (case-frame breakpoint) */
 @media (max-width: 899.98px) {
   .case-mod {
     padding: 14vh 24px 8vh;
@@ -1176,7 +1185,8 @@ button:focus-visible {
   }
 }
 
-/* stacked: the steps peek out above the front card as top bars */
+/* stacked: the steps peek out above the front card as top bars
+   (case-frame breakpoint) */
 @media (max-width: 899.98px) {
   .case-deck {
     --bar: 44px;
