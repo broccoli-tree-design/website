@@ -24,9 +24,9 @@
   --leaf-radius: 4px 62% 4px 62% / 4px 62% 4px 62%;
 }
 
-/* Roles: swapped per section by ThemeGates.tsx (dark → sage at Services →
-   deep from Case studies). Registered so they fade, which needs literal
-   initial values: the dark theme's. */
+/* Roles: swapped per section by ThemeGates.tsx (dark → light from Case
+   studies through Services → dark again at the footer). Registered so they
+   fade, which needs literal initial values: the dark theme's. */
 @property --bg {
   syntax: "<color>";
   inherits: true;
@@ -61,15 +61,12 @@
   transition: --bg 1.1s ease, --ink 1.1s ease, --muted 1.1s ease,
     --accent 1.1s ease, --warm 1.1s ease;
 }
-:root[data-theme="sage"] {
-  --bg: var(--neutral-200);
+:root[data-theme="light"] {
+  --bg: var(--neutral-100);
   --ink: var(--green-800);
   --muted: var(--neutral-700);
   --accent: var(--green-600);
   --warm: var(--orange-700);
-}
-:root[data-theme="deep"] {
-  --bg: var(--green-900);
 }
 
 html {
@@ -419,6 +416,10 @@ a:hover {
   margin-top: calc(var(--name-fs) * 0.42);
   color: var(--accent);
 }
+.hero-s1-lead {
+  color: var(--ink);
+  font-style: normal;
+}
 .hero-s2 {
   grid-area: 4 / 6 / auto / span 3;
   margin-top: 0.2em;
@@ -532,7 +533,7 @@ a:hover {
   padding-bottom: 4px;
 }
 
-/* ── SERVICES — sage theme, staggered cards ── */
+/* ── SERVICES — staggered cards ── */
 .services {
   position: relative;
   min-height: 190vh;
@@ -666,10 +667,10 @@ a:hover {
   opacity: 0.22;
 }
 .case-frame-2 .case-ring-0 {
-  inset: -14px 10px 10px -14px;
+  inset: 10px 10px -14px -14px;
 }
 .case-frame-2 .case-ring-1 {
-  inset: -30px 26px 26px -30px;
+  inset: 26px 26px -30px -30px;
 }
 
 /* case — module accordion; curves flow from each tab into the 400%.
@@ -717,6 +718,7 @@ a:hover {
   display: flex;
   height: clamp(440px, 43cqw, 620px);
   border-radius: 16px;
+  border: 1px solid var(--green-900);
   overflow: hidden;
 }
 .mod-item {
@@ -728,6 +730,9 @@ a:hover {
   background: var(--c);
   color: var(--fg);
   border-right: 1px solid var(--green-900);
+}
+.mod-item:last-child {
+  border-right: 0;
 }
 .mod-item.is-open {
   flex: 1 1 0;
@@ -884,6 +889,7 @@ a:hover {
 }
 .result-stat {
   font-size: var(--display-4);
+  color: var(--warm);
 }
 .mod-result .result-stat {
   margin-right: -2.8cqw;
@@ -924,7 +930,7 @@ a:hover {
     margin-top: 56px;
   }
   .mod-frame .case-ring-0 {
-    inset: -8px 6px 6px -8px;
+    inset: 6px 6px -8px -8px;
     border-radius: 20px;
   }
   .mod-frame .case-ring-1 {
@@ -942,6 +948,9 @@ a:hover {
     color: var(--green-900);
     border-right: 0;
     border-bottom: 1px solid var(--green-900);
+  }
+  .mod-item:last-child {
+    border-bottom: 0;
   }
   .mod-tab,
   .is-open .mod-tab,
@@ -1030,7 +1039,8 @@ a:hover {
   position: absolute;
   left: 0;
   top: 0;
-  z-index: 0;
+  z-index: 4;
+  pointer-events: none;
   width: 100%;
   height: auto;
 }
@@ -1038,14 +1048,15 @@ a:hover {
   width: calc(960 * var(--u));
   height: calc(600 * var(--u));
 }
+/* half a card step past the back card (244, 144), then another half */
 .deck-frame .case-ring-0 {
-  left: calc(300 * var(--u));
-  top: calc(180 * var(--u));
+  left: calc(272 * var(--u));
+  top: calc(162 * var(--u));
   z-index: 2;
 }
 .deck-frame .case-ring-1 {
-  left: calc(356 * var(--u));
-  top: calc(216 * var(--u));
+  left: calc(300 * var(--u));
+  top: calc(180 * var(--u));
   z-index: 1;
 }
 /* every card in one grid cell; depth --d slides it down the diagonal */
@@ -1149,6 +1160,9 @@ a:hover {
 @media (prefers-reduced-motion: no-preference) {
   .deck-card {
     transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+  .deck-flow path {
+    transition: d 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
 }
 

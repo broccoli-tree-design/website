@@ -42,14 +42,16 @@ const N = CARDS.length;
 const num = (i: number) => (i ? `0${i}` : "");
 
 /** Artboard units (1384-wide deck): each depth slot steps 56 right, 36 down.
- *  One curve per slot (5 cards + 2 rings), from its bottom centre to the
- *  result label's left edge. The SVG sits behind the stack, so each curve
- *  only shows where it comes out from under it. */
+ *  One curve from the bottom of the Review summary tab, wherever that card
+ *  sits in the stack, to the result label's left edge. Drawn over the stack;
+ *  CSS animates `d` alongside the cards. */
 const EX = 480;
-const FLOW = Array.from({ length: N + 2 }, (_, d) => {
-  const x = 20 + d * 56 + 480;
-  return `M ${x} ${600 + d * 36} C ${x} ${730 + d * 36}, ${EX} 856, ${EX} 986`;
-});
+const SUMMARY = N - 1;
+function flow(d: number) {
+  const x = 952 + d * 56;
+  const y = 600 + d * 36;
+  return `M ${x} ${y} C ${x} ${y + 160}, ${EX} 826, ${EX} 986`;
+}
 
 /** three static curves, drawn on a 350-wide frame and stretched to fit */
 const MOBILE_EX = (350 * EX) / 1384;
@@ -64,6 +66,7 @@ const MOBILE_FLOW = [
 
 export default function CaseDeck() {
   const [active, setActive] = useState(0);
+  const summaryFlow = flow((SUMMARY - active + N) % N);
 
   // behind cards come forward; the front card hands over to the next step
   const pick = (i: number) => setActive((a) => (a === i ? (i + 1) % N : i));
@@ -76,9 +79,10 @@ export default function CaseDeck() {
           viewBox="0 0 1384 986"
           aria-hidden="true"
         >
-          {FLOW.map((d, i) => (
-            <path key={i} d={d} />
-          ))}
+          <path
+            d={summaryFlow}
+            style={{ d: `path("${summaryFlow}")` } as CSSProperties}
+          />
         </svg>
         <div
           className="case-ring case-ring-0"
