@@ -16,11 +16,12 @@
   --neutral-700: #3c4a3f;
   --neutral-200: #d7dccb;
   --neutral-100: #efeede;
+  --orange-800: #742f15; /* --orange-700 20% toward black (oklab) */
   --orange-700: #9e4220;
   --orange-400: #fb7e4f;
 
   --button: var(--orange-700); /* button text 5.5:1 */
-  --button-hover: color-mix(in oklab, var(--orange-700), black 20%);
+  --button-hover: var(--orange-800); /* button text 8.3:1 */
   --leaf-radius: 4px 62% 4px 62% / 4px 62% 4px 62%;
 }
 
@@ -93,6 +94,13 @@ a {
 }
 a:hover {
   color: var(--ink);
+}
+/* one ring for links and buttons, readable on both themes (accent is
+   6.65:1 on dark, 5:1 on light); the case tabs keep their inset ring */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 /* headlines bleed past the edges on purpose */
@@ -851,7 +859,7 @@ a:hover {
   padding-top: 14px;
 }
 .mod-client-list .text-num {
-  color: var(--orange-700);
+  color: var(--orange-700); /* the panel is always neutral-100, whatever the theme */
 }
 
 .mod-flow {
@@ -1244,7 +1252,7 @@ a:hover {
 /* ── MOBILE ── */
 @media (max-width: 640px) {
   .nav {
-    padding: 16px 18px;
+    padding: 16px 24px; /* the phone content gutter */
   }
   .nav-logo-text {
     display: none;
