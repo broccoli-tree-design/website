@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { phoneFlow } from "./flow";
 
 /** Client view, then the four modules it is built from */
 const MODULES = [
@@ -49,26 +50,12 @@ function desktopFlow(w: number, ex: number, active: number) {
   return `M ${cx} 0 C ${cx} 110, ${ex} 60, ${ex} 170`;
 }
 
-/** three static curves, drawn on a 350-wide frame and stretched to fit */
-function mobileFlow(w: number, ex: number) {
-  const s = w / 350;
-  return [
-    [40, 50, 30],
-    [175, 50, 40],
-    [310, 40, 50],
-  ].map(([x, a, b]) => {
-    const sx = (x * s).toFixed(1);
-    return `M ${sx} 0 C ${sx} ${a}, ${ex} ${b}, ${ex} 90`;
-  });
-}
-
 export default function CaseModules() {
   const [active, setActive] = useState(1);
   const [width, setWidth] = useState(1384);
   const [labelX, setLabelX] = useState(1000); // label's left edge in track space
   const track = useRef<HTMLDivElement>(null);
   const result = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const el = track.current;
     const res = result.current;
@@ -93,6 +80,8 @@ export default function CaseModules() {
   }, []);
 
   const flow = desktopFlow(width, labelX, active);
+  // the label starts mid-screen, so start right of it for a curve
+  const mobileFlow = phoneFlow(width, labelX, 0.75);
 
   // desktop opens; mobile toggles, so tapping the open row closes it
   const toggle = (i: number) =>
@@ -189,12 +178,9 @@ export default function CaseModules() {
       <svg
         className="mod-flow mod-flow-mobile"
         viewBox={`0 0 ${width} 90`}
-        preserveAspectRatio="none"
         aria-hidden="true"
       >
-        {mobileFlow(width, labelX).map((d, i) => (
-          <path key={i} d={d} />
-        ))}
+        <path d={mobileFlow} />
       </svg>
 
       <div className="mod-result" ref={result}>

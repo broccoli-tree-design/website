@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
-import { useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { phoneFlow } from "./flow";
 
 /** The black box in front, then the four steps behind it */
 const CARDS = [
@@ -53,27 +54,31 @@ function flow(d: number) {
   return `M ${x} ${y} C ${x} ${y + 160}, ${EX} 826, ${EX} 986`;
 }
 
-/** three static curves, drawn on a 350-wide frame and stretched to fit */
-const MOBILE_EX = (350 * EX) / 1384;
-const MOBILE_FLOW = [
-  [40, 50, 30],
-  [175, 50, 40],
-  [310, 40, 50],
-].map(
-  ([x, a, b]) =>
-    `M ${x} 0 C ${x} ${a}, ${MOBILE_EX.toFixed(1)} ${b}, ${MOBILE_EX.toFixed(1)} 90`,
-);
+/** Stacked (phones): the label starts 34.7% in */
+const PHONE_EX = 0.347;
 
 export default function CaseDeck() {
   const [active, setActive] = useState(0);
   const summaryFlow = flow((SUMMARY - active + N) % N);
+  const frame = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(350);
+
+  useEffect(() => {
+    const el = frame.current;
+    if (!el) return;
+    const ro = new ResizeObserver(() => setWidth(el.offsetWidth));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
+  const mobileFlow = phoneFlow(width, width * PHONE_EX);
 
   // behind cards come forward; the front card hands over to the next step
   const pick = (i: number) => setActive((a) => (a === i ? (i + 1) % N : i));
 
   return (
     <>
-      <div className="case-frame deck-frame">
+      <div className="case-frame deck-frame" ref={frame}>
         <svg
           className="mod-flow deck-flow"
           viewBox="0 0 1384 986"
@@ -153,13 +158,10 @@ export default function CaseDeck() {
 
       <svg
         className="mod-flow deck-flow-mobile"
-        viewBox="0 0 350 90"
-        preserveAspectRatio="none"
+        viewBox={`0 0 ${width} 90`}
         aria-hidden="true"
       >
-        {MOBILE_FLOW.map((d, i) => (
-          <path key={i} d={d} />
-        ))}
+        <path d={mobileFlow} />
       </svg>
 
       <div className="deck-result">
