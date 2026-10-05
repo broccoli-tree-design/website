@@ -1,7 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Eye from "@/components/Eye";
-import Eyes from "@/components/Eyes";
+import EyeTracker from "@/components/EyeTracker";
 import CaseDeck from "@/components/CaseDeck";
 import CaseModules from "@/components/CaseModules";
 import Rings from "@/components/Rings";
@@ -164,8 +164,7 @@ export default function Home() {
             </h1>
             <p className="text-sub hero-slogan">
               <span className="hero-s1">
-                <span className="hero-s1-lead">I design</span> intuitive
-                experience
+                I design <em className="hero-s1-em">intuitive</em> experience
               </span>{" "}
               <span className="hero-s2">for legal tech</span>
             </p>
@@ -329,7 +328,7 @@ export default function Home() {
       />
       <ThemeGates />
       <Rings />
-      <Eyes />
+      <EyeTracker />
       <Analytics />
       <SpeedInsights />
     </div>

@@ -10,7 +10,7 @@ const blink = (el: Element) =>
 /** Every [data-eye] follows the pointer, blinks when clicked, and blinks on
  *  its own every few seconds. Idle blinks are off under prefers-reduced-motion;
  *  tracking and click-blinks stay since they answer the user's own input. */
-export default function Eyes() {
+export default function EyeTracker() {
   useEffect(() => {
     const reduce = matchMedia("(prefers-reduced-motion: reduce)");
     // before the first move, look down at the copy

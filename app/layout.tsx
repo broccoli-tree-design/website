@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Bodoni_Moda, Work_Sans, Montserrat_Alternates, IBM_Plex_Mono } from 'next/font/google'
+import { Bodoni_Moda, Work_Sans, Montserrat_Alternates } from 'next/font/google'
 import './globals.css'
 import { SITE_URL, SITE_NAME, SITE_TITLE, SITE_DESCRIPTION } from './site'
 
@@ -20,12 +20,6 @@ const display = Montserrat_Alternates({
   subsets: ['latin'],
   variable: '--display',
   weight: ['600'],
-})
-
-const mono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  variable: '--mono',
-  weight: ['400', '500'],
 })
 
 export const metadata: Metadata = {
@@ -59,7 +53,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable} ${display.variable} ${mono.variable}`}>
+    <html lang="en" className={`${serif.variable} ${sans.variable} ${display.variable}`}>
       <body>{children}</body>
     </html>
   )
