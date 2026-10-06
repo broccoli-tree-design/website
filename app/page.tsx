@@ -170,7 +170,7 @@ export default function Home() {
             </h1>
             <p className="text-sub hero-slogan">
               <span className="hero-s1">
-                I design <em className="hero-s1-em">intuitive</em> experience
+                I design <em className="hero-s1-em">intuitive</em> experiences
               </span>{" "}
               <span className="hero-s2">for legal tech</span>
             </p>
@@ -180,11 +180,11 @@ export default function Home() {
         {/* ABOUT — legalese */}
         <section className="about" id="about" data-gate="dark">
           <h2 className="text-display about-h2">
-            <em>Seeing</em> both
+            To design is to <em>see</em>
             <br />
-            human
+            both the human
             <br />
-            and system
+            and the system
           </h2>
           <p className="body about-p">
             As a Paralegal turned Designer, I’ve experienced first-hand the
