@@ -1,41 +1,43 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { phoneFlow } from "./flow";
+import {
+  CaseResult,
+  CaseRings,
+  num,
+  PhoneFlow,
+  STEP_COLORS,
+  type CaseStep,
+} from "./CaseParts";
 
 /** Client view, then the four modules it is built from */
-const MODULES = [
+const MODULES: CaseStep[] = [
   { name: "Client view", color: "var(--neutral-100)", fg: "var(--green-900)" },
   {
     name: "Audience insights",
     img: "/case2/m-audience.png",
     h: 725,
-    color: "var(--green-300)",
-    fg: "var(--green-900)",
+    ...STEP_COLORS[0],
   },
   {
     name: "Channel planning",
     img: "/case2/m-channel.png",
     h: 729,
-    color: "var(--orange-400)",
-    fg: "var(--green-900)",
+    ...STEP_COLORS[1],
   },
   {
     name: "Investment planning",
     img: "/case2/m-investment.png",
     h: 729,
-    color: "var(--neutral-200)",
-    fg: "var(--green-900)",
+    ...STEP_COLORS[2],
   },
   {
     name: "Performance reporting",
     img: "/case2/m-performance.png",
     h: 729,
-    color: "var(--green-800)",
-    fg: "var(--neutral-100)",
+    ...STEP_COLORS[3],
   },
 ];
-const num = (i: number) => (i ? `0${i}` : "");
 
 const DESKTOP = "(min-width: 900px)";
 const TAB = 84; // collapsed tab width, matches .mod-item
@@ -80,8 +82,6 @@ export default function CaseModules() {
   }, []);
 
   const flow = desktopFlow(width, labelX, active);
-  // the label starts mid-screen, so start right of it for a curve
-  const mobileFlow = phoneFlow(width, labelX, 0.75);
 
   // desktop opens; mobile toggles, so tapping the open row closes it
   const toggle = (i: number) =>
@@ -90,16 +90,7 @@ export default function CaseModules() {
   return (
     <>
       <div className="case-frame case-frame-2 mod-frame">
-        <div
-          className="case-ring case-ring-1"
-          data-ring={1}
-          aria-hidden="true"
-        />
-        <div
-          className="case-ring case-ring-0"
-          data-ring={0}
-          aria-hidden="true"
-        />
+        <CaseRings />
         <div className="mod-track" ref={track}>
           {MODULES.map((m, i) => {
             const open = i === active;
@@ -175,18 +166,15 @@ export default function CaseModules() {
       >
         <path d={flow} style={{ d: `path("${flow}")` } as CSSProperties} />
       </svg>
-      <svg
-        className="case-flow case-flow-mobile"
-        viewBox={`0 0 ${width} 90`}
-        aria-hidden="true"
-      >
-        <path d={mobileFlow} />
-      </svg>
+      {/* the label starts mid-screen, so start right of it for a curve */}
+      <PhoneFlow width={width} ex={labelX} from={0.75} />
 
-      <div className="case-result mod-result" ref={result}>
-        <span className="text-sub result-label">User base grew</span>
-        <span className="text-stat result-stat">400%</span>
-      </div>
+      <CaseResult
+        className="mod-result"
+        ref={result}
+        label="User base grew"
+        stat="400%"
+      />
     </>
   );
 }
