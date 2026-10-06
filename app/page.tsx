@@ -186,17 +186,20 @@ export default function Home() {
             <br />
             and the system
           </h2>
-          <p className="body about-p">
-            As a Paralegal turned Designer, I’ve experienced first-hand the
-            stress and fulfillment operating within legal systems in the U.S.
-            and China — from working late nights alongside attorneys on urgent
-            trademark prosecution, to negotiating with county clerks for the
-            records behind an insurance litigation, to translating for immigrant
-            families fighting for their children's right to go to school.
-            <br />
-            <br />I know when technology makes legal systems easier to deal
-            with, and when humans should make the judgment.
-          </p>
+          <div className="grid section-body about-body">
+            <p className="body about-p">
+              As a Paralegal turned Designer, I’ve experienced first-hand the
+              stress and fulfillment operating within legal systems in the U.S.
+              and China — from working late nights alongside attorneys on urgent
+              trademark prosecution, to negotiating with county clerks for the
+              records behind an insurance litigation, to translating for
+              immigrant families fighting for their children's right to go to
+              school.
+              <br />
+              <br />I know when technology makes legal systems easier to deal
+              with, and when humans should make the judgment.
+            </p>
+          </div>
         </section>
 
         {/* CASE STUDIES — header */}
@@ -206,11 +209,13 @@ export default function Home() {
             <span className="cs-studies">studies</span>{" "}
             <span className="text-sub cs-sub">of data and workflow apps</span>
           </h2>
-          <p className="body cs-p">
-            Examples from my past life designing enterprise software that help
-            humans overwhelmed by datageddon and fragmented tools make informed
-            decisions and develop shared understanding.
-          </p>
+          <div className="grid section-body cs-body">
+            <p className="body cs-p">
+              Examples from my past life designing enterprise software that help
+              humans overwhelmed by datageddon and fragmented tools make
+              informed decisions and develop shared understanding.
+            </p>
+          </div>
         </section>
 
         {/* CASE — black-box deck; the four steps sit behind the answer */}
@@ -283,7 +288,7 @@ export default function Home() {
         </section>
 
         {/* QUESTION */}
-        <section className="question" data-gate="light">
+        <section className="grid section-body question" data-gate="light">
           <p className="text-label question-label">RECENT THOUGHTS</p>
           <p className="text-sub question-p">
             How does AI reshape the way clients engage with and evaluate legal

@@ -120,6 +120,11 @@ button:focus-visible {
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: 2cqw;
 }
+/* body copy sits on the same columns as the cases and services; the
+   display headlines above it stay off the grid so they can bleed */
+.section-body {
+  padding-inline: var(--gutter);
+}
 
 /* side gutter: 24px on phones (the case sections switch at their own
    breakpoint, in cases.css) */
@@ -536,18 +541,21 @@ button:focus-visible {
   font-style: normal;
   white-space: nowrap;
 }
+.about-body {
+  margin-top: 12vh;
+}
 .about-p {
-  margin: 16vh 0 0 max(var(--gutter), 8cqw);
-  max-width: 400px;
+  grid-column: 7 / span 5;
+  margin: 0;
 }
 
 /* ── QUESTION ── */
 .question {
   min-height: 95vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 var(--gutter) 0 clamp(var(--gutter), 40cqw, 720px);
+  align-content: center;
+}
+.question > * {
+  grid-column: 6 / -1;
 }
 .question-label {
   margin: 0 0 12px;
@@ -558,7 +566,7 @@ button:focus-visible {
 }
 .question-link {
   margin-top: 36px;
-  align-self: flex-start;
+  justify-self: start;
   color: var(--warm);
   border-bottom: 1px solid currentColor;
   padding-bottom: 4px;
@@ -662,10 +670,12 @@ button:focus-visible {
   display: block;
   margin: 3vh 0 0 36cqw;
 }
+.cs-body {
+  margin-top: 12vh;
+}
 .cs-p {
-  margin: 16vh 0 0 max(var(--gutter), 62cqw);
-  max-width: 360px;
-  padding-right: var(--gutter);
+  grid-column: 7 / span 5;
+  margin: 0;
 }
 
 /* ── CTA ── */
@@ -746,14 +756,19 @@ button:focus-visible {
     font-size: var(--display-6);
     margin-block: 0;
   }
+  .about-body {
+    margin-top: 8vh;
+  }
   .about-p {
-    margin: 8vh var(--gutter) 0;
-    max-width: none;
+    grid-column: 1 / -1;
   }
 
   .question {
     min-height: auto;
-    padding: 14vh var(--gutter);
+    padding-block: 14vh;
+  }
+  .question > * {
+    grid-column: 1 / -1;
   }
   .question-p {
     max-width: none;
@@ -789,10 +804,11 @@ button:focus-visible {
   .cs-sub {
     margin: 2vh 0 0 20vw;
   }
+  .cs-body {
+    margin-top: 8vh;
+  }
   .cs-p {
-    margin: 8vh var(--gutter) 0;
-    max-width: none;
-    padding: 0;
+    grid-column: 1 / -1;
   }
 
   .cta {
