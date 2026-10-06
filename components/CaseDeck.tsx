@@ -1,46 +1,48 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import { phoneFlow } from "./flow";
+import {
+  CaseResult,
+  CaseRings,
+  num,
+  PhoneFlow,
+  STEP_COLORS,
+  type CaseStep,
+} from "./CaseParts";
 
 /** The black box in front, then the four steps behind it */
-const CARDS = [
+const CARDS: CaseStep[] = [
   { name: "Black box", color: "var(--green-950)", fg: "var(--neutral-100)" },
   {
     name: "Set parameters",
     img: "/case1/parameter.png",
     w: 1293,
     h: 969,
-    color: "var(--green-300)",
-    fg: "var(--green-900)",
+    ...STEP_COLORS[0],
   },
   {
     name: "Generate",
     img: "/case1/loading.png",
     w: 1054,
     h: 544,
-    color: "var(--orange-400)",
-    fg: "var(--green-900)",
+    ...STEP_COLORS[1],
   },
   {
     name: "Compare reasoning",
     img: "/case1/reasoning.png",
     w: 1366,
     h: 734,
-    color: "var(--neutral-200)",
-    fg: "var(--green-900)",
+    ...STEP_COLORS[2],
   },
   {
     name: "Review summary",
     img: "/case1/summary.png",
     w: 1366,
     h: 1021,
-    color: "var(--green-800)",
-    fg: "var(--neutral-100)",
+    ...STEP_COLORS[3],
   },
 ];
 const N = CARDS.length;
-const num = (i: number) => (i ? `0${i}` : "");
 
 /** Artboard units (1384-wide deck): each depth slot steps 56 right, 36 down.
  *  One curve from the bottom of the Review summary tab, wherever that card
@@ -71,8 +73,6 @@ export default function CaseDeck() {
     return () => ro.disconnect();
   }, []);
 
-  const mobileFlow = phoneFlow(width, width * PHONE_EX);
-
   // behind cards come forward; the front card hands over to the next step
   const pick = (i: number) => setActive((a) => (a === i ? (i + 1) % N : i));
 
@@ -80,7 +80,7 @@ export default function CaseDeck() {
     <>
       <div className="case-frame deck-frame" ref={frame}>
         <svg
-          className="mod-flow deck-flow"
+          className="case-flow deck-flow"
           viewBox="0 0 1384 986"
           aria-hidden="true"
         >
@@ -89,16 +89,7 @@ export default function CaseDeck() {
             style={{ d: `path("${summaryFlow}")` } as CSSProperties}
           />
         </svg>
-        <div
-          className="case-ring case-ring-0"
-          data-ring={0}
-          aria-hidden="true"
-        />
-        <div
-          className="case-ring case-ring-1"
-          data-ring={1}
-          aria-hidden="true"
-        />
+        <CaseRings />
         <div className="deck-stack">
           {CARDS.map((c, i) => {
             const d = (i - active + N) % N;
@@ -119,7 +110,7 @@ export default function CaseDeck() {
                 }
                 onClick={() => pick(i)}
               >
-                <div className="deck-body">
+                <div className="case-shot deck-body">
                   {c.img ? (
                     <Image
                       src={c.img}
@@ -141,13 +132,13 @@ export default function CaseDeck() {
                 </div>
                 <button
                   type="button"
-                  className="deck-tab"
+                  className="case-tab deck-tab"
                   aria-label={
                     i ? `Show step ${num(i)}: ${c.name}` : `Show ${c.name}`
                   }
                   aria-pressed={front}
                 >
-                  <span className="deck-name">{c.name}</span>
+                  <span className="case-name">{c.name}</span>
                   <span className="text-num deck-num">{num(i)}</span>
                 </button>
               </div>
@@ -156,20 +147,13 @@ export default function CaseDeck() {
         </div>
       </div>
 
-      <svg
-        className="mod-flow deck-flow-mobile"
-        viewBox={`0 0 ${width} 90`}
-        aria-hidden="true"
-      >
-        <path d={mobileFlow} />
-      </svg>
+      <PhoneFlow width={width} ex={width * PHONE_EX} />
 
-      <div className="deck-result">
-        <span className="text-sub result-label">
-          Increase in funding after MVP delivery
-        </span>
-        <span className="text-stat result-stat">50%</span>
-      </div>
+      <CaseResult
+        className="deck-result"
+        label="Increase in funding after MVP delivery"
+        stat="50%"
+      />
     </>
   );
 }

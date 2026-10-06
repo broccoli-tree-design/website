@@ -120,6 +120,22 @@ button:focus-visible {
   grid-template-columns: repeat(12, minmax(0, 1fr));
   column-gap: 2cqw;
 }
+/* body copy sits on the same columns as the cases and services; the
+   display headlines above it stay off the grid so they can bleed */
+.section-body {
+  padding-inline: var(--gutter);
+}
+
+/* side gutter: 24px on phones (the case sections switch at their own
+   breakpoint, in cases.css) */
+:root {
+  --gutter: 28px;
+}
+@media (max-width: 640px) {
+  :root {
+    --gutter: 24px;
+  }
+}
 
 /* Breakpoints (media queries can't read custom properties, so they are
    written out):
@@ -129,6 +145,12 @@ button:focus-visible {
      too narrow for their 18px vertical names, while everything else still
      scales with the column. Between the two, only the case frames are
      stacked, on purpose. */
+
+/* ── MOTION ── one ease-out for entrances and layout moves (Rings.tsx
+   repeats it: Web Animations easing can't read custom properties) */
+:root {
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+}
 
 /* ── TYPE ──
    UI text sits on four even sizes. Display text sits on a √2 scale in
@@ -238,7 +260,7 @@ button:focus-visible {
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 20px 28px;
+  padding: 20px var(--gutter);
 }
 .nav-logo {
   display: flex;
@@ -399,7 +421,7 @@ button:focus-visible {
   right: 0;
   top: 54%;
   translate: 0 -50%;
-  padding: 0 28px;
+  padding: 0 var(--gutter);
   z-index: 3;
   pointer-events: none;
 }
@@ -425,12 +447,13 @@ button:focus-visible {
   margin-top: calc(var(--name-fs) * 0.01);
   font-size: var(--name-fs);
   letter-spacing: -0.05em;
-  margin-left: -0.04em; /* optical alignment of the italic A */
+  margin-left: 0.05em; /* optical alignment of the italic A */
+  color: var(--ink);
 }
 .hero-slogan {
   font-size: var(--display-0);
   /* heavier than .text-sub's 500: Bodoni's hairlines thin out at phone and
-     tablet sizes, where the terracotta has only 4.56:1 to spare */
+     tablet sizes */
   font-weight: 600;
 }
 .hero-s1 {
@@ -442,7 +465,7 @@ button:focus-visible {
 }
 .hero-s1-em {
   font-style: italic;
-  color: var(--warm);
+  color: var(--accent);
 }
 .hero-s2 {
   grid-area: 4 / 6 / auto / span 3;
@@ -456,32 +479,22 @@ button:focus-visible {
    its `rotate`. */
 @media (prefers-reduced-motion: no-preference) {
   .hero-photo {
-    animation: hero-photo-in 1100ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
+    animation: hero-photo-in 1100ms var(--ease-out) backwards;
   }
+  /* inner → outer, 110ms apart; --i is set in page.tsx */
   .hero-photo .ring-layer {
-    animation: hero-ring-in 1600ms cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
-  }
-  .hero-photo .ring-layer:nth-child(1) {
-    animation-delay: 250ms;
-  }
-  .hero-photo .ring-layer:nth-child(2) {
-    animation-delay: 360ms;
-  }
-  .hero-photo .ring-layer:nth-child(3) {
-    animation-delay: 470ms;
-  }
-  .hero-photo .ring-layer:nth-child(4) {
-    animation-delay: 580ms;
+    animation: hero-ring-in 1600ms var(--ease-out) backwards;
+    animation-delay: calc(250ms + var(--i) * 110ms);
   }
   .hero-hi,
   .hero-name {
-    animation: hero-rise 1200ms cubic-bezier(0.2, 0.7, 0.2, 1) 380ms backwards;
+    animation: hero-rise 1200ms var(--ease-out) 380ms backwards;
   }
   .hero-name {
     animation-delay: 540ms;
   }
   .hero-slogan {
-    animation: hero-fade 1200ms cubic-bezier(0.2, 0.7, 0.2, 1) 700ms backwards;
+    animation: hero-fade 1200ms var(--ease-out) 700ms backwards;
   }
 }
 @keyframes hero-photo-in {
@@ -527,20 +540,24 @@ button:focus-visible {
   display: inline-block;
   font-size: var(--display-3);
   margin-block: -0.12em 0.1em;
+  font-style: normal;
   white-space: nowrap;
 }
+.about-body {
+  margin-top: 12vh;
+}
 .about-p {
-  margin: 16vh 0 0 max(28px, 8cqw);
-  max-width: 400px;
+  grid-column: 7 / span 5;
+  margin: 0;
 }
 
 /* ── QUESTION ── */
 .question {
   min-height: 95vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 28px 0 clamp(28px, 40cqw, 720px);
+  align-content: center;
+}
+.question > * {
+  grid-column: 6 / -1;
 }
 .question-label {
   margin: 0 0 12px;
@@ -551,7 +568,7 @@ button:focus-visible {
 }
 .question-link {
   margin-top: 36px;
-  align-self: flex-start;
+  justify-self: start;
   color: var(--warm);
   border-bottom: 1px solid currentColor;
   padding-bottom: 4px;
@@ -569,13 +586,17 @@ button:focus-visible {
   margin-left: -1.2cqw;
   white-space: nowrap;
 }
+
+/* overlaps title on purpose */
 .services-sub {
   display: block;
+  position: relative;
   font-size: var(--display-3);
-  margin: 1vh 0 0 42cqw;
+  margin-top: 0.4cqw;
+  margin-left: 7em;
 }
 .services-grid {
-  padding: 14vh 28px 0;
+  padding: 14vh var(--gutter) 0;
 }
 .svc-card {
   display: flex;
@@ -630,7 +651,7 @@ button:focus-visible {
 /* ── CASE STUDIES — header ── */
 .cs {
   position: relative;
-  min-height: 120vh;
+  min-height: 116vh;
   padding-top: 20vh;
 }
 .cs-h2 {
@@ -640,7 +661,7 @@ button:focus-visible {
   display: block;
   font-size: var(--display-8);
   letter-spacing: -0.05em;
-  margin-left: -3cqw;
+  margin-left: -7cqw;
 }
 /* overlaps "Case" on purpose */
 .cs-studies {
@@ -648,613 +669,33 @@ button:focus-visible {
   position: relative;
   z-index: 2;
   font-size: var(--display-5);
-  margin: -14.5cqw 0 0 34cqw;
+  letter-spacing: 0.022em;
+  /* pinned to the right edge; the em margin cuts half the final "s" at
+     every width */
+  width: fit-content;
+  margin-top: -15.1cqw;
+  margin-left: auto;
+  margin-right: -0.24em;
   white-space: nowrap;
 }
 .cs-sub {
   display: block;
-  margin: 3vh 0 0 36cqw;
+  margin: 4vh 0 0 51cqw;
+  font-style: normal;
+}
+.cs-body {
+  margin-top: 12vh;
 }
 .cs-p {
-  margin: 16vh 0 0 max(28px, 62cqw);
-  max-width: 360px;
-  padding-right: 28px;
-}
-
-/* ── CASES ── */
-.case {
-  position: relative;
-}
-.case-eyebrow {
-  color: var(--warm);
-}
-
-/* growth rings around a case frame */
-.case-frame {
-  position: relative;
+  grid-column: 7 / span 5;
   margin: 0;
-}
-.case-ring {
-  position: absolute;
-  border: 1px solid var(--accent);
-  pointer-events: none;
-}
-.case-ring-0 {
-  border-radius: 24px;
-  opacity: 0.6;
-}
-.case-ring-1 {
-  border-radius: 32px;
-  opacity: 0.22;
-}
-.case-frame-2 .case-ring-0 {
-  inset: 10px 10px -14px -14px;
-}
-.case-frame-2 .case-ring-1 {
-  inset: 26px 26px -30px -30px;
-}
-
-/* case — module accordion; curves flow from each tab into the 400%.
-   Desktop ≥ 900px, stacked accordion below (its own breakpoint) */
-.case-mod {
-  padding: 20vh 28px 8vh;
-}
-.mod-title {
-  grid-column: 1 / span 8;
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-.mod-h3 {
-  font-size: var(--display-2);
-  text-wrap: balance;
-}
-.mod-brief {
-  margin-top: 48px;
-}
-.mod-problem,
-.mod-solution {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.mod-problem {
-  grid-column: 1 / span 4;
-}
-.mod-solution {
-  grid-column: 6 / span 4;
-}
-.mod-problem .text-label {
-  color: var(--warm);
-}
-.mod-solution .text-label {
-  color: var(--accent);
-}
-
-.mod-frame {
-  margin-top: 96px;
-}
-.mod-track {
-  position: relative;
-  display: flex;
-  height: clamp(440px, 43cqw, 620px);
-  border-radius: 16px;
-  border: 1px solid var(--green-900);
-  overflow: hidden;
-}
-.mod-item {
-  flex: 0 0 84px;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background: var(--c);
-  color: var(--fg);
-  border-right: 1px solid var(--green-900);
-}
-.mod-item:last-child {
-  border-right: 0;
-}
-.mod-item.is-open {
-  flex: 1 1 0;
-  background: var(--neutral-100);
-}
-.mod-tab {
-  appearance: none;
-  margin: 0;
-  border: 0;
-  font: inherit;
-  color: var(--fg);
-  background: var(--c);
-  text-align: left;
-  cursor: pointer;
-  /* collapsed: vertical name, number at the foot */
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 24px 0;
-}
-.mod-tab:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: -6px;
-}
-.mod-num {
-  order: 2;
-}
-.mod-name {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-  font-size: var(--text-lg);
-  font-weight: 600;
-  white-space: nowrap;
-}
-.mod-sign {
-  display: none;
-}
-/* open: header bar in the module colour */
-.is-open .mod-tab {
-  flex: none;
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: flex-start;
-  gap: 14px;
-  padding: 18px 28px;
-  cursor: default;
-}
-.is-open .mod-num {
-  order: 0;
-}
-.is-open .mod-name {
-  writing-mode: horizontal-tb;
-  transform: none;
-}
-.mod-client.is-open .mod-tab {
-  display: none;
-}
-.mod-panel {
-  flex: 1;
-  min-height: 0;
-}
-.mod-panel[hidden] {
-  display: none;
-}
-.mod-shot {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-}
-.mod-shot img {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
-}
-.mod-client-view {
-  height: 100%;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(28px, 3.3cqw, 48px);
-  padding: clamp(28px, 3.3cqw, 48px);
-  align-items: end;
-  color: var(--green-900);
-}
-.mod-client-head {
-  align-self: start;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.mod-client-head .text-label {
-  color: var(--neutral-700);
-}
-.mod-client-title {
-  font-size: var(--display-1);
-}
-.mod-client-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  font-size: var(--text-md);
-}
-.mod-client-list li {
-  display: flex;
-  gap: 14px;
-  border-top: 1px solid var(--neutral-200);
-  padding-top: 14px;
-}
-.mod-client-list .text-num {
-  color: var(
-    --orange-700
-  ); /* the panel is always neutral-100, whatever the theme */
-}
-
-.mod-flow {
-  display: block;
-  width: 100%;
-  overflow: visible;
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 1.25;
-  stroke-linecap: round;
-}
-.mod-flow-desktop {
-  height: 170px;
-}
-.mod-flow-mobile {
-  display: none;
-  height: 90px;
-}
-
-/* hugs the 400% at the right edge; label sits on its left edge, where the
-   curves meet */
-.mod-result {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: max-content;
-  margin: 0 -28px 0 auto;
-  gap: 18px;
-  padding-top: 20px;
-}
-/* a roman subtitle over an italic number, shared by both cases */
-.result-label {
-  max-width: 20ch;
-  font-style: normal;
-  text-wrap: balance;
-}
-.result-stat {
-  font-size: var(--display-4);
-  color: var(--warm);
-}
-.mod-result .result-stat {
-  margin-right: -2.8cqw;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .mod-item {
-    transition: flex 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
-  .mod-flow path {
-    transition: d 0.45s cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
-}
-
-/* stacked accordion; one row open at most (case-frame breakpoint) */
-@media (max-width: 899.98px) {
-  .case-mod {
-    padding: 14vh 24px 8vh;
-  }
-  .mod-title,
-  .mod-problem,
-  .mod-solution {
-    grid-column: 1 / -1;
-  }
-  .mod-title {
-    gap: 16px;
-  }
-  .mod-brief {
-    margin-top: 36px;
-    row-gap: 28px;
-  }
-  .mod-problem,
-  .mod-solution {
-    gap: 10px;
-  }
-
-  .mod-frame {
-    margin-top: 56px;
-  }
-  .mod-frame .case-ring-0 {
-    inset: 6px 6px -8px -8px;
-    border-radius: 20px;
-  }
-  .mod-frame .case-ring-1 {
-    display: none;
-  }
-  .mod-track {
-    flex-direction: column;
-    height: auto;
-    border-radius: 14px;
-  }
-  .mod-item,
-  .mod-item.is-open {
-    flex: none;
-    background: var(--neutral-100);
-    color: var(--green-900);
-    border-right: 0;
-    border-bottom: 1px solid var(--green-900);
-  }
-  .mod-item:last-child {
-    border-bottom: 0;
-  }
-  .mod-tab,
-  .is-open .mod-tab,
-  .mod-client.is-open .mod-tab {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 12px;
-    min-height: 56px;
-    padding: 0 18px;
-    cursor: pointer;
-  }
-  .mod-num,
-  .is-open .mod-num {
-    order: 0;
-    flex: none;
-    width: 16px;
-  }
-  .mod-name,
-  .is-open .mod-name {
-    flex: 1;
-    writing-mode: horizontal-tb;
-    transform: none;
-    font-size: var(--text-md);
-  }
-  .mod-sign {
-    display: block;
-    font-size: var(--text-lg);
-    line-height: 1;
-  }
-  .mod-shot {
-    padding: 8px 4px;
-  }
-  .mod-shot img {
-    width: 100%;
-  }
-  .mod-client-view {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 20px;
-    padding: 22px 18px 24px;
-  }
-  .mod-client-head .text-label {
-    display: none;
-  }
-  .mod-client-list {
-    gap: 10px;
-  }
-  .mod-client-list li {
-    gap: 12px;
-    padding-top: 10px;
-  }
-
-  .mod-flow-desktop {
-    display: none;
-  }
-  .mod-flow-mobile {
-    display: block;
-  }
-  .mod-result {
-    margin-right: -24px;
-    gap: 14px;
-    padding-top: 14px;
-  }
-  .mod-result .result-stat {
-    margin-right: -6cqw;
-  }
-}
-
-/* case — black-box deck. Laid out on the 1384-wide artboard in --u units,
-   so the stack, rings and curves scale together. Desktop ≥ 900px, a
-   vertical stack below. Title and brief reuse the .mod-* classes */
-.case-deck {
-  --u: calc((100cqw - 56px) / 1384);
-  padding: 20vh 28px 8vh;
-}
-.deck-frame {
-  margin-top: 96px;
-  height: calc(816 * var(--u));
-  isolation: isolate;
-}
-.deck-flow {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 4;
-  pointer-events: none;
-  width: 100%;
-  height: auto;
-}
-.deck-frame .case-ring {
-  width: calc(960 * var(--u));
-  height: calc(600 * var(--u));
-}
-/* half a card step past the back card (244, 144), then another half */
-.deck-frame .case-ring-0 {
-  left: calc(272 * var(--u));
-  top: calc(162 * var(--u));
-  z-index: 2;
-}
-.deck-frame .case-ring-1 {
-  left: calc(300 * var(--u));
-  top: calc(180 * var(--u));
-  z-index: 1;
-}
-/* every card in one grid cell; depth --d slides it down the diagonal */
-.deck-stack {
-  position: relative;
-  z-index: 3;
-  display: grid;
-}
-.deck-card {
-  grid-area: 1 / 1;
-  margin-left: calc(20 * var(--u));
-  width: calc(960 * var(--u));
-  height: calc(600 * var(--u));
-  display: flex;
-  overflow: hidden;
-  border-radius: 16px;
-  border: 1px solid var(--green-900);
-  background: var(--neutral-100);
-  cursor: pointer;
-  transform: translate(
-    calc(var(--d) * 56 * var(--u)),
-    calc(var(--d) * 36 * var(--u))
-  );
-}
-.deck-black {
-  background: var(--green-950);
-}
-.deck-body {
-  flex: 1;
-  min-width: 0;
-  min-height: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: calc(24 * var(--u));
-}
-.deck-body img {
-  display: block;
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
-}
-.deck-face {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  padding: 0 calc(60 * var(--u));
-  text-align: center;
-}
-.deck-face-title {
-  max-width: 16ch;
-  font-size: var(--display-1);
-  text-wrap: balance;
-  color: var(--neutral-100);
-}
-/* the card is always near-black, so the bright orange whatever the theme
-   (--warm turns dark terracotta in the light theme: 3.05:1) */
-.deck-face .text-label {
-  color: var(--orange-400);
-}
-/* the strip that shows on every card behind; 56 wide = the x step */
-.deck-tab {
-  appearance: none;
-  margin: 0;
-  border: 0;
-  border-left: 1px solid var(--green-900);
-  font: inherit;
-  flex: 0 0 calc(56 * var(--u));
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding: 22px 0;
-  background: var(--c);
-  color: var(--fg);
-  cursor: pointer;
-}
-.deck-tab:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: -6px;
-}
-.deck-name {
-  writing-mode: vertical-rl;
-  font-size: var(--text-lg);
-  font-weight: 600;
-  white-space: nowrap;
-}
-.deck-flow-mobile {
-  display: none;
-  height: 90px;
-}
-.deck-result {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
-  margin: calc(170 * var(--u)) 0 0 calc(480 * var(--u));
-  padding-top: 20px;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .deck-card {
-    transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
-  .deck-flow path {
-    transition: d 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
-  }
-}
-
-/* stacked: the steps peek out above the front card as top bars
-   (case-frame breakpoint) */
-@media (max-width: 899.98px) {
-  .case-deck {
-    --bar: 44px;
-    padding: 14vh 24px 8vh;
-  }
-  .deck-frame {
-    margin-top: 56px;
-    height: auto;
-  }
-  .deck-flow,
-  .deck-frame .case-ring-1 {
-    display: none;
-  }
-  .deck-frame .case-ring-0 {
-    inset: -8px 6px 6px -8px;
-    width: auto;
-    height: auto;
-    border-radius: 20px;
-  }
-  .deck-card {
-    margin: calc(4 * var(--bar)) 0 0;
-    width: auto;
-    height: auto;
-    flex-direction: column;
-    border-radius: 14px;
-    transform: translateY(calc(var(--d) * -1 * var(--bar)));
-  }
-  .deck-body {
-    aspect-ratio: 4 / 3;
-    flex: none;
-    padding: 8px;
-  }
-  .deck-face {
-    gap: 16px;
-    padding: 0 20px;
-  }
-  .deck-tab {
-    order: -1;
-    flex: none;
-    height: var(--bar);
-    flex-direction: row;
-    padding: 0 18px;
-    border-left: 0;
-    border-bottom: 1px solid var(--green-900);
-  }
-  .deck-name {
-    writing-mode: horizontal-tb;
-    font-size: var(--text-md);
-  }
-  .deck-flow-mobile {
-    display: block;
-  }
-  .deck-result {
-    margin: 0 0 0 34.7%;
-    padding-top: 14px;
-  }
 }
 
 /* ── CTA ── */
 .cta {
   position: relative;
   min-height: 90vh;
-  padding: 24vh 28px 8vh;
+  padding: 24vh var(--gutter) 8vh;
 }
 .cta-h2 {
   margin: 0 0 0 18cqw;
@@ -1262,12 +703,13 @@ button:focus-visible {
 }
 .cta-h2 em {
   margin-left: 12cqw;
+  color: var(--warm);
 }
 
 /* ── MOBILE ── */
 @media (max-width: 640px) {
   .nav {
-    padding: 16px 24px; /* the phone content gutter */
+    padding-block: 16px;
   }
   .nav-logo-text {
     display: none;
@@ -1301,7 +743,6 @@ button:focus-visible {
     top: 72px;
   }
   .hero-text {
-    padding: 0 24px;
     top: auto;
     bottom: 5svh;
     translate: none;
@@ -1329,14 +770,19 @@ button:focus-visible {
     font-size: var(--display-6);
     margin-block: 0;
   }
+  .about-body {
+    margin-top: 8vh;
+  }
   .about-p {
-    margin: 8vh 24px 0;
-    max-width: none;
+    grid-column: 1 / -1;
   }
 
   .question {
     min-height: auto;
-    padding: 14vh 24px;
+    padding-block: 14vh;
+  }
+  .question > * {
+    grid-column: 1 / -1;
   }
   .question-p {
     max-width: none;
@@ -1346,21 +792,23 @@ button:focus-visible {
     min-height: auto;
     padding: 14vh 0 10vh;
   }
-  /* wraps rather than running off the screen */
   .services-sub {
-    white-space: normal;
-    margin: 2vh 0 0 22vw;
+    font-size: var(--display-2);
+    margin-top: -0.3cqw;
+    margin-left: 3.7em;
   }
   .services-grid {
     row-gap: 9vh;
-    padding: 10vh 24px 0;
+    padding-top: 10vh;
   }
   /* indented cards keep the off-balance rhythm */
   .svc-card {
     grid-column: 1 / -1;
     margin-top: 0;
   }
-  .svc-card-2,
+  .svc-card-2 {
+    grid-column: 5 / -1;
+  }
   .svc-card-4 {
     grid-column: 3 / -1;
   }
@@ -1372,23 +820,21 @@ button:focus-visible {
   .cs-sub {
     margin: 2vh 0 0 20vw;
   }
+  .cs-body {
+    margin-top: 8vh;
+  }
   .cs-p {
-    margin: 8vh 24px 0;
-    max-width: none;
-    padding: 0;
+    grid-column: 1 / -1;
   }
 
   .cta {
     min-height: 70vh;
-    padding: 22vh 24px 10vh;
+    padding: 22vh var(--gutter) 10vh;
   }
   .cta-h2 {
     margin: 0;
   }
-  .result-stat {
-    font-size: var(--display-6);
-  }
   .cta-h2 em {
-    margin-left: 8vw;
+    color: var(--warm);
   }
 }

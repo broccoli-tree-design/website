@@ -1,0 +1,570 @@
+/* The two case studies (page.tsx, CaseDeck.tsx, CaseModules.tsx). Loaded
+   after globals.css (layout.tsx), so it builds on its tokens and type
+   classes: .result-label's roman, for one, overrides .text-sub's italic. */
+
+/* ── CASES ──
+   shared by the deck and the module accordion: section spacing, frame,
+   tab strip, screenshot, connectors and result. Title and brief use the
+   .mod-* classes in both */
+.case {
+  position: relative;
+  padding: 20vh var(--gutter) 8vh;
+}
+.case-eyebrow {
+  color: var(--warm);
+}
+
+/* growth rings around a case frame */
+.case-frame {
+  position: relative;
+  margin: 96px 0 0;
+}
+.case-ring {
+  position: absolute;
+  border: 1px solid var(--accent);
+  pointer-events: none;
+}
+.case-ring-0 {
+  border-radius: 24px;
+  opacity: 0.6;
+}
+.case-ring-1 {
+  border-radius: 32px;
+  opacity: 0.22;
+}
+.case-frame-2 .case-ring-0 {
+  inset: 10px 10px -14px -14px;
+}
+.case-frame-2 .case-ring-1 {
+  inset: 26px 26px -30px -30px;
+}
+
+/* each step's tab: collapsed, a vertical name with the number at the foot */
+.case-tab {
+  appearance: none;
+  margin: 0;
+  border: 0;
+  font: inherit;
+  background: var(--c);
+  color: var(--fg);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.case-tab:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -6px;
+}
+.case-name {
+  writing-mode: vertical-rl;
+  font-size: var(--text-lg);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* screenshots fit inside their panel or card */
+.case-shot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.case-shot img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* connectors from the frame to the result */
+.case-flow {
+  display: block;
+  width: 100%;
+  overflow: visible;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.25;
+  stroke-linecap: round;
+}
+.case-flow-mobile {
+  display: none;
+  height: 90px;
+}
+
+/* a roman subtitle over an italic number */
+.case-result {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  padding-top: 20px;
+}
+.result-label {
+  max-width: 20ch;
+  font-style: normal;
+  text-wrap: balance;
+}
+.result-stat {
+  font-size: var(--display-4);
+  color: var(--warm);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .case-flow path {
+    transition: d 0.45s var(--ease-out);
+  }
+}
+
+/* case-frame breakpoint: frames stack, tabs turn into horizontal bars */
+@media (max-width: 899.98px) {
+  .case {
+    --gutter: 24px;
+    padding-top: 14vh;
+  }
+  .case-frame {
+    margin-top: 56px;
+  }
+  .case-name {
+    writing-mode: horizontal-tb;
+    font-size: var(--text-md);
+  }
+  .case-flow-mobile {
+    display: block;
+  }
+  .case-result {
+    padding-top: 14px;
+  }
+}
+
+/* case — module accordion; curves flow from each tab into the 400%.
+   Desktop ≥ 900px, stacked accordion below (its own breakpoint) */
+.mod-title {
+  grid-column: 1 / span 8;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+.mod-h3 {
+  font-size: var(--display-2);
+  text-wrap: balance;
+}
+.mod-brief {
+  margin-top: 48px;
+}
+.mod-problem,
+.mod-solution {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.mod-problem {
+  grid-column: 1 / span 4;
+}
+.mod-solution {
+  grid-column: 6 / span 4;
+}
+.mod-problem .text-label {
+  color: var(--warm);
+}
+.mod-solution .text-label {
+  color: var(--accent);
+}
+
+.mod-track {
+  position: relative;
+  display: flex;
+  height: clamp(440px, 43cqw, 620px);
+  border-radius: 16px;
+  border: 1px solid var(--green-900);
+  overflow: hidden;
+}
+.mod-item {
+  flex: 0 0 84px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--c);
+  color: var(--fg);
+  border-right: 1px solid var(--green-900);
+}
+.mod-item:last-child {
+  border-right: 0;
+}
+.mod-item.is-open {
+  flex: 1 1 0;
+  background: var(--neutral-100);
+}
+.mod-tab {
+  flex: 1;
+  text-align: left;
+  padding: 24px 0;
+}
+.mod-num {
+  order: 2;
+}
+.mod-name {
+  transform: rotate(180deg);
+}
+.mod-sign {
+  display: none;
+}
+/* open: header bar in the module colour */
+.is-open .mod-tab {
+  flex: none;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 18px 28px;
+  cursor: default;
+}
+.is-open .mod-num {
+  order: 0;
+}
+.is-open .mod-name {
+  writing-mode: horizontal-tb;
+  transform: none;
+}
+.mod-client.is-open .mod-tab {
+  display: none;
+}
+.mod-panel {
+  flex: 1;
+  min-height: 0;
+}
+.mod-panel[hidden] {
+  display: none;
+}
+.mod-shot {
+  height: 100%;
+  padding: 16px;
+}
+.mod-client-view {
+  height: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 3.3cqw, 48px);
+  padding: clamp(28px, 3.3cqw, 48px);
+  align-items: end;
+  color: var(--green-900);
+}
+.mod-client-head {
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.mod-client-head .text-label {
+  color: var(--neutral-700);
+}
+.mod-client-title {
+  font-size: var(--display-1);
+}
+.mod-client-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-size: var(--text-md);
+}
+.mod-client-list li {
+  display: flex;
+  gap: 14px;
+  border-top: 1px solid var(--neutral-200);
+  padding-top: 14px;
+}
+.mod-client-list .text-num {
+  color: var(
+    --orange-700
+  ); /* the panel is always neutral-100, whatever the theme */
+}
+
+.mod-flow-desktop {
+  height: 170px;
+}
+
+/* hugs the 400% at the right edge; label sits on its left edge, where the
+   curves meet */
+.mod-result {
+  width: max-content;
+  margin: 0 calc(-1 * var(--gutter)) 0 auto;
+  gap: 18px;
+}
+.mod-result .result-stat {
+  margin-right: -2.8cqw;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .mod-item {
+    transition: flex 0.45s var(--ease-out);
+  }
+}
+
+/* stacked accordion; one row open at most (case-frame breakpoint) */
+@media (max-width: 899.98px) {
+  .mod-title,
+  .mod-problem,
+  .mod-solution {
+    grid-column: 1 / -1;
+  }
+  .mod-title {
+    gap: 16px;
+  }
+  .mod-brief {
+    margin-top: 36px;
+    row-gap: 28px;
+  }
+  .mod-problem,
+  .mod-solution {
+    gap: 10px;
+  }
+
+  .mod-frame .case-ring-0 {
+    inset: 6px 6px -8px -8px;
+    border-radius: 20px;
+  }
+  .mod-frame .case-ring-1 {
+    display: none;
+  }
+  .mod-track {
+    flex-direction: column;
+    height: auto;
+    border-radius: 14px;
+  }
+  .mod-item,
+  .mod-item.is-open {
+    flex: none;
+    background: var(--neutral-100);
+    color: var(--green-900);
+    border-right: 0;
+    border-bottom: 1px solid var(--green-900);
+  }
+  .mod-item:last-child {
+    border-bottom: 0;
+  }
+  .mod-tab,
+  .is-open .mod-tab,
+  .mod-client.is-open .mod-tab {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    min-height: 56px;
+    padding: 0 18px;
+    cursor: pointer;
+  }
+  .mod-num,
+  .is-open .mod-num {
+    order: 0;
+    flex: none;
+    width: 16px;
+  }
+  .mod-name,
+  .is-open .mod-name {
+    flex: 1;
+    transform: none;
+  }
+  .mod-sign {
+    display: block;
+    font-size: var(--text-lg);
+    line-height: 1;
+  }
+  .mod-shot {
+    padding: 8px 4px;
+  }
+  .mod-shot img {
+    width: 100%;
+  }
+  .mod-client-view {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+    padding: 22px 18px 24px;
+  }
+  .mod-client-head .text-label {
+    display: none;
+  }
+  .mod-client-list {
+    gap: 10px;
+  }
+  .mod-client-list li {
+    gap: 12px;
+    padding-top: 10px;
+  }
+
+  .mod-flow-desktop {
+    display: none;
+  }
+  .mod-result {
+    gap: 14px;
+  }
+  .mod-result .result-stat {
+    margin-right: -6cqw;
+  }
+}
+
+/* case — black-box deck. Laid out on the 1384-wide artboard in --u units,
+   so the stack, rings and curves scale together. Desktop ≥ 900px, a
+   vertical stack below. Title and brief reuse the .mod-* classes */
+.case-deck {
+  --u: calc((100cqw - 2 * var(--gutter)) / 1384);
+}
+.deck-frame {
+  height: calc(816 * var(--u));
+  isolation: isolate;
+}
+.deck-flow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 4;
+  pointer-events: none;
+  width: 100%;
+  height: auto;
+}
+.deck-frame .case-ring {
+  width: calc(960 * var(--u));
+  height: calc(600 * var(--u));
+}
+/* half a card step past the back card (244, 144), then another half */
+.deck-frame .case-ring-0 {
+  left: calc(272 * var(--u));
+  top: calc(162 * var(--u));
+  z-index: 2;
+}
+.deck-frame .case-ring-1 {
+  left: calc(300 * var(--u));
+  top: calc(180 * var(--u));
+  z-index: 1;
+}
+/* every card in one grid cell; depth --d slides it down the diagonal */
+.deck-stack {
+  position: relative;
+  z-index: 3;
+  display: grid;
+}
+.deck-card {
+  grid-area: 1 / 1;
+  margin-left: calc(20 * var(--u));
+  width: calc(960 * var(--u));
+  height: calc(600 * var(--u));
+  display: flex;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid var(--green-900);
+  background: var(--neutral-100);
+  cursor: pointer;
+  transform: translate(
+    calc(var(--d) * 56 * var(--u)),
+    calc(var(--d) * 36 * var(--u))
+  );
+}
+.deck-black {
+  background: var(--green-950);
+}
+.deck-body {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  padding: calc(24 * var(--u));
+}
+.deck-face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 0 calc(60 * var(--u));
+  text-align: center;
+}
+.deck-face-title {
+  max-width: 16ch;
+  font-size: var(--display-1);
+  text-wrap: balance;
+  color: var(--neutral-100);
+}
+/* the card is always near-black, so the bright orange whatever the theme
+   (--warm turns dark terracotta in the light theme: 3.05:1) */
+.deck-face .text-label {
+  color: var(--orange-400);
+}
+/* the strip that shows on every card behind; 56 wide = the x step */
+.deck-tab {
+  flex: 0 0 calc(56 * var(--u));
+  border-left: 1px solid var(--green-900);
+  padding: 22px 0;
+}
+.deck-result {
+  margin: calc(170 * var(--u)) 0 0 calc(480 * var(--u));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .deck-card {
+    transition: transform 0.6s var(--ease-out);
+  }
+  .deck-flow path {
+    transition: d 0.6s var(--ease-out);
+  }
+}
+
+/* stacked: the steps peek out above the front card as top bars
+   (case-frame breakpoint) */
+@media (max-width: 899.98px) {
+  .case-deck {
+    --bar: 44px;
+  }
+  .deck-frame {
+    height: auto;
+  }
+  .deck-flow,
+  .deck-frame .case-ring-1 {
+    display: none;
+  }
+  .deck-frame .case-ring-0 {
+    inset: -8px 6px 6px -8px;
+    width: auto;
+    height: auto;
+    border-radius: 20px;
+  }
+  .deck-card {
+    margin: calc(4 * var(--bar)) 0 0;
+    width: auto;
+    height: auto;
+    flex-direction: column;
+    border-radius: 14px;
+    transform: translateY(calc(var(--d) * -1 * var(--bar)));
+  }
+  .deck-body {
+    aspect-ratio: 4 / 3;
+    flex: none;
+    padding: 8px;
+  }
+  .deck-face {
+    gap: 16px;
+    padding: 0 20px;
+  }
+  .deck-tab {
+    order: -1;
+    flex: none;
+    height: var(--bar);
+    flex-direction: row;
+    padding: 0 18px;
+    border-left: 0;
+    border-bottom: 1px solid var(--green-900);
+  }
+  .deck-result {
+    margin: 0 0 0 34.7%;
+  }
+}
+
+@media (max-width: 640px) {
+  .result-stat {
+    font-size: var(--display-6);
+  }
+}

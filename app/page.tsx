@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Eye from "@/components/Eye";
@@ -137,7 +138,12 @@ export default function Home() {
           <div className="hero-photo">
             {/* growth rings — parallax on the wrapper, breathing on the ring */}
             {HERO_RINGS.map((depth, i) => (
-              <div className="ring-layer" data-parallax={depth} key={i}>
+              <div
+                className="ring-layer"
+                data-parallax={depth}
+                style={{ "--i": i } as CSSProperties}
+                key={i}
+              >
                 <div
                   className={`hero-ring hero-ring-${i}`}
                   data-ring={i}
@@ -164,7 +170,7 @@ export default function Home() {
             </h1>
             <p className="text-sub hero-slogan">
               <span className="hero-s1">
-                I design <em className="hero-s1-em">intuitive</em> experience
+                I design <em className="hero-s1-em">intuitive</em> experiences
               </span>{" "}
               <span className="hero-s2">for legal tech</span>
             </p>
@@ -174,23 +180,26 @@ export default function Home() {
         {/* ABOUT — legalese */}
         <section className="about" id="about" data-gate="dark">
           <h2 className="text-display about-h2">
-            <em>Seeing</em> both
+            To design is to <em>see</em>
             <br />
-            human
+            both the human
             <br />
-            and system
+            and the system
           </h2>
-          <p className="body about-p">
-            As a Paralegal turned Designer, I’ve experienced first-hand the
-            stress and fulfillment operating within legal systems in the U.S.
-            and China — from working late nights alongside attorneys on urgent
-            trademark prosecution, to negotiating with county clerks for the
-            records behind an insurance litigation, to translating for immigrant
-            families fighting for their children's right to go to school.
-            <br />
-            <br />I know when technology makes legal systems easier to deal
-            with, and when humans should make the judgment.
-          </p>
+          <div className="grid section-body about-body">
+            <p className="body about-p">
+              As a Paralegal turned Designer, I’ve experienced first-hand the
+              stress and fulfillment operating within legal systems in the U.S.
+              and China — from working late nights alongside attorneys on urgent
+              trademark prosecution, to negotiating with county clerks for the
+              records behind an insurance litigation, to translating for
+              immigrant families fighting for their children's right to go to
+              school.
+              <br />
+              <br />I know when technology makes legal systems easier to deal
+              with, and when humans should make the judgment.
+            </p>
+          </div>
         </section>
 
         {/* CASE STUDIES — header */}
@@ -200,11 +209,13 @@ export default function Home() {
             <span className="cs-studies">studies</span>{" "}
             <span className="text-sub cs-sub">of data and workflow apps</span>
           </h2>
-          <p className="body cs-p">
-            Examples from my past life designing enterprise software that help
-            humans overwhelmed by datageddon and fragmented tools make informed
-            decisions and develop shared understanding.
-          </p>
+          <div className="grid section-body cs-body">
+            <p className="body cs-p">
+              Examples from my past life designing enterprise software that help
+              humans overwhelmed by datageddon and fragmented tools make
+              informed decisions and develop shared understanding.
+            </p>
+          </div>
         </section>
 
         {/* CASE — black-box deck; the four steps sit behind the answer */}
@@ -277,7 +288,7 @@ export default function Home() {
         </section>
 
         {/* QUESTION */}
-        <section className="question" data-gate="light">
+        <section className="grid section-body question" data-gate="light">
           <p className="text-label question-label">RECENT THOUGHTS</p>
           <p className="text-sub question-p">
             How does AI reshape the way clients engage with and evaluate legal
@@ -315,7 +326,7 @@ export default function Home() {
           <h2 className="text-display cta-h2">
             Let&rsquo;s talk about
             <br />
-            <em>your product</em>
+            <em>your</em> product
           </h2>
         </footer>
       </main>
