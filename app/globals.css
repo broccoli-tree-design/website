@@ -584,10 +584,14 @@ button:focus-visible {
   margin-left: -1.2cqw;
   white-space: nowrap;
 }
+
+/* overlaps title on purpose */
 .services-sub {
   display: block;
+  position: relative;
   font-size: var(--display-3);
-  margin: 1vh 0 0 42cqw;
+  margin-top: 0.4cqw;
+  margin-left: 7em;
 }
 .services-grid {
   padding: 14vh var(--gutter) 0;
@@ -645,7 +649,7 @@ button:focus-visible {
 /* ── CASE STUDIES — header ── */
 .cs {
   position: relative;
-  min-height: 120vh;
+  min-height: 116vh;
   padding-top: 20vh;
 }
 .cs-h2 {
@@ -655,7 +659,7 @@ button:focus-visible {
   display: block;
   font-size: var(--display-8);
   letter-spacing: -0.05em;
-  margin-left: -3cqw;
+  margin-left: -7cqw;
 }
 /* overlaps "Case" on purpose */
 .cs-studies {
@@ -663,12 +667,19 @@ button:focus-visible {
   position: relative;
   z-index: 2;
   font-size: var(--display-5);
-  margin: -14.5cqw 0 0 34cqw;
+  letter-spacing: 0.022em;
+  /* pinned to the right edge; the em margin cuts half the final "s" at
+     every width */
+  width: fit-content;
+  margin-top: -15.1cqw;
+  margin-left: auto;
+  margin-right: -0.24em;
   white-space: nowrap;
 }
 .cs-sub {
   display: block;
-  margin: 3vh 0 0 36cqw;
+  margin: 4vh 0 0 51cqw;
+  font-style: normal;
 }
 .cs-body {
   margin-top: 12vh;
@@ -778,10 +789,10 @@ button:focus-visible {
     min-height: auto;
     padding: 14vh 0 10vh;
   }
-  /* wraps rather than running off the screen */
   .services-sub {
-    white-space: normal;
-    margin: 2vh 0 0 22vw;
+    font-size: var(--display-2);
+    margin-top: -0.3cqw;
+    margin-left: 3.7em;
   }
   .services-grid {
     row-gap: 9vh;
