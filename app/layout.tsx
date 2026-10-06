@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Bodoni_Moda, Work_Sans, Montserrat_Alternates } from 'next/font/google'
+import { Bodoni_Moda, Montserrat, Montserrat_Alternates } from 'next/font/google'
 import './globals.css'
 import './cases.css'
 import { SITE_URL, SITE_NAME, SITE_TITLE, SITE_DESCRIPTION } from './site'
@@ -11,7 +11,7 @@ const serif = Bodoni_Moda({
   style: ['normal', 'italic'],
 })
 
-const sans = Work_Sans({
+const sans = Montserrat({
   subsets: ['latin'],
   variable: '--sans',
   weight: ['400', '500', '600'],
