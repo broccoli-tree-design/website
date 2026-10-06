@@ -321,7 +321,7 @@ export default function Home() {
           <h2 className="text-display cta-h2">
             Let&rsquo;s talk about
             <br />
-            <em>your product</em>
+            <em>your</em> product
           </h2>
         </footer>
       </main>
