@@ -447,7 +447,7 @@ button:focus-visible {
 .hero-slogan {
   font-size: var(--display-0);
   /* heavier than .text-sub's 500: Bodoni's hairlines thin out at phone and
-     tablet sizes, where the terracotta has only 4.56:1 to spare */
+     tablet sizes */
   font-weight: 600;
 }
 .hero-s1 {
