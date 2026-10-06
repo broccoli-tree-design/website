@@ -805,7 +805,7 @@ button:focus-visible {
     padding: 20vh 0 14vh;
   }
   .about-h2 em {
-    font-size: var(--display-6);
+    font-size: var(--display-5);
     margin-block: 0;
   }
   .about-body {
