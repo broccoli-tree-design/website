@@ -114,13 +114,13 @@ export default function CaseModules() {
                 <button
                   type="button"
                   id={`mod-tab-${i}`}
-                  className="mod-tab"
+                  className="case-tab mod-tab"
                   aria-expanded={open}
                   aria-controls={`mod-panel-${i}`}
                   onClick={() => toggle(i)}
                 >
                   <span className="text-num mod-num">{num(i)}</span>
-                  <span className="mod-name">{m.name}</span>
+                  <span className="case-name mod-name">{m.name}</span>
                   <span className="mod-sign" aria-hidden="true">
                     {open ? "–" : "+"}
                   </span>
@@ -133,7 +133,7 @@ export default function CaseModules() {
                   hidden={!open}
                 >
                   {m.img ? (
-                    <div className="mod-shot">
+                    <div className="case-shot mod-shot">
                       <Image
                         src={m.img}
                         alt={`${m.name} module, Omnicom Marketing OS`}
@@ -168,7 +168,7 @@ export default function CaseModules() {
       </div>
 
       <svg
-        className="mod-flow mod-flow-desktop"
+        className="case-flow mod-flow-desktop"
         viewBox={`0 0 ${width} 170`}
         preserveAspectRatio="none"
         aria-hidden="true"
@@ -176,14 +176,14 @@ export default function CaseModules() {
         <path d={flow} style={{ d: `path("${flow}")` } as CSSProperties} />
       </svg>
       <svg
-        className="mod-flow mod-flow-mobile"
+        className="case-flow case-flow-mobile"
         viewBox={`0 0 ${width} 90`}
         aria-hidden="true"
       >
         <path d={mobileFlow} />
       </svg>
 
-      <div className="mod-result" ref={result}>
+      <div className="case-result mod-result" ref={result}>
         <span className="text-sub result-label">User base grew</span>
         <span className="text-stat result-stat">400%</span>
       </div>

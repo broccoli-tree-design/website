@@ -80,7 +80,7 @@ export default function CaseDeck() {
     <>
       <div className="case-frame deck-frame" ref={frame}>
         <svg
-          className="mod-flow deck-flow"
+          className="case-flow deck-flow"
           viewBox="0 0 1384 986"
           aria-hidden="true"
         >
@@ -119,7 +119,7 @@ export default function CaseDeck() {
                 }
                 onClick={() => pick(i)}
               >
-                <div className="deck-body">
+                <div className="case-shot deck-body">
                   {c.img ? (
                     <Image
                       src={c.img}
@@ -141,13 +141,13 @@ export default function CaseDeck() {
                 </div>
                 <button
                   type="button"
-                  className="deck-tab"
+                  className="case-tab deck-tab"
                   aria-label={
                     i ? `Show step ${num(i)}: ${c.name}` : `Show ${c.name}`
                   }
                   aria-pressed={front}
                 >
-                  <span className="deck-name">{c.name}</span>
+                  <span className="case-name">{c.name}</span>
                   <span className="text-num deck-num">{num(i)}</span>
                 </button>
               </div>
@@ -157,14 +157,14 @@ export default function CaseDeck() {
       </div>
 
       <svg
-        className="mod-flow deck-flow-mobile"
+        className="case-flow case-flow-mobile"
         viewBox={`0 0 ${width} 90`}
         aria-hidden="true"
       >
         <path d={mobileFlow} />
       </svg>
 
-      <div className="deck-result">
+      <div className="case-result deck-result">
         <span className="text-sub result-label">
           Increase in funding after MVP delivery
         </span>

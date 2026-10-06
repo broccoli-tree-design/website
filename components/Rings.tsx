@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 
-const EASE = "cubic-bezier(.2,.7,.2,1)";
+const EASE = "cubic-bezier(.2,.7,.2,1)"; // --ease-out in globals.css
 
 /** Growth-ring motion: hero rings breathe and follow the pointer; case-study
  *  rings ripple once on view and swell on hover. Everything is off under

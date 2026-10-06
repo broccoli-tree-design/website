@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next'
 import { Bodoni_Moda, Work_Sans, Montserrat_Alternates } from 'next/font/google'
 import './globals.css'
+import './cases.css'
 import { SITE_URL, SITE_NAME, SITE_TITLE, SITE_DESCRIPTION } from './site'
 
 const serif = Bodoni_Moda({

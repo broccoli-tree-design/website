@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Eye from "@/components/Eye";
@@ -137,7 +138,12 @@ export default function Home() {
           <div className="hero-photo">
             {/* growth rings — parallax on the wrapper, breathing on the ring */}
             {HERO_RINGS.map((depth, i) => (
-              <div className="ring-layer" data-parallax={depth} key={i}>
+              <div
+                className="ring-layer"
+                data-parallax={depth}
+                style={{ "--i": i } as CSSProperties}
+                key={i}
+              >
                 <div
                   className={`hero-ring hero-ring-${i}`}
                   data-ring={i}
