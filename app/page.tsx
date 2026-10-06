@@ -3,6 +3,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import Eye from "@/components/Eye";
 import EyeTracker from "@/components/EyeTracker";
+import SeeEyes from "@/components/SeeEyes";
 import CaseDeck from "@/components/CaseDeck";
 import CaseModules from "@/components/CaseModules";
 import Rings from "@/components/Rings";
@@ -180,7 +181,7 @@ export default function Home() {
         {/* ABOUT — legalese */}
         <section className="about" id="about" data-gate="dark">
           <h2 className="text-display about-h2">
-            To design is to <em>see</em>
+            To design is to <SeeEyes />
             <br />
             both the human
             <br />

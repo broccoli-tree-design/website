@@ -1,11 +1,13 @@
 "use client";
 import { useEffect } from "react";
 
+// squash the eye shut, or just its lid when it has one (the "see" eyes,
+// whose fill must stay put)
 const blink = (el: Element) =>
-  el.animate([{ scale: "1 1" }, { scale: "1 0.08" }, { scale: "1 1" }], {
-    duration: 220,
-    easing: "ease-in-out",
-  });
+  (el.querySelector("[data-lid]") ?? el).animate(
+    [{ scale: "1 1" }, { scale: "1 0.08" }, { scale: "1 1" }],
+    { duration: 220, easing: "ease-in-out" },
+  );
 
 /** Every [data-eye] follows the pointer, blinks when clicked, and blinks on
  *  its own every few seconds. Idle blinks are off under prefers-reduced-motion;
@@ -58,6 +60,8 @@ export default function EyeTracker() {
     // eyes move under a still cursor when the page scrolls or reflows
     addEventListener("scroll", schedule, { passive: true });
     addEventListener("resize", schedule);
+    // SeeEyes sizes its eyes once the font is in
+    addEventListener("eyes:layout", schedule);
     addEventListener("click", onClick);
     // web font swap can shift the nav eye
     document.fonts?.ready.then(schedule);
@@ -67,6 +71,7 @@ export default function EyeTracker() {
       removeEventListener("pointermove", onMove);
       removeEventListener("scroll", schedule);
       removeEventListener("resize", schedule);
+      removeEventListener("eyes:layout", schedule);
       removeEventListener("click", onClick);
       clearInterval(idle);
       cancelAnimationFrame(raf);
