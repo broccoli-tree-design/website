@@ -542,6 +542,44 @@ button:focus-visible {
   margin-block: -0.12em 0.1em;
   font-style: normal;
   white-space: nowrap;
+  font-weight: inherit; /* 600 like the rest of the line */
+  color: inherit;
+}
+/* "see": each counter is an eye (components/SeeEyes.tsx). The socket's
+   position, size and mask are measured off the glyph and set in em */
+.see-e {
+  position: relative;
+  display: inline-block;
+}
+/* zero-size probe; its bottom edge is the baseline */
+.see-base {
+  display: inline-block;
+  width: 0;
+  height: 0;
+}
+.see-eye {
+  position: absolute;
+  visibility: hidden; /* until measured */
+  background: currentColor;
+  cursor: pointer;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+/* the logo's pupil; EyeTracker moves it with transform */
+.see-pupil {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+}
+.see-lid {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: var(--bg);
 }
 .about-body {
   margin-top: 12vh;
@@ -767,7 +805,7 @@ button:focus-visible {
     padding: 20vh 0 14vh;
   }
   .about-h2 em {
-    font-size: var(--display-6);
+    font-size: var(--display-4);
     margin-block: 0;
   }
   .about-body {
