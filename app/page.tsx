@@ -291,11 +291,10 @@ export default function Home() {
         <section className="grid section-body question" data-gate="light">
           <p className="text-label question-label">RECENT THOUGHTS</p>
           <p className="text-sub question-p">
-            How does AI reshape the way clients engage with and evaluate legal
-            services?
+            Legora's Jude Law campaign: AI products as cult objects?
           </p>
           <a
-            href="https://lnkd.in/p/gPGaJ2Sa"
+            href="https://lnkd.in/p/eH3XTXzj"
             target="_blank"
             rel="noopener"
             className="text-label question-link"

@@ -538,7 +538,7 @@ button:focus-visible {
    margin keeps the third line clear of it */
 .about-h2 em {
   display: inline-block;
-  font-size: var(--display-3);
+  font-size: var(--display-4);
   margin-block: -0.12em 0.1em;
   font-style: normal;
   white-space: nowrap;
