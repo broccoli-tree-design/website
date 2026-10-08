@@ -449,6 +449,7 @@ button:focus-visible {
   letter-spacing: -0.05em;
   margin-left: 0.05em; /* optical alignment of the italic A */
   color: var(--ink);
+  font-style: normal;
 }
 .hero-slogan {
   font-size: var(--display-0);
@@ -464,7 +465,6 @@ button:focus-visible {
   font-style: normal;
 }
 .hero-s1-em {
-  font-style: italic;
   color: var(--accent);
 }
 .hero-s2 {
@@ -545,6 +545,11 @@ button:focus-visible {
   font-weight: inherit; /* 600 like the rest of the line */
   color: inherit;
 }
+/* the big "see" deepens line 1; match that gap between lines 2 and 3 */
+.about-l3 {
+  display: inline-block;
+  margin-top: 0.34em;
+}
 /* "see": each counter is an eye (components/SeeEyes.tsx). The socket's
    position, size and mask are measured off the glyph and set in em */
 .see-e {
@@ -601,8 +606,9 @@ button:focus-visible {
   margin: 0 0 12px;
 }
 .question-p {
-  max-width: 15ch;
+  max-width: 18ch;
   text-wrap: balance;
+  font-style: normal;
 }
 .question-link {
   margin-top: 36px;
@@ -711,7 +717,7 @@ button:focus-visible {
   /* pinned to the right edge; the em margin cuts half the final "s" at
      every width */
   width: fit-content;
-  margin-top: -15.1cqw;
+  margin-top: -15cqw;
   margin-left: auto;
   margin-right: -0.24em;
   white-space: nowrap;
@@ -807,6 +813,9 @@ button:focus-visible {
   .about-h2 em {
     font-size: var(--display-4);
     margin-block: 0;
+  }
+  .about-l3 {
+    margin-top: 0.1em;
   }
   .about-body {
     margin-top: 8vh;
