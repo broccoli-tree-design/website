@@ -171,9 +171,11 @@ export default function Home() {
             </h1>
             <p className="text-sub hero-slogan">
               <span className="hero-s1">
-                I design <em className="hero-s1-em">intuitive</em> experiences
+                I design <em className="hero-s1-em">intuitive experiences</em>
               </span>{" "}
-              <span className="hero-s2">for legal tech</span>
+              <span className="hero-s2">
+                for <em className="hero-s1-em">legal tech</em>
+              </span>
             </p>
           </div>
         </section>
@@ -185,7 +187,7 @@ export default function Home() {
             <br />
             both the human
             <br />
-            and the system
+            <span className="about-l3">and the system</span>
           </h2>
           <div className="grid section-body about-body">
             <p className="body about-p">
@@ -292,7 +294,8 @@ export default function Home() {
         <section className="grid section-body question" data-gate="light">
           <p className="text-label question-label">RECENT THOUGHTS</p>
           <p className="text-sub question-p">
-            Legora's Jude Law campaign: AI products as cult objects?
+            Legora's Jude Law campaign:
+            <br /> AI products as cult objects?
           </p>
           <a
             href="https://lnkd.in/p/eH3XTXzj"
