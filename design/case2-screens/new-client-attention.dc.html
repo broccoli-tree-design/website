@@ -10,7 +10,7 @@
 <helmet data-dc-atomics=""><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"><style>body{margin:0;background:#f0eee9;font-family:"Open Sans",system-ui,sans-serif;color:#464849}a{color:#00618B}a:hover{color:#004563}*{box-sizing:border-box}</style><script src="./image-slot.js"></script></helmet>
 <div id="shot-3" data-screen-label="03 Attention plan" style="width:1120px;height:580px;padding:24px;background:transparent;font-family:'Open Sans',sans-serif">
 <div style="position:relative;width:100%;height:100%;background:#fff;border-radius:10px;box-shadow:0 10px 60px -5px rgba(59,62,63,.08);overflow:hidden">
-<div style="padding:22px 28px;display:flex;flex-direction:column;gap:18px">
+<div style="padding:24px 28px;display:flex;flex-direction:column;gap:18px">
 <span style="font-size:14px;font-weight:600">Attention calculator</span><div style="display:grid;grid-template-columns:repeat(6,1fr);width:760px;align-self:center">
 <sc-for list="{{ steps }}" as="s" hint-placeholder-count="6">
 <div style="display:flex;flex-direction:column;align-items:center;gap:8px"><span style="font-size:12px;font-weight:600;color:#007DB3;white-space:nowrap">{{ s.label }}</span><div style="position:relative;align-self:stretch;height:24px;display:flex;justify-content:center"><div style="position:absolute;left:{{ s.l }};right:{{ s.r }};top:12px;height:1px;background:{{ s.line }}"></div><div style="position:relative;width:24px;height:24px;border-radius:50%;background:linear-gradient(90deg,#45A0C8,#007DB3);display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="1.5"><path d="M2.5 6.2l2.3 2.3 4.7-5"></path></svg></div></div></div>
@@ -21,7 +21,7 @@
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
 <sc-for list="{{ questions }}" as="q" hint-placeholder-count="6">
 <div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:600;color:#464849"><span style="display:flex;align-items:center;gap:4px">{{ q.q }}</span><span style="width:60px;flex:none">Weight</span></div>
-<div style="display:flex;gap:8px"><div style="flex:1;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;font-size:13px"><span style="display:flex;align-items:center;gap:8px">{{ q.a }}</span></div><div style="width:60px;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;font-size:13px">{{ q.w }}<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#686A6C" stroke-width="1.4"><path d="M2 4.5l4 4 4-4"></path></svg></div></div></div>
+<div style="display:flex;gap:8px"><div style="flex:1;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;font-size:13px"><span style="display:flex;align-items:center;gap:8px">{{ q.a }}</span></div><div style="width:60px;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;font-size:13px">{{ q.w }}<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#686A6C" stroke-width="1.4"><path d="M2 4.5l4 4 4-4"></path></svg></div></div></div>
 </sc-for>
 </div></div>
 <div style="height:1px;background:#F1F5FA"></div>
@@ -69,7 +69,7 @@ class Component extends DCLogic {
     });
     const edges = arcs.filter(a => a.edge).map(({ edge: [r, b0, b1] }) => { const [x1, y1] = P(r - 1, b0 + 0.6), [x2, y2] = P(r - 1, b1 - 0.6); return { d: `M${x1.toFixed(1)} ${y1.toFixed(1)}A${r - 1} ${r - 1} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}` }; });
     const segments = [["Pre-opening · Out of market", "1.61M · 42%"], ["Pre-opening · In market", "0.69M · 18%"], ["Run · Out of market", "1.08M · 28%"], ["Run · In market", "0.46M · 12%"]]
-      .map(([name, meta], i) => ({ name, meta, border: i === 0 ? "#007DB3" : "transparent", bg: i === 0 ? "#CAE4EF" : "transparent", fg: i === 0 ? "#004563" : "#464849" }));
+      .map(([name, meta], i) => ({ name, meta, border: i === 0 ? "#007DB3" : "transparent", bg: i === 0 ? "#CAE4EF" : "transparent", fg: i === 0 ? "#00293A" : "#464849" }));
     const levels = [["2s", "Low", 8, "$336K"], ["3s", "Mid-low", 18, "$756K"], ["5s", "Mid", 34, "$1.43M"], ["10s", "Mid-high", 27, "$1.13M"], ["20s", "High", 13, "$546K"]]
       .map(([s, name, p, amt], i) => ({ s, name, pct: p + "%", amt, bl: i ? "1px solid #CFD2D7" : "0", c: s === "5s" || s === "10s" ? "#00618B" : "#242526" }));
     const ico = (inv) => React.createElement("svg", { width: 14, height: 14, viewBox: "0 0 14 14", fill: "none", stroke: "#007DB3", strokeWidth: 1.4, strokeLinecap: "round" }, inv
