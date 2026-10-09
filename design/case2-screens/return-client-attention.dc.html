@@ -18,28 +18,28 @@
 </div>
 <div style="display:flex;flex-direction:column;gap:12px">
 <span style="font-size:14px;font-weight:600">Contact</span>
-<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px 24px">
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px">
 <sc-for list="{{ questions }}" as="q" hint-placeholder-count="6">
 <div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:600;color:#464849"><span style="display:flex;align-items:center;gap:4px">{{ q.q }}</span><span style="width:60px;flex:none">Weight</span></div>
-<div style="display:flex;gap:8px"><div style="flex:1;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;font-size:14px"><span style="display:flex;align-items:center;gap:8px">{{ q.a }}</span></div><div style="width:60px;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;font-size:14px">{{ q.w }}<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#686A6C" stroke-width="1.4"><path d="M2 4.5l4 4 4-4"></path></svg></div></div></div>
+<div style="display:flex;gap:8px"><div style="flex:1;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;font-size:13px"><span style="display:flex;align-items:center;gap:8px">{{ q.a }}</span></div><div style="width:60px;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;font-size:13px">{{ q.w }}<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#686A6C" stroke-width="1.4"><path d="M2 4.5l4 4 4-4"></path></svg></div></div></div>
 </sc-for>
 </div></div>
 <div style="height:1px;background:#F1F5FA"></div>
 <div style="display:flex;flex-direction:column;gap:12px">
 <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px">
-<div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:14px;font-weight:600">Recommendation</span><span style="font-size:13px;color:#8B8D90">A recognised challenger reinforcing its position concentrates the full budget on 3s and 5s.</span></div>
-<div style="display:flex;flex-direction:column;gap:6px;width:300px;flex:none"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Attention levels</span><div style="height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;font-size:14px">2-part mix (3s, 5s)<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#686A6C" stroke-width="1.4"><path d="M2 4.5l4 4 4-4"></path></svg></div></div>
+<div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:14px;font-weight:600">Recommendation</span><span style="font-size:13px;color:#686A6C">A recognised challenger reinforcing its position concentrates the full budget on 3s and 5s.</span></div>
+<div style="display:flex;flex-direction:column;gap:6px;width:300px;flex:none"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Attention levels</span><div style="height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;font-size:13px">2-part mix (3s, 5s)<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#686A6C" stroke-width="1.4"><path d="M2 4.5l4 4 4-4"></path></svg></div></div>
 </div>
 <div style="display:flex;flex-direction:column;gap:10px;background:#F1F5FA;border-radius:10px;padding:16px 24px 14px">
 <div style="display:grid;grid-template-columns:repeat(2,1fr)">
 <sc-for list="{{ levels }}" as="l" hint-placeholder-count="2">
 <div style="display:flex;justify-content:center;gap:24px;border-left:{{ l.bl }}">
-<div style="display:flex;flex-direction:column;align-items:center"><span style="font-size:20px;line-height:26px;font-weight:600;color:#242526">{{ l.s }}</span><span style="font-size:12px;color:#8B8D90">{{ l.name }}</span></div>
-<div style="display:flex;flex-direction:column;align-items:center"><span style="font-size:20px;line-height:26px;font-weight:600;color:{{ l.c }}">{{ l.pct }}</span><span style="font-size:12px;color:#8B8D90">{{ l.amt }}</span></div>
+<div style="display:flex;flex-direction:column;align-items:center"><span style="font-size:20px;line-height:26px;font-weight:600;color:#242526">{{ l.s }}</span><span style="font-size:12px;color:#686A6C">{{ l.name }}</span></div>
+<div style="display:flex;flex-direction:column;align-items:center"><span style="font-size:20px;line-height:26px;font-weight:600;color:{{ l.c }}">{{ l.pct }}</span><span style="font-size:12px;color:#686A6C">{{ l.amt }}</span></div>
 </div>
 </sc-for>
 </div>
-<span style="display:flex;justify-content:center;align-items:center;gap:8px;font-size:12px;color:#8B8D90">Split of the $2.2M fall budget<span>Percentages are rounded so the full budget is allocated.</span></span>
+<span style="display:flex;justify-content:center;align-items:center;gap:8px;font-size:12px;color:#686A6C">Split of the $2.2M fall budget<span>Percentages are rounded so the full budget is allocated.</span></span>
 </div></div>
 </div></div></div>
 </x-dc>
