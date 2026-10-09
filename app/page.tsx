@@ -127,7 +127,7 @@ export default function Home() {
               rel="noopener"
               className="nav-cta"
             >
-              Chat on LinkedIn
+              Let's chat
             </a>
           </li>
         </ul>
