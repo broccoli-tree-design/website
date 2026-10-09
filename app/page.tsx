@@ -274,7 +274,7 @@ export default function Home() {
               <p className="body">
                 The legacy app was designed to help Sales tell the story.
                 Clients were told that Planners would deliver their work in-app,
-                but 70%+ Planners still delivered in Excel and PowerPoints.
+                but 70%+ of Planners still delivered in Excel and PowerPoints.
               </p>
             </div>
             <div className="mod-solution">
@@ -284,8 +284,8 @@ export default function Home() {
                 different levels of visibility, so we separated daily operations
                 from the client-facing portal. I designed 10+ modules that pull
                 data from Sales’ and Planners’ workspaces. Instead of piecing
-                info in Excel and PowerPoints, Sales and Planners can create
-                custom workflows based on different client needs.
+                info together in Excel and PowerPoints, Sales and Planners can
+                create custom workflows based on different client needs.
               </p>
             </div>
           </div>
