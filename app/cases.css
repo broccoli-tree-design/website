@@ -294,8 +294,10 @@
 }
 .mod-figure img {
   display: block;
-  width: 100%;
+  /* the image has 64px of shadow around the 1072px card; overflow it so the card fills the figure */
+  width: calc(100% * 1200 / 1072);
   height: auto;
+  margin: calc(-100% * 64 / 1072);
 }
 .mod-desc {
   max-width: 760px;
@@ -577,9 +579,11 @@ html:has(.mod-zoom[open]) {
 .mod-zoom-scroll img {
   flex: none;
   display: block;
-  width: 1072px;
+  /* the 1072px card plus its 64px of shadow, like .mod-figure img */
+  width: 1200px;
   max-width: none;
   height: auto;
+  margin: -64px;
 }
 .mod-zoom-desc {
   flex: none;

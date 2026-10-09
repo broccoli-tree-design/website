@@ -57,7 +57,7 @@ const CLIENT_VIEW = {
   fg: "var(--green-900)",
 };
 
-/** Module screens: the 1072×532 product card, captured at 2× */
+/** Module screens: the 1072×532 product card with 64px around it for its shadow, captured at 2× */
 function steps(
   prefix: string,
   mods: [ModuleKey, string][],
@@ -67,8 +67,8 @@ function steps(
     ...mods.map(([key, desc]) => ({
       ...MODULE[key],
       img: `/case2/${prefix}-${key}.webp`,
-      w: 2144,
-      h: 1064,
+      w: 2400,
+      h: 1320,
       desc,
     })),
   ];
@@ -364,7 +364,7 @@ export default function CaseModules() {
               alt={`${zoomed.name} module, full size`}
               width={zoomed.w}
               height={zoomed.h}
-              sizes="1072px"
+              sizes="1200px"
             />
           </div>
         )}

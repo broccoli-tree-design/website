@@ -1,5 +1,6 @@
 // Captures each module screen as the image the case study shows:
-// the white product card alone, at 2×, saved as WebP in public/case2/.
+// the white product card and its drop shadow, at 2×, saved as WebP in
+// public/case2/.
 //
 //   npm i --no-save playwright-core
 //   node design/case2-screens/capture.mjs            (all screens)
@@ -13,6 +14,8 @@ import path from "node:path";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.join(HERE, "../../public/case2");
+/** transparent room around the card for its shadow, in CSS px; matches .mod-figure img */
+const PAD = 64;
 
 /** each <name>.dc.html here becomes public/case2/<name>.webp */
 const SCREENS = [
@@ -41,17 +44,26 @@ for (const name of SCREENS) {
   await page.goto("file://" + path.join(HERE, name + ".dc.html"), {
     waitUntil: "networkidle",
   });
-  // transparent page; the card without its outline and shadow
+  // transparent page, so only the card and its shadow are captured
   await page.addStyleTag({
     content:
-      "html,body{background:transparent!important}body{padding:100px!important}[data-screen-label]>div{box-shadow:none!important}",
+      "html,body{background:transparent!important}body{padding:100px!important}",
   });
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(800); // hotlinked paintings, chart layout
-  const png = await page
+  const card = await page
     .locator("[data-screen-label] > div")
     .first()
-    .screenshot({ omitBackground: true });
+    .boundingBox();
+  const png = await page.screenshot({
+    omitBackground: true,
+    clip: {
+      x: card.x - PAD,
+      y: card.y - PAD,
+      width: card.width + 2 * PAD,
+      height: card.height + 2 * PAD,
+    },
+  });
   await sharp(png)
     .webp({ quality: 86, alphaQuality: 90, smartSubsample: true })
     .toFile(path.join(OUT, name + ".webp"));

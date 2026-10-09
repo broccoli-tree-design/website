@@ -23,9 +23,11 @@ Each `<name>.dc.html` here makes `public/case2/<name>.webp`:
    node design/case2-screens/capture.mjs new-client-channel  # one
    ```
 
-   This saves the white card alone at 2× (2144×1064), with no outline
-   or shadow, as WebP in `public/case2/`. Keep that size, because
-   `CaseModules.tsx` sets the images' dimensions.
+   This saves the white card and its drop shadow at 2× (2400×1320: the
+   1072×532 card plus 64px of transparent room on each side) as WebP in
+   `public/case2/`. Keep that size, because `CaseModules.tsx` sets the
+   images' dimensions and `.mod-figure img` in `app/cases.css` overflows
+   the figure by the 64px so the card itself fills it.
 
 The Opportunity screen hotlinks two Raphael paintings (public domain,
 Wikimedia Commons), so capturing it needs a connection. The captured
