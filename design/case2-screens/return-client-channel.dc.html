@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics=""><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"><style>body{margin:0;background:#f0eee9;font-family:"Open Sans",system-ui,sans-serif;color:#464849}a{color:#00618B}a:hover{color:#004563}*{box-sizing:border-box}</style><script src="./image-slot.js"></script></helmet>
+<div id="shot-4" data-screen-label="Revisit 04 Channel plan" style="width:1120px;height:580px;padding:24px;background:transparent;font-family:'Open Sans',sans-serif">
+<div style="position:relative;width:100%;height:100%;background:#fff;border-radius:10px;box-shadow:0 10px 60px -5px rgba(36,37,38,.14),0 0 0 1px #F1F5FA;overflow:hidden">
+<div style="position:absolute;top:0;left:0;bottom:0;width:700px;padding:24px 0 24px 28px;display:flex;gap:4px">
+<div style="width:212px;flex:none;display:flex;flex-direction:column;gap:6px;border-right:1px solid #F1F5FA;padding-right:16px">
+<div style="display:flex;flex-direction:column;align-items:flex-start;gap:6px;padding-bottom:8px"><span style="font-size:14px;font-weight:600">Channel plan</span></div>
+<sc-for list="{{ segments }}" as="g" hint-placeholder-count="4">
+<div style="display:flex;flex-direction:column;gap:1px;padding:8px 12px;border-left:3px solid {{ g.border }};background:{{ g.bg }};border-radius:0 4px 4px 0"><span style="font-size:13px;font-weight:600;color:{{ g.fg }}">{{ g.name }}</span><span style="font-size:12px;color:#8B8D90">{{ g.meta }}</span></div>
+</sc-for>
+</div>
+<div style="position:relative;flex:none;width:460px;height:476px;margin-top:-6px"><svg width="460" height="476" viewBox="0 0 460 476" style="position:absolute;left:0;top:0">
+<sc-for list="{{ arcs }}" as="a" hint-placeholder-count="0">
+<path d="{{ a.d }}" fill="{{ a.fill }}" stroke="{{ a.stroke }}" stroke-width="{{ a.sw }}"></path>
+</sc-for>
+<sc-for list="{{ edges }}" as="e" hint-placeholder-count="0">
+<path d="{{ e.d }}" fill="none" stroke="#007DB3" stroke-width="2.5" stroke-linecap="round"></path>
+</sc-for>
+</svg>
+<sc-for list="{{ arcs }}" as="a" hint-placeholder-count="0">
+<span style="position:absolute;left:{{ a.x }};top:{{ a.y }};transform:translate(-50%,-50%) rotate({{ a.r }});white-space:nowrap;font-size:{{ a.fs }};font-weight:{{ a.fw }};letter-spacing:{{ a.ls }};color:{{ a.tc }};line-height:1">{{ a.label }}</span>
+</sc-for>
+</div>
+</div>
+<div style="position:absolute;top:16px;right:16px;bottom:16px;width:340px;background:#fff;border-radius:10px;box-shadow:0 15px 30px -9px rgba(36,37,38,.22),0 0 0 1px #F1F5FA;display:flex;flex-direction:column;overflow:hidden">
+<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 20px;border-bottom:1px solid #F1F5FA;background:#FAFBFD"><div style="display:flex;flex-direction:column;gap:1px"><span style="font-size:14px;font-weight:600;color:#242526">Channel activity · Retail</span><span style="font-size:12px;color:#8B8D90">Fall, in market</span></div><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#464849" stroke-width="1.4"><path d="M2 2l10 10M12 2L2 12"></path></svg></div>
+<div style="padding:12px 20px;display:flex;flex-direction:column;gap:10px;flex:1;min-height:0;overflow:hidden">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849;white-space:nowrap">Attention level</span><div style="background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);padding:8px 12px;font-size:14px;line-height:20px;white-space:nowrap">3s · Mid-low</div></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Budget</span><div style="background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);padding:8px 12px;font-size:14px;line-height:20px">$380K</div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Flight</span><div style="background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);padding:8px 12px;font-size:14px;line-height:20px">Sep 8 – Oct 31, 2027</div></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Channel idea</span><div style="background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);padding:8px 12px;font-size:13px;line-height:19px;text-wrap:pretty">Sponsored listings on outdoor retailer sites and apps next to boots and jackets, weekend mornings. Spring buyers get a prompt for matching gear before the first cold-weather trips.</div></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Assets required</span><div style="background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);padding:8px 12px;font-size:13px;line-height:19px;text-wrap:pretty">Peak logo, trail pack shot and "Carry further" line, static banners and 3s bumper video.</div></div>
+</div><div style="margin-top:auto;display:flex;justify-content:flex-end;gap:8px;padding:10px 20px;border-top:1px solid #F1F5FA;background:#FAFBFD"><span style="display:flex;align-items:center;height:32px;padding:0 16px;font-size:13px;font-weight:600;color:#00618B;background:transparent;border:1px solid transparent;border-radius:3px">Cancel</span><span style="display:flex;align-items:center;height:32px;padding:0 20px;font-size:13px;font-weight:600;color:#fff;background:#00618B;border:1px solid #00618B;border-radius:3px">Save</span></div></div>
+</div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const cx = 196, cy = 238, ROT = -38.5;
+    const P = (r, a) => { const t = (a + ROT) * Math.PI / 180; return [cx + r * Math.cos(t), cy + r * Math.sin(t)]; };
+    const sector = (r0, r1, a0, a1) => {
+      const L = a1 - a0 > 180 ? 1 : 0, f = n => n.toFixed(2);
+      const [x1, y1] = P(r1, a0), [x2, y2] = P(r1, a1), [x3, y3] = P(r0, a1), [x4, y4] = P(r0, a0);
+      return `M${f(x1)} ${f(y1)}A${r1} ${r1} 0 ${L} 1 ${f(x2)} ${f(y2)}L${f(x3)} ${f(y3)}A${r0} ${r0} 0 ${L} 0 ${f(x4)} ${f(y4)}Z`;
+    };
+    const pos = (r, a, rot) => { const [x, y] = P(r, a); return { x: x.toFixed(1) + "px", y: y.toFixed(1) + "px", r: rot.toFixed(1) + "deg" }; };
+    const radial = (r, a) => { const A = a + ROT; return pos(r, a, Math.cos(A * Math.PI / 180) < -0.01 ? A + 180 : A); };
+    const tangent = (r, a) => { const A = a + ROT; return pos(r, a, Math.sin(A * Math.PI / 180) > 0.01 ? A - 90 : A + 90); };
+    const arcs = [];
+    [["PAID", -90, 90, "#98CAE0", "#00293A"], ["OWNED", 90, 180, "#D5E1EA", "#242526"], ["EARNED", 180, 270, "#E3E9EF", "#242526"]].forEach(([label, a0, a1, fill, tc]) =>
+      arcs.push({ d: sector(48, 72, a0, a1), fill, stroke: "#fff", sw: 2, edge: label === "PAID" ? [72, a0, a1] : null, ...tangent(60, (a0 + a1) / 2), label, tc, fs: "11px", fw: 700, ls: "0.08em" }));
+    ["Video", "Social", "Imagery", "Experiential", "Commerce", "Audio", "Outreach", "Destinations", "Assets", "Shared", "Coverage", "Comment"].forEach((label, i) => {
+      const a0 = -90 + i * 30, sel = i === 4, grp = i < 6 ? 0 : i < 9 ? 1 : 2;
+      arcs.push({ d: sector(74, 160, a0, a0 + 30), fill: sel ? "#98CAE0" : ["#E2EFF5", "#E6ECF2", "#EEF2F6"][grp], stroke: "#fff", sw: 2, edge: sel ? [160, a0, a0 + 30] : null, ...radial(117, a0 + 15), label, tc: sel ? "#00293A" : ["#004563", "#242526", "#242526"][grp], fs: "13px", fw: 600, ls: "0" });
+    });
+    ["Retail", "In-store", "Coupons", "Demos"].forEach((label, i) => {
+      const a0 = 30 + i * 17, sel = i === 0;
+      arcs.push({ d: sector(164, 236, a0, a0 + 17), fill: sel ? "#98CAE0" : "#E2EFF5", stroke: "#fff", sw: 2, edge: sel ? [236, a0, a0 + 17] : null, ...radial(200, a0 + 8.5), label, tc: sel ? "#00293A" : "#004563", fs: "13px", fw: 600, ls: "0" });
+    });
+    const edges = arcs.filter(a => a.edge).map(({ edge: [r, b0, b1] }) => { const [x1, y1] = P(r - 1, b0 + 0.6), [x2, y2] = P(r - 1, b1 - 0.6); return { d: `M${x1.toFixed(1)} ${y1.toFixed(1)}A${r - 1} ${r - 1} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}` }; });
+    const segments = [["Fall · In market", "1.1M · 58%"], ["Early winter · In market", "0.8M · 42%"]]
+      .map(([name, meta], i) => ({ name, meta, border: i === 0 ? "#007DB3" : "transparent", bg: i === 0 ? "#CAE4EF" : "transparent", fg: i === 0 ? "#004563" : "#464849" }));
+    const levels = [["2s", "Low", 8, "$336K"], ["3s", "Mid-low", 18, "$756K"], ["5s", "Mid", 34, "$1.43M"], ["10s", "Mid-high", 27, "$1.13M"], ["20s", "High", 13, "$546K"]]
+      .map(([s, name, p, amt], i) => ({ s, name, pct: p + "%", amt, bl: i ? "1px solid #CFD2D7" : "0", c: s === "5s" || s === "10s" ? "#00618B" : "#242526" }));
+    const ico = (inv) => React.createElement("svg", { width: 14, height: 14, viewBox: "0 0 14 14", fill: "none", stroke: "#007DB3", strokeWidth: 1.4, strokeLinecap: "round" }, inv
+      ? [React.createElement("path", { key: 1, d: "M3 12V8M7 12V3M11 12V6" })]
+      : [React.createElement("rect", { key: 1, x: 2, y: 2.5, width: 5, height: 3.5, rx: 1 }), React.createElement("rect", { key: 2, x: 7, y: 8, width: 5, height: 3.5, rx: 1 }), React.createElement("path", { key: 3, d: "M4.5 6v3.75H7" })]);
+    const card = (id, type, name, when) => ({ id, type, name, when, icon: ico(type === "Investment plan") });
+    const optPlans = [card("inv-pre", "Channel plan", "Super Plate Pre-launch", "2 days ago"), card("inv-invest", "Investment plan", "Super Plate Investment", "1 day ago"), card("inv-launch", "Channel plan", "Super Plate Launch", "29 min ago")];
+    const flights = [card("fl-nyc", "Channel plan", "Pre-launch NYC", "29 min ago"), card("fl-chi", "Channel plan", "Pre-launch Chicago", "29 min ago"), card("fl-la", "Channel plan", "Pre-launch LA", "29 min ago"), card("fl-mia", "Channel plan", "Launch Miami", "29 min ago")];
+    return {
+      arcs, edges, segments, levels, optPlans, flights,
+      steps: ["Comms imperative", "Content", "Context", "Construct", "Culture", "Contact"].map((label, i, a) => ({ label, l: i === 0 ? "50%" : "0", r: i === a.length - 1 ? "50%" : "0" })),
+      questions: [
+        { q: "Is the brand the market leader?", a: "Challenger", w: "3" },
+        { q: "What is brand awareness?", a: "10–20%", w: "2", link: "Ideation" },
+        { q: "Is the brand a startup?", a: "No, eight years in market", w: "1" },
+        { q: "Is there a dominant competitor?", a: "Yes, category leader", w: "2" },
+        { q: "What is the mental availability task?", a: "Reinforce", w: "3", link: "Audience viz" },
+        { q: "What is the source of demand?", a: "Repeat + lapsed buyers", w: "3" }
+      ].map(q => ({ ...q, link: q.link || "", ld: q.link ? "inline-block" : "none" }))
+    };
+  }
+}
+</script>
+</body>
+</html>

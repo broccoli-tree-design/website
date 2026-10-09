@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics=""><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet"><style>body{margin:0;background:#f0eee9;font-family:"Open Sans",system-ui,sans-serif;color:#464849}a{color:#00618B}a:hover{color:#004563}*{box-sizing:border-box}</style><script src="./image-slot.js"></script></helmet>
+<div id="shot-3" data-screen-label="Revisit 03 Attention plan" style="width:1120px;height:580px;padding:24px;background:transparent;font-family:'Open Sans',sans-serif">
+<div style="position:relative;width:100%;height:100%;background:#fff;border-radius:10px;box-shadow:0 10px 60px -5px rgba(36,37,38,.14),0 0 0 1px #F1F5FA;overflow:hidden">
+<div style="padding:22px 28px;display:flex;flex-direction:column;gap:18px">
+<span style="font-size:14px;font-weight:600">Attention calculator</span><div style="display:grid;grid-template-columns:repeat(6,1fr);width:760px;align-self:center">
+<sc-for list="{{ steps }}" as="s" hint-placeholder-count="6">
+<div style="display:flex;flex-direction:column;align-items:center;gap:8px"><span style="font-size:12px;font-weight:600;color:#007DB3;white-space:nowrap">{{ s.label }}</span><div style="position:relative;align-self:stretch;height:24px;display:flex;justify-content:center"><div style="position:absolute;left:{{ s.l }};right:{{ s.r }};top:12px;height:1px;background:#007DB3"></div><div style="position:relative;width:24px;height:24px;border-radius:50%;background:#007DB3;display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="1.5"><path d="M2.5 6.2l2.3 2.3 4.7-5"></path></svg></div></div></div>
+</sc-for>
+</div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<span style="font-size:14px;font-weight:600">Contact</span>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px 24px">
+<sc-for list="{{ questions }}" as="q" hint-placeholder-count="6">
+<div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:600;color:#464849"><span style="display:flex;align-items:center;gap:4px">{{ q.q }}</span><span style="width:60px;flex:none">Weight</span></div>
+<div style="display:flex;gap:8px"><div style="flex:1;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);font-size:14px"><span style="display:flex;align-items:center;gap:8px">{{ q.a }}</span></div><div style="width:60px;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);font-size:14px">{{ q.w }}<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#686A6C" stroke-width="1.4"><path d="M2 4.5l4 4 4-4"></path></svg></div></div></div>
+</sc-for>
+</div></div>
+<div style="height:1px;background:#F1F5FA"></div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px">
+<div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:14px;font-weight:600">Recommendation</span><span style="font-size:13px;color:#8B8D90">A recognised challenger reinforcing its position concentrates the full budget on 3s and 5s.</span></div>
+<div style="display:flex;flex-direction:column;gap:6px;width:300px;flex:none"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Attention levels</span><div style="height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);font-size:14px">2-part mix (3s, 5s)<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#686A6C" stroke-width="1.4"><path d="M2 4.5l4 4 4-4"></path></svg></div></div>
+</div>
+<div style="display:flex;flex-direction:column;gap:10px;background:#F1F5FA;border-radius:10px;padding:16px 24px 14px">
+<div style="display:grid;grid-template-columns:repeat(2,1fr)">
+<sc-for list="{{ levels }}" as="l" hint-placeholder-count="2">
+<div style="display:flex;justify-content:center;gap:24px;border-left:{{ l.bl }}">
+<div style="display:flex;flex-direction:column;align-items:center"><span style="font-size:20px;line-height:26px;font-weight:600;color:#242526">{{ l.s }}</span><span style="font-size:12px;color:#8B8D90">{{ l.name }}</span></div>
+<div style="display:flex;flex-direction:column;align-items:center"><span style="font-size:20px;line-height:26px;font-weight:600;color:{{ l.c }}">{{ l.pct }}</span><span style="font-size:12px;color:#8B8D90">{{ l.amt }}</span></div>
+</div>
+</sc-for>
+</div>
+<span style="display:flex;justify-content:center;align-items:center;gap:8px;font-size:12px;color:#8B8D90">Split of the $2.2M fall budget<span>Percentages are rounded so the full budget is allocated.</span></span>
+</div></div>
+</div></div></div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const cx = 196, cy = 238;
+    const P = (r, a) => { const t = a * Math.PI / 180; return [cx + r * Math.cos(t), cy + r * Math.sin(t)]; };
+    const sector = (r0, r1, a0, a1) => {
+      const L = a1 - a0 > 180 ? 1 : 0, f = n => n.toFixed(2);
+      const [x1, y1] = P(r1, a0), [x2, y2] = P(r1, a1), [x3, y3] = P(r0, a1), [x4, y4] = P(r0, a0);
+      return `M${f(x1)} ${f(y1)}A${r1} ${r1} 0 ${L} 1 ${f(x2)} ${f(y2)}L${f(x3)} ${f(y3)}A${r0} ${r0} 0 ${L} 0 ${f(x4)} ${f(y4)}Z`;
+    };
+    const pos = (r, a, rot) => { const [x, y] = P(r, a); return { x: x.toFixed(1) + "px", y: y.toFixed(1) + "px", r: rot.toFixed(1) + "deg" }; };
+    const radial = (r, a) => pos(r, a, Math.cos(a * Math.PI / 180) < -0.01 ? a + 180 : a);
+    const tangent = (r, a) => pos(r, a, Math.sin(a * Math.PI / 180) > 0.01 ? a - 90 : a + 90);
+    const arcs = [];
+    [["PAID", -90, 90, "#98CAE0", "#00293A"], ["OWNED", 90, 180, "#D5E1EA", "#242526"], ["EARNED", 180, 270, "#E3E9EF", "#242526"]].forEach(([label, a0, a1, fill, tc]) =>
+      arcs.push({ d: sector(48, 72, a0, a1), fill, stroke: "#fff", sw: 2, edge: label === "PAID" ? [72, a0, a1] : null, ...tangent(60, (a0 + a1) / 2), label, tc, fs: "11px", fw: 700, ls: "0.08em" }));
+    ["Video", "Social", "Imagery", "Experiential", "Commerce", "Audio", "Outreach", "Destinations", "Assets", "Shared", "Coverage", "Comment"].forEach((label, i) => {
+      const a0 = -90 + i * 30, sel = i === 2, grp = i < 6 ? 0 : i < 9 ? 1 : 2;
+      arcs.push({ d: sector(74, 160, a0, a0 + 30), fill: sel ? "#98CAE0" : ["#E2EFF5", "#E6ECF2", "#EEF2F6"][grp], stroke: "#fff", sw: 2, edge: sel ? [160, a0, a0 + 30] : null, ...radial(117, a0 + 15), label, tc: sel ? "#00293A" : ["#004563", "#242526", "#242526"][grp], fs: "13px", fw: 600, ls: "0" });
+    });
+    ["Outdoor", "Cinema", "Events", "Sampling"].forEach((label, i) => {
+      const a0 = -30 + i * 17, sel = i === 0;
+      arcs.push({ d: sector(164, 236, a0, a0 + 17), fill: sel ? "#98CAE0" : "#E2EFF5", stroke: "#fff", sw: 2, edge: sel ? [236, a0, a0 + 17] : null, ...radial(200, a0 + 8.5), label, tc: sel ? "#00293A" : "#004563", fs: "13px", fw: 600, ls: "0" });
+    });
+    const edges = arcs.filter(a => a.edge).map(({ edge: [r, b0, b1] }) => { const [x1, y1] = P(r - 1, b0 + 0.6), [x2, y2] = P(r - 1, b1 - 0.6); return { d: `M${x1.toFixed(1)} ${y1.toFixed(1)}A${r - 1} ${r - 1} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}` }; });
+    const segments = [["Pre-launch · Out of market", "16.1M · 42%"], ["Pre-launch · In market", "6.9M · 18%"], ["Launch · Out of market", "10.8M · 28%"], ["Launch · In market", "4.6M · 12%"]]
+      .map(([name, meta], i) => ({ name, meta, border: i === 0 ? "#007DB3" : "transparent", bg: i === 0 ? "#CAE4EF" : "transparent", fg: i === 0 ? "#004563" : "#464849" }));
+    const levels = [["3s", "Mid-low", 55, "$1.21M"], ["5s", "Mid", 45, "$990K"]]
+      .map(([s, name, p, amt], i) => ({ s, name, pct: p + "%", amt, bl: i ? "1px solid #CFD2D7" : "0", c: s === "3s" || s === "5s" ? "#00618B" : "#242526" }));
+    const ico = (inv) => React.createElement("svg", { width: 14, height: 14, viewBox: "0 0 14 14", fill: "none", stroke: "#007DB3", strokeWidth: 1.4, strokeLinecap: "round" }, inv
+      ? [React.createElement("path", { key: 1, d: "M3 12V8M7 12V3M11 12V6" })]
+      : [React.createElement("rect", { key: 1, x: 2, y: 2.5, width: 5, height: 3.5, rx: 1 }), React.createElement("rect", { key: 2, x: 7, y: 8, width: 5, height: 3.5, rx: 1 }), React.createElement("path", { key: 3, d: "M4.5 6v3.75H7" })]);
+    const card = (id, type, name, when) => ({ id, type, name, when, icon: ico(type === "Investment plan") });
+    const optPlans = [card("inv-pre", "Channel plan", "Super Plate Pre-launch", "2 days ago"), card("inv-invest", "Investment plan", "Super Plate Investment", "1 day ago"), card("inv-launch", "Channel plan", "Super Plate Launch", "29 min ago")];
+    const flights = [card("fl-nyc", "Channel plan", "Pre-launch NYC", "29 min ago"), card("fl-chi", "Channel plan", "Pre-launch Chicago", "29 min ago"), card("fl-la", "Channel plan", "Pre-launch LA", "29 min ago"), card("fl-mia", "Channel plan", "Launch Miami", "29 min ago")];
+    return {
+      arcs, edges, segments, levels, optPlans, flights,
+      steps: ["Comms imperative", "Content", "Context", "Construct", "Culture", "Contact"].map((label, i, a) => ({ label, l: i === 0 ? "50%" : "0", r: i === a.length - 1 ? "50%" : "0" })),
+      questions: [
+        { q: "Is the brand the market leader?", a: "Challenger", w: "3" },
+        { q: "What is brand awareness?", a: "10–20%", w: "2", link: "Ideation" },
+        { q: "Is the brand a startup?", a: "No, eight years in market", w: "1" },
+        { q: "Is there a dominant competitor?", a: "Yes, category leader", w: "2" },
+        { q: "What is the mental availability task?", a: "Reinforce", w: "3", link: "Audience viz" },
+        { q: "What is the source of demand?", a: "Repeat + lapsed buyers", w: "3" }
+      ].map(q => ({ ...q, link: q.link || "", ld: q.link ? "inline-block" : "none" }))
+    };
+  }
+}
+</script>
+</body>
+</html>
