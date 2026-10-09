@@ -264,7 +264,7 @@ export default function Home() {
                 REDESIGN LEGACY APP
               </span>
               <h3 className="text-display mod-h3">
-                From monolith to modular workflow
+                Closing the gap between Sales’ demo and Planners’ work
               </h3>
             </div>
           </div>
@@ -272,18 +272,20 @@ export default function Home() {
             <div className="mod-problem">
               <span className="text-label">Problem</span>
               <p className="body">
-                One rigid system had to serve teams with competing needs. Each
-                team worked around it differently, and the client saw the
-                inconsistency.
+                The legacy app was designed to help Sales tell the story.
+                Clients were told that Planners would deliver their work in-app,
+                but 70%+ of Planners still delivered in Excel and PowerPoints.
               </p>
             </div>
             <div className="mod-solution">
               <span className="text-label">Solution</span>
               <p className="body">
-                Customizable modules that pull data from each team&rsquo;s
-                internal workspace into one unified workflow, so every team
-                works its own way while the client still sees one cohesive
-                front.
+                We understand real work is messy and different clients needs
+                different levels of visibility, so we separated daily operations
+                from the client-facing portal. I designed 10+ modules that pull
+                data from Sales’ and Planners’ workspaces. Instead of piecing
+                info together in Excel and PowerPoints, Sales and Planners can
+                create custom workflows based on different client needs.
               </p>
             </div>
           </div>

@@ -10,6 +10,7 @@ export type CaseStep = {
   img?: string;
   w?: number;
   h?: number;
+  desc?: string;
 };
 
 /** The four steps' tab colours, in order, after each case's front item */

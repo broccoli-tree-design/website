@@ -172,10 +172,44 @@
   color: var(--accent);
 }
 
+.view-tabs {
+  display: flex;
+  gap: 4px;
+  width: max-content;
+  margin-top: 96px;
+  padding: 4px;
+  border: 1px solid var(--green-900);
+  border-radius: 999px;
+  background: var(--neutral-100);
+}
+.view-tab {
+  appearance: none;
+  height: 40px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--green-900);
+  font: 500 var(--text-sm) var(--sans), system-ui, sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.view-tab:hover {
+  background: var(--neutral-200);
+}
+.view-tab[aria-selected="true"] {
+  background: var(--green-900);
+  color: var(--neutral-100);
+}
+.view-tabs + .case-frame {
+  margin-top: 28px;
+}
+
 .mod-track {
   position: relative;
   display: flex;
-  height: clamp(440px, 43cqw, 620px);
+  height: clamp(520px, 51.4cqw, 740px);
   border-radius: 16px;
   border: 1px solid var(--green-900);
   overflow: hidden;
@@ -238,9 +272,34 @@
 .mod-panel[hidden] {
   display: none;
 }
-.mod-shot {
+/* the screen as large as the stage allows, its caption under it; 100px
+   is the caption's room (two or three lines and the gap) */
+.mod-stage {
   height: 100%;
-  padding: 16px;
+  padding: 20px;
+  container-type: size;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mod-figure {
+  width: min(100cqw, (100cqh - 100px) * 1072 / 532);
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.mod-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.mod-desc {
+  max-width: 760px;
+  font-size: var(--text-md);
+  line-height: 1.6;
+  color: var(--neutral-700);
+  text-wrap: pretty;
 }
 .mod-client-view {
   height: 100%;
@@ -262,6 +321,16 @@
 }
 .mod-client-title {
   font-size: var(--display-1);
+  white-space: pre-line;
+  text-wrap: balance;
+}
+.mod-client-desc {
+  margin: 14px 0 0;
+  font-size: var(--text-md);
+  line-height: 1.7;
+  color: var(--neutral-700);
+  white-space: pre-line;
+  text-wrap: pretty;
 }
 .mod-client-list {
   margin: 0;
@@ -274,11 +343,16 @@
 }
 .mod-client-list li {
   display: flex;
+  align-items: baseline;
   gap: 14px;
+  font-weight: 600;
   border-top: 1px solid var(--neutral-200);
   padding-top: 14px;
 }
 .mod-client-list .text-num {
+  width: 24px;
+  flex: none;
+  font-weight: 400;
   color: var(
     --orange-700
   ); /* the panel is always neutral-100, whatever the theme */
@@ -324,6 +398,12 @@
     gap: 10px;
   }
 
+  .view-tabs {
+    margin-top: 56px;
+  }
+  .view-tabs + .case-frame {
+    margin-top: 20px;
+  }
   .mod-frame .case-ring-0 {
     inset: 6px 6px -8px -8px;
     border-radius: 20px;
@@ -375,11 +455,17 @@
     font-size: var(--text-lg);
     line-height: 1;
   }
-  .mod-shot {
-    padding: 8px 4px;
+  .mod-stage {
+    height: auto;
+    padding: 8px 4px 20px;
+    container-type: normal;
   }
-  .mod-shot img {
+  .mod-figure {
     width: 100%;
+    gap: 12px;
+  }
+  .mod-desc {
+    padding: 0 10px;
   }
   .mod-client-view {
     display: flex;
@@ -387,9 +473,6 @@
     align-items: stretch;
     gap: 20px;
     padding: 22px 18px 24px;
-  }
-  .mod-client-head .text-label {
-    display: none;
   }
   .mod-client-list {
     gap: 10px;
@@ -407,6 +490,289 @@
   }
   .mod-result .result-stat {
     margin-right: -6cqw;
+  }
+}
+
+/* phones: tap a screen to open it full size in a dialog */
+.mod-enlarge {
+  appearance: none;
+  position: relative;
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: zoom-in;
+}
+.mod-enlarge-hint {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--green-900);
+  color: var(--neutral-100);
+  font-size: var(--text-xs);
+  font-weight: 500;
+}
+.mod-zoom {
+  width: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--neutral-100);
+  color: var(--green-900);
+}
+.mod-zoom[open] {
+  display: flex;
+  flex-direction: column;
+}
+.mod-zoom::backdrop {
+  background: var(--green-950);
+}
+html:has(.mod-zoom[open]) {
+  overflow: hidden;
+}
+.mod-zoom-bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 6px 6px 20px;
+  border-bottom: 1px solid var(--green-900);
+}
+.mod-zoom-bar .case-name {
+  writing-mode: horizontal-tb;
+  font-size: var(--text-md);
+}
+.mod-zoom-close {
+  appearance: none;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+/* the screen at its real size; scroll sideways to read across */
+.mod-zoom-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  padding: 16px;
+}
+.mod-zoom-scroll img {
+  flex: none;
+  display: block;
+  width: 1072px;
+  max-width: none;
+  height: auto;
+}
+.mod-zoom-desc {
+  flex: none;
+  margin: 0;
+  padding: 0 20px 28px;
+  font-size: var(--text-md);
+  line-height: 1.6;
+  color: var(--neutral-700);
+}
+
+/* case — architecture tab: the client portal's workflows over the daily
+   operations apps. Laid out on the 1384-wide frame in px and zoomed to fit
+   (--z, from CaseModules); stacked below 1100px, where zooming would take
+   the text under 11px */
+.arch-track {
+  display: block;
+  height: auto;
+}
+.arch {
+  display: flex;
+  flex-direction: column;
+  padding: 90px 48px 54px;
+  background: var(--neutral-100);
+  color: var(--green-900);
+  zoom: var(--z);
+}
+.arch-box {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px 20px 18px;
+  border: 1px solid var(--green-900);
+  border-radius: 12px;
+  background: var(--neutral-50);
+  overflow: hidden;
+}
+.arch-tag {
+  padding: 4px 10px;
+  border: 1px solid var(--green-900);
+  border-radius: 6px;
+  background: var(--neutral-100);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.arch-rows {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.arch-row {
+  appearance: none;
+  margin: 0;
+  border: 0;
+  padding: 6px 0;
+  border-radius: 10px;
+  background: transparent;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: background 0.15s;
+}
+.arch-row:hover {
+  background: var(--neutral-100);
+}
+.arch-row-name {
+  flex: none;
+  width: 170px;
+  margin-right: auto;
+  padding-left: 4px;
+  font-size: var(--text-md);
+  font-weight: 600;
+}
+.arch-tile,
+.arch-app {
+  flex: none;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border: 1px solid var(--green-900);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.arch-tile {
+  height: 48px;
+  border-radius: 8px;
+  background: var(--c);
+  color: var(--fg);
+}
+.arch-tile.is-unused {
+  border: 1px dashed var(--neutral-400);
+  background: transparent;
+  color: var(--neutral-500);
+}
+/* the last module runs off the box and fades: there are more */
+.arch-tile.arch-more {
+  margin-right: -64px;
+  border-right: 0;
+  border-radius: 8px 0 0 8px;
+  mask-image: linear-gradient(90deg, #000 40%, transparent);
+}
+.arch-link {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--neutral-700);
+}
+.arch-link svg {
+  flex: none;
+  width: 22px;
+  height: 56px;
+  fill: none;
+  stroke: var(--green-900);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.arch-ops {
+  height: 321px;
+}
+.arch-apps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.arch-app {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  height: 40px;
+  border-radius: 999px;
+  background: var(--neutral-100);
+}
+.arch-app.arch-more {
+  mask-image: linear-gradient(90deg, #000 45%, transparent);
+}
+
+/* stacked: rows and apps wrap, nothing bleeds */
+@media (max-width: 1099.98px) {
+  .arch {
+    zoom: 1;
+    padding: 28px 24px 32px;
+  }
+  .arch-row {
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 8px 4px 10px;
+  }
+  .arch-row-name {
+    width: 100%;
+    padding: 0 0 4px;
+  }
+  .arch-tile {
+    height: 40px;
+    padding: 0 12px;
+  }
+  .arch-tile.arch-more {
+    margin-right: 0;
+    border-right: 1px dashed var(--neutral-400);
+    border-radius: 8px;
+    mask-image: none;
+  }
+  .arch-link {
+    height: auto;
+    padding: 14px 0;
+    justify-content: flex-start;
+    text-align: left;
+  }
+  .arch-ops {
+    height: auto;
+  }
+  .arch-apps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding-top: 4px;
+  }
+  .arch-app {
+    position: static;
+    height: 36px;
+    padding: 0 14px;
+  }
+  .arch-app.arch-more {
+    mask-image: none;
   }
 }
 
@@ -566,5 +932,44 @@
 @media (max-width: 640px) {
   .result-stat {
     font-size: var(--display-6);
+  }
+}
+
+/* the tab bar spans the phone column; tabs share it */
+@media (max-width: 640px) {
+  .view-tabs {
+    width: auto;
+  }
+  .view-tab {
+    flex: 1 1 auto;
+    padding: 0 6px;
+  }
+}
+
+/* phones: the architecture's tiles and apps shrink so they pair up */
+@media (max-width: 640px) {
+  .arch {
+    padding: 18px 14px 22px;
+  }
+  .arch-box {
+    padding: 14px 12px 16px;
+  }
+  .arch-row,
+  .arch-apps {
+    gap: 6px;
+  }
+  .arch-tile,
+  .arch-app {
+    height: 32px;
+    padding: 0 10px;
+    font-size: var(--text-xs);
+  }
+}
+
+/* the narrowest phones: smaller tab labels so all three fit */
+@media (max-width: 374.98px) {
+  .view-tab {
+    padding: 0 4px;
+    font-size: var(--text-xs);
   }
 }
