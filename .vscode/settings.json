@@ -1,0 +1,5 @@
+{
+  // design/case2-screens bind styles with {{ }} placeholders that the
+  // design runtime fills in; they are the only HTML files here
+  "html.validate.styles": false
+}
