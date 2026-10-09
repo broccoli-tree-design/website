@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
+import CaseArchitecture from "./CaseArchitecture";
 import {
   CaseResult,
   CaseRings,
@@ -128,6 +129,7 @@ const VIEWS: [View, string][] = [
 
 const DESKTOP = "(min-width: 900px)";
 const TAB = 84; // collapsed tab width, matches .mod-item
+const ARTBOARD = 1384; // the frame's width at the 1440 column
 
 /** One curve from the open tab's centre (or the frame's, with no tabs)
  *  down to the result label's start. The centre comes from the layout rule
@@ -146,7 +148,7 @@ export default function CaseModules() {
     new: CLIENTS.new.open,
     return: CLIENTS.return.open,
   });
-  const [width, setWidth] = useState(1384);
+  const [width, setWidth] = useState(ARTBOARD);
   const [labelX, setLabelX] = useState(1000); // label's left edge in track space
   const track = useRef<HTMLDivElement>(null);
   const result = useRef<HTMLDivElement>(null);
@@ -218,7 +220,20 @@ export default function CaseModules() {
         aria-labelledby={`view-tab-${view}`}
       >
         <CaseRings />
-        <div className="mod-track" ref={track}>
+        <div
+          className={`mod-track${client ? "" : " arch-track"}`}
+          ref={track}
+        >
+          {!client && (
+            <CaseArchitecture
+              scale={width / ARTBOARD}
+              rows={(["new", "return"] as const).map((v) => ({
+                label: CLIENTS[v].label,
+                steps: CLIENTS[v].steps,
+                onOpen: () => setView(v),
+              }))}
+            />
+          )}
           {client &&
             items.map((m, i) => {
               const open = i === active;

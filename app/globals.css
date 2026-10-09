@@ -14,8 +14,11 @@
   --green-600: #476f33;
   --green-300: #a8cf8a;
   --neutral-700: #3c4a3f;
+  --neutral-500: #7d8478;
+  --neutral-400: #a9ad9c;
   --neutral-200: #d7dccb;
   --neutral-100: #efeede;
+  --neutral-50: #f7f5ea;
   --orange-800: #742f15; /* --orange-700 20% toward black (oklab) */
   --orange-700: #9e4220;
   --orange-400: #fb7e4f;
