@@ -13,7 +13,7 @@
 <div style="padding:22px 28px;display:flex;flex-direction:column;gap:18px">
 <span style="font-size:14px;font-weight:600">Attention calculator</span><div style="display:grid;grid-template-columns:repeat(6,1fr);width:760px;align-self:center">
 <sc-for list="{{ steps }}" as="s" hint-placeholder-count="6">
-<div style="display:flex;flex-direction:column;align-items:center;gap:8px"><span style="font-size:12px;font-weight:600;color:#007DB3;white-space:nowrap">{{ s.label }}</span><div style="position:relative;align-self:stretch;height:24px;display:flex;justify-content:center"><div style="position:absolute;left:{{ s.l }};right:{{ s.r }};top:12px;height:1px;background:#007DB3"></div><div style="position:relative;width:24px;height:24px;border-radius:50%;background:#007DB3;display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="1.5"><path d="M2.5 6.2l2.3 2.3 4.7-5"></path></svg></div></div></div>
+<div style="display:flex;flex-direction:column;align-items:center;gap:8px"><span style="font-size:12px;font-weight:600;color:#007DB3;white-space:nowrap">{{ s.label }}</span><div style="position:relative;align-self:stretch;height:24px;display:flex;justify-content:center"><div style="position:absolute;left:{{ s.l }};right:{{ s.r }};top:12px;height:1px;background:{{ s.line }}"></div><div style="position:relative;width:24px;height:24px;border-radius:50%;background:linear-gradient(90deg,#45A0C8,#007DB3);display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="1.5"><path d="M2.5 6.2l2.3 2.3 4.7-5"></path></svg></div></div></div>
 </sc-for>
 </div>
 <div style="display:flex;flex-direction:column;gap:12px">
@@ -21,14 +21,14 @@
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px 24px">
 <sc-for list="{{ questions }}" as="q" hint-placeholder-count="6">
 <div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;gap:8px;font-size:12px;font-weight:600;color:#464849"><span style="display:flex;align-items:center;gap:4px">{{ q.q }}</span><span style="width:60px;flex:none">Weight</span></div>
-<div style="display:flex;gap:8px"><div style="flex:1;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);font-size:14px"><span style="display:flex;align-items:center;gap:8px">{{ q.a }}</span></div><div style="width:60px;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);font-size:14px">{{ q.w }}<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#686A6C" stroke-width="1.4"><path d="M2 4.5l4 4 4-4"></path></svg></div></div></div>
+<div style="display:flex;gap:8px"><div style="flex:1;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;font-size:14px"><span style="display:flex;align-items:center;gap:8px">{{ q.a }}</span></div><div style="width:60px;height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;font-size:14px">{{ q.w }}<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#686A6C" stroke-width="1.4"><path d="M2 4.5l4 4 4-4"></path></svg></div></div></div>
 </sc-for>
 </div></div>
 <div style="height:1px;background:#F1F5FA"></div>
 <div style="display:flex;flex-direction:column;gap:12px">
 <div style="display:flex;justify-content:space-between;align-items:flex-end;gap:24px">
 <div style="display:flex;flex-direction:column;gap:3px"><span style="font-size:14px;font-weight:600">Recommendation</span><span style="font-size:13px;color:#8B8D90">A recognised challenger reinforcing its position concentrates the full budget on 3s and 5s.</span></div>
-<div style="display:flex;flex-direction:column;gap:6px;width:300px;flex:none"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Attention levels</span><div style="height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);font-size:14px">2-part mix (3s, 5s)<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#686A6C" stroke-width="1.4"><path d="M2 4.5l4 4 4-4"></path></svg></div></div>
+<div style="display:flex;flex-direction:column;gap:6px;width:300px;flex:none"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Attention levels</span><div style="height:36px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;font-size:14px">2-part mix (3s, 5s)<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="#686A6C" stroke-width="1.4"><path d="M2 4.5l4 4 4-4"></path></svg></div></div>
 </div>
 <div style="display:flex;flex-direction:column;gap:10px;background:#F1F5FA;border-radius:10px;padding:16px 24px 14px">
 <div style="display:grid;grid-template-columns:repeat(2,1fr)">
@@ -80,7 +80,9 @@ class Component extends DCLogic {
     const flights = [card("fl-nyc", "Channel plan", "Pre-launch NYC", "29 min ago"), card("fl-chi", "Channel plan", "Pre-launch Chicago", "29 min ago"), card("fl-la", "Channel plan", "Pre-launch LA", "29 min ago"), card("fl-mia", "Channel plan", "Launch Miami", "29 min ago")];
     return {
       arcs, edges, segments, levels, optPlans, flights,
-      steps: ["Comms imperative", "Content", "Context", "Construct", "Culture", "Contact"].map((label, i, a) => ({ label, l: i === 0 ? "50%" : "0", r: i === a.length - 1 ? "50%" : "0" })),
+      steps: ["Comms imperative", "Content", "Context", "Construct", "Culture", "Contact"].map((label, i, a) => ({ label, l: i === 0 ? "50%" : "0", r: i === a.length - 1 ? "50%" : "0",
+        // One gradient sweep from the first circle to the last, sliced across the per-step segments.
+        line: `linear-gradient(90deg,#45A0C8,#007DB3) ${(-(i && i - 0.5) * 760 / 6).toFixed(2)}px 0/${(5 * 760 / 6).toFixed(2)}px 100%` })),
       questions: [
         { q: "Is the brand the market leader?", a: "Challenger", w: "3" },
         { q: "What is brand awareness?", a: "10–20%", w: "2", link: "Ideation" },

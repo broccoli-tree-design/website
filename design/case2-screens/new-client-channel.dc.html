@@ -18,8 +18,13 @@
 </sc-for>
 </div>
 <div style="position:relative;flex:none;width:460px;height:476px;margin-top:-6px"><svg width="460" height="476" viewBox="0 0 460 476" style="position:absolute;left:0;top:0">
+<defs>
 <sc-for list="{{ arcs }}" as="a" hint-placeholder-count="0">
-<path d="{{ a.d }}" fill="{{ a.fill }}" stroke="{{ a.stroke }}" stroke-width="{{ a.sw }}"></path>
+<linearGradient id="{{ a.gid }}" gradientUnits="userSpaceOnUse" x1="{{ a.gx1 }}" y1="{{ a.gy1 }}" x2="{{ a.gx2 }}" y2="{{ a.gy2 }}"><stop offset="0" stop-color="{{ a.inner }}"></stop><stop offset="1" stop-color="{{ a.fill }}"></stop></linearGradient>
+</sc-for>
+</defs>
+<sc-for list="{{ arcs }}" as="a" hint-placeholder-count="0">
+<path d="{{ a.d }}" fill="url(#{{ a.gid }})" stroke="{{ a.stroke }}" stroke-width="{{ a.sw }}"></path>
 </sc-for>
 <sc-for list="{{ edges }}" as="e" hint-placeholder-count="0">
 <path d="{{ e.d }}" fill="none" stroke="#007DB3" stroke-width="2.5" stroke-linecap="round"></path>
@@ -34,12 +39,12 @@
 <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 20px;border-bottom:1px solid #F1F5FA;background:#FAFBFD"><div style="display:flex;flex-direction:column;gap:1px"><span style="font-size:14px;font-weight:600;color:#242526">Channel activity · Outdoor</span><span style="font-size:12px;color:#8B8D90">Pre-opening, out of market</span></div><svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#464849" stroke-width="1.4"><path d="M2 2l10 10M12 2L2 12"></path></svg></div>
 <div style="padding:12px 20px;display:flex;flex-direction:column;gap:10px;flex:1;min-height:0;overflow:hidden">
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-<div style="display:flex;flex-direction:column;gap:6px"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849;white-space:nowrap">Attention level</span><div style="background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);padding:8px 12px;font-size:14px;line-height:20px;white-space:nowrap">5s · Mid</div></div>
-<div style="display:flex;flex-direction:column;gap:6px"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Budget</span><div style="background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);padding:8px 12px;font-size:14px;line-height:20px">$540K</div></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849;white-space:nowrap">Attention level</span><div style="background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;padding:8px 12px;font-size:14px;line-height:20px;white-space:nowrap">5s · Mid</div></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Budget</span><div style="background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;padding:8px 12px;font-size:14px;line-height:20px">$540K</div></div>
 </div>
-<div style="display:flex;flex-direction:column;gap:6px"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Flight</span><div style="background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);padding:8px 12px;font-size:14px;line-height:20px">Jan 25 – Mar 5, 2027</div></div>
-<div style="display:flex;flex-direction:column;gap:6px"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Channel idea</span><div style="background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);padding:8px 12px;font-size:13px;line-height:19px;text-wrap:pretty">Digital billboards at transit stops and near cinemas and restaurants, Wednesday to Friday evenings, when people plan their weekend. Builds memory with a countdown to the March 6 opening.</div></div>
-<div style="display:flex;flex-direction:column;gap:6px"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Assets required</span><div style="background:#fff;border:1px solid #CFD2D7;border-radius:4px;color:#242526;box-shadow:0 1px 2px rgba(36,37,38,.06);padding:8px 12px;font-size:13px;line-height:19px;text-wrap:pretty">Gold frame mark, cherub detail crop and "Face to face with Raphael" line, static and 6s motion.</div></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Flight</span><div style="background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;padding:8px 12px;font-size:14px;line-height:20px">Jan 25 – Mar 5, 2027</div></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Channel idea</span><div style="background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;padding:8px 12px;font-size:13px;line-height:19px;text-wrap:pretty">Digital billboards at transit stops and near cinemas and restaurants, Wednesday to Friday evenings, when people plan their weekend. Builds memory with a countdown to the March 6 opening.</div></div>
+<div style="display:flex;flex-direction:column;gap:6px"><span style="display:flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:#464849">Assets required</span><div style="background:#fff;border:1px solid #E4E8ED;border-radius:6px;color:#242526;padding:8px 12px;font-size:13px;line-height:19px;text-wrap:pretty">Gold frame mark, cherub detail crop and "Face to face with Raphael" line, static and 6s motion.</div></div>
 </div><div style="margin-top:auto;display:flex;justify-content:flex-end;gap:8px;padding:10px 20px;border-top:1px solid #F1F5FA;background:#FAFBFD"><span style="display:flex;align-items:center;height:32px;padding:0 16px;font-size:13px;font-weight:600;color:#00618B;background:transparent;border:1px solid transparent;border-radius:3px">Cancel</span><span style="display:flex;align-items:center;height:32px;padding:0 20px;font-size:13px;font-weight:600;color:#fff;background:#00618B;border:1px solid #00618B;border-radius:3px">Save</span></div></div>
 </div></div>
 </x-dc>
@@ -58,15 +63,18 @@ class Component extends DCLogic {
     const tangent = (r, a) => { const A = a + ROT; return pos(r, a, Math.sin(A * Math.PI / 180) > 0.01 ? A - 90 : A + 90); };
     const arcs = [];
     [["PAID", -90, 90, "#98CAE0", "#00293A"], ["OWNED", 90, 180, "#D5E1EA", "#242526"], ["EARNED", 180, 270, "#E3E9EF", "#242526"]].forEach(([label, a0, a1, fill, tc]) =>
-      arcs.push({ d: sector(48, 72, a0, a1), fill, stroke: "#fff", sw: 2, edge: label === "PAID" ? [72, a0, a1] : null, ...tangent(60, (a0 + a1) / 2), label, tc, fs: "11px", fw: 700, ls: "0.08em" }));
+      arcs.push({ d: sector(48, 72, a0, a1), span: [48, 72, a0, a1], fill, stroke: "#fff", sw: 2, edge: label === "PAID" ? [72, a0, a1] : null, ...tangent(60, (a0 + a1) / 2), label, tc, fs: "11px", fw: 700, ls: "0.08em" }));
     ["Video", "Social", "Imagery", "Experiential", "Commerce", "Audio", "Outreach", "Destinations", "Assets", "Shared", "Coverage", "Comment"].forEach((label, i) => {
       const a0 = -90 + i * 30, sel = i === 2, grp = i < 6 ? 0 : i < 9 ? 1 : 2;
-      arcs.push({ d: sector(74, 160, a0, a0 + 30), fill: sel ? "#98CAE0" : ["#E2EFF5", "#E6ECF2", "#EEF2F6"][grp], stroke: "#fff", sw: 2, edge: sel ? [160, a0, a0 + 30] : null, ...radial(117, a0 + 15), label, tc: sel ? "#00293A" : ["#004563", "#242526", "#242526"][grp], fs: "13px", fw: 600, ls: "0" });
+      arcs.push({ d: sector(74, 160, a0, a0 + 30), span: [74, 160, a0, a0 + 30], fill: sel ? "#98CAE0" : ["#E2EFF5", "#E6ECF2", "#EEF2F6"][grp], stroke: "#fff", sw: 2, edge: sel ? [160, a0, a0 + 30] : null, ...radial(117, a0 + 15), label, tc: sel ? "#00293A" : ["#004563", "#242526", "#242526"][grp], fs: "13px", fw: 600, ls: "0" });
     });
     ["Outdoor", "Cinema", "Events", "Sampling"].forEach((label, i) => {
       const a0 = -30 + i * 17, sel = i === 0;
-      arcs.push({ d: sector(164, 236, a0, a0 + 17), fill: sel ? "#98CAE0" : "#E2EFF5", stroke: "#fff", sw: 2, edge: sel ? [236, a0, a0 + 17] : null, ...radial(200, a0 + 8.5), label, tc: sel ? "#00293A" : "#004563", fs: "13px", fw: 600, ls: "0" });
+      arcs.push({ d: sector(164, 236, a0, a0 + 17), span: [164, 236, a0, a0 + 17], fill: sel ? "#98CAE0" : "#E2EFF5", stroke: "#fff", sw: 2, edge: sel ? [236, a0, a0 + 17] : null, ...radial(200, a0 + 8.5), label, tc: sel ? "#00293A" : "#004563", fs: "13px", fw: 600, ls: "0" });
     });
+    // Each sector fades from its fill mixed 27% with white at the inner edge to the fill at the outer edge.
+    const tint = hex => "#" + [1, 3, 5].map(i => Math.round(parseInt(hex.slice(i, i + 2), 16) * 0.73 + 255 * 0.27).toString(16).padStart(2, "0")).join("").toUpperCase();
+    arcs.forEach((a, i) => { const m = (a.span[2] + a.span[3]) / 2, [x1, y1] = P(a.span[0], m), [x2, y2] = P(a.span[1], m); Object.assign(a, { gid: "wg" + i, inner: tint(a.fill), gx1: x1.toFixed(2), gy1: y1.toFixed(2), gx2: x2.toFixed(2), gy2: y2.toFixed(2) }); });
     const edges = arcs.filter(a => a.edge).map(({ edge: [r, b0, b1] }) => { const [x1, y1] = P(r - 1, b0 + 0.6), [x2, y2] = P(r - 1, b1 - 0.6); return { d: `M${x1.toFixed(1)} ${y1.toFixed(1)}A${r - 1} ${r - 1} 0 0 1 ${x2.toFixed(1)} ${y2.toFixed(1)}` }; });
     const segments = [["Pre-opening · Out of market", "1.61M · 42%"], ["Pre-opening · In market", "0.69M · 18%"], ["Run · Out of market", "1.08M · 28%"], ["Run · In market", "0.46M · 12%"]]
       .map(([name, meta], i) => ({ name, meta, border: i === 0 ? "#007DB3" : "transparent", bg: i === 0 ? "#CAE4EF" : "transparent", fg: i === 0 ? "#004563" : "#464849" }));
