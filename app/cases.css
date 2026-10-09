@@ -146,8 +146,11 @@
   flex-direction: column;
   gap: 22px;
 }
+/* roomier than .text-display's 0.85, so the apostrophes in "Sales’" and
+   "Planners’" clear the descenders above (as .about-h2) */
 .mod-h3 {
   font-size: var(--display-2);
+  line-height: 1.1;
   text-wrap: balance;
 }
 .mod-brief {
