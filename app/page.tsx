@@ -237,10 +237,10 @@ export default function Home() {
             <div className="mod-problem">
               <span className="text-label">Problem</span>
               <p className="body">
-                In response to GDPR, the client needed to adopt GeoLift
-                methodology to choose campaign locations. Its command-line
-                interface took Marketing Scientists 20+ hours to learn and run,
-                and worked like a black box.
+                In response to GDPR, clients needed to adopt GeoLift methodology
+                to choose campaign locations. Its command-line interface took
+                Marketing Scientists 20+ hours to learn and run, and worked like
+                a black box.
               </p>
             </div>
             <div className="mod-solution">
@@ -248,8 +248,8 @@ export default function Home() {
               <p className="body">
                 A no-code, self-explanatory workflow that runs in 10+ minutes
                 and surfaces the model&rsquo;s reasoning, so Marketing
-                Scientists can discuss, compare, and make tradeoffs with the
-                client.
+                Scientists can discuss, compare, and make tradeoffs with
+                clients.
               </p>
             </div>
           </div>
