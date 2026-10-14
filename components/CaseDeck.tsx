@@ -122,10 +122,10 @@ export default function CaseDeck() {
                   ) : (
                     <div className="deck-face">
                       <p className="text-title deck-face-title">
-                        Milwaukee, Orlando, Daytona Beach, Melbourne
+                        Washington DC, Detroit, Richmond
                       </p>
                       <span className="text-label">
-                        Why these campaign locations?
+                        Why these campaign markets?
                       </span>
                     </div>
                   )}

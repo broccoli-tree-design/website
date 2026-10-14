@@ -229,7 +229,7 @@ export default function Home() {
                 0&rarr;1 Product design
               </span>
               <h3 className="text-display mod-h3">
-                Increasing efficiency with human-in-the-lead
+                From black box to co-creation with clients
               </h3>
             </div>
           </div>
@@ -237,19 +237,19 @@ export default function Home() {
             <div className="mod-problem">
               <span className="text-label">Problem</span>
               <p className="body">
-                In response to GDPR, clients needed to adopt GeoLift methodology
-                to choose campaign locations. Its command-line interface took
-                Marketing Scientists 20+ hours to learn and run, and worked like
-                a black box.
+                In response to GDPR, clients needed to adopt the GeoLift
+                methodology to select campaign markets. Its command-line
+                interface took Marketing Scientists 20+ hours to learn and run,
+                and worked like a black box.
               </p>
             </div>
             <div className="mod-solution">
               <span className="text-label">Solution</span>
               <p className="body">
-                A no-code, self-explanatory workflow that runs in 10+ minutes
-                and surfaces the model&rsquo;s reasoning, so Marketing
-                Scientists can discuss, compare, and make tradeoffs with
-                clients.
+                A no-code workflow that runs in 10+ minutes and surfaces the
+                model&rsquo;s reasoning, so Marketing Scientists can identify
+                campaign markets, compare, and make tradeoffs with clients
+                during meetings.
               </p>
             </div>
           </div>

@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Omni · Set parameters</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f3f6f9}
+a{color:#00618B}a:hover{color:#004563}
+button,input,select{font-family:inherit}
+select{appearance:none;-webkit-appearance:none}
+input::placeholder{color:#686A6C}
+aside *::-webkit-scrollbar{display:none}
+</style>
+</helmet>
+<div style="width: 1440px; height: 926px; overflow: hidden; display: flex; flex-direction: column; background: #f3f6f9; font-family: 'Open Sans', system-ui, sans-serif; color: #242526; font-size: 14px">
+
+
+  <div style="flex: 1; min-height: 0; display: flex; align-items: stretch">
+    <nav aria-label="Main" style="flex: none; width: 56px; margin: 8px 0 8px 8px; box-sizing: border-box; padding: 12px 0; display: flex; flex-direction: column; align-items: center; gap: 24px; background: #eef2f6; border-radius: 10px">
+      <a href="#" aria-label="Omni home" style="width: 40px; height: 40px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11" fill="none" stroke="#1594c9" stroke-width="2.5"></circle><circle cx="13" cy="13" r="4.5" fill="#1594c9"></circle></svg></a>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
+          <a href="#" aria-label="Home" style="width: 40px; height: 40px; border: 0; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: transparent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2329" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20h-5v-5.5H9V20H4z"></path></svg></a>
+          <a href="#" aria-label="Apps" aria-current="page" style="width: 40px; height: 40px; border: 0; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: #ffffff; box-shadow: 0 1px 3px rgba(16,40,60,0.10)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2329" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"></rect></svg></a>
+          <a href="#" aria-label="Create" style="width: 40px; height: 40px; border: 0; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: transparent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2329" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 8.5v7M8.5 12h7"></path></svg></a>
+          <a href="#" aria-label="Files" style="width: 40px; height: 40px; border: 0; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: transparent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2329" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 11.5 12.6 18a4.2 4.2 0 0 1-6-6L13 5.6a2.8 2.8 0 0 1 4 4l-6.4 6.4a1.4 1.4 0 0 1-2-2L14.5 8"></path></svg></a>
+          <a href="#" aria-label="Assist" style="width: 40px; height: 40px; border: 0; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: transparent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2329" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4l1.6 4.4L17 10l-4.4 1.6L11 16l-1.6-4.4L5 10l4.4-1.6z"></path><path d="M18 14.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"></path></svg></a>
+      </div>
+      <div style="margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 12px">
+        <a href="#" aria-label="Messages" style="width: 40px; height: 40px; border: 0; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: transparent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2329" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h7A2.5 2.5 0 0 1 16 6.5v4a2.5 2.5 0 0 1-2.5 2.5H9l-3.5 3v-3h0A1.5 1.5 0 0 1 4 11.5z"></path><path d="M16 9h1.5A2.5 2.5 0 0 1 20 11.5v4a1.5 1.5 0 0 1-1.5 1.5h0v3l-3.5-3h-3.5A2.5 2.5 0 0 1 9 15.5V15"></path></svg></a>
+        <button type="button" aria-label="Account: Nicole" style="width: 32px; height: 32px; border: 0; padding: 0; border-radius: 50%; background: #c98b6b; color: #ffffff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700">N</button>
+      </div>
+    </nav>
+
+    <main style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; background: #ffffff; min-height: 60px; box-sizing: border-box; padding: 10px 16px 10px 24px; margin: 8px 16px 0 16px; border-radius: 10px; box-shadow: 0 10px 60px -5px rgba(59,62,63,0.08); padding-left: 28px">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+          <span style="font-weight: 600">Set parameters: Bank of Broccoli Tree Free Museum Nights Campaign</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px">
+          <button aria-label="Parameter dictionary" aria-pressed="{{dictOpenStr}}" onClick="{{toggleDict}}" style="{{dictBtnStyle}}">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2329" stroke-width="1.5" aria-hidden="true"><path d="M3 5.5 8.5 3.5 15.5 6 21 4v14.5l-5.5 2-7-2.5L3 20z"></path><path d="M8.5 3.5V18M15.5 6v14.5"></path></svg>
+          </button>
+          
+        </div>
+      </div>
+
+      <div style="flex: 1; min-height: 0; padding: 24px 16px; display: flex; flex-direction: column; gap: 18px">
+        <div style="flex: 1; min-height: 0; display: flex; align-items: stretch; gap: 24px">
+
+          <form style="flex: 999 1 640px; min-width: 0; margin: 0; overflow: hidden; background: #ffffff; border-radius: 10px; box-shadow: 0 10px 60px -5px rgba(59,62,63,0.08); padding: 24px 28px; display: flex; flex-direction: column; gap: 12px; padding-top: 17px; padding-left: 28px; padding-right: 32px">
+
+            <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 36px">
+              <h2 style="margin: 0; font-size: 14px; font-weight: 600; color: #242526">Parameters</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 24px">
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <label for="p-type" style="font-size: 12px; font-weight: 600; color: #464849">Test type</label>
+                <div style="position: relative">
+                  <select id="p-type" defaultValue="one-sided" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 32px 0 12px; background: #ffffff; border: 1px solid #E4E8ED; border-radius: 6px; color: #242526; font-size: 13px; cursor: pointer">
+                    <option value="one-sided">Standard test</option>
+                    <option value="two-sided">Two-sided · measures lift or decline</option>
+                  </select>
+                  <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" style="position: absolute; right: 12px; top: 12px; pointer-events: none"><path d="M2 4.5l4 4 4-4" fill="none" stroke="#686A6C" stroke-width="1.4"></path></svg>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <label for="p-markets" style="font-size: 12px; font-weight: 600; color: #464849">Number of test markets</label>
+                <div style="position: relative">
+                  <select id="p-markets" defaultValue="3" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 32px 0 12px; background: #ffffff; border: 1px solid #E4E8ED; border-radius: 6px; color: #242526; font-size: 13px; cursor: pointer">
+                    <option value="3">3 markets</option>
+                    <option value="2">2 markets</option>
+                    <option value="4">4 markets</option>
+                    <option value="5">5 markets</option>
+                    <option value="6">6 markets</option>
+                  </select>
+                  <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" style="position: absolute; right: 12px; top: 12px; pointer-events: none"><path d="M2 4.5l4 4 4-4" fill="none" stroke="#686A6C" stroke-width="1.4"></path></svg>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <label for="p-period" style="font-size: 12px; font-weight: 600; color: #464849">Treatment period</label>
+                <div style="position: relative">
+                  <select id="p-period" defaultValue="21" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 32px 0 12px; background: #ffffff; border: 1px solid #E4E8ED; border-radius: 6px; color: #242526; font-size: 13px; cursor: pointer">
+                    <option value="21">3 weeks</option>
+                    <option value="14">2 weeks</option>
+                    <option value="28">4 weeks</option>
+                    <option value="35">5 weeks</option>
+                    <option value="42">6 weeks</option>
+                  </select>
+                  <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" style="position: absolute; right: 12px; top: 12px; pointer-events: none"><path d="M2 4.5l4 4 4-4" fill="none" stroke="#686A6C" stroke-width="1.4"></path></svg>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <label for="p-mde" style="font-size: 12px; font-weight: 600; color: #464849">Minimum measurable % change</label>
+                <div style="position: relative">
+                  <select id="p-mde" defaultValue="5" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 32px 0 12px; background: #ffffff; border: 1px solid #E4E8ED; border-radius: 6px; color: #242526; font-size: 13px; cursor: pointer">
+                    <option value="5">5%</option>
+                    <option value="3">3% · needs the most markets or budget</option>
+                    <option value="4">4%</option>
+                    <option value="7.5">7.5%</option>
+                    <option value="10">10% · easiest to detect</option>
+                  </select>
+                  <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" style="position: absolute; right: 12px; top: 12px; pointer-events: none"><path d="M2 4.5l4 4 4-4" fill="none" stroke="#686A6C" stroke-width="1.4"></path></svg>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <label for="p-conf" style="font-size: 12px; font-weight: 600; color: #464849">Confidence level</label>
+                <div style="position: relative">
+                  <select id="p-conf" defaultValue="90" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 32px 0 12px; background: #ffffff; border: 1px solid #E4E8ED; border-radius: 6px; color: #242526; font-size: 13px; cursor: pointer">
+                    <option value="90">90%</option>
+                    <option value="80">80%</option>
+                    <option value="95">95%</option>
+                  </select>
+                  <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true" style="position: absolute; right: 12px; top: 12px; pointer-events: none"><path d="M2 4.5l4 4 4-4" fill="none" stroke="#686A6C" stroke-width="1.4"></path></svg>
+                </div>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <label for="p-cpic" style="font-size: 12px; font-weight: 600; color: #464849">Cost per incremental conversion (CPIC)</label>
+                <input id="p-cpic" type="number" defaultValue="8" min="1" max="5000" placeholder="Enter # between 1 – 5000" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 12px; background: #ffffff; border: 1px solid #E4E8ED; border-radius: 6px; color: #242526; font-size: 13px">
+              </div>
+            </div>
+
+            <div style="height: 1px; background: #F1F5FA; margin: 16px 0"></div>
+
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; min-height: 36px">
+              <div style="display: flex; align-items: baseline; gap: 10px">
+                <h2 style="margin: 0; font-size: 14px; font-weight: 600; color: #242526">Test cell(s)</h2>
+                
+              </div>
+              <div style="display: flex; align-items: center; gap: 12px">
+                <sc-if value="{{full}}" hint-placeholder-val="{{true}}">
+                  
+                </sc-if>
+                <button type="button" aria-disabled="{{fullStr}}" aria-describedby="{{hintId}}" onClick="{{addCell}}" style="{{addStyle}}">
+                  <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M5 1v8M1 5h8" fill="none" stroke="currentColor" stroke-width="1.5"></path></svg>
+                  Add cell
+                </button>
+              </div>
+            </div>
+            <sc-for list="{{cells}}" as="c" hint-placeholder-count="3">
+              <div style="{{c.wellStyle}}">
+                <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+                  <h3 style="margin: 0; font-size: 14px; font-weight: 600; color: #242526">{{c.heading}}</h3>
+                  <button type="button" aria-label="{{c.deleteLabel}}" onClick="{{c.remove}}" style="display: flex; align-items: center; height: 32px; padding: 0 16px; margin-right: -16px; font-size: 13px; font-weight: 600; color: #00618B; background: transparent; border: 1px solid transparent; border-radius: 6px; cursor: pointer">Delete cell</button>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+                  <div style="display: flex; flex-direction: column; gap: 6px">
+                    <label for="{{c.id}}-title" style="font-size: 12px; font-weight: 600; color: #464849">{{c.titleLabel}}</label>
+                    <input id="{{c.id}}-title" type="text" value="{{c.title}}" onInput="{{c.on.title}}" placeholder="{{c.ph.title}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 12px; background: #ffffff; border: 1px solid #E4E8ED; border-radius: 6px; color: #242526; font-size: 13px">
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 6px">
+                    <label for="{{c.id}}-channel" style="font-size: 12px; font-weight: 600; color: #464849">Channel</label>
+                    <input id="{{c.id}}-channel" type="text" value="{{c.channel}}" onInput="{{c.on.channel}}" placeholder="{{c.ph.channel}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 12px; background: #ffffff; border: 1px solid #E4E8ED; border-radius: 6px; color: #242526; font-size: 13px">
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 6px">
+                    <label for="{{c.id}}-sub" style="font-size: 12px; font-weight: 600; color: #464849">Sub-channel</label>
+                    <input id="{{c.id}}-sub" type="text" value="{{c.sub}}" onInput="{{c.on.sub}}" placeholder="{{c.ph.sub}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 12px; background: #ffffff; border: 1px solid #E4E8ED; border-radius: 6px; color: #242526; font-size: 13px">
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 6px">
+                    <label for="{{c.id}}-platform" style="font-size: 12px; font-weight: 600; color: #464849">Platform</label>
+                    <input id="{{c.id}}-platform" type="text" value="{{c.platform}}" onInput="{{c.on.platform}}" placeholder="{{c.ph.platform}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 12px; background: #ffffff; border: 1px solid #E4E8ED; border-radius: 6px; color: #242526; font-size: 13px">
+                  </div>
+                  <div style="display: flex; flex-direction: column; gap: 6px">
+                    <label for="{{c.id}}-publisher" style="font-size: 12px; font-weight: 600; color: #464849">Publisher</label>
+                    <input id="{{c.id}}-publisher" type="text" value="{{c.publisher}}" onInput="{{c.on.publisher}}" placeholder="{{c.ph.publisher}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 12px; background: #ffffff; border: 1px solid #E4E8ED; border-radius: 6px; color: #242526; font-size: 13px">
+                  </div>
+                </div>
+              </div>
+            </sc-for>
+          </form>
+
+          <sc-if value="{{dictOpen}}" hint-placeholder-val="{{true}}">
+            <aside aria-label="Parameter dictionary" style="flex: none; width: 340px; min-height: 480px; position: relative; background: #ffffff; border-radius: 10px; box-shadow: 0 10px 60px -5px rgba(59,62,63,0.08); overflow: hidden">
+              <div style="position: absolute; inset: 0; display: flex; flex-direction: column">
+                <div style="flex: none; display: flex; align-items: center; justify-content: space-between; gap: 8px; height: 52px; box-sizing: border-box; padding: 10px 20px; border-bottom: 1px solid #F1F5FA; padding-right: 16px; padding-left: 20px">
+                  <h2 style="margin: 0; font-size: 14px; font-weight: 600; color: #242526">Parameter dictionary</h2>
+                  <div style="display: flex; align-items: center; gap: 4px">
+                    <button aria-label="Search parameters" aria-expanded="{{searchOpenStr}}" onClick="{{toggleSearch}}" style="{{searchBtnStyle}}">
+                      <svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.5" fill="none" stroke="#464849" stroke-width="1.4"></circle><path d="M10.5 10.5 14 14" stroke="#464849" stroke-width="1.4"></path></svg>
+                    </button>
+                    <button aria-label="Close parameter dictionary" onClick="{{toggleDict}}" style="width: 32px; height: 32px; border: 0; border-radius: 6px; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center">
+                      <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 3l8 8M11 3l-8 8" fill="none" stroke="#464849" stroke-width="1.4"></path></svg>
+                    </button>
+                  </div>
+                </div>
+                <sc-if value="{{searchOpen}}" hint-placeholder-val="{{false}}">
+                  <div style="flex: none; padding: 12px 20px 0 20px">
+                    <label for="dict-search" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Search parameters</label>
+                    <input id="dict-search" type="search" placeholder="Search parameters" value="{{query}}" onInput="{{onSearch}}" style="width: 100%; height: 36px; box-sizing: border-box; padding: 0 12px; background: #ffffff; border: 1px solid #E4E8ED; border-radius: 6px; color: #242526; font-size: 13px">
+                  </div>
+                </sc-if>
+                <div style="flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: none; padding: 12px 20px; display: flex; flex-direction: column; gap: 10px; padding-right: 20px; padding-left: 20px">
+                  <sc-for list="{{terms}}" as="t" hint-placeholder-count="7">
+                    <div style="flex: none; border: 1px solid #E4E8ED; border-radius: 6px; padding: 12px 14px">
+                      <h3 style="margin: 0 0 6px 0; font-size: 14px; line-height: 19px; font-weight: 600; color: #242526">{{t.name}}</h3>
+                      <p style="margin: 0; font-size: 12px; line-height: 17px; font-weight: 400; color: #686A6C">{{t.text}}<sc-if value="{{t.long}}" hint-placeholder-val="{{false}}"><button type="button" aria-expanded="{{t.openStr}}" onClick="{{t.toggle}}" style="border: 0; background: none; padding: 0; margin-left: 2px; font-size: 12px; font-weight: 600; color: #00618B; cursor: pointer">{{t.more}}</button></sc-if></p>
+                    </div>
+                  </sc-for>
+                  <sc-if value="{{noMatch}}" hint-placeholder-val="{{false}}">
+                    <p style="margin: 8px 0; font-size: 12px; color: #686A6C">No parameters match that search.</p>
+                  </sc-if>
+                </div>
+              </div>
+            </aside>
+          </sc-if>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 8px">
+          <button style="display: flex; align-items: center; gap: 6px; height: 32px; padding: 0 16px; font-size: 13px; font-weight: 600; color: #00618B; background: transparent; border: 1px solid transparent; border-radius: 6px; cursor: pointer">
+            <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M7.5 2.5 4 6l3.5 3.5" fill="none" stroke="#00618B" stroke-width="1.6"></path></svg>
+            Back
+          </button>
+          <button type="button" style="display: flex; align-items: center; height: 32px; box-sizing: border-box; padding: 0 20px; font-size: 13px; font-weight: 600; color: #00618B; border: 1px solid #00618B; border-radius: 6px; cursor: pointer; background-color: transparent">Save &amp; close</button>
+          <button style="display: flex; align-items: center; height: 32px; padding: 0 20px; font-size: 13px; font-weight: 600; color: #ffffff; background: #00618B; border: 1px solid #00618B; border-radius: 6px; cursor: pointer">Select markets</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":926}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dictOpen: true, query: '', searchOpen: false, expanded: {},
+      cells: [
+        { title: 'Museum nights only', channel: 'Experiential', sub: '', platform: 'In-venue', publisher: 'Partner museums' },
+        { title: 'Museum nights + Instagram', channel: 'Experiential, Paid social', sub: 'Free museum nights, Reels and Stories', platform: 'In-venue, Meta', publisher: 'Partner museums, Instagram' },
+        { title: 'Museum nights + Paid Search', channel: 'Experiential, Paid search', sub: 'Free museum nights, Non-brand search', platform: 'In-venue, Google Ads', publisher: 'Partner museums, Google' }
+      ]
+    };
+  }
+
+  renderVals() {
+    var self = this;
+    var st = this.state;
+    var all = [
+      { name: 'Number of test markets', body: 'How many markets get the campaign. More markets read cleaner but cost more.' },
+      { name: 'Treatment period', body: 'How many days the campaign runs. Longer periods detect smaller lifts.' },
+      { name: 'Minimum measurable % change', body: 'The smallest lift the test can reliably detect. Smaller targets need more budget.' },
+      { name: 'Confidence level', body: 'How sure you want to be that a lift isn\'t chance. 90% is standard; 95% is stricter.' },
+      { name: 'Cost per incremental conversion', body: 'Your expected spend for each conversion the campaign adds. Omni uses it with the minimum measurable change to size the budget each test cell needs, so a higher CPIC means a bigger budget.', short: 'Your expected spend for each conversion the campaign adds. Omni uses it with the minimum…' },
+      { name: 'Test type', body: 'A standard test looks for a lift only. Two-sided also flags a drop but needs a bigger effect.' },
+      { name: 'Holdout', body: 'The share of conversions kept in control markets. A higher holdout gives a stronger baseline.' }
+    ];
+    var q = (st.query || '').toLowerCase().trim();
+    var hits = all.filter(function (t) { return !q || (t.name + ' ' + t.body).toLowerCase().indexOf(q) !== -1; });
+    var terms = hits.map(function (t) {
+      var open = !!st.expanded[t.name];
+      var long = !!t.short;
+      return Object.assign({}, t, {
+        long: long,
+        text: long && !open ? t.short : t.body + (long ? ' ' : ''),
+        more: open ? 'show less' : 'read more',
+        openStr: open ? 'true' : 'false',
+        toggle: function () { var e = Object.assign({}, st.expanded); e[t.name] = !open; self.setState({ expanded: e }); }
+      });
+    });
+    var MAX_CELLS = 3;
+    var keys = ['title', 'channel', 'sub', 'platform', 'publisher'];
+    var setCells = function (fn) { self.setState(function (prev) { return { cells: fn(prev.cells.slice()) }; }); };
+    var cells = st.cells.map(function (c, i) {
+      var n = i + 1;
+      var on = {};
+      keys.forEach(function (k) {
+        on[k] = function (e) { var v = e.target.value; setCells(function (cs) { cs[i] = Object.assign({}, cs[i]); cs[i][k] = v; return cs; }); };
+      });
+      return Object.assign({}, c, {
+        id: 'cell' + n, heading: 'Cell ' + n, titleLabel: 'Cell ' + n + ' title', deleteLabel: 'Delete cell ' + n,
+        ph: { title: 'Enter cell ' + n + ' title', channel: 'Enter channel', sub: 'Enter sub-channel', platform: 'Enter platform', publisher: 'Enter publisher' },
+        on: on,
+        // Cells stack 16px apart; the form's 12px gap plus this margin.
+        wellStyle: 'display: flex; flex-direction: column; gap: 12px; background: #F1F5FA; border-radius: 10px; padding: 16px 24px 36px 24px' + (i > 0 ? '; margin-top: 4px' : ''),
+        remove: function () { setCells(function (cs) { cs.splice(i, 1); return cs; }); }
+      });
+    });
+    var full = st.cells.length >= MAX_CELLS;
+    var toggleDict = function () { self.setState({ dictOpen: !st.dictOpen }); };
+    return {
+      dictOpen: st.dictOpen,
+      dictOpenStr: st.dictOpen ? 'true' : 'false',
+      dictBtnStyle: 'width: 32px; height: 32px; border: 0; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: ' + (st.dictOpen ? '#E6F0F6' : 'transparent'),
+      toggleDict: toggleDict,
+      query: st.query,
+      searchOpen: st.searchOpen,
+      searchOpenStr: st.searchOpen ? 'true' : 'false',
+      toggleSearch: function () { self.setState({ searchOpen: !st.searchOpen, query: '' }); },
+      searchBtnStyle: 'width: 32px; height: 32px; border: 0; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: ' + (st.searchOpen ? '#E6F0F6' : 'transparent'),
+      onSearch: function (e) { self.setState({ query: e.target.value }); },
+      cells: cells,
+      cellCount: st.cells.length + ' of ' + MAX_CELLS,
+      full: full,
+      fullStr: full ? 'true' : 'false',
+      hintId: full ? 'add-cell-hint' : '',
+      addCell: function () { if (!full) setCells(function (cs) { cs.push({ title: '', channel: '', sub: '', platform: '', publisher: '' }); return cs; }); },
+      addStyle: 'display: flex; align-items: center; gap: 6px; height: 28px; box-sizing: border-box; padding: 0 12px; font-size: 13px; font-weight: 600; border-radius: 6px; ' +
+        (full ? 'color: #686A6C; background: #F1F5FA; border: 1px solid #E4E8ED; cursor: not-allowed' : 'color: #00618B; background: #ffffff; border: 1px solid #00618B; cursor: pointer'),
+      terms: terms,
+      noMatch: terms.length === 0
+    };
+  }
+}
+</script>
+</body>
+</html>

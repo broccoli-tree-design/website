@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Omni · GeoLift market selection</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#f3f6f9}
+a{color:#00618B}a:hover{color:#004563}
+button{font-family:inherit}
+</style>
+</helmet>
+<div style="width: 1440px; height: 926px; overflow: hidden; display: flex; flex-direction: column; background: #f3f6f9; font-family: 'Open Sans', system-ui, sans-serif; color: #242526; font-size: 14px">
+
+
+  <div style="flex: 1; min-height: 0; display: flex; align-items: stretch">
+    <nav aria-label="Main" style="flex: none; width: 56px; margin: 8px 0 8px 8px; box-sizing: border-box; padding: 12px 0; display: flex; flex-direction: column; align-items: center; gap: 24px; background: #eef2f6; border-radius: 10px">
+      <a href="#" aria-label="Omni home" style="width: 40px; height: 40px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 26 26" aria-hidden="true"><circle cx="13" cy="13" r="11" fill="none" stroke="#1594c9" stroke-width="2.5"></circle><circle cx="13" cy="13" r="4.5" fill="#1594c9"></circle></svg></a>
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 8px">
+          <a href="#" aria-label="Home" style="width: 40px; height: 40px; border: 0; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: transparent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2329" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20h-5v-5.5H9V20H4z"></path></svg></a>
+          <a href="#" aria-label="Apps" aria-current="page" style="width: 40px; height: 40px; border: 0; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: #ffffff; box-shadow: 0 1px 3px rgba(16,40,60,0.10)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2329" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"></rect><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"></rect><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"></rect></svg></a>
+          <a href="#" aria-label="Create" style="width: 40px; height: 40px; border: 0; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: transparent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2329" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"></circle><path d="M12 8.5v7M8.5 12h7"></path></svg></a>
+          <a href="#" aria-label="Files" style="width: 40px; height: 40px; border: 0; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: transparent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2329" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 11.5 12.6 18a4.2 4.2 0 0 1-6-6L13 5.6a2.8 2.8 0 0 1 4 4l-6.4 6.4a1.4 1.4 0 0 1-2-2L14.5 8"></path></svg></a>
+          <a href="#" aria-label="Assist" style="width: 40px; height: 40px; border: 0; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: transparent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2329" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4l1.6 4.4L17 10l-4.4 1.6L11 16l-1.6-4.4L5 10l4.4-1.6z"></path><path d="M18 14.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"></path></svg></a>
+      </div>
+      <div style="margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: 12px">
+        <a href="#" aria-label="Messages" style="width: 40px; height: 40px; border: 0; border-radius: 50%; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; background: transparent"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2329" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4h7A2.5 2.5 0 0 1 16 6.5v4a2.5 2.5 0 0 1-2.5 2.5H9l-3.5 3v-3h0A1.5 1.5 0 0 1 4 11.5z"></path><path d="M16 9h1.5A2.5 2.5 0 0 1 20 11.5v4a1.5 1.5 0 0 1-1.5 1.5h0v3l-3.5-3h-3.5A2.5 2.5 0 0 1 9 15.5V15"></path></svg></a>
+        <button type="button" aria-label="Account: Nicole" style="width: 32px; height: 32px; border: 0; padding: 0; border-radius: 50%; background: #c98b6b; color: #ffffff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700">N</button>
+      </div>
+    </nav>
+
+    <main style="flex: 1; min-width: 0; display: flex; flex-direction: column">
+      <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; background: #ffffff; min-height: 60px; box-sizing: border-box; padding: 10px 16px 10px 24px; margin: 8px 16px 0 16px; border-radius: 10px; box-shadow: 0 10px 60px -5px rgba(59,62,63,0.08); padding-left: 28px">
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 8px">
+          <span style="font-weight: 600">Select markets: Bank of Broccoli Tree Free Museum Nights Campaign</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 12px">
+          <button type="button" aria-label="Documentation" style="width: 32px; height: 32px; border: 0; border-radius: 6px; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2329" stroke-width="1.5" aria-hidden="true"><path d="M3 5.5 8.5 3.5 15.5 6 21 4v14.5l-5.5 2-7-2.5L3 20z"></path><path d="M8.5 3.5V18M15.5 6v14.5"></path></svg>
+          </button>
+          
+          
+        </div>
+      </div>
+
+      <div style="flex: 1; min-height: 0; padding: 24px 16px; display: flex; flex-direction: column; gap: 18px">
+
+        <section style="flex: none; background: #f5f8fb; border: 0; border-radius: 10px; box-shadow: 0 10px 60px -5px rgba(59,62,63,0.12); overflow: hidden">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #ffffff; padding: 8px 28px 8px 24px; padding-left: 14px">
+            <div role="tablist" aria-label="Test cell" style="display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding: 3px; background: #F1F5FA; border: 1px solid #E4E8ED; border-radius: 8px">
+              <sc-for list="{{tabs}}" as="t" hint-placeholder-count="3">
+                <button role="tab" aria-selected="{{t.selected}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
+              </sc-for>
+            </div>
+            
+          </div>
+
+          
+
+          <div style="display: flex; flex-wrap: wrap; gap: 24px; padding: 24px 28px">
+
+            <div style="flex: 0 1 400px; min-width: 0; display: flex; flex-direction: column; gap: 0">
+              <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; height: 36px; box-sizing: border-box; padding: 0 8px">
+                <h2 style="margin: 0; font-size: 14px; font-weight: 600; color: #242526">Power by effect size</h2>
+              </div>
+              <svg viewBox="0 12 440 424" style="width: 100%; height: auto; display: block; margin-top: -7px" role="img" aria-label="Simulated statistical power across effect sizes from minus 25 to plus 25 percent for each candidate market set, with the 80 percent power threshold marked">
+                <g stroke="#c3cad2" stroke-width="0.6">
+                  <path d="M56 20H420M56 160H420M56 230H420M56 300H420"></path>
+                  <path d="M56.0 20V370M92.4 20V370M128.8 20V370M165.2 20V370M201.6 20V370M274.4 20V370M310.8 20V370M347.2 20V370M383.6 20V370M420.0 20V370"></path>
+                </g>
+                <path d="M238 20V370" stroke="#8a929b" stroke-width="1"></path>
+                <path d="M56 370H420" stroke="#1f2329" stroke-width="1"></path>
+                <path d="M56 90H420" stroke="#1f2329" stroke-width="1.2" stroke-dasharray="5 4"></path>
+                <rect x="58" y="72" width="104" height="16" rx="8" fill="#1f2329"></rect>
+                <text x="110" y="84" text-anchor="middle" font-size="11" font-weight="600" letter-spacing="0.04em" fill="#ffffff" font-family="Open Sans, system-ui, sans-serif">80% power target</text>
+                <g font-size="13" fill="#686A6C" font-family="Open Sans, system-ui, sans-serif">
+                  <text x="48" y="25" text-anchor="end">1.0</text>
+                  <text x="48" y="95" text-anchor="end">0.8</text>
+                  <text x="48" y="165" text-anchor="end">0.6</text>
+                  <text x="48" y="235" text-anchor="end">0.4</text>
+                  <text x="48" y="305" text-anchor="end">0.2</text>
+                  <text x="48" y="375" text-anchor="end">0</text>
+                  <text x="56.0" y="390" text-anchor="middle">-25%</text>
+                  <text x="128.8" y="390" text-anchor="middle">-15%</text>
+                  <text x="201.6" y="390" text-anchor="middle">-5%</text>
+                  <text x="238.0" y="390" text-anchor="middle">0</text>
+                  <text x="274.4" y="390" text-anchor="middle">5%</text>
+                  <text x="347.2" y="390" text-anchor="middle">15%</text>
+                  <text x="420.0" y="390" text-anchor="middle">25%</text>
+                  <text x="238" y="422" text-anchor="middle">Effect size (simulated lift)</text>
+                  <text x="14" y="195" text-anchor="middle" transform="rotate(-90 14 195)">Power</text>
+                </g>
+                <g fill="none" stroke-linecap="round">
+                  <path d="{{c.p0}}" stroke="#4cc3f5" stroke-width="{{c.w0}}" stroke-opacity="{{c.o0}}" display="{{c.v0}}" onMouseEnter="{{c.e0}}" onMouseLeave="{{leave}}"></path>
+                  <path d="{{c.p1}}" stroke="#f27ad8" stroke-width="{{c.w1}}" stroke-opacity="{{c.o1}}" display="{{c.v1}}" onMouseEnter="{{c.e1}}" onMouseLeave="{{leave}}"></path>
+                  <path d="{{c.p2}}" stroke="#ef5a6f" stroke-width="{{c.w2}}" stroke-opacity="{{c.o2}}" display="{{c.v2}}" onMouseEnter="{{c.e2}}" onMouseLeave="{{leave}}"></path>
+                  <path d="{{c.p3}}" stroke="#1d3a5f" stroke-width="{{c.w3}}" stroke-opacity="{{c.o3}}" display="{{c.v3}}" onMouseEnter="{{c.e3}}" onMouseLeave="{{leave}}"></path>
+                  <path d="{{c.p4}}" stroke="#f5aa2e" stroke-width="{{c.w4}}" stroke-opacity="{{c.o4}}" display="{{c.v4}}" onMouseEnter="{{c.e4}}" onMouseLeave="{{leave}}"></path>
+                  <path d="{{c.p5}}" stroke="#9a4392" stroke-width="{{c.w5}}" stroke-opacity="{{c.o5}}" display="{{c.v5}}" onMouseEnter="{{c.e5}}" onMouseLeave="{{leave}}"></path>
+                </g>
+                <g stroke="#ffffff" stroke-width="1.5">
+                  <circle cx="{{c.x0}}" cy="90" r="4.5" fill="#4cc3f5" fill-opacity="{{c.o0}}" display="{{c.v0}}"></circle>
+                  <circle cx="{{c.x1}}" cy="90" r="4.5" fill="#f27ad8" fill-opacity="{{c.o1}}" display="{{c.v1}}"></circle>
+                  <circle cx="{{c.x2}}" cy="90" r="4.5" fill="#ef5a6f" fill-opacity="{{c.o2}}" display="{{c.v2}}"></circle>
+                  <circle cx="{{c.x3}}" cy="90" r="4.5" fill="#1d3a5f" fill-opacity="{{c.o3}}" display="{{c.v3}}"></circle>
+                  <circle cx="{{c.x4}}" cy="90" r="4.5" fill="#f5aa2e" fill-opacity="{{c.o4}}" display="{{c.v4}}"></circle>
+                  <circle cx="{{c.x5}}" cy="90" r="4.5" fill="#9a4392" fill-opacity="{{c.o5}}" display="{{c.v5}}"></circle>
+                </g>
+              </svg>
+              
+            </div>
+
+            <div style="flex: 999 1 600px; min-width: 0; display: flex; flex-direction: column; gap: 0">
+              <div>
+                <div>
+                  <div style="display: grid; grid-template-columns: 64px minmax(0, 1fr) 100px 100px 84px 104px 56px; align-items: center; height: 36px; box-sizing: border-box; padding: 0 20px 0 14px; font-size: 12px; font-weight: 600; color: #464849; padding-right: 20px">
+                    <span>Show</span>
+                    <span>Markets</span>
+                    <button style="display: flex; align-items: center; gap: 6px; border: 0; background: none; padding: 0; cursor: pointer; font-size: 12px; font-weight: 600; color: #00618B; justify-self: end">Imbalance <svg width="10" height="10" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 7.5 6 4.5 9 7.5" fill="none" stroke="#00618B" stroke-width="1.5"></path></svg></button>
+                    <span style="justify-self: end">Budget</span>
+                    <span style="justify-self: end">Holdout</span>
+                    <span style="justify-self: end">Correlation</span>
+                    <span style="justify-self: end">Select</span>
+                  </div>
+                  <div role="radiogroup" aria-label="Recommended market set" style="display: flex; flex-direction: column; gap: 4px">
+                    <sc-for list="{{rows}}" as="r" hint-placeholder-count="6">
+                      <div onMouseEnter="{{r.enter}}" onMouseLeave="{{leave}}" style="{{r.rowStyle}}">
+                        <span aria-hidden="true" style="{{r.swatchStyle}}"></span>
+                        <div style="display: flex; align-items: center; gap: 2px">
+                          <button aria-pressed="{{r.shownStr}}" aria-label="{{r.toggleLabel}}" onClick="{{r.toggle}}" style="width: 44px; height: 44px; border: 0; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center">
+                            <sc-if value="{{r.shown}}" hint-placeholder-val="{{true}}">
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1f2329" stroke-width="1.6" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                            </sc-if>
+                            <sc-if value="{{r.hidden}}" hint-placeholder-val="{{false}}">
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#8a929b" stroke-width="1.6" aria-hidden="true"><path d="M3 3l18 18"></path><path d="M10.6 5.1A10.4 10.4 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3 3.9M6.6 6.6A17.6 17.6 0 0 0 2 12s3.6 7 10 7a9.7 9.7 0 0 0 5.4-1.6"></path></svg>
+                            </sc-if>
+                          </button>
+                        </div>
+                        <span title="{{r.markets}}" style="{{r.nameStyle}}">{{r.markets}}</span>
+                        <span style="justify-self: end; color: #242526">{{r.imbalance}}</span>
+                        <span style="justify-self: end; color: #242526">{{r.investment}}</span>
+                        <span style="justify-self: end; color: #242526">{{r.holdout}}</span>
+                        <span style="justify-self: end; color: #242526">{{r.correlation}}</span>
+                        <button role="radio" aria-checked="{{r.selectedStr}}" aria-label="{{r.pickLabel}}" onClick="{{r.pick}}" style="justify-self: end; margin-right: -13px; width: 44px; height: 44px; border: 0; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center">
+                          <span style="{{r.radioRing}}">
+                            <sc-if value="{{r.isOn}}" hint-placeholder-val="{{false}}">
+                              <span style="width: 9px; height: 9px; border-radius: 50%; background: #00618B"></span>
+                            </sc-if>
+                          </span>
+                        </button>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </section>
+
+        <section style="flex: 1; min-height: 0; overflow: hidden; background: #ffffff; border: 0; border-radius: 10px; box-shadow: 0 10px 60px -5px rgba(59,62,63,0.08); padding: 24px 28px; padding-top: 21px; padding-bottom: 25px; padding-left: 28px">
+          <div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px">
+            <h2 style="margin: 0; font-size: 14px; font-weight: 600; color: #242526">Selection summary</h2>
+            <button type="button" aria-label="Download summary" style="width: 32px; height: 32px; margin-right: -12px; border: 0; border-radius: 6px; background: none; cursor: pointer; display: inline-flex; align-items: center; justify-content: center">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#1f2329" stroke-width="1.3" aria-hidden="true"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5"></path><path d="M2 11v3h12v-3"></path></svg>
+            </button>
+          </div>
+          <sc-for list="{{summary}}" as="s" hint-placeholder-count="3">
+            <div style="{{s.wrapStyle}}">
+              <h3 style="margin: 0 0 12px 0; font-size: 13px; font-weight: 600; color: #242526">{{s.title}}</h3>
+              <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+                <div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
+                  <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px">
+                    <div><div style="font-size: 12px; font-weight: 600; color: #464849; margin-bottom: 6px">Imbalance</div><div style="font-size: 13px; line-height: 19px; color: #242526">{{s.imbalance}}</div></div>
+                    <div><div style="font-size: 12px; font-weight: 600; color: #464849; margin-bottom: 6px">Budget</div><div style="font-size: 13px; line-height: 19px; color: #242526">{{s.investment}}</div></div>
+                    <div><div style="font-size: 12px; font-weight: 600; color: #464849; margin-bottom: 6px">Holdout</div><div style="font-size: 13px; line-height: 19px; color: #242526">{{s.holdout}}</div></div>
+                    <div><div style="font-size: 12px; font-weight: 600; color: #464849; margin-bottom: 6px">Correlation</div><div style="font-size: 13px; line-height: 19px; color: #242526">{{s.correlation}}</div></div>
+                  </div>
+                  <div><div style="font-size: 12px; font-weight: 600; color: #464849; margin-bottom: 6px">Markets</div><div style="font-size: 13px; line-height: 19px; color: #242526">{{s.markets}}</div></div>
+                </div>
+                <div style="flex: 1 1 420px; max-width: 580px; min-width: 0; background: #f7f9fa; border-radius: 10px">
+                  <svg viewBox="0 0 580 190" style="width: 100%; height: auto; display: block" role="img" aria-label="Daily pass sign-ups in the test markets against their synthetic control across the pre-period, with the simulated test window shaded">
+                    <text x="16" y="18" font-size="10" font-weight="700" fill="#1f2329" font-family="Open Sans, system-ui, sans-serif">Test markets vs. synthetic control</text>
+                    <text x="16" y="31" font-size="8" fill="#5c636b" font-family="Open Sans, system-ui, sans-serif">{{s.fitLabel}}</text>
+                    <path d="M380 18H398" stroke="#0f8a6c" stroke-width="2"></path>
+                    <text x="402" y="21" font-size="8" fill="#3d434a" font-family="Open Sans, system-ui, sans-serif">Test markets</text>
+                    <path d="M462 18H480" stroke="#1d5fa8" stroke-width="2" stroke-dasharray="4 2.5"></path>
+                    <text x="484" y="21" font-size="8" fill="#3d434a" font-family="Open Sans, system-ui, sans-serif">Synthetic control</text>
+                    <rect x="{{shadeX}}" y="44" width="{{shadeW}}" height="110" fill="#00618B" fill-opacity="0.07"></rect>
+                    <text x="{{shadeMid}}" y="54" text-anchor="middle" font-size="7.5" font-weight="700" fill="#00618B" font-family="Open Sans, system-ui, sans-serif">Simulated test window</text>
+                    <g stroke="#dde2e7" stroke-width="0.6">
+                      <path d="M46 44H568M46 80.7H568M46 117.3H568M46 154H568"></path>
+                    </g>
+                    <g font-size="7.5" fill="#5c636b" font-family="Open Sans, system-ui, sans-serif" text-anchor="end">
+                      <text x="40" y="47">6k</text><text x="40" y="83.7">4k</text><text x="40" y="120.3">2k</text><text x="40" y="157">0</text>
+                    </g>
+                    <g font-size="7.5" fill="#5c636b" font-family="Open Sans, system-ui, sans-serif" text-anchor="middle">
+                      <text x="46" y="168">Oct</text><text x="150" y="168">Nov</text><text x="251" y="168">Dec</text><text x="355" y="168">Jan</text><text x="460" y="168">Feb</text><text x="555" y="168">Mar</text>
+                    </g>
+                    <text x="307" y="184" text-anchor="middle" font-size="7.5" fill="#5c636b" font-family="Open Sans, system-ui, sans-serif">Daily sign-ups</text>
+                    <path d="{{s.syn}}" fill="none" stroke="#1d5fa8" stroke-width="1.2" stroke-dasharray="4 2.5"></path>
+                    <path d="{{s.test}}" fill="none" stroke="#0f8a6c" stroke-width="1.3"></path>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </section>
+
+        <div style="flex: none; display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 8px">
+          <a href="Main.dc.html" style="display: flex; align-items: center; gap: 6px; height: 32px; box-sizing: border-box; padding: 0 16px; font-size: 13px; font-weight: 600; color: #00618B; background: transparent; border: 1px solid transparent; border-radius: 6px; cursor: pointer; text-decoration: none"><svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M7.5 2.5 4 6l3.5 3.5" fill="none" stroke="#00618B" stroke-width="1.6"></path></svg>Back</a>
+          <button type="button" style="display: flex; align-items: center; height: 32px; box-sizing: border-box; padding: 0 20px; font-size: 13px; font-weight: 600; color: #00618B; border: 1px solid #00618B; border-radius: 6px; cursor: pointer; background-color: transparent">Save &amp; close</button>
+          <button type="button" style="display: flex; align-items: center; height: 32px; box-sizing: border-box; padding: 0 20px; font-size: 13px; font-weight: 600; color: #ffffff; background: #00618B; border: 1px solid #00618B; border-radius: 6px; cursor: pointer">Confirm selection</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":926}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { tab: 'control', sel: { sampling: 2, fb: 3, control: 5 }, off: {}, hover: null };
+  }
+
+  // GeoLift-style power curve: alpha floor at zero effect, 0.8 power reached at the MDE.
+  powerAt(e, mde, skew) {
+    var s = mde / 1.247;
+    if (e < 0) s = s * skew;
+    var z = Math.abs(e) / s;
+    return 0.05 + 0.95 * (1 - Math.exp(-z * z));
+  }
+
+  curvePath(mde, skew) {
+    var d = '';
+    for (var e = -25; e <= 25.001; e += 0.5) {
+      var x = 238 + e * 7.28;
+      var y = 370 - this.powerAt(e, mde, skew) * 350;
+      d += (d ? ' L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+    }
+    return d;
+  }
+
+  series(seed, base) {
+    var s = seed;
+    var rnd = function () { s = (s * 9301 + 49297) % 233280; return s / 233280; };
+    var test = [], syn = [];
+    var n = 150;
+    for (var i = 0; i < n; i++) {
+      var dow = i % 7;
+      var weekly = (dow === 5 || dow === 6) ? -0.13 : (dow === 0 ? 0.04 : 0.02);
+      var trend = 0.05 * Math.sin(i / 24) + (i > 50 && i < 75 ? 0.09 : 0);
+      var v = base * (1 + weekly + trend + (rnd() - 0.5) * 0.06);
+      test.push(v);
+      syn.push(v * (1 + (rnd() - 0.5) * 0.045));
+    }
+    var toPath = function (arr) {
+      return arr.map(function (v, i) {
+        var x = 46 + i * (522 / (n - 1));
+        var y = 154 - v / 6000 * 110;
+        return (i ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1);
+      }).join(' ');
+    };
+    return { test: toPath(test), syn: toPath(syn) };
+  }
+
+  renderVals() {
+    var self = this;
+    var st = this.state;
+    var tabDefs = [
+      { id: 'sampling', label: 'Museum nights only' },
+      { id: 'fb', label: 'Museum nights + Instagram' },
+      { id: 'control', label: 'Museum nights + Paid Search' }
+    ];
+    var tabs = tabDefs.map(function (t) {
+      var on = st.tab === t.id;
+      return {
+        label: t.label, selected: on ? 'true' : 'false',
+        pick: function () { self.setState({ tab: t.id }); },
+        style: on ? 'display: flex; align-items: center; height: 32px; padding: 0 16px; font-size: 13px; font-weight: 600; color: #00618B; background: #ffffff; border: 1px solid transparent; border-radius: 6px; box-shadow: 0 1px 3px rgba(16,40,60,0.12); cursor: pointer' : 'display: flex; align-items: center; height: 32px; padding: 0 16px; font-size: 13px; font-weight: 600; color: #464849; background: transparent; border: 1px solid transparent; border-radius: 6px; cursor: pointer'
+      };
+    });
+
+    var colors = ['#4cc3f5', '#f27ad8', '#ef5a6f', '#1d3a5f', '#f5aa2e', '#9a4392'];
+    // Sorted by imbalance, lowest first.
+    var sets = [
+      { markets: 'Seattle, Portland, Kansas City', mde: 3.5, skew: 1.08, imbalance: '0.148', investment: '$20,584', holdout: '94.2%', correlation: '0.97', incremental: '≈2,573 conv.', controls: '207 markets', base: 3500 },
+      { markets: 'Chicago, Philadelphia, Pittsburgh', mde: 3, skew: 1.12, imbalance: '0.176', investment: '$24,696', holdout: '91.8%', correlation: '0.96', incremental: '≈3,087 conv.', controls: '207 markets', base: 4900 },
+      { markets: 'Boston, Baltimore, Providence', mde: 4, skew: 1.05, imbalance: '0.209', investment: '$25,872', holdout: '93.6%', correlation: '0.95', incremental: '≈3,234 conv.', controls: '207 markets', base: 3850 },
+      { markets: 'Minneapolis, Cleveland, St. Louis', mde: 4.5, skew: 1.15, imbalance: '0.238', investment: '$23,056', holdout: '94.9%', correlation: '0.94', incremental: '≈2,882 conv.', controls: '207 markets', base: 3050 },
+      { markets: 'New Orleans, Austin, Nashville', mde: 4.75, skew: 1.1, imbalance: '0.271', investment: '$28,728', holdout: '94.0%', correlation: '0.93', incremental: '≈3,591 conv.', controls: '207 markets', base: 3600 },
+      { markets: 'Washington DC, Detroit, Richmond', mde: 5, skew: 1.18, imbalance: '0.312', investment: '$31,504', holdout: '93.8%', correlation: '0.92', incremental: '≈3,938 conv.', controls: '207 markets', base: 3750 }
+    ];
+    var cur = st.sel[st.tab];
+    var leave = function () { if (st.hover !== null) self.setState({ hover: null }); };
+
+    var rows = sets.map(function (set, i) {
+      var on = cur === i;
+      var shown = !st.off[i];
+      var hov = st.hover === i;
+      var bg = on ? '#E6F0F6' : (hov ? '#fbfcfd' : '#ffffff');
+      var ring = on ? 'box-shadow: inset 0 0 0 1.5px #00618B;' : (hov ? 'box-shadow: 0 2px 8px rgba(16,40,60,0.10);' : '');
+      return Object.assign({}, set, {
+        mdeLabel: set.mde + '%',
+        isOn: on, isOff: !on,
+        shown: shown, hidden: !shown, shownStr: shown ? 'true' : 'false',
+        toggleLabel: (shown ? 'Hide ' : 'Show ') + set.markets + ' on chart',
+        pickLabel: 'Select ' + set.markets,
+        toggle: function () { var o = Object.assign({}, st.off); o[i] = shown; self.setState({ off: o }); },
+        pick: function () { var n = Object.assign({}, st.sel); n[st.tab] = i; var o = Object.assign({}, st.off); o[i] = false; self.setState({ sel: n, off: o }); },
+        enter: function () { if (st.hover !== i) self.setState({ hover: i }); },
+        rowStyle: 'position: relative; overflow: hidden; display: grid; grid-template-columns: 64px minmax(0, 1fr) 100px 100px 84px 104px 56px; align-items: center; border-radius: 10px; padding: 3px 20px 3px 14px; height: 50px; box-sizing: border-box; font-size: 13px; line-height: 19px; transition: background 120ms; background: ' + bg + '; ' + (on ? '' : ring),
+        swatchStyle: 'position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: ' + colors[i] + '; opacity: ' + (shown ? 1 : 0.3),
+        selectedStr: on ? 'true' : 'false',
+        radioRing: 'width: 18px; height: 18px; box-sizing: border-box; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; border: 2px solid ' + (on ? '#00618B' : '#1f2329'),
+        nameStyle: 'padding-right: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; ' + (shown ? 'color: #242526' : 'color: #8a929b')
+      });
+    });
+
+    var c = {};
+    var shownCount = 0;
+    sets.forEach(function (set, i) {
+      var shown = !st.off[i];
+      if (shown) shownCount++;
+      var focus = st.hover === i || (st.hover === null && cur === i);
+      var dim = st.hover !== null && st.hover !== i;
+      c['p' + i] = self.curvePath(set.mde, set.skew);
+      c['v' + i] = shown ? 'inline' : 'none';
+      c['w' + i] = focus ? 4 : 2.2;
+      c['o' + i] = dim ? 0.18 : 1;
+      c['x' + i] = (238 + set.mde * 7.28).toFixed(1);
+      c['e' + i] = function () { if (st.hover !== i) self.setState({ hover: i }); };
+    });
+
+    var n = 150, win = 21;
+    var shadeX = 46 + (n - win) * (522 / (n - 1));
+    var seeds = { sampling: 11, fb: 47, control: 83 };
+    var mape = { sampling: '2.8', fb: '3.4', control: '3.1' };
+    var summary = tabDefs.map(function (t, k) {
+      var idx = st.sel[t.id];
+      var set = sets[idx];
+      var ser = self.series(seeds[t.id] + idx * 7, set.base);
+      return Object.assign({}, set, {
+        title: t.label, mdeLabel: set.mde + '%', test: ser.test, syn: ser.syn,
+        fitLabel: 'Pre-period fit · MAPE ' + mape[t.id] + '% · scaled L2 imbalance ' + set.imbalance,
+        wrapStyle: k === 0 ? 'padding: 0 0 24px 0' : 'padding: 24px 0; border-top: 1px solid #F1F5FA'
+      });
+    });
+
+    return {
+      tabs: tabs, rows: rows, c: c, leave: leave, summary: summary,
+      shadeX: shadeX.toFixed(1), shadeW: (568 - shadeX).toFixed(1), shadeMid: ((shadeX + 568) / 2).toFixed(1),
+      shownLabel: shownCount + ' of ' + sets.length + ' sets shown'
+    };
+  }
+}
+</script>
+</body>
+</html>
