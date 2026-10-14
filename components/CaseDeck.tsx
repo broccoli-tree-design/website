@@ -10,50 +10,43 @@ import {
   type CaseStep,
 } from "./CaseParts";
 
-/** The black box in front, then the four steps behind it */
+/** The black box in front, then the three steps behind it */
 const CARDS: CaseStep[] = [
   { name: "Black box", color: "var(--green-950)", fg: "var(--neutral-100)" },
   {
-    name: "Set parameters",
+    name: "Confirm data",
     img: "/case1/parameter.png",
     w: 1293,
     h: 969,
     ...STEP_COLORS[0],
   },
   {
-    name: "Generate",
+    name: "Set parameters",
     img: "/case1/loading.png",
     w: 1054,
     h: 544,
     ...STEP_COLORS[1],
   },
   {
-    name: "Compare reasoning",
+    name: "Select markets",
     img: "/case1/reasoning.png",
     w: 1366,
     h: 734,
     ...STEP_COLORS[2],
   },
-  {
-    name: "Review summary",
-    img: "/case1/summary.png",
-    w: 1366,
-    h: 1021,
-    ...STEP_COLORS[3],
-  },
 ];
 const N = CARDS.length;
 
 /** Artboard units (1384-wide deck): each depth slot steps 56 right, 36 down.
- *  One curve from the bottom of the Review summary tab, wherever that card
+ *  One curve from the bottom of the Select markets tab, wherever that card
  *  sits in the stack, to the result label's left edge. Drawn over the stack;
  *  CSS animates `d` alongside the cards. */
 const EX = 480;
-const SUMMARY = N - 1;
+const MARKETS = N - 1;
 function flow(d: number) {
   const x = 952 + d * 56;
   const y = 600 + d * 36;
-  return `M ${x} ${y} C ${x} ${y + 160}, ${EX} 826, ${EX} 986`;
+  return `M ${x} ${y} C ${x} ${y + 160}, ${EX} 790, ${EX} 950`;
 }
 
 /** Stacked (phones): the label starts 34.7% in */
@@ -61,7 +54,7 @@ const PHONE_EX = 0.347;
 
 export default function CaseDeck() {
   const [active, setActive] = useState(0);
-  const summaryFlow = flow((SUMMARY - active + N) % N);
+  const marketsFlow = flow((MARKETS - active + N) % N);
   const frame = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(350);
 
@@ -81,12 +74,12 @@ export default function CaseDeck() {
       <div className="case-frame deck-frame" ref={frame}>
         <svg
           className="case-flow deck-flow"
-          viewBox="0 0 1384 986"
+          viewBox="0 0 1384 950"
           aria-hidden="true"
         >
           <path
-            d={summaryFlow}
-            style={{ d: `path("${summaryFlow}")` } as CSSProperties}
+            d={marketsFlow}
+            style={{ d: `path("${marketsFlow}")` } as CSSProperties}
           />
         </svg>
         <CaseRings />

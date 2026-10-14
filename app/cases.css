@@ -790,7 +790,7 @@ html:has(.mod-zoom[open]) {
   --u: calc((100cqw - 2 * var(--gutter)) / 1384);
 }
 .deck-frame {
-  height: calc(816 * var(--u));
+  height: calc(780 * var(--u));
   isolation: isolate;
 }
 .deck-flow {
@@ -806,15 +806,15 @@ html:has(.mod-zoom[open]) {
   width: calc(960 * var(--u));
   height: calc(600 * var(--u));
 }
-/* half a card step past the back card (244, 144), then another half */
+/* half a card step past the back card (188, 108), then another half */
 .deck-frame .case-ring-0 {
-  left: calc(272 * var(--u));
-  top: calc(162 * var(--u));
+  left: calc(216 * var(--u));
+  top: calc(126 * var(--u));
   z-index: 2;
 }
 .deck-frame .case-ring-1 {
-  left: calc(300 * var(--u));
-  top: calc(180 * var(--u));
+  left: calc(244 * var(--u));
+  top: calc(144 * var(--u));
   z-index: 1;
 }
 /* every card in one grid cell; depth --d slides it down the diagonal */
@@ -906,7 +906,7 @@ html:has(.mod-zoom[open]) {
     border-radius: 20px;
   }
   .deck-card {
-    margin: calc(4 * var(--bar)) 0 0;
+    margin: calc(3 * var(--bar)) 0 0;
     width: auto;
     height: auto;
     flex-direction: column;
