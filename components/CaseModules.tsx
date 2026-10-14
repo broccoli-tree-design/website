@@ -6,12 +6,15 @@ import {
   CaseResult,
   CaseRings,
   CaseZoom,
+  curvePath,
   DESKTOP,
+  FlowLeaves,
   num,
   PhoneFlow,
   usePhone,
   useZoom,
   type CaseStep,
+  type Curve,
 } from "./CaseParts";
 
 /** Each module's tab colours, wherever it is used */
@@ -135,10 +138,20 @@ const ARTBOARD = 1384; // the frame's width at the 1440 column
  *  down to the result label's start. The centre comes from the layout rule
  *  (collapsed 84px, open tab takes the rest), so the path lands where the
  *  flex transition ends and CSS animates `d` there. */
-function desktopFlow(w: number, ex: number, n: number, active: number) {
+function desktopFlow(
+  w: number,
+  ex: number,
+  n: number,
+  active: number,
+): Curve {
   const open = w - (n - 1) * TAB;
-  const cx = (n ? Math.max(active, 0) * TAB + open / 2 : w / 2).toFixed(1);
-  return `M ${cx} 0 C ${cx} 110, ${ex} 60, ${ex} 170`;
+  const cx = n ? Math.max(active, 0) * TAB + open / 2 : w / 2;
+  return [
+    [cx, 0],
+    [cx, 110],
+    [ex, 60],
+    [ex, 170],
+  ];
 }
 
 export default function CaseModules() {
@@ -188,6 +201,7 @@ export default function CaseModules() {
   const items = client?.steps ?? [];
   const active = view === "arch" ? -1 : openBy[view];
   const flow = desktopFlow(width, labelX, items.length, active);
+  const flowPath = curvePath(flow);
 
   // desktop opens; mobile toggles, so tapping the open row closes it
   const toggle = (i: number) => {
@@ -315,7 +329,11 @@ export default function CaseModules() {
         preserveAspectRatio="none"
         aria-hidden="true"
       >
-        <path d={flow} style={{ d: `path("${flow}")` } as CSSProperties} />
+        <path
+          d={flowPath}
+          style={{ d: `path("${flowPath}")` } as CSSProperties}
+        />
+        <FlowLeaves curve={flow} />
       </svg>
       {/* the label starts mid-screen, so start right of it for a curve */}
       <PhoneFlow width={width} ex={labelX} from={0.75} />

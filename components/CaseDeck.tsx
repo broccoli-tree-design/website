@@ -5,12 +5,15 @@ import {
   CaseResult,
   CaseRings,
   CaseZoom,
+  curvePath,
+  FlowLeaves,
   num,
   PhoneFlow,
   STEP_COLORS,
   usePhone,
   useZoom,
   type CaseStep,
+  type Curve,
 } from "./CaseParts";
 import DitherWord from "./DitherWord";
 
@@ -64,10 +67,15 @@ const N = CARDS.length;
  *  CSS animates `d` alongside the cards. */
 const EX = 480;
 const MARKETS = N - 1;
-function flow(d: number) {
+function flow(d: number): Curve {
   const x = 952 + d * 56;
   const y = 640 + d * 36;
-  return `M ${x} ${y} C ${x} ${y + 160}, ${EX} 830, ${EX} 990`;
+  return [
+    [x, y],
+    [x, y + 160],
+    [EX, 830],
+    [EX, 990],
+  ];
 }
 
 /** Stacked (phones): the label starts 34.7% in */
@@ -76,6 +84,7 @@ const PHONE_EX = 0.347;
 export default function CaseDeck() {
   const [active, setActive] = useState(0);
   const marketsFlow = flow((MARKETS - active + N) % N);
+  const marketsPath = curvePath(marketsFlow);
   const frame = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(350);
   // phones open a screen full size to read it
@@ -102,9 +111,10 @@ export default function CaseDeck() {
           aria-hidden="true"
         >
           <path
-            d={marketsFlow}
-            style={{ d: `path("${marketsFlow}")` } as CSSProperties}
+            d={marketsPath}
+            style={{ d: `path("${marketsPath}")` } as CSSProperties}
           />
+          <FlowLeaves curve={marketsFlow} />
         </svg>
         <CaseRings />
         <div className="deck-stack">

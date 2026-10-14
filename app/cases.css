@@ -88,6 +88,11 @@
   stroke-width: 1.25;
   stroke-linecap: round;
 }
+/* small leaves on the connector, alternating sides */
+.case-leaf {
+  fill: none;
+  stroke-linejoin: round;
+}
 .case-flow-mobile {
   display: none;
   height: 90px;
@@ -114,6 +119,9 @@
 @media (prefers-reduced-motion: no-preference) {
   .case-flow path {
     transition: d 0.45s var(--ease-out);
+  }
+  .case-flow .case-leaf {
+    transition: transform 0.45s var(--ease-out);
   }
 }
 
@@ -932,6 +940,9 @@ html:has(.case-zoom[open]) {
   }
   .deck-flow path {
     transition: d 0.6s var(--ease-out);
+  }
+  .deck-flow .case-leaf {
+    transition: transform 0.6s var(--ease-out);
   }
   .deck-figure .case-desc {
     transition: opacity 0.3s var(--ease-out);
