@@ -9,7 +9,7 @@ import CaseModules from "@/components/CaseModules";
 import CtaConnector from "@/components/CtaConnector";
 import Rings from "@/components/Rings";
 import ThemeGates from "@/components/ThemeGates";
-import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, LINKEDIN_URL } from "./site";
+import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, LINKEDIN_URL, GITHUB_URL } from "./site";
 
 /** structured data: who Aiqi is and what the studio offers (schema.org) */
 const JSON_LD = {
@@ -42,10 +42,10 @@ const JSON_LD = {
       name: SITE_NAME,
       description: SITE_DESCRIPTION,
       url: SITE_URL,
-      logo: `${SITE_URL}/logo-icon.svg`,
+      logo: `${SITE_URL}/logo.png`,
       image: `${SITE_URL}/opengraph-image.jpg`,
       founder: { "@id": `${SITE_URL}/#aiqi` },
-      sameAs: [LINKEDIN_URL],
+      sameAs: [LINKEDIN_URL, GITHUB_URL],
       knowsAbout: ["UX design for legal tech", "Legal tech product design"],
       hasOfferCatalog: {
         "@type": "OfferCatalog",

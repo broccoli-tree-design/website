@@ -6,3 +6,4 @@ export const SITE_TITLE =
 export const SITE_DESCRIPTION =
   "Intuitive design for legal tech. Paralegal-turned UX designer Aiqi Li helps early-stage teams with 0→1 product design, redesigns, research, branding and design systems.";
 export const LINKEDIN_URL = "https://www.linkedin.com/in/liaiqi/";
+export const GITHUB_URL = "https://github.com/broccoli-tree-design";
