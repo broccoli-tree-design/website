@@ -902,6 +902,10 @@ html:has(.case-zoom[open]) {
   border-left: 1px solid var(--green-900);
   padding: 22px 0;
 }
+/* on the near-black card the divider is ivory, like its text */
+.deck-black .deck-tab {
+  border-color: var(--neutral-100);
+}
 .deck-result {
   margin: calc(170 * var(--u)) 0 0 calc(480 * var(--u));
 }

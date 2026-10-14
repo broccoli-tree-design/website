@@ -43,13 +43,13 @@ const CARDS: CaseStep[] = [
     "Set parameters",
     "set-parameters",
     "Map client knowledge to product language",
-    1,
+    2,
   ),
   step(
     "Select markets",
     "select-markets",
     "Review key metrics with clients and select markets collaboratively",
-    2,
+    1,
   ),
 ];
 const N = CARDS.length;
