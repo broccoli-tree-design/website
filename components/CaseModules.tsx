@@ -59,15 +59,18 @@ type Client = {
 };
 
 const CLIENT_VIEW = {
-  name: "Client view",
   color: "var(--neutral-100)",
   fg: "var(--green-900)",
 };
 
 /** Module screens: the 1072×532 product card with 64px around it for its shadow, captured at 2× */
-function steps(prefix: string, mods: [ModuleKey, string][]): CaseStep[] {
+function steps(
+  front: string,
+  prefix: string,
+  mods: [ModuleKey, string][],
+): CaseStep[] {
   return [
-    CLIENT_VIEW,
+    { name: front, ...CLIENT_VIEW },
     ...mods.map(([key, desc]) => ({
       ...MODULE[key],
       img: `/case2/${prefix}-${key}.webp`,
@@ -85,7 +88,7 @@ const CLIENTS: Record<"new" | "return", Client> = {
     title: "Raphael exhibition campaign Spring 2027",
     desc: "Sales walks a prospective museum client through a sample exhibition campaign, from brief to channel mix.",
     open: 2,
-    steps: steps("new-client", [
+    steps: steps("New client workflow", "new-client", [
       [
         "ideation",
         "Frame the brief: ticket goal, core visitors, KPIs, budget and run dates.",
@@ -111,7 +114,7 @@ const CLIENTS: Record<"new" | "return", Client> = {
     title: "Outdoor backpack\nFall 2027\nChannel Plan",
     desc: "A backpack brand returns after its spring campaign with results in hand.\nThe strategy and audience are already set, so Planners update attention targets and rebalance channels for the next flight.",
     open: 0,
-    steps: steps("return-client", [
+    steps: steps("Returning client workflow", "return-client", [
       [
         "attention",
         "Recalculate attention levels for a brand hikers now recognise.",
