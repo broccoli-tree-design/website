@@ -596,10 +596,11 @@ html:has(.case-zoom[open]) {
   width: 1200px;
   margin: -64px;
 }
-/* the whole 1440px screen; corners like .deck-figure img */
+/* the whole 1440px screen; corners and shadow like .deck-figure img */
 .deck-zoom .case-zoom-scroll img {
   width: 1440px;
   border-radius: 10px;
+  box-shadow: var(--screen-shadow);
 }
 .case-zoom-desc {
   flex: none;
@@ -804,6 +805,9 @@ html:has(.case-zoom[open]) {
    vertical stack below. Title and brief reuse the .mod-* classes */
 .case-deck {
   --u: calc((100cqw - 2 * var(--gutter)) / 1384);
+  /* the case 1 screens' card shadow, kept the same size however small the
+     screen is shown */
+  --screen-shadow: 0 10px 60px -5px rgba(59, 62, 63, 0.08);
 }
 .deck-frame {
   height: calc(820 * var(--u));
@@ -879,6 +883,7 @@ html:has(.case-zoom[open]) {
   width: 100%;
   max-height: none;
   border-radius: 10px;
+  box-shadow: var(--screen-shadow);
 }
 /* the caption sits in the strip that shows below the card in front, so
    only the front card's shows */
