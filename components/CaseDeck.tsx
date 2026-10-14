@@ -14,7 +14,8 @@ import {
 } from "./CaseParts";
 import DitherWord from "./DitherWord";
 
-/** Step screens: the whole 1440×926 app screen, captured at 2× */
+/** Step screens: the whole 1440×926 app screen, captured at 3× so zooming
+ *  in (CaseFigure loads the full file then) stays sharp */
 function step(
   name: string,
   file: string,
@@ -24,8 +25,8 @@ function step(
   return {
     name,
     img: `/case1/${file}.webp`,
-    w: 2880,
-    h: 1852,
+    w: 4320,
+    h: 2778,
     // small UI text: 75 smears it
     quality: 90,
     desc,
@@ -134,6 +135,7 @@ export default function CaseDeck() {
                       alt={`${c.name} step, GeoLift no-code experimentation workflow`}
                       sizes="(min-width: 900px) 880px, 100vw"
                       phone={phone}
+                      shown={front}
                       onEnlarge={(e) => {
                         // the card itself steps the deck on
                         e.stopPropagation();
@@ -145,10 +147,10 @@ export default function CaseDeck() {
                       <div
                         className="deck-dither"
                         role="img"
-                        aria-label="Baltimore, Boston, Providence"
+                        aria-label="Boston, Baltimore, Providence"
                       >
-                        <DitherWord word="Baltimore" seed={7} />
                         <DitherWord word="Boston" seed={21} />
+                        <DitherWord word="Baltimore" seed={7} />
                         <DitherWord word="Providence" seed={42} />
                       </div>
                       <span className="text-label">

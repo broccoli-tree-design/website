@@ -22,10 +22,12 @@ Each `<name>.dc.html` here makes `public/case1/<name>.webp`:
    node design/case1-screens/capture.mjs select-markets  # one
    ```
 
-   This saves the whole 1440×926 screen at 2× (2880×1852) as WebP in
+   This saves the whole 1440×926 screen at 3× (4320×2778) as WebP in
    `public/case1/`. Keep that size, because `CaseDeck.tsx` sets the
-   images' dimensions. The 10px corners and the drop shadow are added
-   by `.deck-figure img` in `app/cases.css`, so they stay the same size
-   as the case 2 screens' however small the screen is shown.
+   images' dimensions. Visitors normally get a smaller copy; the full
+   file loads only once they zoom in, so the screen stays sharp. The
+   10px corners and the drop shadow are added by `.deck-figure img` in
+   `app/cases.css`, so they stay the same size as the case 2 screens'
+   however small the screen is shown.
 
 This folder is listed in `.vercelignore`, so deployments leave it out.

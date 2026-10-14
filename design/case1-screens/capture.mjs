@@ -1,5 +1,5 @@
 // Captures each step screen as the image the case study shows: the
-// whole 1440×926 app screen at 2×, saved as WebP in public/case1/. The
+// whole 1440×926 app screen at 3×, saved as WebP in public/case1/. The
 // site rounds its corners and adds the drop shadow in CSS (.deck-figure).
 //
 //   npm i --no-save playwright-core
@@ -26,7 +26,7 @@ const browser = await chromium.launch({
 });
 const page = await browser.newPage({
   viewport: { width: 1600, height: 1100 },
-  deviceScaleFactor: 2,
+  deviceScaleFactor: 3,
 });
 
 for (const name of SCREENS) {

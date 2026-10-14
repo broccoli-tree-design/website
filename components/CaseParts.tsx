@@ -46,6 +46,30 @@ export function usePhone() {
   return phone;
 }
 
+/** True once the viewer zooms in, by pinching (the visual viewport scales)
+ *  or with browser zoom (the pixel ratio rises); it stays true */
+function useZoomedIn() {
+  const [zoomedIn, setZoomedIn] = useState(false);
+  useEffect(() => {
+    const vv = window.visualViewport;
+    const base = devicePixelRatio;
+    const stop = () => {
+      vv?.removeEventListener("resize", check);
+      removeEventListener("resize", check);
+    };
+    function check() {
+      if ((vv?.scale ?? 1) > 1.05 || devicePixelRatio > base * 1.05) {
+        setZoomedIn(true);
+        stop();
+      }
+    }
+    vv?.addEventListener("resize", check);
+    addEventListener("resize", check);
+    return stop;
+  }, []);
+  return zoomedIn;
+}
+
 /** A step's screen over its one-line description. On phones the screen is
  *  a button that opens it full size (useZoom, CaseZoom) */
 export function CaseFigure({
@@ -55,6 +79,7 @@ export function CaseFigure({
   phone,
   onEnlarge,
   className,
+  shown = true,
 }: {
   step: CaseStep;
   alt: string;
@@ -62,7 +87,12 @@ export function CaseFigure({
   phone: boolean;
   onEnlarge: (e: MouseEvent<HTMLButtonElement>) => void;
   className: string;
+  /** false for a screen mostly hidden (a deck's back cards), which keeps
+   *  its smaller copy: a full file decodes to ~48 MB */
+  shown?: boolean;
 }) {
+  // a copy sized to the screen at first; the full file once zoomed in
+  const full = useZoomedIn() && shown;
   const img = (
     <Image
       src={step.img!}
@@ -71,6 +101,7 @@ export function CaseFigure({
       height={step.h}
       quality={step.quality}
       sizes={phone ? "100vw" : sizes}
+      unoptimized={full}
     />
   );
   return (
