@@ -745,8 +745,20 @@ button:focus-visible {
   padding: 24vh var(--gutter) 8vh;
 }
 .cta-h2 {
+  position: relative;
   margin: 0 0 0 18cqw;
   font-size: var(--display-4);
+}
+/* a vine from above the heading up to the nav's Let's chat button */
+.cta-connector {
+  position: absolute;
+  overflow: visible;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  opacity: 0.6;
+  pointer-events: none;
 }
 .cta-h2 em {
   margin-left: 12cqw;

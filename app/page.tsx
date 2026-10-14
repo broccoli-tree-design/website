@@ -6,6 +6,7 @@ import EyeTracker from "@/components/EyeTracker";
 import SeeEyes from "@/components/SeeEyes";
 import CaseDeck from "@/components/CaseDeck";
 import CaseModules from "@/components/CaseModules";
+import CtaConnector from "@/components/CtaConnector";
 import Rings from "@/components/Rings";
 import ThemeGates from "@/components/ThemeGates";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, LINKEDIN_URL } from "./site";
@@ -328,12 +329,13 @@ export default function Home() {
           </div>
         </section>
 
-        {/* CTA — the nav's LinkedIn pill is the action */}
+        {/* CTA — the nav's LinkedIn pill is the action; the connector points up to it */}
         <footer className="cta" data-gate="dark">
           <h2 className="text-display cta-h2">
-            Let&rsquo;s talk about
+            Let&rsquo;s chat about
             <br />
             <em>your</em> product
+            <CtaConnector />
           </h2>
         </footer>
       </main>
