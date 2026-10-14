@@ -1,12 +1,16 @@
 "use client";
-import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import CaseArchitecture from "./CaseArchitecture";
 import {
+  CaseFigure,
   CaseResult,
   CaseRings,
+  CaseZoom,
+  DESKTOP,
   num,
   PhoneFlow,
+  usePhone,
+  useZoom,
   type CaseStep,
 } from "./CaseParts";
 
@@ -127,7 +131,6 @@ const VIEWS: [View, string][] = [
   ["return", CLIENTS.return.label],
 ];
 
-const DESKTOP = "(min-width: 900px)";
 const TAB = 84; // collapsed tab width, matches .mod-item
 const ARTBOARD = 1384; // the frame's width at the 1440 column
 
@@ -151,11 +154,10 @@ export default function CaseModules() {
   const [width, setWidth] = useState(ARTBOARD);
   const [labelX, setLabelX] = useState(1000); // label's left edge in track space
   // phones open a screen full size to read it
-  const [phone, setPhone] = useState(false);
-  const [zoomed, setZoomed] = useState<CaseStep | null>(null);
+  const phone = usePhone();
+  const zoom = useZoom();
   const track = useRef<HTMLDivElement>(null);
   const result = useRef<HTMLDivElement>(null);
-  const zoom = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     const el = track.current;
     const res = result.current;
@@ -172,15 +174,12 @@ export default function CaseModules() {
     // desktop always has one item open
     const mq = matchMedia(DESKTOP);
     const onChange = () => {
-      setPhone(!mq.matches);
       if (!mq.matches) return;
-      zoom.current?.close();
       setOpenBy((o) => ({
         new: o.new < 0 ? 0 : o.new,
         return: o.return < 0 ? 0 : o.return,
       }));
     };
-    setPhone(!mq.matches);
     mq.addEventListener("change", onChange);
     return () => {
       ro.disconnect();
@@ -192,11 +191,6 @@ export default function CaseModules() {
   const items = client?.steps ?? [];
   const active = view === "arch" ? -1 : openBy[view];
   const flow = desktopFlow(width, labelX, items.length, active);
-
-  const enlarge = (m: CaseStep) => {
-    setZoomed(m);
-    zoom.current?.showModal();
-  };
 
   // desktop opens; mobile toggles, so tapping the open row closes it
   const toggle = (i: number) => {
@@ -281,36 +275,14 @@ export default function CaseModules() {
                   >
                     {m.img ? (
                       <div className="mod-stage">
-                        <figure className="mod-figure">
-                          {phone ? (
-                            <button
-                              type="button"
-                              className="mod-enlarge"
-                              onClick={() => enlarge(m)}
-                              aria-haspopup="dialog"
-                            >
-                              <Image
-                                src={m.img}
-                                alt={`${m.name} module, ${client.title.replace(/\n/g, " ")}`}
-                                width={m.w}
-                                height={m.h}
-                                sizes="100vw"
-                              />
-                              <span className="mod-enlarge-hint">
-                                Tap to enlarge
-                              </span>
-                            </button>
-                          ) : (
-                            <Image
-                              src={m.img}
-                              alt={`${m.name} module, ${client.title.replace(/\n/g, " ")}`}
-                              width={m.w}
-                              height={m.h}
-                              sizes="(min-width: 900px) 920px, 100vw"
-                            />
-                          )}
-                          <figcaption className="mod-desc">{m.desc}</figcaption>
-                        </figure>
+                        <CaseFigure
+                          className="mod-figure"
+                          step={m}
+                          alt={`${m.name} module, ${client.title.replace(/\n/g, " ")}`}
+                          sizes="(min-width: 900px) 920px, 100vw"
+                          phone={phone}
+                          onEnlarge={() => zoom.open(m)}
+                        />
                       </div>
                     ) : (
                       <div className="mod-client-view">
@@ -338,38 +310,7 @@ export default function CaseModules() {
         </div>
       </div>
 
-      {/* phones: one screen at full size, scrolled sideways */}
-      <dialog
-        className="mod-zoom"
-        ref={zoom}
-        aria-label={zoomed ? `${zoomed.name} module, full size` : undefined}
-        onClose={() => setZoomed(null)}
-        onClick={(e) => e.target === e.currentTarget && zoom.current?.close()}
-      >
-        <div className="mod-zoom-bar">
-          <span className="case-name">{zoomed?.name}</span>
-          <button
-            type="button"
-            className="mod-zoom-close"
-            onClick={() => zoom.current?.close()}
-            aria-label="Close"
-          >
-            ×
-          </button>
-        </div>
-        {zoomed?.img && (
-          <div className="mod-zoom-scroll">
-            <Image
-              src={zoomed.img}
-              alt={`${zoomed.name} module, full size`}
-              width={zoomed.w}
-              height={zoomed.h}
-              sizes="1200px"
-            />
-          </div>
-        )}
-        <p className="mod-zoom-desc">{zoomed?.desc}</p>
-      </dialog>
+      <CaseZoom zoom={zoom} phone={phone} noun="module" className="mod-zoom" />
 
       <svg
         className="case-flow mod-flow-desktop"

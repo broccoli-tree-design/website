@@ -1,39 +1,56 @@
 "use client";
-import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import {
+  CaseFigure,
   CaseResult,
   CaseRings,
+  CaseZoom,
   num,
   PhoneFlow,
   STEP_COLORS,
+  usePhone,
+  useZoom,
   type CaseStep,
 } from "./CaseParts";
+
+/** Step screens: the whole 1440×926 app screen, captured at 2× */
+function step(
+  name: string,
+  file: string,
+  desc: string,
+  i: number,
+): CaseStep {
+  return {
+    name,
+    img: `/case1/${file}.webp`,
+    w: 2880,
+    h: 1852,
+    desc,
+    ...STEP_COLORS[i],
+  };
+}
 
 /** The black box in front, then the three steps behind it */
 const CARDS: CaseStep[] = [
   { name: "Black box", color: "var(--green-950)", fg: "var(--neutral-100)" },
-  {
-    name: "Confirm data",
-    img: "/case1/parameter.png",
-    w: 1293,
-    h: 969,
-    ...STEP_COLORS[0],
-  },
-  {
-    name: "Set parameters",
-    img: "/case1/loading.png",
-    w: 1054,
-    h: 544,
-    ...STEP_COLORS[1],
-  },
-  {
-    name: "Select markets",
-    img: "/case1/reasoning.png",
-    w: 1366,
-    h: 734,
-    ...STEP_COLORS[2],
-  },
+  step(
+    "Confirm data",
+    "confirm-data",
+    "Input client’s historical data to train the baseline model",
+    0,
+  ),
+  step(
+    "Set parameters",
+    "set-parameters",
+    "Map client knowledge to product language",
+    1,
+  ),
+  step(
+    "Select markets",
+    "select-markets",
+    "Review key metrics with clients and select markets collaboratively",
+    2,
+  ),
 ];
 const N = CARDS.length;
 
@@ -57,6 +74,9 @@ export default function CaseDeck() {
   const marketsFlow = flow((MARKETS - active + N) % N);
   const frame = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(350);
+  // phones open a screen full size to read it
+  const phone = usePhone();
+  const zoom = useZoom();
 
   useEffect(() => {
     const el = frame.current;
@@ -105,17 +125,22 @@ export default function CaseDeck() {
               >
                 <div className="case-shot deck-body">
                   {c.img ? (
-                    <Image
-                      src={c.img}
+                    <CaseFigure
+                      className="deck-figure"
+                      step={c}
                       alt={`${c.name} step, GeoLift no-code experimentation workflow`}
-                      width={c.w}
-                      height={c.h}
-                      sizes="(min-width: 900px) 900px, 100vw"
+                      sizes="(min-width: 900px) 820px, 100vw"
+                      phone={phone}
+                      onEnlarge={(e) => {
+                        // the card itself steps the deck on
+                        e.stopPropagation();
+                        zoom.open(c);
+                      }}
                     />
                   ) : (
                     <div className="deck-face">
                       <p className="text-title deck-face-title">
-                        Washington DC, Detroit, Richmond
+                        Boston, Baltimore, Providence
                       </p>
                       <span className="text-label">
                         Why these campaign markets?
@@ -139,6 +164,8 @@ export default function CaseDeck() {
           })}
         </div>
       </div>
+
+      <CaseZoom zoom={zoom} phone={phone} noun="step" className="deck-zoom" />
 
       <PhoneFlow width={width} ex={width * PHONE_EX} />
 
