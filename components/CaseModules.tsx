@@ -62,10 +62,7 @@ const CLIENT_VIEW = {
 };
 
 /** Module screens: the 1072×532 product card with 64px around it for its shadow, captured at 2× */
-function steps(
-  prefix: string,
-  mods: [ModuleKey, string][],
-): CaseStep[] {
+function steps(prefix: string, mods: [ModuleKey, string][]): CaseStep[] {
   return [
     CLIENT_VIEW,
     ...mods.map(([key, desc]) => ({
@@ -80,8 +77,8 @@ function steps(
 
 const CLIENTS: Record<"new" | "return", Client> = {
   new: {
-    label: "New client",
-    eyebrow: "Product demo · Sales",
+    label: "Sales' demo",
+    eyebrow: "For new client",
     title: "Raphael exhibition campaign Spring 2027",
     desc: "Sales walks a prospective museum client through a sample exhibition campaign, from brief to channel mix.",
     open: 2,
@@ -106,8 +103,8 @@ const CLIENTS: Record<"new" | "return", Client> = {
     ]),
   },
   return: {
-    label: "Return client",
-    eyebrow: "Campaign revisit · Planner",
+    label: "Planners' work",
+    eyebrow: "For returning client",
     title: "Outdoor backpack\nFall 2027\nChannel Plan",
     desc: "A backpack brand returns after its spring campaign with results in hand.\nThe strategy and audience are already set, so Planners update attention targets and rebalance channels for the next flight.",
     open: 0,
@@ -227,10 +224,7 @@ export default function CaseModules() {
         aria-labelledby={`view-tab-${view}`}
       >
         <CaseRings />
-        <div
-          className={`mod-track${client ? "" : " arch-track"}`}
-          ref={track}
-        >
+        <div className={`mod-track${client ? "" : " arch-track"}`} ref={track}>
           {!client && (
             <CaseArchitecture
               scale={width / ARTBOARD}
@@ -278,7 +272,10 @@ export default function CaseModules() {
                         <CaseFigure
                           className="mod-figure"
                           step={m}
-                          alt={`${m.name} module, ${client.title.replace(/\n/g, " ")}`}
+                          alt={`${m.name} module, ${client.title.replace(
+                            /\n/g,
+                            " "
+                          )}`}
                           sizes="(min-width: 900px) 920px, 100vw"
                           phone={phone}
                           onEnlarge={() => zoom.open(m)}
