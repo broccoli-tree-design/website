@@ -229,7 +229,9 @@ export default function Home() {
                 0&rarr;1 Product design
               </span>
               <h3 className="text-display mod-h3">
-                From black box to co-creation with clients
+                From black box to
+                <br />
+                co-creation with clients
               </h3>
             </div>
           </div>
