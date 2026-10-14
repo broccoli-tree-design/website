@@ -12,6 +12,7 @@ import {
   useZoom,
   type CaseStep,
 } from "./CaseParts";
+import DitherWord from "./DitherWord";
 
 /** Step screens: the whole 1440×926 app screen, captured at 2× */
 function step(
@@ -25,6 +26,8 @@ function step(
     img: `/case1/${file}.webp`,
     w: 2880,
     h: 1852,
+    // small UI text: 75 smears it
+    quality: 90,
     desc,
     ...STEP_COLORS[i],
   };
@@ -62,8 +65,8 @@ const EX = 480;
 const MARKETS = N - 1;
 function flow(d: number) {
   const x = 952 + d * 56;
-  const y = 600 + d * 36;
-  return `M ${x} ${y} C ${x} ${y + 160}, ${EX} 790, ${EX} 950`;
+  const y = 640 + d * 36;
+  return `M ${x} ${y} C ${x} ${y + 160}, ${EX} 830, ${EX} 990`;
 }
 
 /** Stacked (phones): the label starts 34.7% in */
@@ -94,7 +97,7 @@ export default function CaseDeck() {
       <div className="case-frame deck-frame" ref={frame}>
         <svg
           className="case-flow deck-flow"
-          viewBox="0 0 1384 950"
+          viewBox="0 0 1384 990"
           aria-hidden="true"
         >
           <path
@@ -129,7 +132,7 @@ export default function CaseDeck() {
                       className="deck-figure"
                       step={c}
                       alt={`${c.name} step, GeoLift no-code experimentation workflow`}
-                      sizes="(min-width: 900px) 820px, 100vw"
+                      sizes="(min-width: 900px) 880px, 100vw"
                       phone={phone}
                       onEnlarge={(e) => {
                         // the card itself steps the deck on
@@ -139,9 +142,15 @@ export default function CaseDeck() {
                     />
                   ) : (
                     <div className="deck-face">
-                      <p className="text-title deck-face-title">
-                        Boston, Baltimore, Providence
-                      </p>
+                      <div
+                        className="deck-dither"
+                        role="img"
+                        aria-label="Baltimore, Boston, Providence"
+                      >
+                        <DitherWord word="Baltimore" seed={7} />
+                        <DitherWord word="Boston" seed={21} />
+                        <DitherWord word="Providence" seed={42} />
+                      </div>
                       <span className="text-label">
                         Why these campaign markets?
                       </span>

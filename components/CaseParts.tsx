@@ -17,6 +17,8 @@ export type CaseStep = {
   img?: string;
   w?: number;
   h?: number;
+  /** next/image quality; must be listed in next.config's images.qualities */
+  quality?: number;
   desc?: string;
 };
 
@@ -67,6 +69,7 @@ export function CaseFigure({
       alt={alt}
       width={step.w}
       height={step.h}
+      quality={step.quality}
       sizes={phone ? "100vw" : sizes}
     />
   );
@@ -144,6 +147,7 @@ export function CaseZoom({
             alt={`${step.name} ${noun}, full size`}
             width={step.w}
             height={step.h}
+            quality={step.quality}
             sizes="1440px"
           />
         </div>
