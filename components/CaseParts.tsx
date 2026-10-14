@@ -3,6 +3,7 @@ import {
   useEffect,
   useRef,
   useState,
+  type CSSProperties,
   type MouseEvent,
   type Ref,
 } from "react";
@@ -203,6 +204,60 @@ export function CaseRings() {
   ));
 }
 
+/** A connector's cubic Bézier: start, two controls, end */
+export type Curve = [
+  [number, number],
+  [number, number],
+  [number, number],
+  [number, number],
+];
+
+/** The `d` of a connector curve */
+export function curvePath([a, b, c, e]: Curve) {
+  const f = (p: number[]) => p.map((v) => +v.toFixed(1)).join(" ");
+  return `M ${f(a)} C ${f(b)}, ${f(c)}, ${f(e)}`;
+}
+
+/** Leaf positions along the curve (fractions of the parameter) */
+const LEAVES = [0.3, 0.55, 0.8];
+/** How far a leaf's tip leans away from the stem, degrees */
+const LEAF_LEAN = 50;
+
+/** Three small leaves on a connector, alternating sides. Each sits on the
+ *  curve, base on the stem, and CSS transitions the transform alongside
+ *  the path's `d` when the curve moves. */
+export function FlowLeaves({ curve }: { curve: Curve }) {
+  const [a, b, c, e] = curve;
+  return LEAVES.map((t, i) => {
+    const u = 1 - t;
+    const at = (k: 0 | 1) =>
+      u ** 3 * a[k] +
+      3 * u * u * t * b[k] +
+      3 * u * t * t * c[k] +
+      t ** 3 * e[k];
+    const slope = (k: 0 | 1) =>
+      3 * u * u * (b[k] - a[k]) +
+      6 * u * t * (c[k] - b[k]) +
+      3 * t * t * (e[k] - c[k]);
+    const heading = (Math.atan2(slope(1), slope(0)) * 180) / Math.PI;
+    const lean = i % 2 ? -LEAF_LEAN : LEAF_LEAN;
+    return (
+      <path
+        key={t}
+        className="case-leaf"
+        d="M 0 0 C 5 -9, 17 -9, 24 0 C 17 9, 5 9, 0 0 Z"
+        style={
+          {
+            transform: `translate(${at(0).toFixed(1)}px, ${at(1).toFixed(
+              1,
+            )}px) rotate(${(heading + lean).toFixed(1)}deg)`,
+          } as CSSProperties
+        }
+      />
+    );
+  });
+}
+
 /** Phone connector, in px of the 90px-tall SVG under a stacked case frame
  *  (y = 0 is the frame's bottom edge): from the bottom-most card's or row's
  *  bottom border, `from` of the way across, down to the result label's left
@@ -216,15 +271,21 @@ export function PhoneFlow({
   ex: number;
   from?: number;
 }) {
-  const x = (width * from).toFixed(1);
-  const e = ex.toFixed(1);
+  const x = width * from;
+  const curve: Curve = [
+    [x, 0],
+    [x, 50],
+    [ex, 40],
+    [ex, 90],
+  ];
   return (
     <svg
       className="case-flow case-flow-mobile"
       viewBox={`0 0 ${width} 90`}
       aria-hidden="true"
     >
-      <path d={`M ${x} 0 C ${x} 50, ${e} 40, ${e} 90`} />
+      <path d={curvePath(curve)} />
+      <FlowLeaves curve={curve} />
     </svg>
   );
 }
