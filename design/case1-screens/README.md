@@ -26,8 +26,8 @@ Each `<name>.dc.html` here makes `public/case1/<name>.webp`:
    `public/case1/`. Keep that size, because `CaseDeck.tsx` sets the
    images' dimensions. Visitors normally get a smaller copy; the full
    file loads only once they zoom in, so the screen stays sharp. The
-   10px corners and the drop shadow are added by `.deck-figure img` in
-   `app/cases.css`, so they stay the same size as the case 2 screens'
-   however small the screen is shown.
+   page background is captured transparent, so the screen's white
+   panels (with their own shadows) sit straight on the card; the 10px
+   corners are added by `.deck-figure img` in `app/cases.css`.
 
 This folder is listed in `.vercelignore`, so deployments leave it out.

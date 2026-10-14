@@ -36,10 +36,16 @@ for (const name of SCREENS) {
   });
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(800); // chart layout
+  // the prototype's #f3f6f9 page colour would show as a gray edge around
+  // the white panels; drop it so the ivory card shows through instead
+  await page.addStyleTag({
+    content:
+      'body, div[style*="width: 1440px"] { background: transparent !important }',
+  });
   const png = await page
     .locator('div[style*="width: 1440px"]')
     .first()
-    .screenshot();
+    .screenshot({ omitBackground: true });
   await sharp(png)
     .webp({ quality: 86, smartSubsample: true })
     .toFile(path.join(OUT, name + ".webp"));
