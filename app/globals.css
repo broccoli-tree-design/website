@@ -841,7 +841,7 @@ button:focus-visible {
 
   .question {
     min-height: auto;
-    padding-block: 14vh;
+    padding-block: 22vh;
   }
   .question > * {
     grid-column: 1 / -1;
