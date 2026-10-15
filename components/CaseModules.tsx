@@ -118,7 +118,7 @@ const CLIENTS: Record<"new" | "return", Client> = {
     steps: steps("Returning client workflow", "return-client", [
       [
         "attention",
-        "Recalculate attention levels for a brand hikers now recognise.",
+        "Recalculate attention levels for a brand hikers now recognize.",
       ],
       [
         "channel",
