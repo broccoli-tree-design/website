@@ -899,12 +899,6 @@ html:has(.case-zoom[open]) {
   padding: 0 calc(60 * var(--u));
   text-align: center;
 }
-.deck-face-title {
-  max-width: 16ch;
-  font-size: var(--display-1);
-  text-wrap: balance;
-  color: var(--neutral-100);
-}
 /* the card is always near-black, so the bright orange whatever the theme
    (--warm turns dark terracotta in the light theme: 3.05:1) */
 .deck-face .text-label {

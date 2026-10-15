@@ -178,7 +178,7 @@ export default function CaseDeck() {
                   aria-pressed={front}
                 >
                   <span className="case-name">{c.name}</span>
-                  <span className="text-num deck-num">{num(i)}</span>
+                  <span className="text-num">{num(i)}</span>
                 </button>
               </div>
             );

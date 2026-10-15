@@ -266,7 +266,7 @@ export default function Home() {
         </section>
 
         {/* CASE — module accordion, curves flow into the 400% */}
-        <section className="case case-mod" data-gate="light">
+        <section className="case" data-gate="light">
           <div className="grid">
             <div className="mod-title">
               <span className="text-label case-eyebrow">
@@ -320,7 +320,7 @@ export default function Home() {
 
         {/* SERVICES */}
         <section className="services" data-gate="light">
-          <h2 className="text-display services-h2">
+          <h2 className="text-display">
             <span className="services-title">Where I help</span>{" "}
             <span className="text-stat services-sub">early-stage teams</span>
           </h2>
