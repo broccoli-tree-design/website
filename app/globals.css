@@ -214,7 +214,7 @@ button:focus-visible {
   margin: 0;
   font-family: var(--serif), serif;
   font-weight: 600;
-  line-height: 1;
+  line-height: 1.1;
   letter-spacing: -0.025em;
 }
 .text-sub {
@@ -461,7 +461,7 @@ button:focus-visible {
   font-weight: 600;
 }
 .hero-s1 {
-  grid-area: 3 / 3 / auto / span 5;
+  grid-area: 3 / 4 / auto / span 5;
   /* dropped clear of the "q"'s italic descender (~0.18em below the
      name's line box) */
   margin-top: calc(var(--name-fs) * 0.42);
@@ -742,7 +742,7 @@ button:focus-visible {
 .cta {
   position: relative;
   min-height: 90vh;
-  padding: 24vh var(--gutter) 8vh;
+  padding: 36vh var(--gutter) 8vh;
 }
 .cta-h2 {
   position: relative;
@@ -891,7 +891,7 @@ button:focus-visible {
 
   .cta {
     min-height: 70vh;
-    padding: 22vh var(--gutter) 10vh;
+    padding: 32vh var(--gutter) 10vh;
   }
   .cta-h2 {
     margin: 0;

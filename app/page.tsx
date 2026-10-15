@@ -9,7 +9,13 @@ import CaseModules from "@/components/CaseModules";
 import CtaConnector from "@/components/CtaConnector";
 import Rings from "@/components/Rings";
 import ThemeGates from "@/components/ThemeGates";
-import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, LINKEDIN_URL, GITHUB_URL } from "./site";
+import {
+  SITE_URL,
+  SITE_NAME,
+  SITE_DESCRIPTION,
+  LINKEDIN_URL,
+  GITHUB_URL,
+} from "./site";
 
 /** structured data: who Aiqi is and what the studio offers (schema.org) */
 const JSON_LD = {
@@ -172,7 +178,7 @@ export default function Home() {
             </h1>
             <p className="text-sub hero-slogan">
               <span className="hero-s1">
-                I design <em className="hero-s1-em">intuitive experiences</em>
+                I design <em className="hero-s1-em">intuitive UX</em>
               </span>{" "}
               <span className="hero-s2">
                 for <em className="hero-s1-em">legal tech</em>
@@ -215,8 +221,8 @@ export default function Home() {
           </h2>
           <div className="grid section-body cs-body">
             <p className="body cs-p">
-              Examples from my past life designing enterprise software that help
-              humans overwhelmed by datageddon and fragmented tools make
+              Examples from my past life designing enterprise softwares that
+              help humans overwhelmed by datageddon and fragmented tools make
               informed decisions and develop shared understanding.
             </p>
           </div>
