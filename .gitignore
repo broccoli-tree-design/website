@@ -3,3 +3,5 @@
 .next/
 node_modules/
 *.tsbuildinfo
+.DS_Store
+next-env.d.ts
