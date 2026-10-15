@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { curvePath, FlowLeaves, type Curve } from "./CaseParts";
+import { FlowLine, type Curve } from "./CaseParts";
 
 /** The case connectors' vine, from above the heading's first line up to
  *  the nav's Let's chat button. The button is fixed at the top of the
@@ -94,12 +94,7 @@ export default function CtaConnector() {
       }
       aria-hidden="true"
     >
-      {shape && (
-        <>
-          <path d={curvePath(shape.curve)} />
-          <FlowLeaves curve={shape.curve} />
-        </>
-      )}
+      {shape && <FlowLine curve={shape.curve} />}
     </svg>
   );
 }

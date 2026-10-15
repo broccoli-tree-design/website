@@ -6,9 +6,8 @@ import {
   CaseResult,
   CaseRings,
   CaseZoom,
-  curvePath,
   DESKTOP,
-  FlowLeaves,
+  Flow,
   num,
   PhoneFlow,
   usePhone,
@@ -199,7 +198,6 @@ export default function CaseModules() {
   const items = client?.steps ?? [];
   const active = view === "arch" ? -1 : openBy[view];
   const flow = desktopFlow(width, labelX, items.length, active);
-  const flowPath = curvePath(flow);
 
   // desktop opens; mobile toggles, so tapping the open row closes it
   const toggle = (i: number) => {
@@ -321,18 +319,13 @@ export default function CaseModules() {
 
       <CaseZoom zoom={zoom} phone={phone} noun="module" className="mod-zoom" />
 
-      <svg
+      <Flow
+        curve={flow}
+        glide
         className="case-flow mod-flow-desktop"
         viewBox={`0 0 ${width} 170`}
         preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <path
-          d={flowPath}
-          style={{ d: `path("${flowPath}")` } as CSSProperties}
-        />
-        <FlowLeaves curve={flow} />
-      </svg>
+      />
       {/* the label starts mid-screen, so start right of it for a curve */}
       <PhoneFlow width={width} ex={labelX} from={0.75} />
 

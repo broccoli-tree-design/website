@@ -5,8 +5,7 @@ import {
   CaseResult,
   CaseRings,
   CaseZoom,
-  curvePath,
-  FlowLeaves,
+  Flow,
   num,
   PhoneFlow,
   STEP_COLORS,
@@ -84,7 +83,6 @@ const PHONE_EX = 0.347;
 export default function CaseDeck() {
   const [active, setActive] = useState(0);
   const marketsFlow = flow((MARKETS - active + N) % N);
-  const marketsPath = curvePath(marketsFlow);
   const frame = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(350);
   // phones open a screen full size to read it
@@ -105,17 +103,12 @@ export default function CaseDeck() {
   return (
     <>
       <div className="case-frame deck-frame" ref={frame}>
-        <svg
+        <Flow
+          curve={marketsFlow}
+          glide
           className="case-flow deck-flow"
           viewBox="0 0 1384 990"
-          aria-hidden="true"
-        >
-          <path
-            d={marketsPath}
-            style={{ d: `path("${marketsPath}")` } as CSSProperties}
-          />
-          <FlowLeaves curve={marketsFlow} />
-        </svg>
+        />
         <CaseRings />
         <div className="deck-stack">
           {CARDS.map((c, i) => {
