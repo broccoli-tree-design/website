@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from "react";
+import { frameThrottle } from "./frame";
 
 // squash the eye shut, or just its lid when it has one (the "see" eyes,
 // whose fill must stay put)
@@ -17,10 +18,8 @@ export default function EyeTracker() {
     const reduce = matchMedia("(prefers-reduced-motion: reduce)");
     // before the first move, look down at the copy
     let pt = { x: innerWidth / 2, y: innerHeight * 0.8 };
-    let raf = 0;
 
     const look = () => {
-      raf = 0;
       document.querySelectorAll<HTMLElement>("[data-eye]").forEach((eye) => {
         const r = eye.getBoundingClientRect();
         if (!r.width) return;
@@ -33,9 +32,7 @@ export default function EyeTracker() {
           pupil.style.transform = `translate(${((dx / d) * k * r.width * 0.3).toFixed(2)}px,${((dy / d) * k * r.height * 0.12).toFixed(2)}px)`;
       });
     };
-    const schedule = () => {
-      if (!raf) raf = requestAnimationFrame(look);
-    };
+    const schedule = frameThrottle(look);
     const onMove = (e: PointerEvent) => {
       pt = { x: e.clientX, y: e.clientY };
       schedule();
@@ -74,7 +71,7 @@ export default function EyeTracker() {
       removeEventListener("eyes:layout", schedule);
       removeEventListener("click", onClick);
       clearInterval(idle);
-      cancelAnimationFrame(raf);
+      schedule.cancel();
     };
   }, []);
   return null;

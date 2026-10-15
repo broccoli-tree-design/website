@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
+import { frameThrottle } from "./frame";
 
 /** "see" whose two "e"s look back: each counter (the arch above the
  *  crossbar) is filled with the letter's colour and holds the logo's pupil.
@@ -124,9 +125,7 @@ export default function SeeEyes() {
   useEffect(() => {
     const em = ref.current;
     if (!em) return;
-    let raf = 0;
     const layout = () => {
-      raf = 0;
       const cs = getComputedStyle(em);
       const fs = parseFloat(cs.fontSize);
       const s = measure(
@@ -154,9 +153,7 @@ export default function SeeEyes() {
       // let EyeTracker aim the pupils now they have a size
       dispatchEvent(new Event("eyes:layout"));
     };
-    const schedule = () => {
-      if (!raf) raf = requestAnimationFrame(layout);
-    };
+    const schedule = frameThrottle(layout);
     // a canvas drawn before the web font loads measures the fallback's "e"
     const cs = getComputedStyle(em);
     document.fonts
@@ -166,7 +163,7 @@ export default function SeeEyes() {
     addEventListener("resize", schedule);
     return () => {
       removeEventListener("resize", schedule);
-      cancelAnimationFrame(raf);
+      schedule.cancel();
     };
   }, []);
 

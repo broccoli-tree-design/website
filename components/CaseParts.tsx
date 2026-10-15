@@ -7,6 +7,7 @@ import {
   type CSSProperties,
   type MouseEvent,
   type Ref,
+  type RefObject,
 } from "react";
 
 /** Pieces shared by the two case studies (CaseDeck, CaseModules) */
@@ -67,6 +68,27 @@ export function usePhone() {
     return () => mq.removeEventListener("change", onChange);
   }, []);
   return phone;
+}
+
+/** Calls `measure` when any of these elements resizes, and once when
+ *  watching starts. It waits until every ref holds an element; the refs
+ *  are meant to be stable. */
+export function useResize(
+  refs: RefObject<Element | null>[],
+  measure: () => void,
+) {
+  const latest = useRef(measure);
+  useEffect(() => {
+    latest.current = measure;
+  });
+  useEffect(() => {
+    const els = refs.map((r) => r.current);
+    if (els.some((el) => !el)) return;
+    const ro = new ResizeObserver(() => latest.current());
+    els.forEach((el) => ro.observe(el!));
+    return () => ro.disconnect();
+    // once: the refs never change
+  }, []);
 }
 
 /** True once the viewer zooms in, by pinching (the visual viewport scales)

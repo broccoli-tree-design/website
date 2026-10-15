@@ -12,6 +12,7 @@ import {
   num,
   PhoneFlow,
   usePhone,
+  useResize,
   useZoom,
   type CaseStep,
   type Curve,
@@ -167,19 +168,13 @@ export default function CaseModules() {
   const zoom = useZoom();
   const track = useRef<HTMLDivElement>(null);
   const result = useRef<HTMLDivElement>(null);
+  // the result block's width follows the 400% (and its font loading)
+  useResize([track, result], () => {
+    const t = track.current!.getBoundingClientRect();
+    setWidth(t.width);
+    setLabelX(Math.round(result.current!.getBoundingClientRect().left - t.left));
+  });
   useEffect(() => {
-    const el = track.current;
-    const res = result.current;
-    if (!el || !res) return;
-    // the result block's width follows the 400% (and its font loading)
-    const measure = () => {
-      const t = el.getBoundingClientRect();
-      setWidth(t.width);
-      setLabelX(Math.round(res.getBoundingClientRect().left - t.left));
-    };
-    const ro = new ResizeObserver(measure);
-    ro.observe(el);
-    ro.observe(res);
     // desktop always has one item open
     const mq = matchMedia(DESKTOP);
     const onChange = () => {
@@ -190,10 +185,7 @@ export default function CaseModules() {
       }));
     };
     mq.addEventListener("change", onChange);
-    return () => {
-      ro.disconnect();
-      mq.removeEventListener("change", onChange);
-    };
+    return () => mq.removeEventListener("change", onChange);
   }, []);
 
   const client = view === "arch" ? null : CLIENTS[view];
