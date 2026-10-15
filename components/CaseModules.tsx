@@ -67,7 +67,7 @@ const CLIENT_VIEW = {
 function steps(
   front: string,
   prefix: string,
-  mods: [ModuleKey, string][],
+  mods: [ModuleKey, string][]
 ): CaseStep[] {
   return [
     { name: front, ...CLIENT_VIEW },
@@ -85,7 +85,7 @@ const CLIENTS: Record<"new" | "return", Client> = {
   new: {
     label: "Sales' demo",
     eyebrow: "For new client",
-    title: "Raphael exhibition campaign Spring 2027",
+    title: "Buddhist art exhibition campaign Spring 2027",
     desc: "Sales walks a prospective museum client through a sample exhibition campaign, from brief to channel mix.",
     open: 2,
     steps: steps("New client workflow", "new-client", [
@@ -141,12 +141,7 @@ const ARTBOARD = 1384; // the frame's width at the 1440 column
  *  down to the result label's start. The centre comes from the layout rule
  *  (collapsed 84px, open tab takes the rest), so the path lands where the
  *  flex transition ends and CSS animates `d` there. */
-function desktopFlow(
-  w: number,
-  ex: number,
-  n: number,
-  active: number,
-): Curve {
+function desktopFlow(w: number, ex: number, n: number, active: number): Curve {
   const open = w - (n - 1) * TAB;
   const cx = n ? Math.max(active, 0) * TAB + open / 2 : w / 2;
   return [

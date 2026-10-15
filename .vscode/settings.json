@@ -1,5 +1,10 @@
 {
   // design/case2-screens bind styles with {{ }} placeholders that the
   // design runtime fills in; they are the only HTML files here
-  "html.validate.styles": false
+  "html.validate.styles": false,
+  // a formatter rewrites each one-line element across many lines, which
+  // buries real edits in the git diff
+  "[html]": {
+    "editor.formatOnSave": false
+  }
 }
