@@ -13,6 +13,8 @@ import {
 /** A case's front item (no screenshot) or one of its steps */
 export type CaseStep = {
   name: string;
+  /** a module's key in MODULES */
+  key?: string;
   color: string;
   fg: string;
   img?: string;
@@ -22,6 +24,21 @@ export type CaseStep = {
   quality?: number;
   desc?: string;
 };
+
+/** Every module a client workflow can use, in workflow order (the
+ *  architecture diagram lists them all; the last bleeds off its box to say
+ *  there are more). Workflows pick modules by these keys. */
+export const MODULES = {
+  insights: "Insights",
+  ideation: "Ideation",
+  opportunity: "Opportunity",
+  audience: "Audience",
+  attention: "Attention",
+  channel: "Channel",
+  investment: "Investment",
+  flight: "Flight",
+  optimization: "Optimization",
+} as const;
 
 /** The four steps' tab colours, in order, after each case's front item */
 export const STEP_COLORS = [
