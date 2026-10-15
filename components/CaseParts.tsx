@@ -53,6 +53,10 @@ export const STEP_COLORS = [
  *  size in a dialog to be read */
 export const DESKTOP = "(min-width: 900px)";
 
+/** The page's phone breakpoint, the same 640px as the CSS media queries
+ *  (Rings.tsx combines it with hover, as its inverse) */
+export const PHONE = "(max-width: 640px)";
+
 export function usePhone() {
   const [phone, setPhone] = useState(false);
   useEffect(() => {
