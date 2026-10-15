@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { curvePath, FlowLeaves, type Curve } from "./CaseParts";
+import { curvePath, FlowLeaves, PHONE, type Curve } from "./CaseParts";
 
 /** The case connectors' vine, from above the heading's first line up to
  *  the nav's Let's chat button. The button is fixed at the top of the
@@ -42,7 +42,7 @@ export default function CtaConnector() {
       // beside the button, at the end of the page, in page coordinates
       const endY = doc.scrollHeight - innerHeight + bb.bottom + 30;
       // phones have no room left of the button, so rise to its centre
-      const phone = innerWidth < 640;
+      const phone = matchMedia(PHONE).matches;
       // the middle of the text's top edge (phones keep to the right, clear of the copy above)
       const startX = phone ? lineEnd - 20 : (lineStart + lineEnd) / 2;
       const endX = phone
