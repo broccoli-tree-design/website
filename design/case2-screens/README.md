@@ -32,8 +32,9 @@ Each `<name>.dc.html` here makes `public/case2/<name>.webp`:
    images' dimensions and `.mod-figure img` in `app/cases.css` overflows
    the figure by the 64px so the card itself fills it.
 
-The Opportunity screen shows two bodhisattva images, loaded from
-`public/Bodhisattva_11thc.jpeg` and `public/Bodhisattva_utagawa.jpeg`
-by relative path. The captured image already contains them.
+The Opportunity screen shows two images from `images/`, named after their
+captions: `bodhisattva-avalokitesvara-11th-c.jpeg` and
+`seitaka-doji-utagawa-print.jpeg`. The captured image already contains
+them, so they are not part of the site.
 
 This folder is listed in `.vercelignore`, so deployments leave it out.
