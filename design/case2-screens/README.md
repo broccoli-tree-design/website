@@ -23,6 +23,9 @@ Each `<name>.dc.html` here makes `public/case2/<name>.webp`:
    node design/case2-screens/capture.mjs new-client-channel  # one
    ```
 
+   `sharp` comes with Next, so only `playwright-core` is installed here;
+   if `sharp` goes missing, `npm i --no-save sharp`.
+
    This saves the white card and its drop shadow at 2× (2400×1320: the
    1072×532 card plus 64px of transparent room on each side) as WebP in
    `public/case2/`. Keep that size, because `CaseModules.tsx` sets the

@@ -22,6 +22,9 @@ Each `<name>.dc.html` here makes `public/case1/<name>.webp`:
    node design/case1-screens/capture.mjs select-markets  # one
    ```
 
+   `sharp` comes with Next, so only `playwright-core` is installed here;
+   if `sharp` goes missing, `npm i --no-save sharp`.
+
    This saves the whole 1440×926 screen at 3× (4320×2778) as WebP in
    `public/case1/`. Keep that size, because `CaseDeck.tsx` sets the
    images' dimensions. Visitors normally get a smaller copy; the full
