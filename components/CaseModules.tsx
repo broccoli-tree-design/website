@@ -9,6 +9,7 @@ import {
   curvePath,
   DESKTOP,
   FlowLeaves,
+  MODULES,
   num,
   PhoneFlow,
   usePhone,
@@ -20,27 +21,27 @@ import {
 /** Each module's tab colours, wherever it is used */
 const MODULE = {
   ideation: {
-    name: "Ideation",
+    name: MODULES.ideation,
     color: "var(--neutral-200)",
     fg: "var(--green-900)",
   },
   opportunity: {
-    name: "Opportunity",
+    name: MODULES.opportunity,
     color: "var(--green-600)",
     fg: "var(--neutral-100)",
   },
   audience: {
-    name: "Audience",
+    name: MODULES.audience,
     color: "var(--green-300)",
     fg: "var(--green-900)",
   },
   attention: {
-    name: "Attention",
+    name: MODULES.attention,
     color: "var(--green-800)",
     fg: "var(--neutral-100)",
   },
   channel: {
-    name: "Channel",
+    name: MODULES.channel,
     color: "var(--orange-400)",
     fg: "var(--green-900)",
   },
@@ -73,6 +74,7 @@ function steps(
     { name: front, ...CLIENT_VIEW },
     ...mods.map(([key, desc]) => ({
       ...MODULE[key],
+      key,
       img: `/case2/${prefix}-${key}.webp`,
       w: 2400,
       h: 1320,

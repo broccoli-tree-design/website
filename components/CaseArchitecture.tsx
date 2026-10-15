@@ -1,19 +1,7 @@
 import type { CSSProperties } from "react";
-import type { CaseStep } from "./CaseParts";
+import { MODULES, type CaseStep } from "./CaseParts";
 
-/** Every module a client workflow can use, in workflow order; the last one
- *  bleeds off the box to say there are more */
-const MODULES = [
-  "Insights",
-  "Ideation",
-  "Opportunity",
-  "Audience",
-  "Attention",
-  "Channel",
-  "Investment",
-  "Flight",
-  "Optimization",
-];
+const MODULE_LIST = Object.entries(MODULES);
 
 /** The daily-operations apps, placed by hand on the 1282×321 box:
  *  name, left, top, and whether it fades out past the right edge */
@@ -64,13 +52,13 @@ export default function CaseArchitecture({
               aria-label={`Open the ${r.label} workflow`}
             >
               <span className="arch-row-name">{r.label}</span>
-              {MODULES.map((name, i) => {
-                const step = r.steps.find((s) => s.name === name);
+              {MODULE_LIST.map(([key, name], i) => {
+                const step = r.steps.find((s) => s.key === key);
                 return (
                   <span
-                    key={name}
+                    key={key}
                     className={`arch-tile${step ? "" : " is-unused"}${
-                      i === MODULES.length - 1 ? " arch-more" : ""
+                      i === MODULE_LIST.length - 1 ? " arch-more" : ""
                     }`}
                     style={
                       step &&
