@@ -29,8 +29,8 @@ Each `<name>.dc.html` here makes `public/case2/<name>.webp`:
    images' dimensions and `.mod-figure img` in `app/cases.css` overflows
    the figure by the 64px so the card itself fills it.
 
-The Opportunity screen hotlinks two Raphael paintings (public domain,
-Wikimedia Commons), so capturing it needs a connection. The captured
-image already contains them, so the site doesn't hotlink anything.
+The Opportunity screen shows two bodhisattva images, loaded from
+`public/Bodhisattva_11thc.jpeg` and `public/Bodhisattva_utagawa.jpeg`
+by relative path. The captured image already contains them.
 
 This folder is listed in `.vercelignore`, so deployments leave it out.
