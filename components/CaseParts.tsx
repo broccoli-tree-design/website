@@ -3,6 +3,7 @@ import {
   useEffect,
   useRef,
   useState,
+  type ComponentProps,
   type CSSProperties,
   type MouseEvent,
   type Ref,
@@ -275,6 +276,35 @@ export function FlowLeaves({ curve }: { curve: Curve }) {
   });
 }
 
+/** A connector's curve and the leaves along it, to go inside an <svg>.
+ *  `glide` also sets the path's CSS `d`, so CSS can transition the curve
+ *  when it moves (the desktop connectors). */
+export function FlowLine({ curve, glide }: { curve: Curve; glide?: boolean }) {
+  const d = curvePath(curve);
+  return (
+    <>
+      <path
+        d={d}
+        style={glide ? ({ d: `path("${d}")` } as CSSProperties) : undefined}
+      />
+      <FlowLeaves curve={curve} />
+    </>
+  );
+}
+
+/** A connector in its own <svg>, which takes the usual svg props */
+export function Flow({
+  curve,
+  glide,
+  ...svg
+}: { curve: Curve; glide?: boolean } & ComponentProps<"svg">) {
+  return (
+    <svg aria-hidden="true" {...svg}>
+      <FlowLine curve={curve} glide={glide} />
+    </svg>
+  );
+}
+
 /** Phone connector, in px of the 90px-tall SVG under a stacked case frame
  *  (y = 0 is the frame's bottom edge): from the bottom-most card's or row's
  *  bottom border, `from` of the way across, down to the result label's left
@@ -296,14 +326,11 @@ export function PhoneFlow({
     [ex, 90],
   ];
   return (
-    <svg
+    <Flow
+      curve={curve}
       className="case-flow case-flow-mobile"
       viewBox={`0 0 ${width} 90`}
-      aria-hidden="true"
-    >
-      <path d={curvePath(curve)} />
-      <FlowLeaves curve={curve} />
-    </svg>
+    />
   );
 }
 
