@@ -148,7 +148,7 @@
 
 /* case — module accordion; curves flow from each tab into the 400%.
    Desktop ≥ 900px, stacked accordion below (its own breakpoint) */
-.mod-title {
+.case-title {
   grid-column: 1 / span 8;
   display: flex;
   flex-direction: column;
@@ -156,30 +156,30 @@
 }
 /* roomier than .text-display's 0.85, so the apostrophes in "Sales’" and
    "Planners’" clear the descenders above (as .about-h2) */
-.mod-h3 {
+.case-h3 {
   font-size: var(--display-2);
   line-height: 1.1;
   text-wrap: balance;
 }
-.mod-brief {
+.case-brief {
   margin-top: 48px;
 }
-.mod-problem,
-.mod-solution {
+.case-problem,
+.case-solution {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
-.mod-problem {
+.case-problem {
   grid-column: 1 / span 4;
 }
-.mod-solution {
+.case-solution {
   grid-column: 6 / span 4;
 }
-.mod-problem .text-label {
+.case-problem .text-label {
   color: var(--warm);
 }
-.mod-solution .text-label {
+.case-solution .text-label {
   color: var(--accent);
 }
 
@@ -394,20 +394,20 @@
 
 /* stacked accordion; one row open at most (case-frame breakpoint) */
 @media (max-width: 899.98px) {
-  .mod-title,
-  .mod-problem,
-  .mod-solution {
+  .case-title,
+  .case-problem,
+  .case-solution {
     grid-column: 1 / -1;
   }
-  .mod-title {
+  .case-title {
     gap: 16px;
   }
-  .mod-brief {
+  .case-brief {
     margin-top: 36px;
     row-gap: 28px;
   }
-  .mod-problem,
-  .mod-solution {
+  .case-problem,
+  .case-solution {
     gap: 10px;
   }
 

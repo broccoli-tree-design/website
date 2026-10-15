@@ -231,19 +231,19 @@ export default function Home() {
         {/* CASE — black-box deck; the four steps sit behind the answer */}
         <section className="case case-deck" data-gate="light">
           <div className="grid">
-            <div className="mod-title">
+            <div className="case-title">
               <span className="text-label case-eyebrow">
                 0&rarr;1 Product design
               </span>
-              <h3 className="text-display mod-h3">
+              <h3 className="text-display case-h3">
                 From black box to
                 <br />
                 co-creation with clients
               </h3>
             </div>
           </div>
-          <div className="grid mod-brief">
-            <div className="mod-problem">
+          <div className="grid case-brief">
+            <div className="case-problem">
               <span className="text-label">Problem</span>
               <p className="body">
                 In response to GDPR, clients needed to adopt the GeoLift
@@ -252,7 +252,7 @@ export default function Home() {
                 and worked like a black box.
               </p>
             </div>
-            <div className="mod-solution">
+            <div className="case-solution">
               <span className="text-label">Solution</span>
               <p className="body">
                 A no-code workflow that runs in 10+ minutes and surfaces the
@@ -268,17 +268,17 @@ export default function Home() {
         {/* CASE — module accordion, curves flow into the 400% */}
         <section className="case case-mod" data-gate="light">
           <div className="grid">
-            <div className="mod-title">
+            <div className="case-title">
               <span className="text-label case-eyebrow">
                 REDESIGN LEGACY APP
               </span>
-              <h3 className="text-display mod-h3">
+              <h3 className="text-display case-h3">
                 Closing the gap between Sales’ demo and Planners’ work
               </h3>
             </div>
           </div>
-          <div className="grid mod-brief">
-            <div className="mod-problem">
+          <div className="grid case-brief">
+            <div className="case-problem">
               <span className="text-label">Problem</span>
               <p className="body">
                 The legacy app was designed to help Sales tell the story.
@@ -286,7 +286,7 @@ export default function Home() {
                 but 70%+ of Planners still delivered in Excel and PowerPoints.
               </p>
             </div>
-            <div className="mod-solution">
+            <div className="case-solution">
               <span className="text-label">Solution</span>
               <p className="body">
                 We understand real work is messy and different clients needs
