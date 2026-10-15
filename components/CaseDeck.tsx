@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useRef, useState, type CSSProperties } from "react";
 import {
   CaseFigure,
   CaseResult,
@@ -10,6 +10,7 @@ import {
   PhoneFlow,
   STEP_COLORS,
   usePhone,
+  useWidth,
   useZoom,
   type CaseStep,
   type Curve,
@@ -84,18 +85,11 @@ export default function CaseDeck() {
   const [active, setActive] = useState(0);
   const marketsFlow = flow((MARKETS - active + N) % N);
   const frame = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(350);
+  const width = useWidth(frame, 350);
   // phones open a screen full size to read it
   const phone = usePhone();
   const zoom = useZoom();
 
-  useEffect(() => {
-    const el = frame.current;
-    if (!el) return;
-    const ro = new ResizeObserver(() => setWidth(el.offsetWidth));
-    ro.observe(el);
-    return () => ro.disconnect();
-  }, []);
 
   // behind cards come forward; the front card hands over to the next step
   const pick = (i: number) => setActive((a) => (a === i ? (i + 1) % N : i));

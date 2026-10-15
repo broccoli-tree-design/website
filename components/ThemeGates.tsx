@@ -1,5 +1,6 @@
 "use client";
 import { useEffect } from "react";
+import { frameThrottle } from "./frame";
 
 /** Page colour follows the scroll: the active gate is the last [data-gate]
  *  whose top has passed 55% of the viewport, and its value names the theme
@@ -8,9 +9,7 @@ import { useEffect } from "react";
 export default function ThemeGates() {
   useEffect(() => {
     const root = document.documentElement;
-    let raf = 0;
     const update = () => {
-      raf = 0;
       const line = innerHeight * 0.55;
       let theme = "dark";
       document.querySelectorAll<HTMLElement>("[data-gate]").forEach((sec) => {
@@ -18,16 +17,14 @@ export default function ThemeGates() {
       });
       if (root.dataset.theme !== theme) root.dataset.theme = theme;
     };
-    const schedule = () => {
-      if (!raf) raf = requestAnimationFrame(update);
-    };
+    const schedule = frameThrottle(update);
     addEventListener("scroll", schedule, { passive: true });
     addEventListener("resize", schedule);
     update();
     return () => {
       removeEventListener("scroll", schedule);
       removeEventListener("resize", schedule);
-      cancelAnimationFrame(raf);
+      schedule.cancel();
     };
   }, []);
   return null;
