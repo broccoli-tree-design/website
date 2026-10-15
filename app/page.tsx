@@ -100,7 +100,7 @@ const SERVICES = [
   {
     num: "04",
     title: "Branding & Design system",
-    desc: "From brand identity to component library, a cohesive visual language so your product and marketing scale without a redesign every quarter",
+    desc: "A unique visual identity from brand identity to component library that articulates your product value, built to scale",
   },
 ];
 
