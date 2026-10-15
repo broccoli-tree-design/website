@@ -27,7 +27,7 @@ const JSON_LD = {
       name: "Aiqi Li",
       jobTitle: "UX Designer",
       description:
-        "Paralegal-turned UX designer creating intuitive design for legal tech, drawing on first-hand experience inside legal systems in the U.S. and China.",
+        "Paralegal-turned UX designer creating intuitive UX design for legal tech, drawing on first-hand experience inside legal systems in the U.S. and China.",
       url: SITE_URL,
       image: `${SITE_URL}/profile.jpg`,
       sameAs: [LINKEDIN_URL],
@@ -221,8 +221,8 @@ export default function Home() {
           </h2>
           <div className="grid section-body cs-body">
             <p className="body cs-p">
-              Examples from my past life designing enterprise softwares that
-              help humans overwhelmed by datageddon and fragmented tools make
+              Examples from my past life designing enterprise software that help
+              humans overwhelmed by datageddon and fragmented tools make
               informed decisions and develop shared understanding.
             </p>
           </div>
