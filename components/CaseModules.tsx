@@ -13,6 +13,7 @@ import {
   PhoneFlow,
   usePhone,
   useResize,
+  useWidth,
   useZoom,
   type CaseStep,
   type Curve,
@@ -161,17 +162,16 @@ export default function CaseModules() {
     new: CLIENTS.new.open,
     return: CLIENTS.return.open,
   });
-  const [width, setWidth] = useState(ARTBOARD);
   const [labelX, setLabelX] = useState(1000); // label's left edge in track space
   // phones open a screen full size to read it
   const phone = usePhone();
   const zoom = useZoom();
   const track = useRef<HTMLDivElement>(null);
   const result = useRef<HTMLDivElement>(null);
+  const width = useWidth(track, ARTBOARD);
   // the result block's width follows the 400% (and its font loading)
   useResize([track, result], () => {
     const t = track.current!.getBoundingClientRect();
-    setWidth(t.width);
     setLabelX(Math.round(result.current!.getBoundingClientRect().left - t.left));
   });
   useEffect(() => {

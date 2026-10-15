@@ -91,6 +91,13 @@ export function useResize(
   }, []);
 }
 
+/** An element's width in px, kept current as it resizes */
+export function useWidth(ref: RefObject<HTMLElement | null>, initial: number) {
+  const [width, setWidth] = useState(initial);
+  useResize([ref], () => setWidth(ref.current!.offsetWidth));
+  return width;
+}
+
 /** True once the viewer zooms in, by pinching (the visual viewport scales)
  *  or with browser zoom (the pixel ratio rises); it stays true */
 function useZoomedIn() {
