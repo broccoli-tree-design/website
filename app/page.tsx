@@ -210,20 +210,16 @@ export default function Home() {
         </section>
 
         {/* CASE STUDIES — header */}
-        <section className="cs" id="work" data-gate="light">
+        <section className="grid cs" id="work" data-gate="light">
           <h2 className="text-display cs-h2">
             <span className="text-stat cs-case">Case</span>{" "}
             <span className="cs-studies">studies</span>{" "}
             <span className="text-sub cs-sub"></span>
           </h2>
-          <div className="grid section-body cs-body">
-            <p className="body cs-p">
-              of my past enterprise UX designs that <br />
-              engage clients, deliver services, and
-              <br />
-              increase value beyond efficiency.
-            </p>
-          </div>
+          <p className="body cs-p">
+            of my past enterprise UX designs that engage clients, deliver
+            services, and increase value beyond efficiency.
+          </p>
         </section>
 
         {/* CASE — black-box deck; the four steps sit behind the answer */}
