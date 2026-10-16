@@ -214,14 +214,14 @@ export default function Home() {
           <h2 className="text-display cs-h2">
             <span className="text-stat cs-case">Case</span>{" "}
             <span className="cs-studies">studies</span>{" "}
-            <span className="text-sub cs-sub">
-              of my past enterprise UX designs
-            </span>
+            <span className="text-sub cs-sub"></span>
           </h2>
           <div className="grid section-body cs-body">
             <p className="body cs-p">
-              that engage clients, deliver services, and increase value beyond
-              efficiency.
+              of my past enterprise UX designs that <br />
+              engage clients, deliver services, and
+              <br />
+              increase value beyond efficiency.
             </p>
           </div>
         </section>

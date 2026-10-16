@@ -892,7 +892,7 @@ button:focus-visible {
     margin-top: 8vh;
   }
   .cs-p {
-    grid-column: 1 / -1;
+    grid-column: 1 / span 10;
   }
 
   .cta {
