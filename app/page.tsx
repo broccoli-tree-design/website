@@ -100,7 +100,7 @@ const SERVICES = [
   {
     num: "04",
     title: "Branding & Design system",
-    desc: "A unique visual identity from brand identity to component library that articulates your product value, built to scale",
+    desc: "A unique visual identity from brand assets to component library that articulates your product value, built to scale",
   },
 ];
 
@@ -177,12 +177,9 @@ export default function Home() {
               <span className="text-stat hero-name">Aiqi</span>
             </h1>
             <p className="text-sub hero-slogan">
-              <span className="hero-s1">
-                I design <em className="hero-s1-em">intuitive UX</em>
-              </span>{" "}
-              <span className="hero-s2">
-                for <em className="hero-s1-em">legal tech</em>
-              </span>
+              <span className="hero-s1">I design</span>{" "}
+              <span className="hero-s2">what efficiency misses</span>{" "}
+              <span className="hero-s3">in legal tech</span>
             </p>
           </div>
         </section>
@@ -206,8 +203,8 @@ export default function Home() {
               immigrant families fighting for their children's right to go to
               school.
               <br />
-              <br />I know when technology makes legal systems easier to deal
-              with, and when humans should make the judgment.
+              <br />I know when technology can make law more accessible, and
+              when human should take the lead.
             </p>
           </div>
         </section>
@@ -217,13 +214,14 @@ export default function Home() {
           <h2 className="text-display cs-h2">
             <span className="text-stat cs-case">Case</span>{" "}
             <span className="cs-studies">studies</span>{" "}
-            <span className="text-sub cs-sub">of data and workflow apps</span>
+            <span className="text-sub cs-sub">
+              of my past enterprise UX designs
+            </span>
           </h2>
           <div className="grid section-body cs-body">
             <p className="body cs-p">
-              Examples from my past life designing enterprise software that help
-              humans overwhelmed by datageddon and fragmented tools make
-              informed decisions and develop shared understanding.
+              that engage clients, deliver services, and increase value beyond
+              efficiency.
             </p>
           </div>
         </section>
@@ -322,7 +320,7 @@ export default function Home() {
         <section className="services" data-gate="light">
           <h2 className="text-display">
             <span className="services-title">Where I help</span>{" "}
-            <span className="text-stat services-sub">early-stage teams</span>
+            <span className="text-stat services-sub">legal tech teams</span>
           </h2>
           <div className="grid services-grid">
             {SERVICES.map((s, i) => (

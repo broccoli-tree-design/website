@@ -451,8 +451,7 @@ button:focus-visible {
   font-size: var(--name-fs);
   letter-spacing: -0.05em;
   margin-left: 0.05em; /* optical alignment of the italic A */
-  color: var(--ink);
-  font-style: normal;
+  color: var(--accent);
 }
 .hero-slogan {
   font-size: var(--display-0);
@@ -461,17 +460,19 @@ button:focus-visible {
   font-weight: 600;
 }
 .hero-s1 {
-  grid-area: 3 / 4 / auto / span 5;
+  grid-area: 3 / 2 / auto / span 3;
   /* dropped clear of the "q"'s italic descender (~0.18em below the
      name's line box) */
   margin-top: calc(var(--name-fs) * 0.42);
   font-style: normal;
 }
-.hero-s1-em {
-  color: var(--accent);
-}
 .hero-s2 {
-  grid-area: 4 / 6 / auto / span 3;
+  grid-area: 4 / 3 / auto / span 6;
+  margin-top: 0.2em;
+  font-style: normal;
+}
+.hero-s3 {
+  grid-area: 5 / 6 / auto / span 4;
   margin-top: 0.2em;
   font-style: normal;
 }
@@ -639,8 +640,8 @@ button:focus-visible {
   display: block;
   position: relative;
   font-size: var(--display-3);
-  margin-top: 0.4cqw;
-  margin-left: 7em;
+  margin-top: 2.4cqw;
+  margin-left: 7.25em;
 }
 .services-grid {
   padding: 14vh var(--gutter) 0;
@@ -679,20 +680,19 @@ button:focus-visible {
   margin-top: 12vh;
 }
 .svc-card-3 .svc-num {
-  font-size: var(--display-5);
-  margin-left: -1cqw;
+  font-size: var(--display-1);
 }
 .svc-card-4 {
-  grid-column: 10 / span 3;
-  margin-top: 34vh;
+  grid-column: 9 / span 4;
+  margin-top: 38vh;
   gap: 10px;
 }
 .svc-card-4 .svc-num {
-  font-size: var(--display-1);
+  font-size: var(--display-4);
   color: var(--warm);
 }
 .svc-card-4 .svc-desc {
-  max-width: 26ch;
+  max-width: 32ch;
 }
 
 /* ── CASE STUDIES — header ── */
@@ -807,6 +807,9 @@ button:focus-visible {
     translate: none;
   }
   /* like the stacked service cards: full width, alternate lines indented */
+  .hero-slogan {
+    font-size: 5vw; /* one step below --display-0 (6vw), the bottom of the scale */
+  }
   .hero-hi {
     grid-column: 1 / -1;
   }
@@ -814,11 +817,14 @@ button:focus-visible {
     grid-column: 1 / -1;
   }
   .hero-s1 {
-    grid-column: 2 / -1;
+    grid-column: 1 / -1;
     margin-top: calc(var(--name-fs) * 0.45);
   }
   .hero-s2 {
-    grid-column: 8 / -1;
+    grid-column: 3 / -1;
+  }
+  .hero-s3 {
+    grid-column: 9 / -1;
   }
 
   .about {
