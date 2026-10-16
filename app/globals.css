@@ -739,7 +739,7 @@ button:focus-visible {
 }
 .cs-p {
   grid-column: 7 / span 4;
-  margin: 12vh 0 0;
+  margin: 6vh 0 0;
 }
 
 /* ── CTA ── */
