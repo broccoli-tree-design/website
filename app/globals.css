@@ -529,7 +529,7 @@ button:focus-visible {
 /* ── ABOUT — legalese ── */
 .about {
   position: relative;
-  min-height: 150vh;
+  min-height: 125vh;
   padding-top: 30vh;
 }
 .about-h2 {
