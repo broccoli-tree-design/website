@@ -133,10 +133,10 @@ export default function Home() {
         </a>
         <ul className="nav-links">
           <li>
-            <a href="#about">About</a>
+            <a href="#work">Work</a>
           </li>
           <li>
-            <a href="#work">Work</a>
+            <a href="#about">About</a>
           </li>
           <li>
             <a
@@ -191,31 +191,6 @@ export default function Home() {
               <span className="hero-s1">I design</span>{" "}
               <span className="hero-s2">what efficiency misses</span>{" "}
               <span className="hero-s3">in legal tech</span>
-            </p>
-          </div>
-        </section>
-
-        {/* ABOUT — legalese */}
-        <section className="about" id="about" data-gate="dark">
-          <h2 className="text-display about-h2">
-            To design is to <SeeEyes />
-            <br />
-            both the human
-            <br />
-            <span className="about-l3">and the system</span>
-          </h2>
-          <div className="grid section-body about-body">
-            <p className="body about-p">
-              As a Paralegal turned Designer, I’ve experienced first-hand the
-              stress and fulfillment operating within legal systems in the U.S.
-              and China — from working late nights alongside attorneys on urgent
-              trademark prosecution, to negotiating with county clerks for the
-              records behind an insurance litigation, to translating for
-              immigrant families fighting for their children's right to go to
-              school.
-              <br />
-              <br />I know when technology can make law more accessible, and
-              when human should take the lead.
             </p>
           </div>
         </section>
@@ -337,6 +312,31 @@ export default function Home() {
                 <p className="svc-desc">{s.desc}</p>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* ABOUT — legalese */}
+        <section className="about" id="about" data-gate="dark">
+          <h2 className="text-display about-h2">
+            To design is to <SeeEyes />
+            <br />
+            both the human
+            <br />
+            <span className="about-l3">and the system</span>
+          </h2>
+          <div className="grid section-body about-body">
+            <p className="body about-p">
+              As a Paralegal turned Designer, I’ve experienced first-hand the
+              stress and fulfillment operating within legal systems in the U.S.
+              and China — from working late nights alongside attorneys on urgent
+              trademark prosecution, to negotiating with county clerks for the
+              records behind an insurance litigation, to translating for
+              immigrant families fighting for their children's right to go to
+              school.
+              <br />
+              <br />I know when technology can make law more accessible, and
+              when human should take the lead.
+            </p>
           </div>
         </section>
 
