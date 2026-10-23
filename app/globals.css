@@ -381,6 +381,7 @@ button:focus-visible {
   display: block;
   object-fit: cover;
   border-radius: var(--leaf-radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 /* springy wiggle on hover — small, the photo is big */
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
@@ -700,7 +701,6 @@ button:focus-visible {
 /* ── CASE STUDIES — header ── */
 .cs {
   position: relative;
-  min-height: 116vh;
   padding: 20vh var(--gutter) 0;
   align-content: start;
 }

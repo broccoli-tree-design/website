@@ -5,7 +5,6 @@ import {
   useState,
   type ComponentProps,
   type CSSProperties,
-  type MouseEvent,
   type ReactNode,
   type Ref,
   type RefObject,
@@ -43,17 +42,9 @@ export const MODULES = {
   optimization: "Optimization",
 } as const;
 
-/** The four steps' tab colours, in order, after each case's front item */
-export const STEP_COLORS = [
-  { color: "var(--green-300)", fg: "var(--green-900)" },
-  { color: "var(--orange-400)", fg: "var(--green-900)" },
-  { color: "var(--neutral-200)", fg: "var(--green-900)" },
-  { color: "var(--green-800)", fg: "var(--neutral-100)" },
-];
-
-/** The case frames' breakpoint: below it they stack, and screens open full
+/** The case studies' breakpoint: below it they stack, and screens open full
  *  size in a dialog to be read */
-export const DESKTOP = "(min-width: 900px)";
+const DESKTOP = "(min-width: 900px)";
 
 /** The page's phone breakpoint, the same 640px as the CSS media queries
  *  (Rings.tsx combines it with hover, as its inverse) */
@@ -74,7 +65,7 @@ export function usePhone() {
 /** Calls `measure` when any of these elements resizes, and once when
  *  watching starts. It waits until every ref holds an element; the refs
  *  are meant to be stable. */
-export function useResize(
+function useResize(
   refs: RefObject<Element | null>[],
   measure: () => void,
 ) {
@@ -90,91 +81,6 @@ export function useResize(
     return () => ro.disconnect();
     // once: the refs never change
   }, []);
-}
-
-/** An element's width in px, kept current as it resizes */
-export function useWidth(ref: RefObject<HTMLElement | null>, initial: number) {
-  const [width, setWidth] = useState(initial);
-  useResize([ref], () => setWidth(ref.current!.offsetWidth));
-  return width;
-}
-
-/** True once the viewer zooms in, by pinching (the visual viewport scales)
- *  or with browser zoom (the pixel ratio rises); it stays true */
-function useZoomedIn() {
-  const [zoomedIn, setZoomedIn] = useState(false);
-  useEffect(() => {
-    const vv = window.visualViewport;
-    const base = devicePixelRatio;
-    const stop = () => {
-      vv?.removeEventListener("resize", check);
-      removeEventListener("resize", check);
-    };
-    function check() {
-      if ((vv?.scale ?? 1) > 1.05 || devicePixelRatio > base * 1.05) {
-        setZoomedIn(true);
-        stop();
-      }
-    }
-    vv?.addEventListener("resize", check);
-    addEventListener("resize", check);
-    return stop;
-  }, []);
-  return zoomedIn;
-}
-
-/** A step's screen over its one-line description. On phones the screen is
- *  a button that opens it full size (useZoom, CaseZoom) */
-export function CaseFigure({
-  step,
-  alt,
-  sizes,
-  phone,
-  onEnlarge,
-  className,
-  shown = true,
-}: {
-  step: CaseStep;
-  alt: string;
-  sizes: string;
-  phone: boolean;
-  onEnlarge: (e: MouseEvent<HTMLButtonElement>) => void;
-  className: string;
-  /** false for a screen mostly hidden (a deck's back cards), which keeps
-   *  its smaller copy: a full file decodes to ~48 MB */
-  shown?: boolean;
-}) {
-  // a copy sized to the screen at first; the full file once zoomed in
-  const full = useZoomedIn() && shown;
-  const img = (
-    <Image
-      src={step.img!}
-      alt={alt}
-      width={step.w}
-      height={step.h}
-      quality={step.quality}
-      sizes={phone ? "100vw" : sizes}
-      unoptimized={full}
-    />
-  );
-  return (
-    <figure className={className}>
-      {phone ? (
-        <button
-          type="button"
-          className="case-enlarge"
-          onClick={onEnlarge}
-          aria-haspopup="dialog"
-        >
-          {img}
-          <span className="case-enlarge-hint">Tap to enlarge</span>
-        </button>
-      ) : (
-        img
-      )}
-      <figcaption className="case-desc">{step.desc}</figcaption>
-    </figure>
-  );
 }
 
 /** The step open full size in CaseZoom */
@@ -244,18 +150,6 @@ export function CaseZoom({
 /** Step numbers: 01–04, none for the front item */
 export const num = (i: number) => (i ? `0${i}` : "");
 
-/** Growth rings around a case frame; Rings.tsx animates them by data-ring */
-export function CaseRings() {
-  return [1, 0].map((i) => (
-    <div
-      key={i}
-      className={`case-ring case-ring-${i}`}
-      data-ring={i}
-      aria-hidden="true"
-    />
-  ));
-}
-
 /** A connector's cubic Bézier: start, two controls, end */
 export type Curve = [
   [number, number],
@@ -265,7 +159,7 @@ export type Curve = [
 ];
 
 /** The `d` of a connector curve */
-export function curvePath([a, b, c, e]: Curve) {
+function curvePath([a, b, c, e]: Curve) {
   const f = (p: number[]) => p.map((v) => +v.toFixed(1)).join(" ");
   return `M ${f(a)} C ${f(b)}, ${f(c)}, ${f(e)}`;
 }
@@ -277,7 +171,7 @@ const LEAF_LEAN = 50;
 
 /** Three small leaves on a connector, alternating sides. Each sits on the
  *  curve, base on the stem. */
-export function FlowLeaves({ curve }: { curve: Curve }) {
+function FlowLeaves({ curve }: { curve: Curve }) {
   const [a, b, c, e] = curve;
   return LEAVES.map((t, i) => {
     const u = 1 - t;
@@ -357,7 +251,7 @@ function BriefFlow({ result }: { result: RefObject<HTMLElement | null> }) {
 }
 
 /** A roman subtitle over the italic result number */
-export function CaseResult({
+function CaseResult({
   label,
   stat,
   className,

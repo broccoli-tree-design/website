@@ -1,140 +1,87 @@
 "use client";
-import { useState, type CSSProperties, type ReactNode } from "react";
-import {
-  CaseFigure,
-  CaseRings,
-  CaseTail,
-  CaseZoom,
-  num,
-  STEP_COLORS,
-  usePhone,
-  useZoom,
-  type CaseStep,
-} from "./CaseParts";
+import { useState, type ReactNode } from "react";
+import { CaseTail } from "./CaseParts";
 import DitherWord from "./DitherWord";
+import GlassCarousel, { type GlassDeck } from "./GlassCarousel";
 
 /** Step screens: the whole 1440×926 app screen, captured at 3× so zooming
- *  in (CaseFigure loads the full file then) stays sharp */
-function step(name: string, file: string, desc: string, i: number): CaseStep {
-  return {
-    name,
-    img: `/case1/${file}.webp`,
-    w: 4320,
-    h: 2778,
-    // small UI text: 75 smears it
-    quality: 90,
-    desc,
-    ...STEP_COLORS[i],
-  };
-}
+ *  in stays sharp */
+const shot = (file: string) => ({
+  src: `/case1/${file}.webp`,
+  w: 4320,
+  h: 2778,
+  // small UI text: 75 smears it
+  quality: 90,
+});
 
-/** The black box in front, then the three steps behind it */
-const CARDS: CaseStep[] = [
-  { name: "Black box", color: "var(--green-950)", fg: "var(--neutral-100)" },
-  step(
-    "Confirm data",
-    "confirm-data",
-    "Input client’s historical data to train the baseline model",
-    0,
-  ),
-  step(
-    "Set parameters",
-    "set-parameters",
-    "Map client knowledge to product language",
-    2,
-  ),
-  step(
-    "Select markets",
-    "select-markets",
-    "Review key metrics with clients and select markets collaboratively",
-    1,
-  ),
-];
-const N = CARDS.length;
+const tint = (color: string, pct: number) =>
+  `color-mix(in srgb, ${color} ${pct}%, transparent)`;
+
+/** The black box first, then the three steps, as glass decks in a row */
+const DECKS: GlassDeck[] = [
+  {
+    name: "Black box",
+    num: "",
+    tint: "var(--green-950)",
+    solid: true,
+    dark: true,
+    body: (
+      <>
+        <div
+          className="deck-dither"
+          role="img"
+          aria-label="Boston, Baltimore, Providence"
+        >
+          <DitherWord word="Boston" seed={21} />
+          <DitherWord word="Baltimore" seed={7} />
+          <DitherWord word="Providence" seed={42} />
+        </div>
+        <span className="text-label gc-question">
+          Why these campaign markets?
+        </span>
+      </>
+    ),
+  },
+  {
+    name: "Confirm data",
+    num: "01",
+    desc: "Input client’s historical data to train the baseline model",
+    tint: tint("var(--green-300)", 22),
+    img: shot("confirm-data"),
+  },
+  {
+    name: "Set parameters",
+    num: "02",
+    desc: "Map client knowledge to product language",
+    tint: tint("var(--neutral-200)", 45),
+    img: shot("set-parameters"),
+  },
+  {
+    name: "Select markets",
+    num: "03",
+    desc: "Review key metrics with clients and select markets collaboratively",
+    tint: tint("var(--orange-400)", 13),
+    img: shot("select-markets"),
+  },
+].map((d) => ({
+  ...d,
+  alt: d.img ? `${d.name} step, GeoLift no-code experimentation workflow` : "",
+}));
 
 export default function CaseDeck({ brief }: { brief: ReactNode }) {
-  const [active, setActive] = useState(0);
-  // phones open a screen full size to read it
-  const phone = usePhone();
-  const zoom = useZoom();
-
-  // behind cards come forward; the front card hands over to the next step
-  const pick = (i: number) => setActive((a) => (a === i ? (i + 1) % N : i));
-
+  const [focus, setFocus] = useState(0);
   return (
     <>
-      <div className="case-frame deck-frame">
-        <CaseRings />
-        <div className="deck-stack">
-          {CARDS.map((c, i) => {
-            const d = (i - active + N) % N;
-            const front = d === 0;
-            return (
-              <div
-                key={c.name}
-                className={`deck-card${c.img ? "" : " deck-black"}${
-                  front ? " is-front" : ""
-                }`}
-                style={
-                  {
-                    "--d": d,
-                    "--c": c.color,
-                    "--fg": c.fg,
-                    zIndex: 10 - d,
-                  } as CSSProperties
-                }
-                onClick={() => pick(i)}
-              >
-                <div className="case-shot deck-body">
-                  {c.img ? (
-                    <CaseFigure
-                      className="deck-figure"
-                      step={c}
-                      alt={`${c.name} step, GeoLift no-code experimentation workflow`}
-                      sizes="(min-width: 900px) 880px, 100vw"
-                      phone={phone}
-                      shown={front}
-                      onEnlarge={(e) => {
-                        // the card itself steps the deck on
-                        e.stopPropagation();
-                        zoom.open(c);
-                      }}
-                    />
-                  ) : (
-                    <div className="deck-face">
-                      <div
-                        className="deck-dither"
-                        role="img"
-                        aria-label="Boston, Baltimore, Providence"
-                      >
-                        <DitherWord word="Boston" seed={21} />
-                        <DitherWord word="Baltimore" seed={7} />
-                        <DitherWord word="Providence" seed={42} />
-                      </div>
-                      <span className="text-label">
-                        Why these campaign markets?
-                      </span>
-                    </div>
-                  )}
-                </div>
-                <button
-                  type="button"
-                  className="case-tab deck-tab"
-                  aria-label={
-                    i ? `Show step ${num(i)}: ${c.name}` : `Show ${c.name}`
-                  }
-                  aria-pressed={front}
-                >
-                  <span className="case-name">{c.name}</span>
-                  <span className="text-num">{num(i)}</span>
-                </button>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
-      <CaseZoom zoom={zoom} phone={phone} noun="step" className="deck-zoom" />
+      <GlassCarousel
+        className="deck-carousel"
+        decks={DECKS}
+        ratio={1440 / 926}
+        focus={focus}
+        onFocus={setFocus}
+        noun="step"
+        roomy
+        zoomClass="gc-zoom gc-zoom-screen"
+      />
 
       <CaseTail
         className="deck-result"

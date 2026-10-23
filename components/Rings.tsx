@@ -3,9 +3,8 @@ import { useEffect } from "react";
 
 const EASE = "cubic-bezier(.2,.7,.2,1)"; // --ease-out in globals.css
 
-/** Growth-ring motion: hero rings breathe and follow the pointer; case-study
- *  rings ripple once on view and swell on hover. Everything is off under
- *  prefers-reduced-motion. */
+/** Growth-ring motion: hero rings breathe and follow the pointer. Everything
+ *  is off under prefers-reduced-motion. */
 export default function Rings() {
   useEffect(() => {
     const reduce = matchMedia("(prefers-reduced-motion: reduce)");
@@ -60,61 +59,6 @@ export default function Rings() {
           layers.forEach((l) => (l.style.transform = l.style.transition = ""));
         });
       }
-
-      // 3 + 4. case-study rings
-      const frames = document.querySelectorAll<HTMLElement>(".case-frame");
-      const ringsOf = (frame: Element) =>
-        [...frame.querySelectorAll<HTMLElement>(".case-ring")].map((el) => ({
-          el,
-          i: Number(el.dataset.ring),
-          base: baseOf(el),
-        }));
-
-      const io = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            io.unobserve(entry.target);
-            ringsOf(entry.target).forEach(({ el, i, base }) => {
-              el.animate(
-                [
-                  { scale: "0.97", opacity: 0 },
-                  { scale: "1.015", opacity: Math.min(base * 2, 0.8) },
-                  { scale: "1", opacity: base },
-                ],
-                { duration: 1600, easing: EASE, fill: "backwards", delay: i * 260 },
-              );
-            });
-          });
-        },
-        { threshold: 0.45 },
-      );
-      frames.forEach((f) => io.observe(f));
-      cleanups.push(() => io.disconnect());
-
-      frames.forEach((frame) => {
-        const rings = ringsOf(frame);
-        rings.forEach(({ el }) => (el.style.transition = `scale .9s ${EASE}, opacity .9s`));
-        const onEnter = () => {
-          if (!desktop.matches) return;
-          rings.forEach(({ el, i }) => {
-            el.style.scale = String(1 + (i + 1) * 0.012);
-            el.style.opacity = "0.8";
-          });
-        };
-        const onLeave = () =>
-          rings.forEach(({ el }) => (el.style.scale = el.style.opacity = ""));
-        frame.addEventListener("pointerenter", onEnter);
-        frame.addEventListener("pointerleave", onLeave);
-        cleanups.push(() => {
-          frame.removeEventListener("pointerenter", onEnter);
-          frame.removeEventListener("pointerleave", onLeave);
-          rings.forEach(({ el }) => {
-            el.getAnimations().forEach((a) => a.cancel());
-            el.style.scale = el.style.opacity = el.style.transition = "";
-          });
-        });
-      });
 
       return () => cleanups.forEach((fn) => fn());
     };
