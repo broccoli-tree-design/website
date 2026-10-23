@@ -154,8 +154,7 @@
   backdrop-filter: blur(14px) saturate(1.6);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9),
     inset 0 -8px 16px rgba(255, 255, 255, 0.25),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.25),
-    0 6px 18px rgba(16, 46, 39, 0.12);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 6px 18px rgba(16, 46, 39, 0.12);
 }
 .view-tab[aria-selected="true"]:hover {
   background: var(--green-900);
@@ -347,7 +346,10 @@ html:has(.case-zoom[open]) {
   --u: calc((100cqw - 2 * var(--gutter)) / 1384);
   --dw: calc(100cqw - 2 * var(--gutter) - 44px);
   position: relative;
-  overflow: hidden;
+  /* the next deck is cut off at the frame's sides, but the shadows spill
+     out of its top and bottom (phones scroll it instead, below) */
+  overflow-x: clip;
+  overflow-y: visible;
   /* the tallest deck plus room above and below it for its shadow */
   height: calc((var(--gc-h) + 120) * var(--u));
   margin-top: 56px;
@@ -408,7 +410,11 @@ html:has(.case-zoom[open]) {
       rgba(255, 255, 255, 0.12) 20%,
       rgba(255, 255, 255, 0) 42%
     ),
-    linear-gradient(0deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0) 14%);
+    linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.22) 0%,
+      rgba(255, 255, 255, 0) 14%
+    );
 }
 .gc-deck::after {
   padding: 3px;
@@ -840,7 +846,8 @@ html:has(.case-zoom[open]) {
 .gc-band::before {
   content: "";
   position: absolute;
-  inset: 0 calc(-22 * var(--u)) 0 calc(130 * var(--u) + 10 * var(--u) - 6 * var(--u));
+  inset: 0 calc(-22 * var(--u)) 0
+    calc(130 * var(--u) + 10 * var(--u) - 6 * var(--u));
   border-radius: 8px 0 0 8px;
   background: color-mix(in srgb, var(--neutral-700) 8%, transparent);
 }

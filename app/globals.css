@@ -321,6 +321,7 @@ button:focus-visible {
   padding: 8px 20px;
   border-radius: 24px;
   font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: background 0.15s, border-color 0.15s;
 }
 .nav-links .nav-cta:hover {
