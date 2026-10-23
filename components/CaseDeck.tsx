@@ -1,30 +1,21 @@
 "use client";
-import { useRef, useState, type CSSProperties } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import {
   CaseFigure,
-  CaseResult,
   CaseRings,
+  CaseTail,
   CaseZoom,
-  Flow,
   num,
-  PhoneFlow,
   STEP_COLORS,
   usePhone,
-  useWidth,
   useZoom,
   type CaseStep,
-  type Curve,
 } from "./CaseParts";
 import DitherWord from "./DitherWord";
 
 /** Step screens: the whole 1440×926 app screen, captured at 3× so zooming
  *  in (CaseFigure loads the full file then) stays sharp */
-function step(
-  name: string,
-  file: string,
-  desc: string,
-  i: number,
-): CaseStep {
+function step(name: string, file: string, desc: string, i: number): CaseStep {
   return {
     name,
     img: `/case1/${file}.webp`,
@@ -61,48 +52,18 @@ const CARDS: CaseStep[] = [
 ];
 const N = CARDS.length;
 
-/** Artboard units (1384-wide deck): each depth slot steps 56 right, 36 down.
- *  One curve from the bottom of the Select markets tab, wherever that card
- *  sits in the stack, to the result label's left edge. Drawn over the stack;
- *  CSS animates `d` alongside the cards. */
-const EX = 480;
-const MARKETS = N - 1;
-function flow(d: number): Curve {
-  const x = 952 + d * 56;
-  const y = 640 + d * 36;
-  return [
-    [x, y],
-    [x, y + 160],
-    [EX, 830],
-    [EX, 990],
-  ];
-}
-
-/** Stacked (phones): the label starts 34.7% in */
-const PHONE_EX = 0.347;
-
-export default function CaseDeck() {
+export default function CaseDeck({ brief }: { brief: ReactNode }) {
   const [active, setActive] = useState(0);
-  const marketsFlow = flow((MARKETS - active + N) % N);
-  const frame = useRef<HTMLDivElement>(null);
-  const width = useWidth(frame, 350);
   // phones open a screen full size to read it
   const phone = usePhone();
   const zoom = useZoom();
-
 
   // behind cards come forward; the front card hands over to the next step
   const pick = (i: number) => setActive((a) => (a === i ? (i + 1) % N : i));
 
   return (
     <>
-      <div className="case-frame deck-frame" ref={frame}>
-        <Flow
-          curve={marketsFlow}
-          glide
-          className="case-flow deck-flow"
-          viewBox="0 0 1384 990"
-        />
+      <div className="case-frame deck-frame">
         <CaseRings />
         <div className="deck-stack">
           {CARDS.map((c, i) => {
@@ -175,13 +136,13 @@ export default function CaseDeck() {
 
       <CaseZoom zoom={zoom} phone={phone} noun="step" className="deck-zoom" />
 
-      <PhoneFlow width={width} ex={width * PHONE_EX} />
-
-      <CaseResult
+      <CaseTail
         className="deck-result"
         label="Increase in funding after MVP delivery"
         stat="50%"
-      />
+      >
+        {brief}
+      </CaseTail>
     </>
   );
 }

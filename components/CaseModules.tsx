@@ -1,22 +1,24 @@
 "use client";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 import CaseArchitecture from "./CaseArchitecture";
 import {
   CaseFigure,
-  CaseResult,
   CaseRings,
+  CaseTail,
   CaseZoom,
   DESKTOP,
-  Flow,
   MODULES,
   num,
-  PhoneFlow,
   usePhone,
-  useResize,
   useWidth,
   useZoom,
   type CaseStep,
-  type Curve,
 } from "./CaseParts";
 
 /** Each module's tab colours, wherever it is used */
@@ -69,7 +71,7 @@ const CLIENT_VIEW = {
 function steps(
   front: string,
   prefix: string,
-  mods: [ModuleKey, string][]
+  mods: [ModuleKey, string][],
 ): CaseStep[] {
   return [
     { name: front, ...CLIENT_VIEW },
@@ -137,43 +139,20 @@ const VIEWS: [View, string][] = [
   ["return", CLIENTS.return.label],
 ];
 
-const TAB = 84; // collapsed tab width, matches .mod-item
 const ARTBOARD = 1384; // the frame's width at the 1440 column
 
-/** One curve from the open tab's centre (or the frame's, with no tabs)
- *  down to the result label's start. The centre comes from the layout rule
- *  (collapsed 84px, open tab takes the rest), so the path lands where the
- *  flex transition ends and CSS animates `d` there. */
-function desktopFlow(w: number, ex: number, n: number, active: number): Curve {
-  const open = w - (n - 1) * TAB;
-  const cx = n ? Math.max(active, 0) * TAB + open / 2 : w / 2;
-  return [
-    [cx, 0],
-    [cx, 110],
-    [ex, 60],
-    [ex, 170],
-  ];
-}
-
-export default function CaseModules() {
+export default function CaseModules({ brief }: { brief: ReactNode }) {
   const [view, setView] = useState<View>("new");
   // the open item per client, kept while switching tabs
   const [openBy, setOpenBy] = useState({
     new: CLIENTS.new.open,
     return: CLIENTS.return.open,
   });
-  const [labelX, setLabelX] = useState(1000); // label's left edge in track space
   // phones open a screen full size to read it
   const phone = usePhone();
   const zoom = useZoom();
   const track = useRef<HTMLDivElement>(null);
-  const result = useRef<HTMLDivElement>(null);
   const width = useWidth(track, ARTBOARD);
-  // the result block's width follows the 400% (and its font loading)
-  useResize([track, result], () => {
-    const t = track.current!.getBoundingClientRect();
-    setLabelX(Math.round(result.current!.getBoundingClientRect().left - t.left));
-  });
   useEffect(() => {
     // desktop always has one item open
     const mq = matchMedia(DESKTOP);
@@ -191,7 +170,6 @@ export default function CaseModules() {
   const client = view === "arch" ? null : CLIENTS[view];
   const items = client?.steps ?? [];
   const active = view === "arch" ? -1 : openBy[view];
-  const flow = desktopFlow(width, labelX, items.length, active);
 
   // desktop opens; mobile toggles, so tapping the open row closes it
   const toggle = (i: number) => {
@@ -278,7 +256,7 @@ export default function CaseModules() {
                           step={m}
                           alt={`${m.name} module, ${client.title.replace(
                             /\n/g,
-                            " "
+                            " ",
                           )}`}
                           sizes="(min-width: 900px) 920px, 100vw"
                           phone={phone}
@@ -313,22 +291,9 @@ export default function CaseModules() {
 
       <CaseZoom zoom={zoom} phone={phone} noun="module" className="mod-zoom" />
 
-      <Flow
-        curve={flow}
-        glide
-        className="case-flow mod-flow-desktop"
-        viewBox={`0 0 ${width} 170`}
-        preserveAspectRatio="none"
-      />
-      {/* the label starts mid-screen, so start right of it for a curve */}
-      <PhoneFlow width={width} ex={labelX} from={0.75} />
-
-      <CaseResult
-        className="mod-result"
-        ref={result}
-        label="User base grew"
-        stat="400%"
-      />
+      <CaseTail className="mod-result" label="User base grew" stat="400%">
+        {brief}
+      </CaseTail>
     </>
   );
 }

@@ -78,7 +78,7 @@
   max-height: 100%;
 }
 
-/* connectors from the frame to the result */
+/* connector from the Solution to the result */
 .case-flow {
   display: block;
   width: 100%;
@@ -93,9 +93,9 @@
   fill: none;
   stroke-linejoin: round;
 }
-.case-flow-mobile {
-  display: none;
-  height: 90px;
+.case-brief-flow {
+  height: 120px;
+  margin-top: 20px;
 }
 
 /* a roman subtitle over an italic number */
@@ -116,15 +116,6 @@
   color: var(--warm);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .case-flow path {
-    transition: d 0.45s var(--ease-out);
-  }
-  .case-flow .case-leaf {
-    transition: transform 0.45s var(--ease-out);
-  }
-}
-
 /* case-frame breakpoint: frames stack, tabs turn into horizontal bars */
 @media (max-width: 899.98px) {
   .case {
@@ -138,8 +129,8 @@
     writing-mode: horizontal-tb;
     font-size: var(--text-md);
   }
-  .case-flow-mobile {
-    display: block;
+  .case-brief-flow {
+    height: 90px;
   }
   .case-result {
     padding-top: 14px;
@@ -162,7 +153,7 @@
   text-wrap: balance;
 }
 .case-brief {
-  margin-top: 48px;
+  margin-top: 96px;
 }
 .case-problem,
 .case-solution {
@@ -371,10 +362,6 @@
   ); /* the panel is always neutral-100, whatever the theme */
 }
 
-.mod-flow-desktop {
-  height: 170px;
-}
-
 /* hugs the 400% at the right edge; label sits on its left edge, where the
    curves meet */
 .mod-result {
@@ -403,7 +390,7 @@
     gap: 16px;
   }
   .case-brief {
-    margin-top: 36px;
+    margin-top: 56px;
     row-gap: 28px;
   }
   .case-problem,
@@ -495,9 +482,6 @@
     padding-top: 10px;
   }
 
-  .mod-flow-desktop {
-    display: none;
-  }
   .mod-result {
     gap: 14px;
   }
@@ -813,15 +797,6 @@ html:has(.case-zoom[open]) {
   height: calc(820 * var(--u));
   isolation: isolate;
 }
-.deck-flow {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 4;
-  pointer-events: none;
-  width: 100%;
-  height: auto;
-}
 .deck-frame .case-ring {
   width: calc(960 * var(--u));
   height: calc(640 * var(--u));
@@ -930,17 +905,11 @@ html:has(.case-zoom[open]) {
   border-color: var(--neutral-100);
 }
 .deck-result {
-  margin: calc(170 * var(--u)) 0 0 calc(480 * var(--u));
+  margin: 0 0 0 calc(480 * var(--u));
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .deck-card {
-    transition: transform 0.6s var(--ease-out);
-  }
-  .deck-flow path {
-    transition: d 0.6s var(--ease-out);
-  }
-  .deck-flow .case-leaf {
     transition: transform 0.6s var(--ease-out);
   }
   .deck-figure .case-desc {
@@ -957,7 +926,6 @@ html:has(.case-zoom[open]) {
   .deck-frame {
     height: auto;
   }
-  .deck-flow,
   .deck-frame .case-ring-1 {
     display: none;
   }

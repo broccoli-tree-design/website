@@ -6,6 +6,7 @@ import {
   type ComponentProps,
   type CSSProperties,
   type MouseEvent,
+  type ReactNode,
   type Ref,
   type RefObject,
 } from "react";
@@ -275,8 +276,7 @@ const LEAVES = [0.3, 0.55, 0.8];
 const LEAF_LEAN = 50;
 
 /** Three small leaves on a connector, alternating sides. Each sits on the
- *  curve, base on the stem, and CSS transitions the transform alongside
- *  the path's `d` when the curve moves. */
+ *  curve, base on the stem. */
 export function FlowLeaves({ curve }: { curve: Curve }) {
   const [a, b, c, e] = curve;
   return LEAVES.map((t, i) => {
@@ -309,61 +309,50 @@ export function FlowLeaves({ curve }: { curve: Curve }) {
   });
 }
 
-/** A connector's curve and the leaves along it, to go inside an <svg>.
- *  `glide` also sets the path's CSS `d`, so CSS can transition the curve
- *  when it moves (the desktop connectors). */
-export function FlowLine({ curve, glide }: { curve: Curve; glide?: boolean }) {
-  const d = curvePath(curve);
+/** A connector's curve and the leaves along it, to go inside an <svg> */
+export function FlowLine({ curve }: { curve: Curve }) {
   return (
     <>
-      <path
-        d={d}
-        style={glide ? ({ d: `path("${d}")` } as CSSProperties) : undefined}
-      />
+      <path d={curvePath(curve)} />
       <FlowLeaves curve={curve} />
     </>
   );
 }
 
-/** A connector in its own <svg>, which takes the usual svg props */
-export function Flow({
-  curve,
-  glide,
-  ...svg
-}: { curve: Curve; glide?: boolean } & ComponentProps<"svg">) {
-  return (
-    <svg aria-hidden="true" {...svg}>
-      <FlowLine curve={curve} glide={glide} />
-    </svg>
-  );
-}
-
-/** Phone connector, in px of the 90px-tall SVG under a stacked case frame
- *  (y = 0 is the frame's bottom edge): from the bottom-most card's or row's
- *  bottom border, `from` of the way across, down to the result label's left
- *  edge at `ex`. */
-export function PhoneFlow({
-  width,
-  ex,
-  from = 0.5,
-}: {
-  width: number;
-  ex: number;
-  from?: number;
-}) {
-  const x = width * from;
+/** The connector from the Solution down to the result label: from the
+ *  Solution's left edge (the brief sits just above) to the label's left
+ *  edge, in px of its own box. */
+function BriefFlow({ result }: { result: RefObject<HTMLElement | null> }) {
+  const svg = useRef<SVGSVGElement>(null);
+  const [box, setBox] = useState({ w: 0, h: 0, sx: 0, ex: 0 });
+  useResize([svg, result], () => {
+    const s = svg.current!.getBoundingClientRect();
+    const solution =
+      svg.current!.previousElementSibling?.querySelector(".case-solution");
+    if (!solution) return;
+    setBox({
+      w: s.width,
+      h: s.height,
+      sx: solution.getBoundingClientRect().left - s.left,
+      ex: result.current!.getBoundingClientRect().left - s.left,
+    });
+  });
+  const { w, h, sx, ex } = box;
   const curve: Curve = [
-    [x, 0],
-    [x, 50],
-    [ex, 40],
-    [ex, 90],
+    [sx, 0],
+    [sx, h * 0.6],
+    [ex, h * 0.4],
+    [ex, h],
   ];
   return (
-    <Flow
-      curve={curve}
-      className="case-flow case-flow-mobile"
-      viewBox={`0 0 ${width} 90`}
-    />
+    <svg
+      ref={svg}
+      aria-hidden="true"
+      className="case-flow case-brief-flow"
+      viewBox={`0 0 ${w} ${h}`}
+    >
+      {w > 0 && <FlowLine curve={curve} />}
+    </svg>
   );
 }
 
@@ -384,5 +373,21 @@ export function CaseResult({
       <span className="text-sub result-label">{label}</span>
       <span className="text-stat result-stat">{stat}</span>
     </div>
+  );
+}
+
+/** Everything under a case's frame: the Problem and Solution (children),
+ *  the connector from the Solution, and the result */
+export function CaseTail({
+  children,
+  ...result
+}: { children: ReactNode } & Omit<ComponentProps<typeof CaseResult>, "ref">) {
+  const ref = useRef<HTMLDivElement>(null);
+  return (
+    <>
+      <div className="grid case-brief">{children}</div>
+      <BriefFlow result={ref} />
+      <CaseResult ref={ref} {...result} />
+    </>
   );
 }
