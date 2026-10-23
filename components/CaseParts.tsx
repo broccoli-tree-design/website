@@ -5,7 +5,7 @@ import {
   useState,
   type ComponentProps,
   type CSSProperties,
-  type MouseEvent,
+  type ReactNode,
   type Ref,
   type RefObject,
 } from "react";
@@ -42,17 +42,9 @@ export const MODULES = {
   optimization: "Optimization",
 } as const;
 
-/** The four steps' tab colours, in order, after each case's front item */
-export const STEP_COLORS = [
-  { color: "var(--green-300)", fg: "var(--green-900)" },
-  { color: "var(--orange-400)", fg: "var(--green-900)" },
-  { color: "var(--neutral-200)", fg: "var(--green-900)" },
-  { color: "var(--green-800)", fg: "var(--neutral-100)" },
-];
-
-/** The case frames' breakpoint: below it they stack, and screens open full
+/** The case studies' breakpoint: below it they stack, and screens open full
  *  size in a dialog to be read */
-export const DESKTOP = "(min-width: 900px)";
+const DESKTOP = "(min-width: 900px)";
 
 /** The page's phone breakpoint, the same 640px as the CSS media queries
  *  (Rings.tsx combines it with hover, as its inverse) */
@@ -73,7 +65,7 @@ export function usePhone() {
 /** Calls `measure` when any of these elements resizes, and once when
  *  watching starts. It waits until every ref holds an element; the refs
  *  are meant to be stable. */
-export function useResize(
+function useResize(
   refs: RefObject<Element | null>[],
   measure: () => void,
 ) {
@@ -89,91 +81,6 @@ export function useResize(
     return () => ro.disconnect();
     // once: the refs never change
   }, []);
-}
-
-/** An element's width in px, kept current as it resizes */
-export function useWidth(ref: RefObject<HTMLElement | null>, initial: number) {
-  const [width, setWidth] = useState(initial);
-  useResize([ref], () => setWidth(ref.current!.offsetWidth));
-  return width;
-}
-
-/** True once the viewer zooms in, by pinching (the visual viewport scales)
- *  or with browser zoom (the pixel ratio rises); it stays true */
-function useZoomedIn() {
-  const [zoomedIn, setZoomedIn] = useState(false);
-  useEffect(() => {
-    const vv = window.visualViewport;
-    const base = devicePixelRatio;
-    const stop = () => {
-      vv?.removeEventListener("resize", check);
-      removeEventListener("resize", check);
-    };
-    function check() {
-      if ((vv?.scale ?? 1) > 1.05 || devicePixelRatio > base * 1.05) {
-        setZoomedIn(true);
-        stop();
-      }
-    }
-    vv?.addEventListener("resize", check);
-    addEventListener("resize", check);
-    return stop;
-  }, []);
-  return zoomedIn;
-}
-
-/** A step's screen over its one-line description. On phones the screen is
- *  a button that opens it full size (useZoom, CaseZoom) */
-export function CaseFigure({
-  step,
-  alt,
-  sizes,
-  phone,
-  onEnlarge,
-  className,
-  shown = true,
-}: {
-  step: CaseStep;
-  alt: string;
-  sizes: string;
-  phone: boolean;
-  onEnlarge: (e: MouseEvent<HTMLButtonElement>) => void;
-  className: string;
-  /** false for a screen mostly hidden (a deck's back cards), which keeps
-   *  its smaller copy: a full file decodes to ~48 MB */
-  shown?: boolean;
-}) {
-  // a copy sized to the screen at first; the full file once zoomed in
-  const full = useZoomedIn() && shown;
-  const img = (
-    <Image
-      src={step.img!}
-      alt={alt}
-      width={step.w}
-      height={step.h}
-      quality={step.quality}
-      sizes={phone ? "100vw" : sizes}
-      unoptimized={full}
-    />
-  );
-  return (
-    <figure className={className}>
-      {phone ? (
-        <button
-          type="button"
-          className="case-enlarge"
-          onClick={onEnlarge}
-          aria-haspopup="dialog"
-        >
-          {img}
-          <span className="case-enlarge-hint">Tap to enlarge</span>
-        </button>
-      ) : (
-        img
-      )}
-      <figcaption className="case-desc">{step.desc}</figcaption>
-    </figure>
-  );
 }
 
 /** The step open full size in CaseZoom */
@@ -243,18 +150,6 @@ export function CaseZoom({
 /** Step numbers: 01–04, none for the front item */
 export const num = (i: number) => (i ? `0${i}` : "");
 
-/** Growth rings around a case frame; Rings.tsx animates them by data-ring */
-export function CaseRings() {
-  return [1, 0].map((i) => (
-    <div
-      key={i}
-      className={`case-ring case-ring-${i}`}
-      data-ring={i}
-      aria-hidden="true"
-    />
-  ));
-}
-
 /** A connector's cubic Bézier: start, two controls, end */
 export type Curve = [
   [number, number],
@@ -264,7 +159,7 @@ export type Curve = [
 ];
 
 /** The `d` of a connector curve */
-export function curvePath([a, b, c, e]: Curve) {
+function curvePath([a, b, c, e]: Curve) {
   const f = (p: number[]) => p.map((v) => +v.toFixed(1)).join(" ");
   return `M ${f(a)} C ${f(b)}, ${f(c)}, ${f(e)}`;
 }
@@ -275,9 +170,8 @@ const LEAVES = [0.3, 0.55, 0.8];
 const LEAF_LEAN = 50;
 
 /** Three small leaves on a connector, alternating sides. Each sits on the
- *  curve, base on the stem, and CSS transitions the transform alongside
- *  the path's `d` when the curve moves. */
-export function FlowLeaves({ curve }: { curve: Curve }) {
+ *  curve, base on the stem. */
+function FlowLeaves({ curve }: { curve: Curve }) {
   const [a, b, c, e] = curve;
   return LEAVES.map((t, i) => {
     const u = 1 - t;
@@ -309,66 +203,55 @@ export function FlowLeaves({ curve }: { curve: Curve }) {
   });
 }
 
-/** A connector's curve and the leaves along it, to go inside an <svg>.
- *  `glide` also sets the path's CSS `d`, so CSS can transition the curve
- *  when it moves (the desktop connectors). */
-export function FlowLine({ curve, glide }: { curve: Curve; glide?: boolean }) {
-  const d = curvePath(curve);
+/** A connector's curve and the leaves along it, to go inside an <svg> */
+export function FlowLine({ curve }: { curve: Curve }) {
   return (
     <>
-      <path
-        d={d}
-        style={glide ? ({ d: `path("${d}")` } as CSSProperties) : undefined}
-      />
+      <path d={curvePath(curve)} />
       <FlowLeaves curve={curve} />
     </>
   );
 }
 
-/** A connector in its own <svg>, which takes the usual svg props */
-export function Flow({
-  curve,
-  glide,
-  ...svg
-}: { curve: Curve; glide?: boolean } & ComponentProps<"svg">) {
+/** The connector from the Solution down to the result label: from the
+ *  Solution's left edge (the brief sits just above) to the label's left
+ *  edge, in px of its own box. */
+function BriefFlow({ result }: { result: RefObject<HTMLElement | null> }) {
+  const svg = useRef<SVGSVGElement>(null);
+  const [box, setBox] = useState({ w: 0, h: 0, sx: 0, ex: 0 });
+  useResize([svg, result], () => {
+    const s = svg.current!.getBoundingClientRect();
+    const solution =
+      svg.current!.previousElementSibling?.querySelector(".case-solution");
+    if (!solution) return;
+    setBox({
+      w: s.width,
+      h: s.height,
+      sx: solution.getBoundingClientRect().left - s.left,
+      ex: result.current!.getBoundingClientRect().left - s.left,
+    });
+  });
+  const { w, h, sx, ex } = box;
+  const curve: Curve = [
+    [sx, 0],
+    [sx, h * 0.6],
+    [ex, h * 0.4],
+    [ex, h],
+  ];
   return (
-    <svg aria-hidden="true" {...svg}>
-      <FlowLine curve={curve} glide={glide} />
+    <svg
+      ref={svg}
+      aria-hidden="true"
+      className="case-flow case-brief-flow"
+      viewBox={`0 0 ${w} ${h}`}
+    >
+      {w > 0 && <FlowLine curve={curve} />}
     </svg>
   );
 }
 
-/** Phone connector, in px of the 90px-tall SVG under a stacked case frame
- *  (y = 0 is the frame's bottom edge): from the bottom-most card's or row's
- *  bottom border, `from` of the way across, down to the result label's left
- *  edge at `ex`. */
-export function PhoneFlow({
-  width,
-  ex,
-  from = 0.5,
-}: {
-  width: number;
-  ex: number;
-  from?: number;
-}) {
-  const x = width * from;
-  const curve: Curve = [
-    [x, 0],
-    [x, 50],
-    [ex, 40],
-    [ex, 90],
-  ];
-  return (
-    <Flow
-      curve={curve}
-      className="case-flow case-flow-mobile"
-      viewBox={`0 0 ${width} 90`}
-    />
-  );
-}
-
 /** A roman subtitle over the italic result number */
-export function CaseResult({
+function CaseResult({
   label,
   stat,
   className,
@@ -384,5 +267,21 @@ export function CaseResult({
       <span className="text-sub result-label">{label}</span>
       <span className="text-stat result-stat">{stat}</span>
     </div>
+  );
+}
+
+/** Everything under a case's frame: the Problem and Solution (children),
+ *  the connector from the Solution, and the result */
+export function CaseTail({
+  children,
+  ...result
+}: { children: ReactNode } & Omit<ComponentProps<typeof CaseResult>, "ref">) {
+  const ref = useRef<HTMLDivElement>(null);
+  return (
+    <>
+      <div className="grid case-brief">{children}</div>
+      <BriefFlow result={ref} />
+      <CaseResult ref={ref} {...result} />
+    </>
   );
 }

@@ -1,10 +1,12 @@
-import type { CSSProperties } from "react";
-import { MODULES, type CaseStep } from "./CaseParts";
+"use client";
+import Image from "next/image";
+import { useEffect, useRef, type CSSProperties } from "react";
+import { MODULES, usePhone } from "./CaseParts";
 
 const MODULE_LIST = Object.entries(MODULES);
 
-/** The daily-operations apps, placed by hand on the 1282×321 box:
- *  name, left, top, and whether it fades out past the right edge */
+/** The daily-operations apps, placed by hand on a 1282×321 box: name, left,
+ *  top, and whether it fades out past the right edge. Phones list them. */
 const APPS: [string, number, number, boolean?][] = [
   ["Consumer insights app", 71, 99],
   ["Audience data app", 440, 68],
@@ -17,86 +19,119 @@ const APPS: [string, number, number, boolean?][] = [
   ["Optimization app", 152, 175],
   ["Social listening app", 474, 190],
   ["Creative library app", 852, 216],
-  ["Measurement app", 1064, 247],
   ["Flighting app", 100, 256],
   ["Budget management app", 568, 256],
 ];
 
-export type ArchRow = {
-  label: string;
-  steps: CaseStep[];
+export type BoardStep = {
+  /** a module's key in MODULES */
+  key: string;
+  name: string;
+  /** a small copy of the module's screen */
+  thumb: string;
+  tint: string;
+  /** opens the workflow on this module */
   onOpen: () => void;
 };
 
-/** Client portal (workflows built from modules) over the daily operations
- *  apps, joined by shared data. Laid out at 1384 wide; `scale` zooms it to
- *  the frame on desktop */
-export default function CaseArchitecture({
-  rows,
-  scale,
-}: {
-  rows: ArchRow[];
-  scale: number;
-}) {
+export type BoardRow = {
+  label: string;
+  steps: BoardStep[];
+  /** opens the workflow on its brief */
+  onOpen: () => void;
+};
+
+/** The client portal's workflows over the daily operations apps, joined by
+ *  shared data. The portal is a board: a column per module, a row per
+ *  workflow, each screen a small copy of its deck. On phones the board
+ *  scrolls sideways, opening at Opportunity. */
+export default function CaseArchitecture({ rows }: { rows: BoardRow[] }) {
+  const phone = usePhone();
+  const scroller = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const s = scroller.current;
+    if (!s || !phone) return;
+    const col = s.querySelector<HTMLElement>('[data-module="opportunity"]');
+    if (col) s.scrollLeft = col.offsetLeft - 18;
+  }, [phone]);
+
   return (
-    <div className="arch" style={{ "--z": scale } as CSSProperties}>
-      <div className="arch-box">
-        <span className="arch-tag">Sample client workflows</span>
-        <div className="arch-rows">
-          {rows.map((r) => (
-            <button
-              type="button"
-              key={r.label}
-              className="arch-row"
-              onClick={r.onOpen}
-              aria-label={`Open the ${r.label} workflow`}
-            >
-              <span className="arch-row-name">{r.label}</span>
-              {MODULE_LIST.map(([key, name], i) => {
-                const step = r.steps.find((s) => s.key === key);
-                return (
-                  <span
-                    key={key}
-                    className={`arch-tile${step ? "" : " is-unused"}${
-                      i === MODULE_LIST.length - 1 ? " arch-more" : ""
-                    }`}
-                    style={
-                      step &&
-                      ({ "--c": step.color, "--fg": step.fg } as CSSProperties)
-                    }
-                  >
-                    {name}
-                  </span>
-                );
-              })}
-            </button>
-          ))}
+    <div className="gc-arch">
+      <section className="gc-tile" aria-label="Sample client workflows">
+        <h4 className="gc-tile-title">Sample client workflows</h4>
+        <div className="gc-board" ref={scroller}>
+          <div className="gc-grid">
+            <div className="gc-row gc-head" aria-hidden="true">
+              <span />
+              {MODULE_LIST.map(([key, name]) => (
+                <span
+                  key={key}
+                  data-module={key}
+                  className={
+                    rows.some((r) => r.steps.some((s) => s.key === key))
+                      ? ""
+                      : "is-unused"
+                  }
+                >
+                  {name}
+                </span>
+              ))}
+            </div>
+            {rows.map((r) => (
+              <div className="gc-row gc-band" key={r.label}>
+                <button type="button" className="gc-label" onClick={r.onOpen}>
+                  {r.label}
+                </button>
+                {MODULE_LIST.map(([key, name]) => {
+                  const s = r.steps.find((x) => x.key === key);
+                  return s ? (
+                    <button
+                      type="button"
+                      key={key}
+                      className="gc-thumb"
+                      style={{ "--tint": s.tint } as CSSProperties}
+                      onClick={s.onOpen}
+                      aria-label={`Open the ${r.label} workflow on ${name}`}
+                    >
+                      <Image
+                        src={s.thumb}
+                        alt=""
+                        width={360}
+                        height={179}
+                        sizes="(min-width: 900px) 9vw, 106px"
+                      />
+                    </button>
+                  ) : (
+                    <span key={key} className="gc-slot" aria-hidden="true" />
+                  );
+                })}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-
-      <div className="arch-link">
-        <svg viewBox="0 0 22 56" aria-hidden="true">
-          <path d="M11 3v50M3 11l8-8 8 8M3 45l8 8 8-8" />
-        </svg>
-        <span>
+        <p className="gc-link">
           Shared data between workflow modules and daily operations workspace
-        </span>
-      </div>
+          <svg viewBox="0 0 22 56" aria-hidden="true">
+            <path d="M11 3v50M3 11l8-8 8 8M3 45l8 8 8-8" />
+          </svg>
+        </p>
+      </section>
 
-      <div className="arch-box arch-ops">
-        <span className="arch-tag">Daily operations workspace</span>
-        <ul className="arch-apps">
+      <section className="gc-tile gc-ops" aria-label="Daily operations workspace">
+        <ul className="gc-apps">
           {APPS.map(([name, x, y, fade]) => (
             <li
               key={name}
-              className={`arch-app${fade ? " arch-more" : ""}`}
-              style={{ "--x": `${x}px`, "--y": `${y}px` } as CSSProperties}
+              className={fade ? "is-fade" : undefined}
+              style={{ "--x": x, "--y": y } as CSSProperties}
             >
               {name}
             </li>
           ))}
         </ul>
-      </div>
+        <h4 className="gc-tile-title">Daily operations workspace</h4>
+      </section>
     </div>
   );
 }

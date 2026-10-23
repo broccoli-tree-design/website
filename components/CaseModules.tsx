@@ -1,104 +1,54 @@
 "use client";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useState, type ReactNode } from "react";
 import CaseArchitecture from "./CaseArchitecture";
-import {
-  CaseFigure,
-  CaseResult,
-  CaseRings,
-  CaseZoom,
-  DESKTOP,
-  Flow,
-  MODULES,
-  num,
-  PhoneFlow,
-  usePhone,
-  useResize,
-  useWidth,
-  useZoom,
-  type CaseStep,
-  type Curve,
-} from "./CaseParts";
+import { CaseTail, MODULES } from "./CaseParts";
+import GlassCarousel, { type GlassDeck } from "./GlassCarousel";
 
-/** Each module's tab colours, wherever it is used */
-const MODULE = {
-  ideation: {
-    name: MODULES.ideation,
-    color: "var(--neutral-200)",
-    fg: "var(--green-900)",
-  },
-  opportunity: {
-    name: MODULES.opportunity,
-    color: "var(--green-600)",
-    fg: "var(--neutral-100)",
-  },
-  audience: {
-    name: MODULES.audience,
-    color: "var(--green-300)",
-    fg: "var(--green-900)",
-  },
-  attention: {
-    name: MODULES.attention,
-    color: "var(--green-800)",
-    fg: "var(--neutral-100)",
-  },
-  channel: {
-    name: MODULES.channel,
-    color: "var(--orange-400)",
-    fg: "var(--green-900)",
-  },
+const tint = (color: string, pct: number) =>
+  `color-mix(in srgb, ${color} ${pct}%, transparent)`;
+
+/** Each module's glass tint, wherever it is used: the same colour in both
+ *  workflows and on the board */
+const MODULE_TINT = {
+  ideation: tint("var(--neutral-200)", 45),
+  opportunity: tint("var(--green-600)", 22),
+  audience: tint("var(--green-300)", 28),
+  attention: tint("var(--green-800)", 22),
+  channel: tint("var(--orange-400)", 16),
 };
-type ModuleKey = keyof typeof MODULE;
+type ModuleKey = keyof typeof MODULE_TINT;
 
-/** The client view in front, then the modules its workflow is built from */
+/** A client's workflow: a brief, then the modules it is built from */
 type Client = {
   label: string;
+  /** the screens' file prefix */
+  prefix: "new-client" | "return-client";
   eyebrow: string;
   title: string;
   desc: string;
-  /** the item open on first view: 0 is the client view */
-  open: number;
-  steps: CaseStep[];
+  /** the brief's fill, solid: deep green for Sales, ivory for Planners */
+  tint: string;
+  dark: boolean;
+  steps: [ModuleKey, string][];
 };
-
-const CLIENT_VIEW = {
-  color: "var(--neutral-100)",
-  fg: "var(--green-900)",
-};
-
-/** Module screens: the 1072×532 product card with 64px around it for its shadow, captured at 2× */
-function steps(
-  front: string,
-  prefix: string,
-  mods: [ModuleKey, string][]
-): CaseStep[] {
-  return [
-    { name: front, ...CLIENT_VIEW },
-    ...mods.map(([key, desc]) => ({
-      ...MODULE[key],
-      key,
-      img: `/case2/${prefix}-${key}.webp`,
-      w: 2400,
-      h: 1320,
-      desc,
-    })),
-  ];
-}
 
 const CLIENTS: Record<"new" | "return", Client> = {
   new: {
-    label: "Sales' demo",
+    label: "Sales’ demo",
+    prefix: "new-client",
     eyebrow: "For new client",
     title: "Buddhist art exhibition campaign Spring 2027",
     desc: "Sales walks a prospective museum client through a sample exhibition campaign, from brief to channel mix.",
-    open: 2,
-    steps: steps("New client workflow", "new-client", [
+    tint: "var(--green-800)",
+    dark: true,
+    steps: [
       [
         "ideation",
         "Frame the brief: ticket goal, core visitors, KPIs, budget and run dates.",
       ],
       [
         "opportunity",
-        "Show where the exhibition can stand out against the season's other shows.",
+        "Show where the exhibition can stand out against the season’s other shows.",
       ],
       [
         "audience",
@@ -109,15 +59,17 @@ const CLIENTS: Record<"new" | "return", Client> = {
         "Calculate how much attention visitors need before they book.",
       ],
       ["channel", "Turn attention into a channel mix and budget split."],
-    ]),
+    ],
   },
   return: {
-    label: "Planners' work",
+    label: "Planners’ work",
+    prefix: "return-client",
     eyebrow: "For returning client",
     title: "Outdoor backpack\nFall 2027\nChannel Plan",
     desc: "A backpack brand returns after its spring campaign with results in hand.\nThe strategy and audience are already set, so Planners update attention targets and rebalance channels for the next flight.",
-    open: 0,
-    steps: steps("Returning client workflow", "return-client", [
+    tint: "var(--neutral-100)",
+    dark: false,
+    steps: [
       [
         "attention",
         "Recalculate attention levels for a brand hikers now recognize.",
@@ -126,80 +78,58 @@ const CLIENTS: Record<"new" | "return", Client> = {
         "channel",
         "Move budget into retail and outdoor placements near trailheads and gear stores.",
       ],
-    ]),
+    ],
   },
 };
 
-type View = "arch" | keyof typeof CLIENTS;
+type ClientKey = keyof typeof CLIENTS;
+type View = "arch" | ClientKey;
 const VIEWS: [View, string][] = [
   ["arch", "Architecture"],
   ["new", CLIENTS.new.label],
   ["return", CLIENTS.return.label],
 ];
 
-const TAB = 84; // collapsed tab width, matches .mod-item
-const ARTBOARD = 1384; // the frame's width at the 1440 column
-
-/** One curve from the open tab's centre (or the frame's, with no tabs)
- *  down to the result label's start. The centre comes from the layout rule
- *  (collapsed 84px, open tab takes the rest), so the path lands where the
- *  flex transition ends and CSS animates `d` there. */
-function desktopFlow(w: number, ex: number, n: number, active: number): Curve {
-  const open = w - (n - 1) * TAB;
-  const cx = n ? Math.max(active, 0) * TAB + open / 2 : w / 2;
+/** A client's decks: the brief in front, then a deck per module */
+function decksFor(c: Client): GlassDeck[] {
   return [
-    [cx, 0],
-    [cx, 110],
-    [ex, 60],
-    [ex, 170],
+    {
+      name: c.label,
+      num: "",
+      tint: c.tint,
+      dark: c.dark,
+      body: (
+        <div className="gc-client">
+          <span className="text-label">{c.eyebrow}</span>
+          <span className="text-title gc-client-title">{c.title}</span>
+          <p className="gc-client-desc">{c.desc}</p>
+        </div>
+      ),
+    },
+    ...c.steps.map(([key, desc], i) => ({
+      name: MODULES[key],
+      num: `0${i + 1}`,
+      desc,
+      tint: MODULE_TINT[key],
+      img: {
+        src: `/case2/screens/${c.prefix}-${key}.webp`,
+        w: 2144,
+        h: 1064,
+        quality: 90,
+      },
+      alt: `${MODULES[key]} module, ${c.title.replace(/\n/g, " ")}`,
+    })),
   ];
 }
 
-export default function CaseModules() {
-  const [view, setView] = useState<View>("new");
-  // the open item per client, kept while switching tabs
-  const [openBy, setOpenBy] = useState({
-    new: CLIENTS.new.open,
-    return: CLIENTS.return.open,
-  });
-  const [labelX, setLabelX] = useState(1000); // label's left edge in track space
-  // phones open a screen full size to read it
-  const phone = usePhone();
-  const zoom = useZoom();
-  const track = useRef<HTMLDivElement>(null);
-  const result = useRef<HTMLDivElement>(null);
-  const width = useWidth(track, ARTBOARD);
-  // the result block's width follows the 400% (and its font loading)
-  useResize([track, result], () => {
-    const t = track.current!.getBoundingClientRect();
-    setLabelX(Math.round(result.current!.getBoundingClientRect().left - t.left));
-  });
-  useEffect(() => {
-    // desktop always has one item open
-    const mq = matchMedia(DESKTOP);
-    const onChange = () => {
-      if (!mq.matches) return;
-      setOpenBy((o) => ({
-        new: o.new < 0 ? 0 : o.new,
-        return: o.return < 0 ? 0 : o.return,
-      }));
-    };
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
+export default function CaseModules({ brief }: { brief: ReactNode }) {
+  const [view, setView] = useState<View>("arch");
+  // the deck in focus per client, kept while switching tabs
+  const [focus, setFocus] = useState({ new: 0, return: 0 });
 
-  const client = view === "arch" ? null : CLIENTS[view];
-  const items = client?.steps ?? [];
-  const active = view === "arch" ? -1 : openBy[view];
-  const flow = desktopFlow(width, labelX, items.length, active);
-
-  // desktop opens; mobile toggles, so tapping the open row closes it
-  const toggle = (i: number) => {
-    if (view === "arch") return;
-    setOpenBy((o) => ({
-      ...o,
-      [view]: o[view] === i && !matchMedia(DESKTOP).matches ? -1 : i,
-    }));
+  const open = (client: ClientKey, deck: number) => {
+    setFocus((f) => ({ ...f, [client]: deck }));
+    setView(client);
   };
 
   return (
@@ -222,113 +152,43 @@ export default function CaseModules() {
       </div>
 
       <div
-        className="case-frame case-frame-2 mod-frame"
         id="view-panel"
         role="tabpanel"
         aria-labelledby={`view-tab-${view}`}
+        className="gc-panel"
       >
-        <CaseRings />
-        <div className={`mod-track${client ? "" : " arch-track"}`} ref={track}>
-          {!client && (
-            <CaseArchitecture
-              scale={width / ARTBOARD}
-              rows={(["new", "return"] as const).map((v) => ({
-                label: CLIENTS[v].label,
-                steps: CLIENTS[v].steps,
-                onOpen: () => setView(v),
-              }))}
-            />
-          )}
-          {client &&
-            items.map((m, i) => {
-              const open = i === active;
-              return (
-                <div
-                  key={`${view}-${m.name}`}
-                  className={`mod-item${open ? " is-open" : ""}${
-                    m.img ? "" : " mod-client"
-                  }`}
-                  style={{ "--c": m.color, "--fg": m.fg } as CSSProperties}
-                >
-                  <button
-                    type="button"
-                    id={`mod-tab-${i}`}
-                    className="case-tab mod-tab"
-                    aria-expanded={open}
-                    aria-controls={`mod-panel-${i}`}
-                    onClick={() => toggle(i)}
-                  >
-                    <span className="text-num mod-num">{num(i)}</span>
-                    <span className="case-name mod-name">{m.name}</span>
-                    <span className="mod-sign" aria-hidden="true">
-                      {open ? "–" : "+"}
-                    </span>
-                  </button>
-                  <div
-                    id={`mod-panel-${i}`}
-                    className="mod-panel"
-                    role="region"
-                    aria-labelledby={`mod-tab-${i}`}
-                    hidden={!open}
-                  >
-                    {m.img ? (
-                      <div className="mod-stage">
-                        <CaseFigure
-                          className="mod-figure"
-                          step={m}
-                          alt={`${m.name} module, ${client.title.replace(
-                            /\n/g,
-                            " "
-                          )}`}
-                          sizes="(min-width: 900px) 920px, 100vw"
-                          phone={phone}
-                          onEnlarge={() => zoom.open(m)}
-                        />
-                      </div>
-                    ) : (
-                      <div className="mod-client-view">
-                        <div className="mod-client-head">
-                          <span className="text-label">{client.eyebrow}</span>
-                          <span className="text-title mod-client-title">
-                            {client.title}
-                          </span>
-                          <p className="mod-client-desc">{client.desc}</p>
-                        </div>
-                        <ol className="mod-client-list">
-                          {items.slice(1).map((s, j) => (
-                            <li key={s.name}>
-                              <span className="text-num">{num(j + 1)}</span>
-                              {s.name}
-                            </li>
-                          ))}
-                        </ol>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-        </div>
+        {view === "arch" ? (
+          <CaseArchitecture
+            rows={(["new", "return"] as const).map((k) => ({
+              label: CLIENTS[k].label,
+              onOpen: () => open(k, 0),
+              steps: CLIENTS[k].steps.map(([key], i) => ({
+                key,
+                name: MODULES[key],
+                thumb: `/case2/thumbs/${CLIENTS[k].prefix}-${key}.webp`,
+                tint: MODULE_TINT[key],
+                onOpen: () => open(k, i + 1),
+              })),
+            }))}
+          />
+        ) : (
+          <GlassCarousel
+            key={view}
+            className="mod-carousel"
+            decks={decksFor(CLIENTS[view])}
+            ratio={2144 / 1064}
+            focus={focus[view]}
+            onFocus={(i) => setFocus((f) => ({ ...f, [view]: i }))}
+            noun="module"
+            roomy
+            zoomClass="gc-zoom gc-zoom-card"
+          />
+        )}
       </div>
 
-      <CaseZoom zoom={zoom} phone={phone} noun="module" className="mod-zoom" />
-
-      <Flow
-        curve={flow}
-        glide
-        className="case-flow mod-flow-desktop"
-        viewBox={`0 0 ${width} 170`}
-        preserveAspectRatio="none"
-      />
-      {/* the label starts mid-screen, so start right of it for a curve */}
-      <PhoneFlow width={width} ex={labelX} from={0.75} />
-
-      <CaseResult
-        className="mod-result"
-        ref={result}
-        label="User base grew"
-        stat="400%"
-      />
+      <CaseTail className="mod-result" label="User base grew" stat="400%">
+        {brief}
+      </CaseTail>
     </>
   );
 }

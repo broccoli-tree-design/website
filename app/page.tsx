@@ -222,27 +222,30 @@ export default function Home() {
               </h3>
             </div>
           </div>
-          <div className="grid case-brief">
-            <div className="case-problem">
-              <span className="text-label">Problem</span>
-              <p className="body">
-                In response to GDPR, clients needed to adopt the GeoLift
-                methodology to select campaign markets. Its command-line
-                interface took Marketing Scientists 20+ hours to learn and run,
-                and worked like a black box.
-              </p>
-            </div>
-            <div className="case-solution">
-              <span className="text-label">Solution</span>
-              <p className="body">
-                A no-code workflow that runs in 10+ minutes and surfaces the
-                model&rsquo;s reasoning, so Marketing Scientists can identify
-                campaign markets, compare, and make tradeoffs with clients
-                during meetings.
-              </p>
-            </div>
-          </div>
-          <CaseDeck />
+          <CaseDeck
+            brief={
+              <>
+                <div className="case-problem">
+                  <span className="text-label">Problem</span>
+                  <p className="body">
+                    In response to GDPR, clients needed to adopt the GeoLift
+                    methodology to select campaign markets. Its command-line
+                    interface took Marketing Scientists 20+ hours to learn and
+                    run, and worked like a black box.
+                  </p>
+                </div>
+                <div className="case-solution">
+                  <span className="text-label">Solution</span>
+                  <p className="body">
+                    A no-code workflow that runs in 10+ minutes and surfaces the
+                    model&rsquo;s reasoning, so Marketing Scientists can
+                    identify campaign markets, compare, and make tradeoffs with
+                    clients during meetings.
+                  </p>
+                </div>
+              </>
+            }
+          />
         </section>
 
         {/* CASE — module accordion, curves flow into the 400% */}
@@ -257,28 +260,33 @@ export default function Home() {
               </h3>
             </div>
           </div>
-          <div className="grid case-brief">
-            <div className="case-problem">
-              <span className="text-label">Problem</span>
-              <p className="body">
-                The legacy app was designed to help Sales tell the story.
-                Clients were told that Planners would deliver their work in-app,
-                but 70%+ of Planners still delivered in Excel and PowerPoints.
-              </p>
-            </div>
-            <div className="case-solution">
-              <span className="text-label">Solution</span>
-              <p className="body">
-                We understand real work is messy and different clients needs
-                different levels of visibility, so we separated daily operations
-                from the client-facing portal. I designed 10+ modules that pull
-                data from Sales’ and Planners’ workspaces. Instead of piecing
-                info together in Excel and PowerPoints, Sales and Planners can
-                create custom workflows based on different client needs.
-              </p>
-            </div>
-          </div>
-          <CaseModules />
+          <CaseModules
+            brief={
+              <>
+                <div className="case-problem">
+                  <span className="text-label">Problem</span>
+                  <p className="body">
+                    The legacy app was designed to help Sales tell the story.
+                    Clients were told that Planners would deliver their work
+                    in-app, but 70%+ of Planners still delivered in Excel and
+                    PowerPoints.
+                  </p>
+                </div>
+                <div className="case-solution">
+                  <span className="text-label">Solution</span>
+                  <p className="body">
+                    We understand real work is messy and different clients needs
+                    different levels of visibility, so we separated daily
+                    operations from the client-facing portal. I designed 10+
+                    modules that pull data from Sales’ and Planners’ workspaces.
+                    Instead of piecing info together in Excel and PowerPoints,
+                    Sales and Planners can create custom workflows based on
+                    different client needs.
+                  </p>
+                </div>
+              </>
+            }
+          />
         </section>
 
         {/* QUESTION */}

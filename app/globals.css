@@ -321,6 +321,7 @@ button:focus-visible {
   padding: 8px 20px;
   border-radius: 24px;
   font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: background 0.15s, border-color 0.15s;
 }
 .nav-links .nav-cta:hover {
@@ -381,6 +382,7 @@ button:focus-visible {
   display: block;
   object-fit: cover;
   border-radius: var(--leaf-radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 /* springy wiggle on hover — small, the photo is big */
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
@@ -700,7 +702,6 @@ button:focus-visible {
 /* ── CASE STUDIES — header ── */
 .cs {
   position: relative;
-  min-height: 116vh;
   padding: 20vh var(--gutter) 0;
   align-content: start;
 }
