@@ -793,8 +793,8 @@ html:has(.case-zoom[open]) {
   border: 0;
   border-radius: calc(30 * var(--u));
   background: linear-gradient(
-      color-mix(in srgb, var(--neutral-100) 45%, transparent),
-      color-mix(in srgb, var(--neutral-100) 45%, transparent)
+      color-mix(in srgb, var(--neutral-100) 30%, transparent),
+      color-mix(in srgb, var(--neutral-100) 30%, transparent)
     ),
     rgba(239, 238, 222, 0.42);
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25),
