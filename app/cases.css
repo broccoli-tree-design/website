@@ -950,6 +950,8 @@ html:has(.case-zoom[open]) {
   z-index: 1;
 }
 .gc-ops {
+  /* dark green with ivory type, unlike the glass board above it */
+  background: var(--green-900);
   z-index: 0;
   width: calc(1140 * var(--u));
   /* rises 40u behind the board so its "Shared data" caption sits in the
@@ -973,19 +975,20 @@ html:has(.case-zoom[open]) {
   align-items: center;
   height: calc(34 * 0.855 * var(--u));
   padding: 0 calc(14 * 0.855 * var(--u));
-  border: 1px solid var(--green-900);
+  border: 1px solid var(--neutral-100);
   border-radius: 999px;
-  background: rgba(247, 245, 234, 0.62);
+  background: rgba(239, 238, 222, 0.08);
   font-size: max(11px, calc(14 * 0.855 * var(--u)));
   font-weight: 500;
   white-space: nowrap;
-  color: var(--green-900);
+  color: var(--neutral-100);
 }
 .gc-apps li.is-fade {
   -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent);
   mask-image: linear-gradient(90deg, #000 40%, transparent);
 }
 .gc-ops .gc-tile-title {
+  color: var(--neutral-100);
   position: absolute;
   left: calc(22 * var(--u));
   bottom: calc(20 * var(--u));
