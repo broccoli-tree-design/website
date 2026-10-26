@@ -113,6 +113,10 @@
 }
 
 .view-tabs {
+  /* above the carousel's frame, which reaches up over the tab bar's lower
+     half (see .gc-panel .gc) */
+  position: relative;
+  z-index: 6;
   display: flex;
   gap: 4px;
   width: max-content;
