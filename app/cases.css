@@ -419,6 +419,21 @@ html:has(.case-zoom[open]) {
       rgba(255, 255, 255, 0) 14%
     );
 }
+/* a dark brief card keeps its green behind the title: the sweep would turn it
+   grey-ivory */
+.gc-deck.is-dark:has(.gc-client)::before {
+  background: linear-gradient(
+      112deg,
+      rgba(255, 255, 255, 0.12) 0%,
+      rgba(255, 255, 255, 0.04) 20%,
+      rgba(255, 255, 255, 0) 42%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(255, 255, 255, 0.08) 0%,
+      rgba(255, 255, 255, 0) 14%
+    );
+}
 .gc-deck::after {
   padding: 3px;
   background: linear-gradient(
