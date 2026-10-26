@@ -633,7 +633,8 @@ button:focus-visible {
 .services-title {
   display: block;
   font-size: var(--display-5);
-  margin-left: -1.2cqw;
+  /* the "W" has side bearing; put its ink on the gutter line */
+  margin-left: calc(var(--gutter) - 0.01em);
   white-space: nowrap;
 }
 
