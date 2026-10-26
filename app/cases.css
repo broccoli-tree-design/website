@@ -867,16 +867,16 @@ html:has(.case-zoom[open]) {
   font-weight: 500;
   color: var(--neutral-700);
 }
-/* a workflow's shaded row, from its label to the tile's edge */
+/* a workflow's shaded row, from its label to the last column, clear of the
+   tile's rim */
 .gc-band {
   padding-block: calc(10 * var(--u));
 }
 .gc-band::before {
   content: "";
   position: absolute;
-  inset: 0 calc(-22 * var(--u)) 0
-    calc(130 * var(--u) + 10 * var(--u) - 6 * var(--u));
-  border-radius: 8px 0 0 8px;
+  inset: 0 0 0 calc(130 * var(--u) + 10 * var(--u) - 6 * var(--u));
+  border-radius: 8px;
   background: color-mix(in srgb, var(--neutral-700) 8%, transparent);
 }
 .gc-row > * {
