@@ -78,7 +78,15 @@ function useResize(
     if (els.some((el) => !el)) return;
     const ro = new ResizeObserver(() => latest.current());
     els.forEach((el) => ro.observe(el!));
-    return () => ro.disconnect();
+    // text can reflow without its box changing (webfonts arriving, balanced
+    // wrapping), which moves what connectors measure
+    const remeasure = () => latest.current();
+    addEventListener("resize", remeasure);
+    document.fonts?.ready.then(remeasure);
+    return () => {
+      ro.disconnect();
+      removeEventListener("resize", remeasure);
+    };
     // once: the refs never change
   }, []);
 }
@@ -213,22 +221,41 @@ export function FlowLine({ curve }: { curve: Curve }) {
   );
 }
 
+/** The horizontal middle of an element's text, in viewport px */
+function textMid(el: Element) {
+  const range = document.createRange();
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  const rects: DOMRect[] = [];
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    if (!n.textContent?.trim()) continue;
+    range.selectNodeContents(n);
+    rects.push(...range.getClientRects());
+  }
+  if (!rects.length) {
+    const b = el.getBoundingClientRect();
+    return b.left + b.width / 2;
+  }
+  const left = Math.min(...rects.map((r) => r.left));
+  const right = Math.max(...rects.map((r) => r.right));
+  return (left + right) / 2;
+}
+
 /** The connector from the Solution down to the result label: from the
- *  Solution's left edge (the brief sits just above) to the label's left
- *  edge, in px of its own box. */
+ *  middle of the Solution's text (the brief sits just above) to the middle
+ *  of the result's text, in px of its own box. */
 function BriefFlow({ result }: { result: RefObject<HTMLElement | null> }) {
   const svg = useRef<SVGSVGElement>(null);
   const [box, setBox] = useState({ w: 0, h: 0, sx: 0, ex: 0 });
   useResize([svg, result], () => {
     const s = svg.current!.getBoundingClientRect();
     const solution =
-      svg.current!.previousElementSibling?.querySelector(".case-solution");
+      svg.current!.previousElementSibling?.querySelector(".case-solution p");
     if (!solution) return;
     setBox({
       w: s.width,
       h: s.height,
-      sx: solution.getBoundingClientRect().left - s.left,
-      ex: result.current!.getBoundingClientRect().left - s.left,
+      sx: textMid(solution) - s.left,
+      ex: textMid(result.current!) - s.left,
     });
   });
   const { w, h, sx, ex } = box;
