@@ -174,7 +174,6 @@ export default function CaseModules({ brief }: { brief: ReactNode }) {
         ) : (
           <GlassCarousel
             key={view}
-            className="mod-carousel"
             decks={decksFor(CLIENTS[view])}
             ratio={2144 / 1064}
             focus={focus[view]}

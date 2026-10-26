@@ -273,7 +273,7 @@ export default function Home() {
           />
         </section>
 
-        {/* CASE — module accordion, curves flow into the 400% */}
+        {/* CASE — curves flow into the 400% */}
         <section className="case" data-gate="light">
           <div className="grid">
             <div className="case-title">

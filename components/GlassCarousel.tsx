@@ -52,7 +52,6 @@ export default function GlassCarousel({
   noun,
   zoomClass,
   roomy = false,
-  className = "",
 }: {
   decks: GlassDeck[];
   /** the screens' width over height */
@@ -64,7 +63,6 @@ export default function GlassCarousel({
   zoomClass: string;
   /** more padding around each deck's content */
   roomy?: boolean;
-  className?: string;
 }) {
   const phone = usePhone();
   const zoom = useZoom();
@@ -108,7 +106,7 @@ export default function GlassCarousel({
   return (
     <div
       ref={frame}
-      className={`gc${roomy ? " is-roomy" : ""} ${className}`}
+      className={`gc${roomy ? " is-roomy" : ""}`}
       style={style}
     >
       <div className="gc-track">
