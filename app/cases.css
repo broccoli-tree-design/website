@@ -933,8 +933,9 @@ html:has(.case-zoom[open]) {
   gap: 12px;
   margin: calc(18 * var(--u)) 0 0;
   /* centred on the overlap with the tile behind, without moving the tile's
-     bottom edge */
-  top: calc(10 * var(--u));
+     bottom edge. The caption row is a fixed size but the overlap scales
+     with --u, so the offset shrinks as --u grows (fitted at u = 0.6 to 1) */
+  top: calc(20px - 13 * var(--u));
   font-size: max(12px, calc(14 * var(--u)));
   color: var(--green-900);
   text-align: center;
@@ -1054,6 +1055,10 @@ html:has(.case-zoom[open]) {
   .gc-thumb {
     padding: 5px;
   }
+  /* the caption wraps to two lines here, so it stays clear of the tile's rim */
+  .gc-link {
+    top: 0;
+  }
   .gc-ops {
     width: auto;
     min-height: 0;
@@ -1080,5 +1085,12 @@ html:has(.case-zoom[open]) {
   .gc-ops .gc-tile-title {
     left: 18px;
     bottom: 16px;
+  }
+}
+/* stacked but wide enough for the caption on one line: centre it on the
+   overlap like the desktop one */
+@media (min-width: 640px) and (max-width: 899.98px) {
+  .gc-link {
+    top: 29px;
   }
 }
