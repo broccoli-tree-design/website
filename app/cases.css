@@ -367,7 +367,7 @@ html:has(.case-zoom[open]) {
   gap: calc(12 * var(--u));
   padding: calc(16 * var(--u)) calc(20 * var(--u)) calc(24 * var(--u));
   border: 0;
-  border-radius: calc(28 * var(--u));
+  border-radius: 10px;
   background: linear-gradient(var(--tint), var(--tint)),
     rgba(239, 238, 222, 0.42);
   color: var(--ink);
@@ -380,7 +380,7 @@ html:has(.case-zoom[open]) {
   width: calc(1020 * var(--u));
   min-height: calc(var(--gc-h) * var(--u));
   padding-inline: calc(22 * var(--u));
-  border-radius: calc(32 * var(--u));
+  border-radius: 10px;
 }
 .gc-deck.is-solid {
   background: var(--green-950);
@@ -652,7 +652,7 @@ html:has(.case-zoom[open]) {
     min-height: 0;
     gap: 10px;
     padding: 14px 16px 20px;
-    border-radius: 24px;
+    border-radius: 10px;
   }
   .gc.is-roomy .gc-deck,
   .gc.is-roomy .gc-deck.is-focus {
