@@ -625,6 +625,22 @@ html:has(.case-zoom[open]) {
   }
 }
 
+/* only the decks either side of the focused one show; the rest wait out of
+   sight (phones scroll through all of them, below) */
+@media (min-width: 900px) {
+  .gc-deck.is-far {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .gc-deck {
+    transition: width 0.7s var(--ease-out), min-height 0.7s var(--ease-out),
+      opacity 0.5s ease, visibility 0.5s;
+  }
+}
+
 /* phones: one deck at a time, the next peeking in */
 @media (max-width: 899.98px) {
   /* the frame scrolls sideways and snaps to a deck, the next peeking in */
