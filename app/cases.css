@@ -735,6 +735,14 @@ html:has(.case-zoom[open]) {
 .gc-panel .gc {
   margin-top: 0;
 }
+/* the frame leaves 60u above the tallest deck for its shadow; pull it up so
+   the focused deck sits as far below the tabs as the architecture board
+   does, which keeps the tab bar on screen when a deck fills the viewport */
+@media (min-width: 900px) {
+  .gc-panel .gc {
+    margin-top: calc(-60 * var(--u));
+  }
+}
 
 /* case 2's architecture: a glass board of screens by module (a column per
    module, a row per workflow) over the daily operations workspace */
