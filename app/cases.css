@@ -474,11 +474,8 @@ html:has(.case-zoom[open]) {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: calc(12 * var(--u));
+  border-radius: 10px;
   background: #fff;
-}
-.gc-deck.is-focus .gc-shot img {
-  border-radius: calc(18 * var(--u));
 }
 .gc-pick {
   appearance: none;
@@ -677,10 +674,6 @@ html:has(.case-zoom[open]) {
   .gc-text p,
   .gc-deck.is-focus .gc-text p {
     font-size: 14px;
-  }
-  .gc-shot img,
-  .gc-deck.is-focus .gc-shot img {
-    border-radius: 12px;
   }
   .gc-body {
     gap: 14px;
