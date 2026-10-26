@@ -131,7 +131,7 @@
   backdrop-filter: blur(18px) saturate(1.6);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9),
     inset 0 -10px 20px rgba(255, 255, 255, 0.2),
-    0 8px 24px rgba(16, 46, 39, 0.12);
+    0 8px 24px color-mix(in srgb, var(--green-900) 12%, transparent);
 }
 .view-tab {
   appearance: none;
@@ -158,7 +158,7 @@
   backdrop-filter: blur(14px) saturate(1.6);
   box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9),
     inset 0 -8px 16px rgba(255, 255, 255, 0.25),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 6px 18px rgba(16, 46, 39, 0.12);
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 6px 18px color-mix(in srgb, var(--green-900) 12%, transparent);
 }
 .view-tab[aria-selected="true"]:hover {
   background: var(--green-900);
@@ -275,12 +275,12 @@ html:has(.case-zoom[open]) {
   color: var(--neutral-700);
 }
 
-/* case — black-box deck. Laid out on the 1384-wide artboard in --u units. */
-.case-deck {
+/* The cases are laid out on a 1384-wide artboard in --u units (the decks, the
+   glass carousel and case 2's board). GlassCarousel.tsx's FRAME mirrors it. */
+.case-deck,
+.gc,
+.gc-arch {
   --u: calc((100cqw - 2 * var(--gutter)) / 1384);
-  /* the case 1 screens' card shadow, kept the same size however small the
-     screen is shown */
-  --screen-shadow: 0 10px 60px -5px rgba(59, 62, 63, 0.08);
 }
 
 /* the three cities in ivory dither; every pixel is a --px square */
@@ -341,7 +341,6 @@ html:has(.case-zoom[open]) {
    next peeking in. Sized on the 1384 artboard in --u units, like the old
    deck; phones use px. */
 .gc {
-  --u: calc((100cqw - 2 * var(--gutter)) / 1384);
   --dw: calc(100cqw - 2 * var(--gutter) - 44px);
   /* how far the frame reaches past the gutters to the edge of the screen */
   --bleed: calc(50vw - 50cqw + var(--gutter));
@@ -379,12 +378,12 @@ html:has(.case-zoom[open]) {
   border: 0;
   border-radius: calc(28 * var(--u));
   background: linear-gradient(var(--tint), var(--tint)),
-    rgba(239, 238, 222, 0.42);
+    color-mix(in srgb, var(--neutral-100) 42%, transparent);
   color: var(--ink);
   /* a faint ring and a soft shadow below, as on the glass tiles */
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25),
     0 calc(50 * var(--u)) calc(90 * var(--u)) calc(-40 * var(--u))
-      rgba(16, 46, 39, 0.35);
+      color-mix(in srgb, var(--green-900) 35%, transparent);
 }
 .gc-deck.is-focus {
   width: calc(1020 * var(--u));
@@ -484,7 +483,7 @@ html:has(.case-zoom[open]) {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 10px;
+  border-radius: var(--radius-md);
   background: #fff;
 }
 .gc-pick {
@@ -570,9 +569,9 @@ html:has(.case-zoom[open]) {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(16, 46, 39, 0.35);
+  border: 1px solid color-mix(in srgb, var(--green-900) 35%, transparent);
   border-radius: 50%;
-  background: rgba(239, 238, 222, 0.82);
+  background: color-mix(in srgb, var(--neutral-100) 82%, transparent);
   transform: translateY(-50%);
   cursor: pointer;
   transition: background 0.2s;
@@ -607,13 +606,13 @@ html:has(.case-zoom[open]) {
 /* the enlarged screen: the whole 1440px capture, or case 2's 1072px card */
 .gc-zoom-screen .case-zoom-scroll img {
   width: 1440px;
-  border-radius: 10px;
-  box-shadow: var(--screen-shadow, 0 10px 60px -5px rgba(59, 62, 63, 0.08));
+  border-radius: var(--radius-md);
+  box-shadow: var(--screen-shadow);
 }
 .gc-zoom-card .case-zoom-scroll img {
   width: 1072px;
   border-radius: 12px;
-  box-shadow: 0 10px 60px -5px rgba(59, 62, 63, 0.08);
+  box-shadow: var(--screen-shadow);
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -667,7 +666,7 @@ html:has(.case-zoom[open]) {
   .gc-deck {
     scroll-snap-align: start;
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25),
-      0 24px 40px -24px rgba(16, 46, 39, 0.35);
+      0 24px 40px -24px color-mix(in srgb, var(--green-900) 35%, transparent);
   }
   .gc-pick,
   .gc-arrow {
@@ -679,7 +678,7 @@ html:has(.case-zoom[open]) {
     min-height: 0;
     gap: 10px;
     padding: 14px 16px 20px;
-    border-radius: 24px;
+    border-radius: var(--radius-lg);
   }
   .gc.is-roomy .gc-deck,
   .gc.is-roomy .gc-deck.is-focus {
@@ -780,7 +779,6 @@ html:has(.case-zoom[open]) {
 /* case 2's architecture: a glass board of screens by module (a column per
    module, a row per workflow) over the daily operations workspace */
 .gc-arch {
-  --u: calc((100cqw - 2 * var(--gutter)) / 1384);
   display: flex;
   flex-direction: column;
   gap: calc(28 * var(--u));
@@ -796,10 +794,10 @@ html:has(.case-zoom[open]) {
       color-mix(in srgb, var(--neutral-100) 80%, transparent),
       color-mix(in srgb, var(--neutral-100) 80%, transparent)
     ),
-    rgba(239, 238, 222, 0.42);
+    color-mix(in srgb, var(--neutral-100) 42%, transparent);
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25),
     0 calc(50 * var(--u)) calc(90 * var(--u)) calc(-40 * var(--u))
-      rgba(16, 46, 39, 0.35);
+      color-mix(in srgb, var(--green-900) 35%, transparent);
 }
 .gc-tile::before,
 .gc-tile::after {
@@ -877,7 +875,7 @@ html:has(.case-zoom[open]) {
   position: absolute;
   inset: 0 calc(-6 * var(--u)) 0
     calc(130 * var(--u) + 10 * var(--u) - 6 * var(--u));
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   background: color-mix(in srgb, var(--neutral-700) 8%, transparent);
 }
 .gc-row > * {
@@ -904,9 +902,9 @@ html:has(.case-zoom[open]) {
   margin: 0;
   padding: calc(5 * var(--u));
   border: 0;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   background: linear-gradient(var(--tint), var(--tint)),
-    rgba(239, 238, 222, 0.42);
+    color-mix(in srgb, var(--neutral-100) 42%, transparent);
   line-height: 0;
   cursor: pointer;
 }
@@ -914,12 +912,12 @@ html:has(.case-zoom[open]) {
   display: block;
   width: 100%;
   height: auto;
-  border-radius: 4px;
+  border-radius: var(--radius-xs);
   background: #fff;
 }
 .gc-slot {
   border: 1px dashed rgba(23, 63, 53, 0.4);
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
 }
 .gc-label:focus-visible,
 .gc-thumb:focus-visible {
@@ -981,7 +979,7 @@ html:has(.case-zoom[open]) {
   padding: 0 calc(14 * 0.855 * var(--u));
   border: 1px solid var(--neutral-100);
   border-radius: 999px;
-  background: rgba(239, 238, 222, 0.08);
+  background: color-mix(in srgb, var(--neutral-100) 8%, transparent);
   font-size: max(11px, calc(14 * 0.855 * var(--u)));
   font-weight: 500;
   white-space: nowrap;
@@ -1006,9 +1004,9 @@ html:has(.case-zoom[open]) {
   }
   .gc-tile {
     padding: 18px;
-    border-radius: 24px;
+    border-radius: var(--radius-lg);
     box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25),
-      0 24px 40px -24px rgba(16, 46, 39, 0.35);
+      0 24px 40px -24px color-mix(in srgb, var(--green-900) 35%, transparent);
   }
   .gc-board {
     overflow-x: auto;
@@ -1040,7 +1038,7 @@ html:has(.case-zoom[open]) {
   }
   .gc-band::before {
     inset: 0 -18px;
-    border-radius: 8px;
+    border-radius: var(--radius-sm);
   }
   .gc-label {
     position: sticky;
@@ -1049,7 +1047,7 @@ html:has(.case-zoom[open]) {
     justify-self: start;
     width: 132px;
     height: 30px;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     font-size: 14px;
   }
   .gc-thumb {
