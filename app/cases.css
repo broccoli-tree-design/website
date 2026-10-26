@@ -754,6 +754,12 @@ html:has(.case-zoom[open]) {
     margin-top: calc(-60 * var(--u));
   }
 }
+/* stacked: the frame's own 24px of top padding is what pulls the decks away */
+@media (max-width: 899.98px) {
+  .gc-panel .gc {
+    margin-top: -24px;
+  }
+}
 
 /* case 2's architecture: a glass board of screens by module (a column per
    module, a row per workflow) over the daily operations workspace */
