@@ -16,6 +16,10 @@
   --neutral-700: #3c4a3f;
   --neutral-200: #d7dccb;
   --neutral-100: #efeede;
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 24px;
   --orange-800: #742f15; /* --orange-700 20% toward black (oklab) */
   --orange-700: #9e4220;
   --orange-400: #fb7e4f;
@@ -79,6 +83,8 @@
   --button: var(--orange-400);
   --button-hover: #fd976f;
   --button-ink: var(--green-900);
+  --screen-shadow: 0 10px 60px -5px
+    color-mix(in srgb, var(--neutral-700) 8%, transparent);
   /* darker and stronger than the light theme's, so the bright button still
      lifts off the dark green */
   --button-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
@@ -339,7 +345,7 @@ button:focus-visible {
   border: 1.5px solid var(--button);
   color: var(--button-ink);
   padding: 8px 20px;
-  border-radius: 24px;
+  border-radius: var(--radius-lg);
   font-weight: 600;
   box-shadow: var(--button-shadow);
   transition: background 0.15s, border-color 0.15s, box-shadow 0.3s;
