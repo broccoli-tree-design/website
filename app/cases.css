@@ -951,14 +951,16 @@ html:has(.case-zoom[open]) {
 .gc-ops {
   z-index: 0;
   width: calc(1140 * var(--u));
-  min-height: calc(380 * var(--u));
-  margin: calc(-58 * var(--u)) 0 0 calc(90 * var(--u));
+  /* rises 40u behind the board so its "Shared data" caption sits in the
+     overlap; the apps and the height below make that up */
+  min-height: calc(420 * var(--u));
+  margin: calc(-98 * var(--u)) 0 0 calc(90 * var(--u));
 }
 .gc-apps {
   position: relative;
   width: calc(1096 * var(--u));
   height: calc(275 * var(--u));
-  margin: calc(30 * var(--u)) 0 0;
+  margin: calc(70 * var(--u)) 0 0;
   padding: 0;
   list-style: none;
 }
