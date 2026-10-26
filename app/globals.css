@@ -84,7 +84,7 @@
   --button-ink: var(--green-900);
   /* darker and stronger than the light theme's, so the bright button still
      lifts off the dark green */
-  --button-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --button-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
   transition: --bg 1.1s ease, --ink 1.1s ease, --muted 1.1s ease,
     --accent 1.1s ease, --warm 1.1s ease, --button 0.3s ease-out,
     --button-hover 0.3s ease-out, --button-ink 0.3s ease-out;
