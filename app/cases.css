@@ -169,11 +169,8 @@
    curves meet */
 .mod-result {
   width: max-content;
-  margin: 0 calc(-1 * var(--gutter)) 0 auto;
+  margin: 0 0 0 auto;
   gap: 18px;
-}
-.mod-result .result-stat {
-  margin-right: -2.8cqw;
 }
 
 /* stacked */
@@ -200,9 +197,6 @@
   }
   .mod-result {
     gap: 14px;
-  }
-  .mod-result .result-stat {
-    margin-right: -6cqw;
   }
 }
 

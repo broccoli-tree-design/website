@@ -705,18 +705,18 @@ button:focus-visible {
   padding: 20vh var(--gutter) 0;
   align-content: start;
 }
-/* the headline spans every column and bleeds back out over the gutters */
+/* the headline spans every column, inside the gutters. Its cqw sizes are
+   relative to its own width, so the overlap holds at every viewport */
 .cs-h2 {
+  container-type: inline-size;
   position: relative;
   grid-column: 1 / -1;
   min-width: 0;
-  margin-inline: calc(-1 * var(--gutter));
 }
 .cs-case {
   display: block;
   font-size: var(--display-8);
   letter-spacing: -0.05em;
-  margin-left: -7cqw;
 }
 /* overlaps "Case" on purpose */
 .cs-studies {
@@ -724,13 +724,12 @@ button:focus-visible {
   position: relative;
   z-index: 2;
   font-size: var(--display-5);
-  letter-spacing: 0.022em;
-  /* pinned to the right edge; the em margin cuts half the final "s" at
-     every width */
+  letter-spacing: 0.02em;
+  /* pinned to the right edge */
   width: fit-content;
-  margin-top: -15cqw;
+  margin-top: -14cqw;
   margin-left: auto;
-  margin-right: -0.24em;
+
   white-space: nowrap;
 }
 .cs-sub {
