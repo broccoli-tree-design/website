@@ -717,6 +717,8 @@ button:focus-visible {
   display: block;
   font-size: var(--display-8);
   letter-spacing: -0.05em;
+  /* the "C" has side bearing; pull its ink onto the gutter line */
+  margin-left: -0.052em;
 }
 /* overlaps "Case" on purpose */
 .cs-studies {
