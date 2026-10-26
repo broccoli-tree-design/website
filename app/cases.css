@@ -339,9 +339,15 @@ html:has(.case-zoom[open]) {
 .gc {
   --u: calc((100cqw - 2 * var(--gutter)) / 1384);
   --dw: calc(100cqw - 2 * var(--gutter) - 44px);
+  /* how far the frame reaches past the gutters to the edge of the screen */
+  --bleed: calc(50vw - 50cqw + var(--gutter));
   position: relative;
-  /* the next deck is cut off at the frame's sides, but the shadows spill
-     out of its top and bottom (phones scroll it instead, below) */
+  /* the frame runs to the screen's edges and the track starts back at the
+     gutter, so neighbouring decks and the shadows are cut by the screen,
+     not by a margin. The shadows still spill out of the top and bottom
+     (phones scroll it instead, below) */
+  margin-inline: calc(-1 * var(--bleed));
+  padding-inline: var(--bleed);
   overflow-x: clip;
   overflow-y: visible;
   /* the tallest deck plus room above and below it for its shadow */
@@ -571,10 +577,10 @@ html:has(.case-zoom[open]) {
   background: rgba(247, 245, 234, 0.95);
 }
 .gc-arrow-next {
-  right: calc(20 * var(--u));
+  right: calc(var(--bleed) + 20 * var(--u));
 }
 .gc-arrow-prev {
-  left: calc(20 * var(--u));
+  left: calc(var(--bleed) + 20 * var(--u));
 }
 .gc-arrow svg {
   width: 40%;
@@ -627,6 +633,7 @@ html:has(.case-zoom[open]) {
     scroll-snap-type: x mandatory;
     scrollbar-width: none;
     overscroll-behavior-x: contain;
+    scroll-padding-inline: var(--bleed);
   }
   .gc::-webkit-scrollbar {
     display: none;
