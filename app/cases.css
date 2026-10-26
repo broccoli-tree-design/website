@@ -1055,14 +1055,16 @@ html:has(.case-zoom[open]) {
   .gc-thumb {
     padding: 5px;
   }
-  /* the caption wraps to two lines here, so it stays clear of the tile's rim */
+  /* centred on the 64px band where the tiles overlap, one line or two */
   .gc-link {
-    top: 0;
+    top: 6px;
   }
   .gc-ops {
     width: auto;
     min-height: 0;
-    margin: -34px 18px 0;
+    /* rises 46px more than it used to so the caption has a band of its own
+       to sit in; the apps below make that up */
+    margin: -80px 8px 0;
     padding-bottom: 54px;
   }
   .gc-apps {
@@ -1071,7 +1073,7 @@ html:has(.case-zoom[open]) {
     gap: 8px;
     width: auto;
     height: auto;
-    margin: 30px 0 0;
+    margin: 76px 0 0;
   }
   .gc-apps li,
   .gc-apps li.is-fade {
@@ -1085,12 +1087,5 @@ html:has(.case-zoom[open]) {
   .gc-ops .gc-tile-title {
     left: 18px;
     bottom: 16px;
-  }
-}
-/* stacked but wide enough for the caption on one line: centre it on the
-   overlap like the desktop one */
-@media (min-width: 640px) and (max-width: 899.98px) {
-  .gc-link {
-    top: 29px;
   }
 }
