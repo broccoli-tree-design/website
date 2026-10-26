@@ -81,10 +81,10 @@ export default function GlassCarousel({
     el.scrollTo({ left: foc * (deck.offsetWidth + 10) });
   }, [foc, phone]);
 
-  // the row slides so the focused deck sits at the left edge, except the
-  // last, which sits flush right with the one before it cut off at the left
+  // the row slides so the focused deck sits in the middle of the frame, the
+  // ones before and after it on either side
   const slide = foc * (W_SM + GAP);
-  const tx = foc === n - 1 && n > 1 ? -(slide - (FRAME - W_BIG)) : -slide;
+  const tx = (FRAME - W_BIG) / 2 - slide;
 
   const style = {
     "--foc": foc,
@@ -132,8 +132,8 @@ export default function GlassCarousel({
             <div
               key={d.name}
               className={`gc-deck${on ? " is-focus" : ""}${
-                d.solid ? " is-solid" : ""
-              }${d.dark ? " is-dark" : ""}`}
+                Math.abs(i - foc) > 1 ? " is-far" : ""
+              }${d.solid ? " is-solid" : ""}${d.dark ? " is-dark" : ""}`}
               style={{ "--tint": d.tint } as CSSProperties}
             >
               {!on && (
