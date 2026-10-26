@@ -900,7 +900,8 @@ button:focus-visible {
 
   .cta {
     min-height: 70vh;
-    padding: 32vh var(--gutter) 10vh;
+    /* tall enough that the vine up to the nav crosses no copy */
+    padding: 48vh var(--gutter) 10vh;
   }
   .cta-h2 {
     margin: 0;

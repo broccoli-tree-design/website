@@ -41,13 +41,12 @@ export default function CtaConnector() {
       const doc = document.documentElement;
       // beside the button, at the end of the page, in page coordinates
       const endY = doc.scrollHeight - innerHeight + bb.bottom + 30;
-      // phones have no room left of the button, so rise to its centre
+      // the middle of the text's top edge on desktop; phones keep to the
+      // right, clear of the copy above
       const phone = matchMedia(PHONE).matches;
-      // the middle of the text's top edge (phones keep to the right, clear of the copy above)
       const startX = phone ? lineEnd - 20 : (lineStart + lineEnd) / 2;
-      const endX = phone
-        ? bb.left + bb.width / 2
-        : Math.max(bb.left - 60, startX + 80);
+      // rise to the button's centre
+      const endX = bb.left + bb.width / 2;
       // just above the heading's first line
       const startY = first + scrollY - 34;
       const w = endX - startX + 2 * PAD;
