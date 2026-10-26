@@ -793,8 +793,8 @@ html:has(.case-zoom[open]) {
   border: 0;
   border-radius: calc(30 * var(--u));
   background: linear-gradient(
-      color-mix(in srgb, var(--neutral-100) 55%, transparent),
-      color-mix(in srgb, var(--neutral-100) 55%, transparent)
+      color-mix(in srgb, var(--neutral-100) 45%, transparent),
+      color-mix(in srgb, var(--neutral-100) 45%, transparent)
     ),
     rgba(239, 238, 222, 0.42);
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25),
@@ -932,6 +932,9 @@ html:has(.case-zoom[open]) {
   justify-content: center;
   gap: 12px;
   margin: calc(18 * var(--u)) 0 0;
+  /* centred on the overlap with the tile behind, without moving the tile's
+     bottom edge */
+  top: calc(10 * var(--u));
   font-size: max(12px, calc(14 * var(--u)));
   color: var(--green-900);
   text-align: center;
