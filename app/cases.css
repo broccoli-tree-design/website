@@ -113,6 +113,10 @@
 }
 
 .view-tabs {
+  /* above the carousel's frame, which reaches up over the tab bar's lower
+     half (see .gc-panel .gc) */
+  position: relative;
+  z-index: 6;
   display: flex;
   gap: 4px;
   width: max-content;
@@ -748,6 +752,12 @@ html:has(.case-zoom[open]) {
 @media (min-width: 900px) {
   .gc-panel .gc {
     margin-top: calc(-60 * var(--u));
+  }
+}
+/* stacked: the frame's own 24px of top padding is what pulls the decks away */
+@media (max-width: 899.98px) {
+  .gc-panel .gc {
+    margin-top: -24px;
   }
 }
 
