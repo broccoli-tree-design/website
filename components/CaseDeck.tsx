@@ -73,7 +73,6 @@ export default function CaseDeck({ brief }: { brief: ReactNode }) {
   return (
     <>
       <GlassCarousel
-        className="deck-carousel"
         decks={DECKS}
         ratio={1440 / 926}
         focus={focus}

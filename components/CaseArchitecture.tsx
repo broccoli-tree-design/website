@@ -23,7 +23,7 @@ const APPS: [string, number, number, boolean?][] = [
   ["Budget management app", 568, 256],
 ];
 
-export type BoardStep = {
+type BoardStep = {
   /** a module's key in MODULES */
   key: string;
   name: string;
@@ -34,7 +34,7 @@ export type BoardStep = {
   onOpen: () => void;
 };
 
-export type BoardRow = {
+type BoardRow = {
   label: string;
   steps: BoardStep[];
   /** opens the workflow on its brief */
