@@ -340,7 +340,9 @@ button:focus-visible {
   color: var(--accent);
 }
 .nav-links .nav-cta {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   background: var(--button);
   border: 1.5px solid var(--button);
   color: var(--button-ink);
@@ -349,6 +351,11 @@ button:focus-visible {
   font-weight: 600;
   box-shadow: var(--button-shadow);
   transition: background 0.15s, border-color 0.15s, box-shadow 0.3s;
+}
+.nav-cta-icon {
+  width: 14px;
+  height: 14px;
+  flex: none;
 }
 .nav-links .nav-cta:hover {
   background: var(--button-hover);
@@ -636,6 +643,7 @@ button:focus-visible {
 }
 .question-label {
   margin: 0 0 12px;
+  color: var(--warm);
 }
 .question-p {
   max-width: 18ch;
@@ -646,6 +654,7 @@ button:focus-visible {
   margin-top: 36px;
   justify-self: start;
   color: var(--warm);
+  text-transform: none;
   border-bottom: 1px solid currentColor;
   padding-bottom: 4px;
 }
@@ -763,7 +772,7 @@ button:focus-visible {
 }
 .cs-sub {
   display: block;
-  margin: 4vh 0 0 51cqw;
+  margin: 2vh 0 0 51cqw;
   font-style: normal;
 }
 .cs-p {

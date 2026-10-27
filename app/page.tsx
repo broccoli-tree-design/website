@@ -146,6 +146,18 @@ export default function Home() {
               className="nav-cta"
             >
               Let's chat
+              <svg
+                className="nav-cta-icon"
+                viewBox="0 0 16 16"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M6 3H3v10h10v-3M9 3h4v4M13 3L7.5 8.5" />
+              </svg>
             </a>
           </li>
         </ul>
@@ -228,8 +240,8 @@ export default function Home() {
             <span className="text-sub cs-sub"></span>
           </h2>
           <p className="body cs-p">
-            of my past enterprise UX designs that engage clients, deliver
-            services, and increase value beyond efficiency.
+            How to make complex enterprise systems visible and trustworthy to
+            teams and clients?
           </p>
         </section>
 
@@ -318,8 +330,7 @@ export default function Home() {
         <section className="grid section-body question" data-gate="light">
           <p className="text-label question-label">RECENT THOUGHTS</p>
           <p className="text-sub question-p">
-            Legora's Jude Law campaign:
-            <br /> AI products as cult objects?
+            How Legora builds trust by visualizing legal AI via Jude Law
           </p>
           <a
             href="https://lnkd.in/p/eH3XTXzj"
