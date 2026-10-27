@@ -533,8 +533,8 @@ html:has(.case-zoom[open]) {
   gap: calc(4 * var(--u));
 }
 .gc-deck.is-focus .deck-dither {
-  --px: calc(6 * var(--u));
-  gap: calc(10 * var(--u));
+  --px: calc(4.8 * var(--u));
+  gap: calc(8 * var(--u));
 }
 .gc-question {
   color: var(--orange-400);
