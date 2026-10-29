@@ -1314,6 +1314,12 @@ html:has(.case-zoom[open]) {
   transform-origin: 0 0;
   transition: none;
   will-change: transform;
+  /* the glass (its fill, rim and shadow) comes in with the light, so the
+     carton's black faces stand clean */
+  background: color-mix(in srgb, #fff calc(34% * var(--light, 0)), transparent);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / calc(0.4 * var(--light, 0))),
+    0 calc(40 * var(--u)) calc(70 * var(--u)) calc(-34 * var(--u))
+      color-mix(in srgb, var(--green-900) calc(30% * var(--light, 0)), transparent);
 }
 /* a face's caption hangs under it, as on the carousel, and fades in with the
    light (the side faces' at the carousel's step-back) */
@@ -1339,13 +1345,13 @@ html:has(.case-zoom[open]) {
   pointer-events: none;
 }
 .bb-card.is-lid .bb-skin {
-  background: color-mix(in srgb, var(--green-950) 82%, var(--neutral-100));
+  background: #2b302d;
 }
 .bb-card.is-front .bb-skin {
-  background: var(--green-950);
+  background: #070e0b;
 }
 .bb-card.is-side .bb-skin {
-  background: color-mix(in srgb, var(--green-950) 62%, #000);
+  background: linear-gradient(90deg, #070e0b, #0b1612);
 }
 /* the carton's shadow on the ground, soft like the logo's */
 .bb-shadow {
@@ -1354,46 +1360,47 @@ html:has(.case-zoom[open]) {
   top: 0;
   border-radius: 50%;
   background: radial-gradient(
-    closest-side,
-    color-mix(in srgb, var(--green-950) 30%, transparent),
-    transparent
+    ellipse,
+    rgba(16, 46, 39, 0.4),
+    rgba(16, 46, 39, 0) 70%
   );
 }
 /* printed on the front: the cities and the question, sized to the card */
 .bb-print {
   position: absolute;
-  inset: 0;
+  left: 0;
+  top: 0;
   z-index: 3;
-  container-type: size;
+  /* the front's own size, 534×304, undone from the card's (--sx, --sy) so
+     the type is not stretched */
+  width: 534px;
+  height: 304px;
+  transform-origin: 0 0;
+  transform: scale(var(--sx, 1), var(--sy, 1));
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6cqh;
+  gap: 4px;
   opacity: var(--print, 1);
   pointer-events: none;
 }
-.bb-print span {
+.bb-city {
   font-family: var(--serif), serif;
+  font-style: italic;
   font-weight: 700;
-  font-size: min(11cqw, 17cqh);
+  font-size: 54px;
   line-height: 1;
   letter-spacing: -0.01em;
   color: var(--neutral-100);
 }
-/* the question, above the box: it hangs from the box's top edge, which the
-   script sets as --box-h, and goes with the print as the faces part */
+/* the question, centred under the cities, the two sitting centred on the face
+   together */
 .bb-question {
-  position: absolute;
-  left: 50%;
-  bottom: calc(50% + var(--box-h, 0px) / 2 + 28px);
-  transform: translateX(-50%);
-  width: max-content;
-  max-width: 90%;
+  margin-top: 14px;
+  font-size: 16px;
   text-align: center;
-  color: var(--orange-800);
-  opacity: var(--print, 1);
-  pointer-events: none;
+  color: var(--orange-400);
 }
 /* the carousel the faces land in: centred on the stage, shown once they
    have (the script sets .is-landed); until then nothing in it animates, so
