@@ -4,7 +4,7 @@ import { useEffect, useRef, type ReactNode } from "react";
 import { GlassCaption } from "./GlassCarousel";
 
 /** The black box: a cartoon carton, flat-shaded like the logo, three black
- *  faces with the cities it picked printed on its front, the question above.
+ *  faces with the cities it picked and the question printed on its front.
  *  Scrolling through the section takes it apart: the faces pull away from
  *  each other, flatten, and light gets in, each one turning into a glass
  *  card (a bare GlassCarousel deck's) holding a step's screen, its caption
@@ -29,72 +29,135 @@ export type BoxStep = {
   alt: string;
 };
 
-/** The carton, in its edge S: front width, side depth, height */
-const FRONT = 1.5;
-const DEPTH = 0.85;
-const TALL = 1;
-/** the gap between faces and their corners' radius, in S */
-const SEAM = 0.025;
-const ROUND = 0.13;
-/** the whole carton leans a little, like the logo's tree */
-const LEAN = (-4 * Math.PI) / 180;
+/** The carton, as in the B4 design: an 880×560 board with the box a 540×330
+ *  slab, 180 deep, turned -18° about x and -26° about y and seen through a
+ *  perspective of 1500. Each face is a rect on one of the slab's planes, set
+ *  in about 3px from its neighbours; points are in the slab's own px, from
+ *  its top-left-front corner. */
+const BOARD_W = 880;
+const BOARD_H = 560;
+const TURN_X = (-18 * Math.PI) / 180;
+const TURN_Y = (-26 * Math.PI) / 180;
+const EYE = 1500;
+/** the slab's centre and the vanishing point, from the board's centre */
+const SLAB_AT: V = [0, 5];
+const VANISH: V = [0, -56];
+const SLAB_MID: P3 = [270, 165, 0];
+/** how far a face parts from the box, at most (the slab's height) */
+const PART = 330;
 /** how far through the scroll the carousel takes over */
 const DONE = 0.985;
 
-const C30 = Math.cos(Math.PI / 6);
 type V = [number, number];
-const add = (a: V, b: V): V => [a[0] + b[0], a[1] + b[1]];
-const scale = (a: V, k: number): V => [a[0] * k, a[1] * k];
-const len = (a: V) => Math.hypot(a[0], a[1]);
-const lean = (a: V): V => [
-  a[0] * Math.cos(LEAN) - a[1] * Math.sin(LEAN),
-  a[0] * Math.sin(LEAN) + a[1] * Math.cos(LEAN),
-];
+type P3 = [number, number, number];
 
-/** The axes on screen: along the front (down to the right), along the side
- *  (up to the right), and up */
-const ALONG: V = [C30, 0.5];
-const BACK: V = [C30, -0.5];
-const DOWN: V = [0, 1];
-
-/** Each face as a corner o and the card's top edge e1 and left edge e2, in
- *  S, from the front top corner; in step order: front, lid, side */
-const LEFT: V = scale(ALONG, -FRONT);
-const FACES: { o: V; e1: V; e2: V; out: V; shade: string }[] = [
+/** Each face as its top-left corner and the card's top edge e1 and left edge
+ *  e2 on the slab, the way it faces, its two lengths and its corners'
+ *  radius; in step order: front, lid, side */
+const FACES: {
+  tl: P3;
+  e1: P3;
+  e2: P3;
+  out: P3;
+  lx: number;
+  ly: number;
+  r: number;
+  shade: string;
+}[] = [
   {
-    o: LEFT,
-    e1: scale(ALONG, FRONT),
-    e2: scale(DOWN, TALL),
-    out: [-C30, 0.5],
+    tl: [3, 13, 90],
+    e1: [534, 0, 0],
+    e2: [0, 304, 0],
+    out: [0, 0, 1],
+    lx: 534,
+    ly: 304,
+    r: 22,
     shade: "front",
   },
   {
-    o: LEFT,
-    e1: scale(BACK, DEPTH),
-    e2: scale(ALONG, FRONT),
-    out: [0, -1],
+    tl: [3, 10, 86],
+    e1: [0, 0, -172],
+    e2: [534, 0, 0],
+    out: [0, -1, 0],
+    lx: 172,
+    ly: 534,
+    r: 30,
     shade: "lid",
   },
   {
-    o: [0, 0],
-    e1: scale(BACK, DEPTH),
-    e2: scale(DOWN, TALL),
-    out: [C30, 0.5],
+    tl: [540, 13, 86],
+    e1: [0, 0, -172],
+    e2: [0, 304, 0],
+    out: [1, 0, 0],
+    lx: 172,
+    ly: 304,
+    r: 30,
     shade: "side",
   },
 ];
-/** the carton's outline, to centre it */
-const CORNERS: V[] = (
-  [[0, 0], LEFT, add(LEFT, scale(BACK, DEPTH)), scale(BACK, DEPTH)] as V[]
-).flatMap((p): V[] => [p, add(p, scale(DOWN, TALL))]);
-const xs = CORNERS.map((p) => p[0]);
-const ys = CORNERS.map((p) => p[1]);
-const BOX_W = Math.max(...xs) - Math.min(...xs);
-const BOX_H = Math.max(...ys) - Math.min(...ys);
-const MID: V = [
-  (Math.max(...xs) + Math.min(...xs)) / 2,
-  (Math.max(...ys) + Math.min(...ys)) / 2,
-];
+
+/** a point on the slab, on screen, from the board's centre, in the board's px */
+const project = ([x, y, z]: P3): V => {
+  const px = x - SLAB_MID[0];
+  const py = y - SLAB_MID[1];
+  const [cy, sy] = [Math.cos(TURN_Y), Math.sin(TURN_Y)];
+  const [cx, sx] = [Math.cos(TURN_X), Math.sin(TURN_X)];
+  const x1 = px * cy + z * sy;
+  const z1 = -px * sy + z * cy;
+  const y2 = py * cx - z1 * sx;
+  const z2 = py * sx + z1 * cx;
+  const s = EYE / (EYE - z2);
+  return [
+    VANISH[0] + (SLAB_AT[0] + x1 - VANISH[0]) * s,
+    VANISH[1] + (SLAB_AT[1] + y2 - VANISH[1]) * s,
+  ];
+};
+/** a face's corners on screen (top-left, top-right, bottom-right,
+ *  bottom-left), the face moved out of the box by d */
+const corners = (f: (typeof FACES)[number], d = 0): V[] =>
+  (
+    [
+      [0, 0, 0],
+      f.e1,
+      [f.e1[0] + f.e2[0], f.e1[1] + f.e2[1], f.e1[2] + f.e2[2]],
+      f.e2,
+    ] as P3[]
+  ).map((o) =>
+    project([
+      f.tl[0] + o[0] + f.out[0] * d,
+      f.tl[1] + o[1] + f.out[1] * d,
+      f.tl[2] + o[2] + f.out[2] * d,
+    ]),
+  );
+const cs = FACES.flatMap((f) => corners(f));
+const EXT_W =
+  Math.max(...cs.map((c) => c[0])) - Math.min(...cs.map((c) => c[0]));
+const EXT_H =
+  Math.max(...cs.map((c) => c[1])) - Math.min(...cs.map((c) => c[1]));
+
+/** The CSS matrix that lays a w×h card on four corners (top-left, top-right,
+ *  bottom-right, bottom-left): a homography, so the perspective holds */
+const quad = (c: V[], w: number, h: number) => {
+  const [[x0, y0], [x1, y1], [x2, y2], [x3, y3]] = c;
+  const dx1 = x1 - x2;
+  const dx2 = x3 - x2;
+  const dx3 = x0 - x1 + x2 - x3;
+  const dy1 = y1 - y2;
+  const dy2 = y3 - y2;
+  const dy3 = y0 - y1 + y2 - y3;
+  let g = 0;
+  let k = 0;
+  if (Math.abs(dx3) > 1e-9 || Math.abs(dy3) > 1e-9) {
+    const den = dx1 * dy2 - dx2 * dy1;
+    g = (dx3 * dy2 - dx2 * dy3) / den;
+    k = (dx1 * dy3 - dx3 * dy1) / den;
+  }
+  const a = x1 - x0 + g * x1;
+  const b = x3 - x0 + k * x3;
+  const d = y1 - y0 + g * y1;
+  const e = y3 - y0 + k * y3;
+  return `matrix3d(${[a / w, d / w, 0, g / w, b / h, e / h, 0, k / h, 0, 0, 1, 0, x0, y0, 0, 1].join(", ")})`;
+};
 
 const clamp = (v: number) => Math.min(1, Math.max(0, v));
 /** 0→1 as p goes from a to b, eased in and out */
@@ -181,11 +244,13 @@ export default function BlackBox({
 
     const draw = (p: number) => {
       if (!done) measure();
-      // the carton's edge: as big as the stage allows, room left for the cue
-      const S = Math.min(
-        (stg.clientWidth * 0.72) / BOX_W,
-        (stg.clientHeight * 0.52) / BOX_H,
-      );
+      // the board's px on this stage: 1 at 880×560, a phone's fit to its width
+      const sw = stg.clientWidth;
+      const sh = stg.clientHeight;
+      const k =
+        sw < 640
+          ? Math.min((sw * 0.8) / EXT_W, (sh * 0.5) / EXT_H)
+          : Math.min(sw / BOARD_W, sh / BOARD_H);
       // 1 · the faces pull apart
       const apart = span(p, 0.06, 0.3);
       // 2 · they flatten into cards and slide to the carousel's decks
@@ -197,44 +262,44 @@ export default function BlackBox({
         const el = cards.current[i];
         const end = ends[i];
         if (!el || !end) return;
-        // on the carton, in px, centred, leaning, each face pulled in from
-        // its neighbours by the seam
-        const e1 = scale(f.e1, S * (1 - SEAM / len(f.e1)));
-        const e2 = scale(f.e2, S * (1 - SEAM / len(f.e2)));
-        const mid = add(f.o, scale(add(f.e1, f.e2), 0.5));
-        const o = add(
-          scale(add(mid, scale(MID, -1)), S),
-          scale(add(e1, e2), -0.5),
+        // on the carton, parted by the pointer and the scroll, then the
+        // corners slide to the deck's: the matrix follows them
+        const out = PART * (0.05 * peek + 0.28 * apart) * (1 - flat);
+        const deck: V[] = [
+          [end.x, end.y],
+          [end.x + end.w, end.y],
+          [end.x + end.w, end.y + end.h],
+          [end.x, end.y + end.h],
+        ];
+        const at = corners(f, out).map(
+          ([x, y], j): V => [
+            mix(x * k, deck[j][0], flat),
+            mix(y * k, deck[j][1], flat),
+          ],
         );
-        const off = S * (0.05 * peek + 0.28 * apart) * (1 - flat);
-        const [ox, oy] = lean(add(o, scale(f.out, off)));
-        const [ax, ay] = lean(e1);
-        const [bx, by] = lean(e2);
-        const box = [ax / end.w, ay / end.w, bx / end.h, by / end.h, ox, oy];
-        const deck = [1, 0, 0, 1, end.x, end.y];
-        const m = box.map((v, j) => mix(v, deck[j], flat));
-        el.style.transform = `matrix(${m.join(", ")})`;
+        el.style.transform = quad(at, end.w, end.h);
         el.style.width = `${end.w}px`;
         el.style.height = `${end.h}px`;
-        // chunky round corners on the carton, the deck's own once flat
-        const r = ROUND * S;
-        el.style.borderRadius = `${mix(r / (len(e1) / end.w), end.r, flat)}px / ${mix(r / (len(e2) / end.h), end.r, flat)}px`;
+        // the carton's corner radius, the deck's own once flat
+        el.style.borderRadius = `${mix((f.r * end.w) / f.lx, end.r, flat)}px / ${mix((f.r * end.h) / f.ly, end.r, flat)}px`;
+        // what is printed on the face keeps its own shape on the card
+        el.style.setProperty("--sx", String(end.w / f.lx));
+        el.style.setProperty("--sy", String(end.h / f.ly));
         el.style.setProperty("--light", String(light));
         // a deck the carousel keeps out of sight fades on its way there
         el.style.opacity = end.far ? String(1 - span(p, 0.4, 0.66)) : "";
       });
 
       // the carton's shadow on the ground
-      const sh = shadow.current;
-      if (sh) {
-        sh.style.width = `${BOX_W * S * 0.9}px`;
-        sh.style.height = `${S * 0.34}px`;
-        sh.style.transform = `translate(-50%, ${(BOX_H / 2) * S - S * 0.2}px)`;
-        sh.style.opacity = String(1 - apart);
+      const sd = shadow.current;
+      if (sd) {
+        sd.style.width = `${580 * k}px`;
+        sd.style.height = `${56 * k}px`;
+        sd.style.transform = `translate(${(10 - 290) * k}px, ${(188 - 28) * k}px)`;
+        sd.style.opacity = String(1 - apart);
       }
       stg.style.setProperty("--print", String(1 - span(p, 0.24, 0.44)));
       stg.style.setProperty("--cue", String(1 - span(p, 0, 0.05)));
-      stg.style.setProperty("--box-h", `${BOX_H * S}px`);
       stg.classList.toggle("is-moving", p > 0.05);
       if (done !== p >= DONE) {
         done = p >= DONE;
@@ -323,19 +388,19 @@ export default function BlackBox({
                 <GlassCaption num={s.num} name={s.name} desc={s.desc} />
               </div>
               {i === 0 && (
-                // printed on the front: the cities it picked
+                // printed on the front: the cities it picked, and the question
                 <div className="bb-print" aria-hidden="true">
-                  <span>Boston</span>
-                  <span>Baltimore</span>
-                  <span>Providence</span>
+                  <span className="bb-city">Boston</span>
+                  <span className="bb-city">Baltimore</span>
+                  <span className="bb-city">Providence</span>
+                  <span className="bb-question text-label">
+                    Why these campaign markets?
+                  </span>
                 </div>
               )}
             </div>
           ))}
         </div>
-        <p className="bb-question text-label" aria-hidden="true">
-          Why these campaign markets?
-        </p>
         <p className="bb-sr">
           A black box, with Boston, Baltimore and Providence printed on it and
           the question: why these campaign markets? It opens into the three
