@@ -6,8 +6,8 @@ import { useEffect, useRef } from "react";
  *  dissolve into the black. Deterministic grain (seeded), so every load
  *  looks the same. */
 
-const ROWS = 30;
-const PAD = 6;
+const ROWS = 24;
+const PAD = 4;
 const BAYER = [
   [0, 8, 2, 10],
   [12, 4, 14, 6],
@@ -54,13 +54,13 @@ export default function DitherWord({
 
       // the letters, softened so the dither has tones to work with
       ctx.clearRect(0, 0, w, ROWS);
-      ctx.filter = "blur(0.55px)";
+      ctx.filter = "blur(0.4px)";
       ctx.font = font;
       ctx.fillStyle = "#fff";
       ctx.textBaseline = "alphabetic";
       // a stroke thickens the serif's hairlines (the e's bar) so they survive
       ctx.strokeStyle = "#fff";
-      ctx.lineWidth = 1.1;
+      ctx.lineWidth = 0.7;
       ctx.strokeText(word, PAD, Math.round(ROWS * 0.8));
       ctx.fillText(word, PAD, Math.round(ROWS * 0.8));
       ctx.filter = "none";

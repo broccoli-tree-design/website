@@ -1,5 +1,6 @@
 "use client";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
+import BlackBox, { type BoxStep } from "./BlackBox";
 import { CaseTail } from "./CaseParts";
 import DitherWord from "./DitherWord";
 import GlassCarousel, { type GlassDeck } from "./GlassCarousel";
@@ -26,7 +27,9 @@ const DECKS: GlassDeck[] = [
     solid: true,
     dark: true,
     body: (
-      <>
+      <div className="gc-carton">
+        <span className="gc-fold" aria-hidden="true" />
+        <span className="gc-tape" aria-hidden="true" />
         <div
           className="deck-dither"
           role="img"
@@ -36,10 +39,12 @@ const DECKS: GlassDeck[] = [
           <DitherWord word="Baltimore" seed={7} />
           <DitherWord word="Providence" seed={42} />
         </div>
-        <span className="text-label gc-question">
-          Why these campaign markets?
-        </span>
-      </>
+        <div className="gc-sticker">
+          <span className="text-label gc-question">
+            Why these campaign markets?
+          </span>
+        </div>
+      </div>
     ),
   },
   {
@@ -68,19 +73,46 @@ const DECKS: GlassDeck[] = [
   alt: d.img ? `${d.name} step, GeoLift no-code experimentation workflow` : "",
 }));
 
+/** The three steps, for the black box's faces */
+const STEPS: BoxStep[] = DECKS.filter((d) => d.img).map((d) => ({
+  num: d.num,
+  name: d.name,
+  desc: d.desc ?? "",
+  img: d.img!,
+  alt: d.alt ?? "",
+}));
+
 export default function CaseDeck({ brief }: { brief: ReactNode }) {
   const [focus, setFocus] = useState(0);
+  // prototype: the black box in place of the carousel; ?deck shows the
+  // carousel with the carton deck again, to compare
+  const [deck, setDeck] = useState(false);
+  useEffect(() => {
+    setDeck(new URLSearchParams(location.search).has("deck"));
+  }, []);
+  const deckView = (decks: GlassDeck[], bare = false) => (
+    <GlassCarousel
+      decks={decks}
+      ratio={1440 / 926}
+      focus={focus}
+      onFocus={setFocus}
+      noun="step"
+      roomy
+      bare={bare}
+      zoomClass="gc-zoom gc-zoom-screen"
+    />
+  );
   return (
     <>
-      <GlassCarousel
-        decks={DECKS}
-        ratio={1440 / 926}
-        focus={focus}
-        onFocus={setFocus}
-        noun="step"
-        roomy
-        zoomClass="gc-zoom gc-zoom-screen"
-      />
+      {deck ? (
+        deckView(DECKS)
+      ) : (
+        <BlackBox
+          steps={STEPS}
+          landing={deckView(DECKS.slice(1), true)}
+          onLanded={(on) => !on && setFocus(0)}
+        />
+      )}
 
       <CaseTail
         className="deck-result"
