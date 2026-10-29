@@ -30,7 +30,7 @@ export type GlassDeck = {
 
 /** Sizes in the artboard's units, matching cases.css: the side card, the one
  *  in focus and the gap */
-const SIZES = { sm: 400, big: 600, gap: 24 };
+const SIZES = { sm: 440, big: 720, gap: 24 };
 const FRAME = 1384;
 /** the caption under the focused card (the gap and up to two lines of
  *  description) */

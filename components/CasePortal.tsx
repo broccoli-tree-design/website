@@ -58,8 +58,11 @@ const CARD_H = 82;
 const CARD_PITCH = 98;
 const COL_X = 570;
 
-/** how far through the scroll the carousel takes over */
-const DONE = 0.985;
+/** the motion plays out over the first 80% of the scroll; the carousel takes
+ *  over a little after, so its cards can be used well before the section
+ *  ends */
+const RUN = 0.8;
+const DONE = 0.84;
 
 const clamp = (v: number) => Math.min(1, Math.max(0, v));
 /** 0→1 as p goes from a to b, eased in and out */
@@ -163,7 +166,8 @@ export default function CasePortal({
       return run > 0 ? clamp(-r.top / run) : 1;
     };
 
-    const draw = (p: number) => {
+    const draw = (raw: number) => {
+      const p = clamp(raw / RUN);
       if (!done) measure();
       const light = span(p, 0.5, 0.78);
       // the workspace slides away, the rest of the portal lets go
@@ -192,8 +196,8 @@ export default function CasePortal({
         el.style.opacity = b.far ? String(1 - span(p, 0.4, 0.66)) : "";
       });
 
-      if (done !== p >= DONE) {
-        done = p >= DONE;
+      if (done !== raw >= DONE) {
+        done = raw >= DONE;
         stg.classList.toggle("is-landed", done);
         setLanded(done);
         if (!done) {

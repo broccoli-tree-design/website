@@ -832,7 +832,7 @@ html:has(.case-zoom[open]) {
 
 /* glass cards (both cases): each screen fills a clear glass card of its own,
    its number, name and description below. The deck is just the column holding
-   the two: the focused one 600 wide, the sides 400, on the 1384 artboard
+   the two: the focused one 720 wide, the sides 440, on the 1384 artboard
    (GlassCarousel.tsx, SIZES). The sides sit on the focused card's centre line. */
 .gc.is-card .gc-track {
   box-sizing: border-box;
@@ -841,7 +841,7 @@ html:has(.case-zoom[open]) {
 }
 .gc.is-card .gc-deck,
 .gc.is-card .gc-deck.is-focus {
-  width: calc(400 * var(--u));
+  width: calc(440 * var(--u));
   min-height: 0;
   gap: calc(18 * var(--u));
   padding: 0;
@@ -850,10 +850,10 @@ html:has(.case-zoom[open]) {
   box-shadow: none;
 }
 .gc.is-card .gc-deck.is-focus {
-  width: calc(600 * var(--u));
+  width: calc(720 * var(--u));
 }
 .gc.is-card .gc-deck:not(.is-focus) {
-  margin-top: calc(100 / var(--ratio) * var(--u));
+  margin-top: calc(140 / var(--ratio) * var(--u));
 }
 .gc.is-card .gc-deck::before,
 .gc.is-card .gc-deck::after {
@@ -935,11 +935,6 @@ html:has(.case-zoom[open]) {
 /* the sides show a number and a name only */
 .gc-deck:not(.is-focus) .gc-caption .gc-text p {
   display: none;
-}
-@media (min-width: 900px) {
-  .gc.is-card .gc-arrow {
-    display: none;
-  }
 }
 @media (prefers-reduced-motion: no-preference) {
   .gc-caption {
@@ -1328,8 +1323,8 @@ html:has(.case-zoom[open]) {
      its height, so 01 in focus with its caption takes about two thirds of
      it (~540 units tall) */
   --u: min(
-    calc((100cqw - 2 * var(--gutter)) / 1700),
-    calc(100svh * 0.66 / 540)
+    calc((100cqw - 2 * var(--gutter)) / 1384),
+    calc((100svh - 160px) / 683)
   );
   /* reaches the screen's edges like the carousel, so a card landing past the
      gutter is cut by the screen, not the margin */
@@ -1578,7 +1573,7 @@ html:has(.case-zoom[open]) {
     0.5px,
     min(
       calc((100cqw - 2 * var(--gutter)) / 1384),
-      calc((100svh - 440px) / 518)
+      calc((100svh - 380px) / 497)
     )
   );
   --bleed: calc(50vw - 50cqw + var(--gutter));
@@ -1628,6 +1623,12 @@ html:has(.case-zoom[open]) {
 .cm-view .gc {
   --u: inherit;
   margin-top: 0;
+  /* less room above and below than the black box's: the heading and the nav
+     share the screen */
+  height: calc((var(--gc-h) + 40) * var(--u));
+}
+.cm-view .gc.is-card .gc-track {
+  padding-top: calc(20 * var(--u));
 }
 @media (min-width: 900px) {
   /* the row recentred: the carousel lays its cards out on a 1384-unit frame,
@@ -1973,6 +1974,11 @@ html:has(.case-zoom[open]) {
 }
 .cp-fly:not(.is-first) .gc-text p {
   display: none;
+}
+/* the first card's caption is the focused one's size, as on the carousel */
+.cp-fly.is-first .gc-text b,
+.bb-card.is-front .gc-text b {
+  font-size: calc(20 * var(--u));
 }
 
 .cm-sr {

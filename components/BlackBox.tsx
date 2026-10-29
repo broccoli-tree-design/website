@@ -45,8 +45,11 @@ const VANISH: V = [0, -56];
 const SLAB_MID: P3 = [270, 165, 0];
 /** how far a face parts from the box, at most (the slab's height) */
 const PART = 330;
-/** how far through the scroll the carousel takes over */
-const DONE = 0.985;
+/** the motion plays out over the first 80% of the scroll; the carousel takes
+ *  over a little after, so its cards can be used well before the section
+ *  ends */
+const RUN = 0.8;
+const DONE = 0.84;
 
 type V = [number, number];
 type P3 = [number, number, number];
@@ -242,7 +245,8 @@ export default function BlackBox({
       return run > 0 ? clamp(-r.top / run) : 1;
     };
 
-    const draw = (p: number) => {
+    const draw = (raw: number) => {
+      const p = clamp(raw / RUN);
       if (!done) measure();
       // the board's px on this stage: 1 at 880×560, a phone's fit to its width
       const sw = stg.clientWidth;
@@ -301,8 +305,8 @@ export default function BlackBox({
       stg.style.setProperty("--print", String(1 - span(p, 0.24, 0.44)));
       stg.style.setProperty("--cue", String(1 - span(p, 0, 0.05)));
       stg.classList.toggle("is-moving", p > 0.05);
-      if (done !== p >= DONE) {
-        done = p >= DONE;
+      if (done !== raw >= DONE) {
+        done = raw >= DONE;
         stg.classList.toggle("is-landed", done);
         if (!done) {
           // back to 01 for the faces to take over from
