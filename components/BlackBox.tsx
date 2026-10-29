@@ -7,7 +7,7 @@ import { GlassCaption } from "./GlassCarousel";
  *  faces with the cities it picked and the question printed on its front.
  *  Scrolling through the section takes it apart: the faces pull away from
  *  each other, flatten, and light gets in, each one turning into a glass
- *  card (a bare GlassCarousel deck's) holding a step's screen, its caption
+ *  card (a GlassCarousel one) holding a step's screen, its caption
  *  fading in below. The front is 01, the lid 02, the side 03.
  *
  *  The faces land where the carousel (`landing`) lays its decks out,
@@ -182,7 +182,7 @@ export default function BlackBox({
   onLanded,
 }: {
   steps: BoxStep[];
-  /** the roomy glass carousel of the same steps, for the faces to land in */
+  /** the glass carousel of the same steps, for the faces to land in */
   landing: ReactNode;
   /** called as the carousel takes over (true) and hands back (false) */
   onLanded?: (landed: boolean) => void;

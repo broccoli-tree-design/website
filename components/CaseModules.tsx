@@ -90,36 +90,20 @@ const VIEWS: [View, string][] = [
   ["return", CLIENTS.return.label],
 ];
 
-/** A client's decks: the brief in front, then a deck per module */
+/** A client's cards: one per module */
 function decksFor(c: Client): GlassDeck[] {
-  return [
-    {
-      name: c.label,
-      num: "",
-      tint: c.tint,
-      dark: c.dark,
-      body: (
-        <div className="gc-client">
-          <span className="text-label">{c.eyebrow}</span>
-          <span className="text-title gc-client-title">{c.title}</span>
-          <p className="gc-client-desc">{c.desc}</p>
-        </div>
-      ),
+  return c.steps.map(([key, desc], i) => ({
+    name: MODULES[key],
+    num: `0${i + 1}`,
+    desc,
+    img: {
+      src: `/case2/screens/${c.prefix}-${key}.webp`,
+      w: 2144,
+      h: 1064,
+      quality: 90,
     },
-    ...c.steps.map(([key, desc], i) => ({
-      name: MODULES[key],
-      num: `0${i + 1}`,
-      desc,
-      tint: MODULE_TINT[key],
-      img: {
-        src: `/case2/screens/${c.prefix}-${key}.webp`,
-        w: 2144,
-        h: 1064,
-        quality: 90,
-      },
-      alt: `${MODULES[key]} module, ${c.title.replace(/\n/g, " ")}`,
-    })),
-  ];
+    alt: `${MODULES[key]} module, ${c.title.replace(/\n/g, " ")}`,
+  }));
 }
 
 export default function CaseModules({ brief }: { brief: ReactNode }) {
@@ -167,7 +151,7 @@ export default function CaseModules({ brief }: { brief: ReactNode }) {
                 name: MODULES[key],
                 thumb: `/case2/thumbs/${CLIENTS[k].prefix}-${key}.webp`,
                 tint: MODULE_TINT[key],
-                onOpen: () => open(k, i + 1),
+                onOpen: () => open(k, i),
               })),
             }))}
           />
@@ -179,7 +163,6 @@ export default function CaseModules({ brief }: { brief: ReactNode }) {
             focus={focus[view]}
             onFocus={(i) => setFocus((f) => ({ ...f, [view]: i }))}
             noun="module"
-            roomy
             zoomClass="gc-zoom gc-zoom-card"
           />
         )}
