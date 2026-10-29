@@ -1373,19 +1373,27 @@ html:has(.case-zoom[open]) {
   opacity: var(--print, 1);
   pointer-events: none;
 }
-/* (outranks the carousel's .gc-deck.is-focus .deck-dither) */
-.bb-card .bb-print .deck-dither {
-  --px: min(0.6cqw, 0.62cqh);
-  gap: 1.2cqh;
+.bb-print span {
+  font-family: var(--serif), serif;
+  font-weight: 700;
+  font-size: min(11cqw, 17cqh);
+  line-height: 1;
+  letter-spacing: -0.01em;
+  color: var(--neutral-100);
 }
-.bb-sticker {
-  padding: 1.6cqw 3.2cqw;
-  border-radius: 1.6cqw;
-  background: var(--neutral-100);
+/* the question, above the box: it hangs from the box's top edge, which the
+   script sets as --box-h, and goes with the print as the faces part */
+.bb-question {
+  position: absolute;
+  left: 50%;
+  bottom: calc(50% + var(--box-h, 0px) / 2 + 28px);
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 90%;
+  text-align: center;
   color: var(--orange-800);
-  font-size: 4cqw;
-  transform: rotate(-3deg);
-  box-shadow: 0 0.8cqw 1.4cqw -0.6cqw rgba(0, 0, 0, 0.6);
+  opacity: var(--print, 1);
+  pointer-events: none;
 }
 /* the carousel the faces land in: centred on the stage, shown once they
    have (the script sets .is-landed); until then nothing in it animates, so

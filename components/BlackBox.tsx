@@ -1,11 +1,10 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, type ReactNode } from "react";
-import DitherWord from "./DitherWord";
 import { GlassCaption } from "./GlassCarousel";
 
 /** The black box: a cartoon carton, flat-shaded like the logo, three black
- *  faces with the cities it picked and the question printed on its front.
+ *  faces with the cities it picked printed on its front, the question above.
  *  Scrolling through the section takes it apart: the faces pull away from
  *  each other, flatten, and light gets in, each one turning into a glass
  *  card (a bare GlassCarousel deck's) holding a step's screen, its caption
@@ -35,7 +34,7 @@ const FRONT = 1.5;
 const DEPTH = 0.85;
 const TALL = 1;
 /** the gap between faces and their corners' radius, in S */
-const SEAM = 0.07;
+const SEAM = 0.025;
 const ROUND = 0.13;
 /** the whole carton leans a little, like the logo's tree */
 const LEAN = (-4 * Math.PI) / 180;
@@ -235,6 +234,7 @@ export default function BlackBox({
       }
       stg.style.setProperty("--print", String(1 - span(p, 0.24, 0.44)));
       stg.style.setProperty("--cue", String(1 - span(p, 0, 0.05)));
+      stg.style.setProperty("--box-h", `${BOX_H * S}px`);
       stg.classList.toggle("is-moving", p > 0.05);
       if (done !== p >= DONE) {
         done = p >= DONE;
@@ -323,21 +323,19 @@ export default function BlackBox({
                 <GlassCaption num={s.num} name={s.name} desc={s.desc} />
               </div>
               {i === 0 && (
-                // printed on the front: the cities it picked, and the question
-                <div className="bb-print">
-                  <div className="deck-dither">
-                    <DitherWord word="Boston" seed={21} />
-                    <DitherWord word="Baltimore" seed={7} />
-                    <DitherWord word="Providence" seed={42} />
-                  </div>
-                  <span className="bb-sticker text-label">
-                    Why these campaign markets?
-                  </span>
+                // printed on the front: the cities it picked
+                <div className="bb-print" aria-hidden="true">
+                  <span>Boston</span>
+                  <span>Baltimore</span>
+                  <span>Providence</span>
                 </div>
               )}
             </div>
           ))}
         </div>
+        <p className="bb-question text-label" aria-hidden="true">
+          Why these campaign markets?
+        </p>
         <p className="bb-sr">
           A black box, with Boston, Baltimore and Providence printed on it and
           the question: why these campaign markets? It opens into the three
