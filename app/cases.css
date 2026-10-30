@@ -645,15 +645,24 @@ html:has(.case-zoom[open]) {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid color-mix(in srgb, var(--green-900) 35%, transparent);
+  border: 0;
   border-radius: 50%;
-  background: color-mix(in srgb, var(--neutral-100) 82%, transparent);
+  /* liquid glass, as the cards: clear fill with a blur, a white ring and a
+     lit rim */
+  background: color-mix(in srgb, #fff 34%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6),
+    inset 0 2px 1px rgba(255, 255, 255, 0.85),
+    inset 0 -2px 1px rgba(255, 255, 255, 0.3),
+    inset 0 0 14px rgba(255, 255, 255, 0.28),
+    0 10px 20px -10px color-mix(in srgb, var(--green-900) 38%, transparent);
   transform: translateY(-50%);
   cursor: pointer;
   transition: background 0.2s;
 }
 .gc-arrow:hover {
-  background: rgba(247, 245, 234, 0.95);
+  background: color-mix(in srgb, #fff 55%, transparent);
 }
 .gc-arrow-next {
   right: calc(var(--bleed) + 20 * var(--u));
@@ -665,7 +674,7 @@ html:has(.case-zoom[open]) {
   width: 40%;
   height: 40%;
   fill: none;
-  stroke: var(--green-900);
+  stroke: var(--ink);
   stroke-width: 2.4;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -841,9 +850,10 @@ html:has(.case-zoom[open]) {
 }
 .gc.is-card .gc-deck,
 .gc.is-card .gc-deck.is-focus {
+  --ink: inherit;
   width: calc(var(--gc-sm, 590) * var(--u));
   min-height: 0;
-  gap: calc(18 * var(--u));
+  gap: calc(22 * var(--u));
   padding: 0;
   border-radius: 0;
   background: none;
@@ -909,15 +919,17 @@ html:has(.case-zoom[open]) {
 }
 .gc-caption {
   display: flex;
-  gap: calc(16 * var(--u));
+  gap: calc(18 * var(--u));
   align-items: flex-start;
   padding-inline: calc(6 * var(--u));
-  color: var(--green-950);
+  /* the page's own text colours, not the screens' near-black: the number and
+     name in the ink, the description in the body copy's muted tone */
+  color: var(--ink);
 }
 .gc-caption .gc-num {
   flex: none;
   min-height: 0;
-  font-size: calc(34 * var(--u));
+  font-size: max(24px, calc(34 * var(--u)));
 }
 .gc-caption .gc-text,
 .gc-deck.is-focus .gc-caption .gc-text {
@@ -925,14 +937,15 @@ html:has(.case-zoom[open]) {
 }
 .gc-caption .gc-text b {
   margin-bottom: calc(4 * var(--u));
-  font-size: calc(17 * var(--u));
+  font-size: max(var(--text-sm), calc(18 * var(--u)));
 }
 .gc-deck.is-focus .gc-caption .gc-text b {
-  font-size: calc(20 * var(--u));
+  font-size: max(var(--text-md), calc(22 * var(--u)));
 }
 .gc-caption .gc-text p,
 .gc-deck.is-focus .gc-caption .gc-text p {
-  font-size: calc(15 * var(--u));
+  font-size: max(var(--text-sm), calc(16 * var(--u)));
+  color: var(--muted);
 }
 /* the sides show a number and a name only */
 .gc-deck:not(.is-focus) .gc-caption .gc-text p {
@@ -1326,7 +1339,7 @@ html:has(.case-zoom[open]) {
      it (~540 units tall) */
   --u: min(
     calc((100cqw - 2 * var(--gutter)) / 1384),
-    calc((100svh - 130px) / 712)
+    calc((100svh - 130px) / 720)
   );
   /* reaches the screen's edges like the carousel, so a card landing past the
      gutter is cut by the screen, not the margin */
@@ -1370,7 +1383,7 @@ html:has(.case-zoom[open]) {
   position: absolute;
   left: 0;
   right: 0;
-  top: calc(100% + 18 * var(--u));
+  top: calc(100% + 22 * var(--u));
   opacity: var(--light, 0);
   pointer-events: none;
 }
@@ -1530,13 +1543,18 @@ html:has(.case-zoom[open]) {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 14px;
+  padding: 0 0 4px;
   border: 0;
-  border-radius: 999px;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
   background: transparent;
-  color: var(--green-950);
+  /* the site's own link: the label type, the warm colour, an underline (as
+     "Read the article") */
+  color: var(--warm);
   font: inherit;
-  font-size: 14px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.03em;
   cursor: pointer;
 }
 .bb-cue svg {
@@ -1597,7 +1615,7 @@ html:has(.case-zoom[open]) {
     0.5px,
     min(
       calc((100cqw - 2 * var(--gutter)) / 1384),
-      calc((100svh - 280px) / 531)
+      calc((100svh - 280px) / 527)
     )
   );
   /* the portal board alone is bigger, about 60% of the screen's height like
@@ -1693,11 +1711,11 @@ html:has(.case-zoom[open]) {
 .cm-title {
   margin: 0;
   font-family: var(--serif), serif;
-  font-weight: 500;
-  font-size: 54px;
-  line-height: 1.05;
-  letter-spacing: -0.01em;
-  color: var(--green-950);
+  font-weight: 600;
+  font-size: max(34px, var(--display-1));
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
 }
 .cm-title em {
   font-weight: 700;
@@ -1712,8 +1730,9 @@ html:has(.case-zoom[open]) {
   max-width: 560px;
   margin: 0 auto;
   font-size: var(--text-md);
-  line-height: 1.6;
-  color: var(--neutral-700);
+  line-height: 1.7;
+  color: var(--muted);
+  text-wrap: pretty;
 }
 
 /* the two workflows as one toggle above the heading */
@@ -1726,8 +1745,14 @@ html:has(.case-zoom[open]) {
   display: inline-flex;
   gap: 2px;
   padding: 3px;
-  border: 1px solid #9aa595;
   border-radius: 999px;
+  background: color-mix(in srgb, #fff 34%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6),
+    inset 0 2px 1px rgba(255, 255, 255, 0.85),
+    inset 0 -2px 1px rgba(255, 255, 255, 0.3),
+    0 10px 20px -12px color-mix(in srgb, var(--green-900) 38%, transparent);
 }
 .cm-tab {
   appearance: none;
@@ -1772,7 +1797,7 @@ html:has(.case-zoom[open]) {
   --u: var(--pu);
   height: calc(520 * var(--u));
   transform: translate(-50%, -52%);
-  color: var(--green-950);
+  color: var(--ink);
   font-size: max(10px, calc(12 * var(--u)));
 }
 .cp-ws,
@@ -2093,7 +2118,7 @@ html:has(.case-zoom[open]) {
   position: absolute;
   left: 0;
   right: 0;
-  top: calc(100% + 18 * var(--u));
+  top: calc(100% + 22 * var(--u));
   opacity: var(--light, 0);
 }
 .cp-fly:not(.is-first) .gc-text p {
@@ -2130,13 +2155,18 @@ html:has(.case-zoom[open]) {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 14px;
+  padding: 0 0 4px;
   border: 0;
-  border-radius: 999px;
+  border-bottom: 1px solid currentColor;
+  border-radius: 0;
   background: transparent;
-  color: var(--green-950);
+  /* the site's own link: the label type, the warm colour, an underline (as
+     "Read the article") */
+  color: var(--warm);
   font: inherit;
-  font-size: 14px;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  letter-spacing: 0.03em;
   cursor: pointer;
 }
 .cm-cue svg {
@@ -2195,9 +2225,6 @@ html:has(.case-zoom[open]) {
   .cm-stage .cm-view .gc {
     visibility: visible;
   }
-  .cm-title {
-    font-size: 38px;
-  }
   .cm-lede {
     font-size: var(--text-sm);
   }
@@ -2212,33 +2239,6 @@ html:has(.case-zoom[open]) {
    motion (CasePortal.tsx), so it needs to reach the board */
 .cm-stage:not(.is-landed) .cp {
   pointer-events: auto;
-}
-
-/* case 2's captions: larger, and closer under the card. The landing cards
-   (.cp-cap) are the same, so they hand over without a jump */
-.cm-view .gc-caption,
-.cp-cap .gc-caption {
-  gap: calc(18 * var(--u));
-}
-.cm-view .gc-caption .gc-num,
-.cp-cap .gc-caption .gc-num {
-  font-size: calc(42 * var(--u));
-}
-.cm-view .gc-caption .gc-text b,
-.cp-cap .gc-caption .gc-text b {
-  font-size: calc(21 * var(--u));
-}
-.cm-view .gc-deck.is-focus .gc-caption .gc-text b,
-.cp-cap .gc-caption .gc-text b {
-  font-size: calc(26 * var(--u));
-}
-.cm-view .gc-caption .gc-text p,
-.cm-view .gc-deck.is-focus .gc-caption .gc-text p,
-.cp-cap .gc-caption .gc-text p {
-  font-size: calc(19 * var(--u));
-}
-.cm-view .gc.is-card .gc-deck {
-  gap: calc(12 * var(--u));
 }
 
 /* case 2's cards are smaller, the focused one centred with the arrows on its

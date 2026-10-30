@@ -35,7 +35,7 @@ export type GlassSizes = typeof SIZES;
 const FRAME = 1384;
 /** the caption under the focused card (the gap, the name and a line of
  *  description) */
-const CAPTION = 72;
+const CAPTION = 80;
 
 export default function GlassCarousel({
   decks,
@@ -82,7 +82,7 @@ export default function GlassCarousel({
   const style = {
     "--foc": foc,
     "--tx": tx,
-    "--gc-h": sz.big / ratio + CAPTION + (sizes ? 14 : 0),
+    "--gc-h": sz.big / ratio + CAPTION,
     "--gc-big": sz.big,
     "--gc-sm": sz.sm,
     "--gc-gap": sz.gap,
