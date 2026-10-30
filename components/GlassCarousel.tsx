@@ -3,21 +3,21 @@ import Image from "next/image";
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
 import { CaseZoom, usePhone, useZoom, type CaseStep } from "./CaseParts";
 
-/** Flat glass decks in a row, shared by both case studies. On desktop the
- *  deck in focus is wide, so its screen is easy to read, and the next deck
- *  is cut off by the frame's edge with an arrow over it. On phones one deck
- *  shows at a time with the next peeking in, and a tap on the screen opens
- *  it full size (CaseZoom). All the sizes live in cases.css, on the 1384
- *  artboard's units (--u). */
-/** Phones scroll the row sideways, snapping to a deck; there are no arrows */
+/** Glass cards in a row, shared by both case studies: each screen fills a
+ *  clear glass card of its own, with its number, name and description below.
+ *  On desktop the first card is centred and in focus (wide, so its screen is
+ *  easy to read), the next peeks in at the frame's edge and a click on a side
+ *  card brings it into focus. On phones one card shows at a time with the
+ *  next peeking in, and a tap on the screen opens it full size (CaseZoom).
+ *  All the sizes live in cases.css, on the 1384 artboard's units (--u). */
 
 export type GlassDeck = {
   name: string;
   /** "01", "02"…; empty for a front deck */
   num: string;
   desc?: string;
-  /** the glass tint over the ivory base (a colour) */
-  tint: string;
+  /** the old tinted deck's glass tint over the ivory base (a colour) */
+  tint?: string;
   /** a solid fill instead of glass (the black box) */
   solid?: boolean;
   /** ivory type, for the dark decks */
@@ -28,27 +28,14 @@ export type GlassDeck = {
   body?: ReactNode;
 };
 
-/** Sizes in the artboard's units, matching cases.css: the small deck, the
- *  one in focus and the gap. `bare` decks are closer in size, the sides
- *  about 72% of the focus, so the row reads as one set (see .is-bare). */
-const SIZES = {
-  glass: { sm: 400, big: 1020, gap: 24 },
-  bare: { sm: 460, big: 640, gap: 32 },
-};
+/** Sizes in the artboard's units, matching cases.css: the side card, the one
+ *  in focus and the gap */
+const SIZES = { sm: 590, big: 965, gap: 24 };
+export type GlassSizes = typeof SIZES;
 const FRAME = 1384;
-/** a bare deck's glass padding and the caption below it, in units */
-const BARE_PAD = 12;
-const BARE_CAPTION = 104;
-/** everything above and below the screen in a wide deck / a small one: the
- *  padding, the number, the name and description. `roomy` decks have more
- *  padding (cases.css, .is-roomy). */
-const chrome = (roomy: boolean) => ({
-  big: roomy ? 230 : 202,
-  sm: roomy ? 250 : 236,
-  /** the screen's width: the deck less its side padding */
-  bigW: SIZES.glass.big - (roomy ? 72 : 44),
-  smW: SIZES.glass.sm - (roomy ? 64 : 40),
-});
+/** the caption under the focused card (the gap, the name and a line of
+ *  description) */
+const CAPTION = 80;
 
 export default function GlassCarousel({
   decks,
@@ -57,8 +44,7 @@ export default function GlassCarousel({
   onFocus,
   noun,
   zoomClass,
-  roomy = false,
-  bare = false,
+  sizes,
 }: {
   decks: GlassDeck[];
   /** the screens' width over height */
@@ -68,12 +54,12 @@ export default function GlassCarousel({
   /** for the zoom dialog's label: "step", "module" */
   noun: string;
   zoomClass: string;
-  /** more padding around each deck's content */
-  roomy?: boolean;
-  /** each screen on a plain glass card of its own, untinted, with its
-   *  number, name and description below it */
-  bare?: boolean;
+  /** smaller cards, the focused one centred with a side card cut off on
+   *  each side and the arrows on its edges (case 2); the default is the
+   *  wide card of case 1 */
+  sizes?: GlassSizes;
 }) {
+  const sz = sizes ?? SIZES;
   const phone = usePhone();
   const zoom = useZoom();
   const n = decks.length;
@@ -89,22 +75,17 @@ export default function GlassCarousel({
     el.scrollTo({ left: foc * (deck.offsetWidth + 10) });
   }, [foc, phone]);
 
-  // the row slides so the focused deck sits in the middle of the frame, the
-  // ones before and after it on either side; bare decks all fit, so the row
-  // stays centred and the focused one grows in place
-  const size = SIZES[bare ? "bare" : "glass"];
-  const slide = bare
-    ? ((n - 1) * (size.sm + size.gap)) / 2
-    : foc * (size.sm + size.gap);
-  const tx = (FRAME - size.big) / 2 - slide;
+  // the row slides so the focused card sits in the middle of the frame, the
+  // ones before and after it on either side
+  const tx = (FRAME - sz.big) / 2 - foc * (sz.sm + sz.gap);
 
   const style = {
     "--foc": foc,
     "--tx": tx,
-    "--gc-h": bare
-      ? 2 * BARE_PAD + (size.big - 2 * BARE_PAD) / ratio + BARE_CAPTION
-      : chrome(roomy).big + chrome(roomy).bigW / ratio,
-    "--gc-sm-h": chrome(roomy).sm + chrome(roomy).smW / ratio,
+    "--gc-h": sz.big / ratio + CAPTION,
+    "--gc-big": sz.big,
+    "--gc-sm": sz.sm,
+    "--gc-gap": sz.gap,
     "--ratio": ratio,
   } as CSSProperties;
 
@@ -122,7 +103,7 @@ export default function GlassCarousel({
   return (
     <div
       ref={frame}
-      className={`gc${roomy ? " is-roomy" : ""}${bare ? " is-bare" : ""}`}
+      className={`gc is-card${sizes ? " gc-centered" : ""}`}
       style={style}
     >
       <div className="gc-track">
@@ -166,9 +147,9 @@ export default function GlassCarousel({
             <div
               key={d.name}
               className={`gc-deck${on ? " is-focus" : ""}${
-                !bare && Math.abs(i - foc) > 1 ? " is-far" : ""
+                Math.abs(i - foc) > 1 ? " is-far" : ""
               }${d.solid ? " is-solid" : ""}${d.dark ? " is-dark" : ""}`}
-              style={{ "--tint": d.tint } as CSSProperties}
+              style={d.tint ? ({ "--tint": d.tint } as CSSProperties) : undefined}
             >
               {!on && (
                 <button
@@ -180,19 +161,10 @@ export default function GlassCarousel({
               )}
               {d.body ? (
                 <div className="gc-body">{d.body}</div>
-              ) : bare ? (
+              ) : (
                 <>
                   <div className="gc-glass">{screen}</div>
                   <GlassCaption num={d.num} name={d.name} desc={d.desc} />
-                </>
-              ) : (
-                <>
-                  <span className="gc-num">{d.num}</span>
-                  <div className="gc-text">
-                    <b>{d.name}</b>
-                    <p>{d.desc}</p>
-                  </div>
-                  {screen}
                 </>
               )}
             </div>
@@ -230,8 +202,8 @@ export default function GlassCarousel({
   );
 }
 
-/** A bare deck's number, name and description, under its glass card (the
- *  black box's faces carry the same caption) */
+/** A card's number, name and description, under its glass (the black box's
+ *  faces carry the same caption) */
 export function GlassCaption({
   num,
   name,
@@ -246,7 +218,7 @@ export function GlassCaption({
       <span className="gc-num">{num}</span>
       <div className="gc-text">
         <b>{name}</b>
-        <p>{desc}</p>
+        {desc && <p>{desc}</p>}
       </div>
     </div>
   );

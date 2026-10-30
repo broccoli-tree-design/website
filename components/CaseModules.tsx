@@ -1,22 +1,10 @@
 "use client";
-import { useState, type ReactNode } from "react";
-import CaseArchitecture from "./CaseArchitecture";
+import { useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import CasePortal, { type PortalStep } from "./CasePortal";
 import { CaseTail, MODULES } from "./CaseParts";
 import GlassCarousel, { type GlassDeck } from "./GlassCarousel";
 
-const tint = (color: string, pct: number) =>
-  `color-mix(in srgb, ${color} ${pct}%, transparent)`;
-
-/** Each module's glass tint, wherever it is used: the same colour in both
- *  workflows and on the board */
-const MODULE_TINT = {
-  ideation: tint("var(--neutral-200)", 45),
-  opportunity: tint("var(--green-600)", 22),
-  audience: tint("var(--green-300)", 28),
-  attention: tint("var(--green-800)", 22),
-  channel: tint("var(--orange-400)", 16),
-};
-type ModuleKey = keyof typeof MODULE_TINT;
+type ModuleKey = keyof typeof MODULES;
 
 /** A client's workflow: a brief, then the modules it is built from */
 type Client = {
@@ -24,6 +12,8 @@ type Client = {
   /** the screens' file prefix */
   prefix: "new-client" | "return-client";
   eyebrow: string;
+  /** the heading's emphasised words: "For a <em>new client</em>" */
+  em: string;
   title: string;
   desc: string;
   /** the brief's fill, solid: deep green for Sales, ivory for Planners */
@@ -32,13 +22,15 @@ type Client = {
   steps: [ModuleKey, string][];
 };
 
+
 const CLIENTS: Record<"new" | "return", Client> = {
   new: {
     label: "Sales’ demo",
     prefix: "new-client",
     eyebrow: "For new client",
+    em: "prospective client",
     title: "Buddhist art exhibition campaign Spring 2027",
-    desc: "Sales walks a prospective museum client through a sample exhibition campaign, from brief to channel mix.",
+    desc: "A sample exhibition campaign, from ideation to channel",
     tint: "var(--green-800)",
     dark: true,
     steps: [
@@ -65,8 +57,9 @@ const CLIENTS: Record<"new" | "return", Client> = {
     label: "Planners’ work",
     prefix: "return-client",
     eyebrow: "For returning client",
+    em: "returning client",
     title: "Outdoor backpack\nFall 2027\nChannel Plan",
-    desc: "A backpack brand returns after its spring campaign with results in hand.\nThe strategy and audience are already set, so Planners update attention targets and rebalance channels for the next flight.",
+    desc: "An existing retail campaign that only needs tweaks",
     tint: "var(--neutral-100)",
     dark: false,
     steps: [
@@ -82,108 +75,144 @@ const CLIENTS: Record<"new" | "return", Client> = {
   },
 };
 
-type ClientKey = keyof typeof CLIENTS;
-type View = "arch" | ClientKey;
-const VIEWS: [View, string][] = [
-  ["arch", "Architecture"],
-  ["new", CLIENTS.new.label],
-  ["return", CLIENTS.return.label],
-];
+/** the carousel's card sizes: the focused card 60% of the screen, the sides
+ *  cut off on both sides */
+const CARD_SIZES = { sm: 520, big: 860, gap: 32 };
 
-/** A client's decks: the brief in front, then a deck per module */
+type ClientKey = keyof typeof CLIENTS;
+const CLIENT_KEYS = ["new", "return"] as const;
+
+const screen = (c: Client, key: ModuleKey) => ({
+  src: `/case2/screens/${c.prefix}-${key}.webp`,
+  w: 2144,
+  h: 1064,
+  quality: 90,
+});
+
+/** Sales' demo's five modules, for the portal's cards to become */
+const PORTAL_STEPS: PortalStep[] = CLIENTS.new.steps.map(([key, desc], i) => ({
+  key,
+  num: `0${i + 1}`,
+  name: MODULES[key],
+  desc,
+  img: screen(CLIENTS.new, key),
+}));
+
+/** A client's cards: one per module */
 function decksFor(c: Client): GlassDeck[] {
-  return [
-    {
-      name: c.label,
-      num: "",
-      tint: c.tint,
-      dark: c.dark,
-      body: (
-        <div className="gc-client">
-          <span className="text-label">{c.eyebrow}</span>
-          <span className="text-title gc-client-title">{c.title}</span>
-          <p className="gc-client-desc">{c.desc}</p>
-        </div>
-      ),
+  return c.steps.map(([key, desc], i) => ({
+    name: MODULES[key],
+    num: `0${i + 1}`,
+    desc,
+    img: {
+      src: `/case2/screens/${c.prefix}-${key}.webp`,
+      w: 2144,
+      h: 1064,
+      quality: 90,
     },
-    ...c.steps.map(([key, desc], i) => ({
-      name: MODULES[key],
-      num: `0${i + 1}`,
-      desc,
-      tint: MODULE_TINT[key],
-      img: {
-        src: `/case2/screens/${c.prefix}-${key}.webp`,
-        w: 2144,
-        h: 1064,
-        quality: 90,
-      },
-      alt: `${MODULES[key]} module, ${c.title.replace(/\n/g, " ")}`,
-    })),
-  ];
+    alt: `${MODULES[key]} module, ${c.title.replace(/\n/g, " ")}`,
+  }));
 }
 
 export default function CaseModules({ brief }: { brief: ReactNode }) {
-  const [view, setView] = useState<View>("arch");
-  // the deck in focus per client, kept while switching tabs
+  const [view, setView] = useState<ClientKey>("new");
+  // the card in focus per client, kept while switching tabs
   const [focus, setFocus] = useState({ new: 0, return: 0 });
+  const tabs = useRef<Record<ClientKey, HTMLButtonElement | null>>({
+    new: null,
+    return: null,
+  });
 
-  const open = (client: ClientKey, deck: number) => {
-    setFocus((f) => ({ ...f, [client]: deck }));
-    setView(client);
+  // arrow keys (either axis, the tabs stack on desktop and sit in a row on
+  // phones), Home and End move between the tabs and open the one they land on
+  const onTabKey = (e: KeyboardEvent) => {
+    const i = CLIENT_KEYS.indexOf(view);
+    const to =
+      e.key === "ArrowRight" || e.key === "ArrowDown"
+        ? (i + 1) % 2
+        : e.key === "ArrowLeft" || e.key === "ArrowUp"
+          ? (i + 1) % 2
+          : e.key === "Home"
+            ? 0
+            : e.key === "End"
+              ? 1
+              : -1;
+    if (to < 0) return;
+    e.preventDefault();
+    setView(CLIENT_KEYS[to]);
+    tabs.current[CLIENT_KEYS[to]]?.focus();
   };
+
+  const client = CLIENTS[view];
+  const landing = (
+    <div className="cm-landing">
+      <div className="cm-nav">
+        <div
+          role="tablist"
+          aria-label="Workflows"
+          className="cm-tabs"
+          onKeyDown={onTabKey}
+        >
+          {CLIENT_KEYS.map((k) => (
+            <button
+              key={k}
+              ref={(el) => {
+                tabs.current[k] = el;
+              }}
+              type="button"
+              role="tab"
+              id={`cm-tab-${k}`}
+              className="cm-tab"
+              aria-selected={k === view}
+              aria-controls="cm-panel"
+              tabIndex={k === view ? 0 : -1}
+              onClick={() => setView(k)}
+            >
+              {CLIENTS[k].label}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div
+        id="cm-panel"
+        role="tabpanel"
+        aria-labelledby={`cm-tab-${view}`}
+        className="cm-panel"
+      >
+        <div className="cm-head">
+          <h3 className="cm-title">
+            For a <em className={`is-${view}`}>{client.em}</em>
+          </h3>
+          <p className="cm-lede">{client.desc.replace("\n", " ")}</p>
+        </div>
+        <GlassCarousel
+          key={view}
+          decks={decksFor(client)}
+          ratio={2144 / 1064}
+          focus={focus[view]}
+          onFocus={(i) => setFocus((f) => ({ ...f, [view]: i }))}
+          noun="module"
+          zoomClass="gc-zoom gc-zoom-card"
+          sizes={CARD_SIZES}
+        />
+      </div>
+    </div>
+  );
 
   return (
     <>
-      <div className="view-tabs" role="tablist" aria-label="Case study views">
-        {VIEWS.map(([v, label]) => (
-          <button
-            key={v}
-            type="button"
-            role="tab"
-            id={`view-tab-${v}`}
-            className="view-tab"
-            aria-selected={v === view}
-            aria-controls="view-panel"
-            onClick={() => setView(v)}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
-
-      <div
-        id="view-panel"
-        role="tabpanel"
-        aria-labelledby={`view-tab-${view}`}
-        className="gc-panel"
-      >
-        {view === "arch" ? (
-          <CaseArchitecture
-            rows={(["new", "return"] as const).map((k) => ({
-              label: CLIENTS[k].label,
-              onOpen: () => open(k, 0),
-              steps: CLIENTS[k].steps.map(([key], i) => ({
-                key,
-                name: MODULES[key],
-                thumb: `/case2/thumbs/${CLIENTS[k].prefix}-${key}.webp`,
-                tint: MODULE_TINT[key],
-                onOpen: () => open(k, i + 1),
-              })),
-            }))}
-          />
-        ) : (
-          <GlassCarousel
-            key={view}
-            decks={decksFor(CLIENTS[view])}
-            ratio={2144 / 1064}
-            focus={focus[view]}
-            onFocus={(i) => setFocus((f) => ({ ...f, [view]: i }))}
-            noun="module"
-            roomy
-            zoomClass="gc-zoom gc-zoom-card"
-          />
-        )}
-      </div>
+      <CasePortal
+        steps={PORTAL_STEPS}
+        landing={landing}
+        onLanded={(on) => {
+          // back to Sales' demo's first card for the portal's cards to take
+          // over from
+          if (!on) {
+            setView("new");
+            setFocus({ new: 0, return: 0 });
+          }
+        }}
+      />
 
       <CaseTail className="mod-result" label="User base grew" stat="400%">
         {brief}

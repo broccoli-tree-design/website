@@ -7,7 +7,7 @@ import { GlassCaption } from "./GlassCarousel";
  *  faces with the cities it picked and the question printed on its front.
  *  Scrolling through the section takes it apart: the faces pull away from
  *  each other, flatten, and light gets in, each one turning into a glass
- *  card (a bare GlassCarousel deck's) holding a step's screen, its caption
+ *  card (a GlassCarousel one) holding a step's screen, its caption
  *  fading in below. The front is 01, the lid 02, the side 03.
  *
  *  The faces land where the carousel (`landing`) lays its decks out,
@@ -45,8 +45,12 @@ const VANISH: V = [0, -56];
 const SLAB_MID: P3 = [270, 165, 0];
 /** how far a face parts from the box, at most (the slab's height) */
 const PART = 330;
-/** how far through the scroll the carousel takes over */
-const DONE = 0.985;
+/** the motion plays out over the first 80% of the scroll (RUN); its own
+ *  progress p runs 0→1 over that. The faces are cards by 0.7 and the carousel
+ *  crossfades in over them at DONE, so there is no stretch of finished-looking
+ *  cards that cannot be used */
+const RUN = 0.8;
+const DONE = 0.72;
 
 type V = [number, number];
 type P3 = [number, number, number];
@@ -182,7 +186,7 @@ export default function BlackBox({
   onLanded,
 }: {
   steps: BoxStep[];
-  /** the roomy glass carousel of the same steps, for the faces to land in */
+  /** the glass carousel of the same steps, for the faces to land in */
   landing: ReactNode;
   /** called as the carousel takes over (true) and hands back (false) */
   onLanded?: (landed: boolean) => void;
@@ -242,13 +246,14 @@ export default function BlackBox({
       return run > 0 ? clamp(-r.top / run) : 1;
     };
 
-    const draw = (p: number) => {
+    const draw = (raw: number) => {
+      const p = clamp(raw / RUN);
       if (!done) measure();
       // the board's px on this stage: 1 at 880×560, a phone's fit to its width
       const sw = stg.clientWidth;
       const sh = stg.clientHeight;
       const k =
-        sw < 640
+        sw <= 640
           ? Math.min((sw * 0.8) / EXT_W, (sh * 0.5) / EXT_H)
           : Math.min(sw / BOARD_W, sh / BOARD_H);
       // 1 · the faces pull apart

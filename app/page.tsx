@@ -293,7 +293,7 @@ export default function Home() {
                 REDESIGN LEGACY APP
               </span>
               <h3 className="text-display case-h3">
-                Closing the gap between Sales’ demo and Planners’ work
+                Bridging the gap between Sales’ demo and Planners’ work
               </h3>
             </div>
           </div>
