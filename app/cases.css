@@ -832,7 +832,7 @@ html:has(.case-zoom[open]) {
 
 /* glass cards (both cases): each screen fills a clear glass card of its own,
    its number, name and description below. The deck is just the column holding
-   the two: the focused one 720 wide, the sides 440, on the 1384 artboard
+   the two: the focused one 965 wide (67% of a 1440 screen), the sides 590, on the 1384 artboard
    (GlassCarousel.tsx, SIZES). The sides sit on the focused card's centre line. */
 .gc.is-card .gc-track {
   box-sizing: border-box;
@@ -841,7 +841,7 @@ html:has(.case-zoom[open]) {
 }
 .gc.is-card .gc-deck,
 .gc.is-card .gc-deck.is-focus {
-  width: calc(440 * var(--u));
+  width: calc(590 * var(--u));
   min-height: 0;
   gap: calc(18 * var(--u));
   padding: 0;
@@ -850,10 +850,10 @@ html:has(.case-zoom[open]) {
   box-shadow: none;
 }
 .gc.is-card .gc-deck.is-focus {
-  width: calc(720 * var(--u));
+  width: calc(965 * var(--u));
 }
 .gc.is-card .gc-deck:not(.is-focus) {
-  margin-top: calc(140 / var(--ratio) * var(--u));
+  margin-top: calc(187.5 / var(--ratio) * var(--u));
 }
 .gc.is-card .gc-deck::before,
 .gc.is-card .gc-deck::after {
@@ -1324,7 +1324,7 @@ html:has(.case-zoom[open]) {
      it (~540 units tall) */
   --u: min(
     calc((100cqw - 2 * var(--gutter)) / 1384),
-    calc((100svh - 160px) / 683)
+    calc((100svh - 130px) / 712)
   );
   /* reaches the screen's edges like the carousel, so a card landing past the
      gutter is cut by the screen, not the margin */
@@ -1356,9 +1356,11 @@ html:has(.case-zoom[open]) {
   /* the glass (its fill, rim and shadow) comes in with the light, so the
      carton's black faces stand clean */
   background: color-mix(in srgb, #fff calc(34% * var(--light, 0)), transparent);
-  box-shadow: 0 0 0 1px rgb(255 255 255 / calc(0.4 * var(--light, 0))),
+  box-shadow: 0 0 0 1px rgb(255 255 255 / calc(0.6 * var(--light, 0))),
     0 calc(40 * var(--u)) calc(70 * var(--u)) calc(-34 * var(--u))
-      color-mix(in srgb, var(--green-900) calc(30% * var(--light, 0)), transparent);
+      color-mix(in srgb, var(--green-900) calc(38% * var(--light, 0)), transparent),
+    0 calc(8 * var(--u)) calc(18 * var(--u)) calc(-10 * var(--u))
+      color-mix(in srgb, var(--green-900) calc(18% * var(--light, 0)), transparent);
 }
 /* a face's caption hangs under it, as on the carousel, and fades in with the
    light */
@@ -1449,18 +1451,38 @@ html:has(.case-zoom[open]) {
   inset: 0;
 }
 .bb-landing .gc {
+  height: calc((var(--gc-h) + 20) * var(--u));
   position: absolute;
   left: 0;
   right: 0;
   top: 50%;
   margin-top: 0;
-  transform: translateY(-50%);
+  /* the image itself is centred on the screen, its caption under it: the
+     26 units are half of the caption and the frame's padding */
+  transform: translateY(calc(-50% + 26 * var(--u)));
+}
+/* the hand-over is a crossfade between two cards that look the same: the
+   carousel fades in over the faces while they fade out */
+.bb-landing {
+  z-index: 2;
+  transition: opacity 0.3s ease;
 }
 .bb-stage:not(.is-landed) .bb-landing {
+  opacity: 0;
   visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
+}
+.bb-scene {
+  z-index: 1;
+  transition: opacity 0.3s ease;
 }
 .bb-stage.is-landed .bb-scene {
+  opacity: 0;
   visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
+}
+.bb-landing .gc.is-card .gc-track {
+  padding-top: calc(20 * var(--u));
 }
 .bb-stage:not(.is-landed) .bb-landing .gc-track,
 .bb-stage:not(.is-landed) .bb-landing .gc-deck {
@@ -1573,7 +1595,7 @@ html:has(.case-zoom[open]) {
     0.5px,
     min(
       calc((100cqw - 2 * var(--gutter)) / 1384),
-      calc((100svh - 380px) / 497)
+      calc((100svh - 392px) / 571)
     )
   );
   --bleed: calc(50vw - 50cqw + var(--gutter));
@@ -1599,6 +1621,8 @@ html:has(.case-zoom[open]) {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  /* clear of the site's header */
+  padding-top: 56px;
 }
 .cm-landing {
   display: flex;
@@ -1613,8 +1637,16 @@ html:has(.case-zoom[open]) {
 .cm-stage.is-landed .cm-nav {
   opacity: 1;
 }
+.cm-view {
+  z-index: 2;
+}
+.cm-view .gc {
+  transition: opacity 0.3s ease;
+}
 .cm-stage:not(.is-landed) .cm-view .gc {
+  opacity: 0;
   visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
 }
 .cm-stage:not(.is-landed) .cm-view .gc-track,
 .cm-stage:not(.is-landed) .cm-view .gc-deck {
@@ -1625,7 +1657,7 @@ html:has(.case-zoom[open]) {
   margin-top: 0;
   /* less room above and below than the black box's: the heading and the nav
      share the screen */
-  height: calc((var(--gc-h) + 40) * var(--u));
+  height: calc((var(--gc-h) + 20) * var(--u));
 }
 .cm-view .gc.is-card .gc-track {
   padding-top: calc(20 * var(--u));
@@ -1684,7 +1716,7 @@ html:has(.case-zoom[open]) {
   column-gap: 20px;
   row-gap: 8px;
   justify-content: center;
-  margin-top: -4px;
+  margin-top: 8px;
 }
 .cm-tabs {
   grid-column: 1;
@@ -1937,8 +1969,14 @@ html:has(.case-zoom[open]) {
 .cm-stage:not(.is-ready) .cm-flyers {
   visibility: hidden;
 }
+.cm-flyers {
+  z-index: 1;
+  transition: opacity 0.3s ease;
+}
 .cm-stage.is-landed .cm-flyers {
+  opacity: 0;
   visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s 0.3s;
 }
 .cp-fly {
   position: absolute;
@@ -1949,7 +1987,9 @@ html:has(.case-zoom[open]) {
   background: color-mix(in srgb, #fff calc(34% * var(--light, 0)), transparent);
   box-shadow: 0 0 0 1px rgb(255 255 255 / calc(0.6 * var(--light, 0))),
     0 calc(40 * var(--u)) calc(70 * var(--u)) calc(-34 * var(--u))
-      color-mix(in srgb, var(--green-900) calc(38% * var(--light, 0)), transparent);
+      color-mix(in srgb, var(--green-900) calc(38% * var(--light, 0)), transparent),
+    0 calc(8 * var(--u)) calc(18 * var(--u)) calc(-10 * var(--u))
+      color-mix(in srgb, var(--green-900) calc(18% * var(--light, 0)), transparent);
 }
 .cp-fly::before {
   opacity: var(--light, 0);

@@ -19,19 +19,19 @@ const DECKS: GlassDeck[] = [
   {
     name: "Confirm data",
     num: "01",
-    desc: "Input client’s historical data to train the baseline model",
+    desc: "Marketing scientist inputs client’s historical data to train the baseline model",
     img: shot("confirm-data"),
   },
   {
     name: "Set parameters",
     num: "02",
-    desc: "Map client knowledge to product language",
+    desc: "Marketing scientist maps client knowledge to product language",
     img: shot("set-parameters"),
   },
   {
     name: "Select markets",
     num: "03",
-    desc: "Review key metrics with clients and select markets collaboratively",
+    desc: "Marketing scientist and client review key metrics and select markets collaboratively",
     img: shot("select-markets"),
   },
 ].map((d) => ({

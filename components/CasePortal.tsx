@@ -58,11 +58,12 @@ const CARD_H = 82;
 const CARD_PITCH = 98;
 const COL_X = 570;
 
-/** the motion plays out over the first 80% of the scroll; the carousel takes
- *  over a little after, so its cards can be used well before the section
- *  ends */
+/** the motion plays out over the first 80% of the scroll (RUN); its own
+ *  progress p runs 0→1 over that. The cards are in place by 0.7 and the
+ *  carousel crossfades in over them at DONE, so there is no stretch of
+ *  finished-looking cards that cannot be used */
 const RUN = 0.8;
-const DONE = 0.84;
+const DONE = 0.72;
 
 const clamp = (v: number) => Math.min(1, Math.max(0, v));
 /** 0→1 as p goes from a to b, eased in and out */
@@ -169,14 +170,14 @@ export default function CasePortal({
     const draw = (raw: number) => {
       const p = clamp(raw / RUN);
       if (!done) measure();
-      const light = span(p, 0.5, 0.78);
+      const light = span(p, 0.4, 0.7);
       // the workspace slides away, the rest of the portal lets go
       stg.style.setProperty("--ws", String(span(p, 0.04, 0.4)));
       stg.style.setProperty("--link", String(span(p, 0.04, 0.24)));
       stg.style.setProperty("--rest", String(span(p, 0.14, 0.5)));
       stg.style.setProperty("--panel", String(span(p, 0.4, 0.72)));
       stg.style.setProperty("--cue", String(1 - span(p, 0, 0.05)));
-      stg.style.setProperty("--chrome", String(span(p, 0.74, 0.96)));
+      stg.style.setProperty("--chrome", String(span(p, 0.5, 0.7)));
       stg.classList.add("is-ready");
       stg.classList.toggle("is-moving", p > 0.05);
 
@@ -185,7 +186,7 @@ export default function CasePortal({
         const a = starts[i];
         const b = ends[i];
         if (!el || !a || !b) return;
-        const t = span(p, 0.2 + 0.035 * i, 0.74);
+        const t = span(p, 0.12 + 0.03 * i, 0.58 + 0.015 * i);
         const lift = Math.sin(Math.PI * t) * 22;
         el.style.transform = `translate(${mix(a.x, b.x, t)}px, ${mix(a.y, b.y, t) - lift}px)`;
         el.style.width = `${mix(a.w, b.w, t)}px`;
@@ -196,8 +197,8 @@ export default function CasePortal({
         el.style.opacity = b.far ? String(1 - span(p, 0.4, 0.66)) : "";
       });
 
-      if (done !== raw >= DONE) {
-        done = raw >= DONE;
+      if (done !== p >= DONE) {
+        done = p >= DONE;
         stg.classList.toggle("is-landed", done);
         setLanded(done);
         if (!done) {
