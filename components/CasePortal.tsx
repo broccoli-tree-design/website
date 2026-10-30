@@ -2,11 +2,12 @@
 import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { GlassCaption } from "./GlassCarousel";
+import CaseWorkspace, { u } from "./CaseWorkspace";
 
 /** Case 2's first view: the client portal, abstracted. A dark "Daily
- *  operations workspace" holds the thirteen apps as pills, joined by a dashed
- *  "Shared data" link to the "Client portal", whose stage columns hold the
- *  modules as skeleton cards. Only five carry names (the ones Sales' demo
+ *  operations workspace" holds the apps and the loose work around them,
+ *  joined by two dotted arcs ("Shared data") to the "Client portal", whose
+ *  stage columns hold the modules as skeleton cards. Only five carry names (the ones Sales' demo
  *  walks through), so it shows how many modules there are without giving the
  *  screens away.
  *
@@ -27,26 +28,10 @@ export type PortalStep = {
   img: { src: string; w: number; h: number; quality?: number };
 };
 
-const APPS = [
-  "Consumer insights app",
-  "Audience data app",
-  "Brand tracking app",
-  "Cross channel planning app",
-  "Cultural trends app",
-  "Media consumption app",
-  "Investment planning app",
-  "Taxonomy app",
-  "Optimization app",
-  "Social listening app",
-  "Creative library app",
-  "Flighting app",
-  "Budget management app",
-];
-
 /** The portal's campaign-stage columns and their cards: a module's key, or
  *  an unnamed skeleton */
 const COLS: { name: string; cards: (string | null)[] }[] = [
-  { name: "Pitch", cards: ["ideation", "opportunity", null] },
+  { name: "Brief", cards: ["ideation", "opportunity", null] },
   { name: "Audience", cards: ["audience", null] },
   { name: "Plan", cards: ["attention", "channel"] },
   { name: "Activate", cards: [null, null, null] },
@@ -72,9 +57,6 @@ const span = (p: number, a: number, b: number) => {
   return t * t * (3 - 2 * t);
 };
 const mix = (a: number, b: number, t: number) => a + (b - a) * t;
-
-/** a length in the artboard's units */
-const u = (n: number) => `calc(${n} * var(--u))`;
 
 type Rect = { x: number; y: number; w: number; h: number };
 type End = Rect & { r: number; far: boolean };
@@ -254,26 +236,17 @@ export default function CasePortal({
 
         <div className="cm-portal" aria-hidden="true">
           <div className="cp">
-            <div className="cp-ws">
-              <span className="cp-tag">Daily operations workspace</span>
-              {APPS.map((name, i) => {
-                const right = i % 2 === 1;
-                return (
-                  <span
-                    key={name}
-                    className="cp-chip"
-                    style={{
-                      left: u(right ? 200 : 16),
-                      top: u(64 + Math.floor(i / 2) * 58 + (right ? 29 : 0)),
-                    }}
-                  >
-                    {name}
-                  </span>
-                );
-              })}
-            </div>
+            {/* first, so the arcs tuck in behind the workspace and the panel */}
             <div className="cp-link">
               <span className="cp-link-label">Shared data</span>
+              <svg viewBox="0 0 264 160">
+                <path d="M32 140A100 120 0 0 1 232 140" />
+                <path d="M32 154A100 120 0 0 1 232 154" />
+              </svg>
+            </div>
+            <div className="cp-ws">
+              <span className="cp-tag">Daily operations workspace</span>
+              <CaseWorkspace />
             </div>
             <div className="cp-panel">
               <span className="cp-tag">Client portal</span>
@@ -342,8 +315,8 @@ export default function CasePortal({
         </div>
 
         <p className="cm-sr">
-          The client portal, abstracted: a daily operations workspace of
-          thirteen apps and a client portal of modules in the stages Pitch,
+          The client portal, abstracted: a messy daily operations workspace of
+          apps, emails, notes and files, and a client portal of modules in the stages Brief,
           Audience, Plan, Activate and Optimize, joined by shared data. Scrolling
           opens the portal into Sales’ demo and Planners’ work, below.
         </p>
