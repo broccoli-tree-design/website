@@ -253,7 +253,7 @@ export default function BlackBox({
       const sw = stg.clientWidth;
       const sh = stg.clientHeight;
       const k =
-        sw < 640
+        sw <= 640
           ? Math.min((sw * 0.8) / EXT_W, (sh * 0.5) / EXT_H)
           : Math.min(sw / BOARD_W, sh / BOARD_H);
       // 1 · the faces pull apart

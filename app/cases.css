@@ -55,7 +55,7 @@
 }
 .result-stat {
   font-size: var(--display-4);
-  color: var(--warm);
+  color: var(--accent);
 }
 
 /* below 900px the case studies stack */
@@ -711,14 +711,14 @@ html:has(.case-zoom[open]) {
 
 /* only the decks either side of the focused one show; the rest wait out of
    sight (phones scroll through all of them, below) */
-@media (min-width: 900px) {
+@media (min-width: 641px) {
   .gc-deck.is-far {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
   }
 }
-@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+@media (min-width: 641px) and (prefers-reduced-motion: no-preference) {
   .gc-deck {
     transition: width 0.7s var(--ease-out), min-height 0.7s var(--ease-out),
       opacity 0.5s ease, visibility 0.5s;
@@ -726,7 +726,7 @@ html:has(.case-zoom[open]) {
 }
 
 /* phones: one deck at a time, the next peeking in */
-@media (max-width: 899.98px) {
+@media (max-width: 640px) {
   /* the frame scrolls sideways and snaps to a deck, the next peeking in */
   .gc {
     height: auto;
@@ -956,7 +956,7 @@ html:has(.case-zoom[open]) {
     transition: opacity 0.5s ease;
   }
 }
-@media (max-width: 899.98px) {
+@media (max-width: 640px) {
   .gc.is-card .gc-track {
     padding-top: 0;
   }
@@ -1004,13 +1004,13 @@ html:has(.case-zoom[open]) {
 /* the frame leaves 60u above the tallest deck for its shadow; pull it up so
    the focused deck sits as far below the tabs as the architecture board
    does, which keeps the tab bar on screen when a deck fills the viewport */
-@media (min-width: 900px) {
+@media (min-width: 641px) {
   .gc-panel .gc {
     margin-top: calc(-60 * var(--u));
   }
 }
 /* stacked: the frame's own 24px of top padding is what pulls the decks away */
-@media (max-width: 899.98px) {
+@media (max-width: 640px) {
   .gc-panel .gc {
     margin-top: -24px;
   }
@@ -1237,7 +1237,7 @@ html:has(.case-zoom[open]) {
 }
 
 /* phones: the board scrolls sideways, a label above each row */
-@media (max-width: 899.98px) {
+@media (max-width: 640px) {
   .gc-arch {
     --u: 1px;
     gap: 16px;
@@ -1417,8 +1417,8 @@ html:has(.case-zoom[open]) {
   border-radius: 50%;
   background: radial-gradient(
     ellipse,
-    rgba(16, 46, 39, 0.4),
-    rgba(16, 46, 39, 0) 70%
+    color-mix(in srgb, var(--green-900) 40%, transparent),
+    color-mix(in srgb, var(--green-900) 0%, transparent) 70%
   );
 }
 /* printed on the front: the cities and the question, sized to the card */
@@ -1503,7 +1503,7 @@ html:has(.case-zoom[open]) {
 .bb-stage:not(.is-landed) .bb-landing .gc-deck {
   transition: none;
 }
-@media (min-width: 900px) {
+@media (min-width: 641px) {
   /* the height-capped units, and the row recentred: the carousel lays its
      decks out on a 1384-unit frame, now narrower than the screen */
   .bb-landing .gc {
@@ -1575,7 +1575,7 @@ html:has(.case-zoom[open]) {
   outline-offset: 3px;
 }
 /* phones: the carousel's own phone glass (px sizes) */
-@media (max-width: 899.98px) {
+@media (max-width: 640px) {
   .bb-caption {
     top: calc(100% + 14px);
   }
@@ -1686,7 +1686,7 @@ html:has(.case-zoom[open]) {
 .cm-view .gc.is-card .gc-track {
   padding-top: calc(20 * var(--u));
 }
-@media (min-width: 900px) {
+@media (min-width: 641px) {
   /* the row recentred: the carousel lays its cards out on a 1384-unit frame,
      now narrower than the screen */
   .cm-view .gc-track {
@@ -1805,8 +1805,8 @@ html:has(.case-zoom[open]) {
   position: absolute;
   top: 0;
   height: 100%;
-  border-radius: 10px;
-  box-shadow: 0 14px 24px -18px rgba(16, 46, 39, 0.3);
+  border-radius: var(--radius-md);
+  box-shadow: 0 14px 24px -18px color-mix(in srgb, var(--green-900) 30%, transparent);
 }
 .cp-ws {
   left: 0;
@@ -1825,7 +1825,8 @@ html:has(.case-zoom[open]) {
     var(--neutral-200) calc(100% * (1 - var(--panel, 0))),
     transparent
   );
-  box-shadow: 0 14px 24px -18px rgba(16, 46, 39, calc(0.3 * (1 - var(--panel, 0))));
+  box-shadow: 0 14px 24px -18px
+    color-mix(in srgb, var(--green-900) calc(30% * (1 - var(--panel, 0))), transparent);
 }
 .cp-tag {
   position: absolute;
@@ -2017,10 +2018,10 @@ html:has(.case-zoom[open]) {
 .cp-skel {
   box-sizing: border-box;
   padding: calc(12 * var(--u)) calc(11 * var(--u));
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   background: #fff;
-  box-shadow: 0 0 0 1px rgba(16, 46, 39, 0.1),
-    0 10px 20px -14px rgba(16, 46, 39, 0.3);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--green-900) 10%, transparent),
+    0 10px 20px -14px color-mix(in srgb, var(--green-900) 30%, transparent);
 }
 .cp-card {
   position: absolute;
@@ -2243,7 +2244,7 @@ html:has(.case-zoom[open]) {
 
 /* case 2's cards are smaller, the focused one centred with the arrows on its
    two edges, level with its middle (the sizes are GlassCarousel's `sizes`) */
-@media (min-width: 900px) {
+@media (min-width: 641px) {
   .cm-view .gc.gc-centered .gc-arrow {
     top: calc((20 + var(--gc-big) / var(--ratio) / 2) * var(--u));
   }
@@ -2253,5 +2254,18 @@ html:has(.case-zoom[open]) {
   .cm-view .gc.gc-centered .gc-arrow-next {
     right: auto;
     left: calc(50% + var(--gc-big) / 2 * var(--u) - 24px);
+  }
+}
+
+/* phones: the carousel is as tall as its card and caption, not the desktop's
+   fixed height, which cut the caption off */
+@media (max-width: 640px) {
+  .cm-view .gc,
+  .bb-landing .gc {
+    height: auto;
+  }
+  .cm-view .gc.is-card .gc-track,
+  .bb-landing .gc.is-card .gc-track {
+    padding-top: 0;
   }
 }
