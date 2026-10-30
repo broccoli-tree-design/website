@@ -49,6 +49,8 @@ const COL_X = 570;
  *  finished-looking cards that cannot be used */
 const RUN = 0.8;
 const DONE = 0.72;
+/** how far into its opening the pointer carries the portal */
+const PEEK = 0.16;
 
 const clamp = (v: number) => Math.min(1, Math.max(0, v));
 /** 0→1 as p goes from a to b, eased in and out */
@@ -93,6 +95,7 @@ export default function CasePortal({
   const land = useRef<HTMLDivElement>(null);
   const slots = useRef<Record<string, HTMLDivElement | null>>({});
   const flyers = useRef<(HTMLDivElement | null)[]>([]);
+  const hovered = useRef(false);
   const [landed, setLanded] = useState(false);
   const cb = useRef(onLanded);
   useEffect(() => {
@@ -107,6 +110,7 @@ export default function CasePortal({
     const flat = () => still.matches || narrow.matches;
 
     let shown = 0;
+    let peek = 0; // the pointer on the portal, easing 0→1
     let raf = 0;
     let running = false;
     // unknown until the first draw, so it sets the stage's state afresh
@@ -150,7 +154,10 @@ export default function CasePortal({
     };
 
     const draw = (raw: number) => {
-      const p = clamp(raw / RUN);
+      // under the pointer the portal plays the first stretch of its opening,
+      // and settles back; the cue and the stage's state follow the scroll alone
+      const base = clamp(raw / RUN);
+      const p = Math.max(base, peek * PEEK);
       if (!done) measure();
       const light = span(p, 0.4, 0.7);
       // the workspace slides away, the rest of the portal lets go
@@ -158,10 +165,10 @@ export default function CasePortal({
       stg.style.setProperty("--link", String(span(p, 0.04, 0.24)));
       stg.style.setProperty("--rest", String(span(p, 0.14, 0.5)));
       stg.style.setProperty("--panel", String(span(p, 0.4, 0.72)));
-      stg.style.setProperty("--cue", String(1 - span(p, 0, 0.05)));
+      stg.style.setProperty("--cue", String(1 - span(base, 0, 0.05)));
       stg.style.setProperty("--chrome", String(span(p, 0.5, 0.7)));
       stg.classList.add("is-ready");
-      stg.classList.toggle("is-moving", p > 0.05);
+      stg.classList.toggle("is-moving", base > 0.05);
 
       steps.forEach((_, i) => {
         const el = flyers.current[i];
@@ -195,6 +202,7 @@ export default function CasePortal({
       const p = target();
       shown += (p - shown) * (flat() ? 1 : 0.14);
       if (Math.abs(p - shown) < 0.0005) shown = p;
+      peek += ((hovered.current && shown < 0.04 ? 1 : 0) - peek) * 0.12;
       draw(shown);
       raf = running ? requestAnimationFrame(tick) : 0;
     };
@@ -235,7 +243,11 @@ export default function CasePortal({
         </div>
 
         <div className="cm-portal" aria-hidden="true">
-          <div className="cp">
+          <div
+            className="cp"
+            onPointerEnter={() => (hovered.current = true)}
+            onPointerLeave={() => (hovered.current = false)}
+          >
             {/* first, so the arcs tuck in behind the workspace and the panel */}
             <div className="cp-link">
               <span className="cp-link-label">Shared data</span>
@@ -322,7 +334,7 @@ export default function CasePortal({
         </p>
         <div className="cm-cue">
           <button type="button" onClick={openPortal}>
-            Scroll to open
+            Scroll to view client portal
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M5 9l7 7 7-7" />
             </svg>

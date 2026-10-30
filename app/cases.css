@@ -1529,7 +1529,7 @@ html:has(.case-zoom[open]) {
   align-items: center;
   gap: 6px;
   padding: 8px 14px;
-  border: 1px solid color-mix(in srgb, var(--green-950) 20%, transparent);
+  border: 0;
   border-radius: 999px;
   background: transparent;
   color: var(--green-950);
@@ -1598,6 +1598,10 @@ html:has(.case-zoom[open]) {
       calc((100svh - 392px) / 571)
     )
   );
+  /* the portal board alone is bigger, about 60% of the screen's height like
+     the black box (its 1328×520 shape is wider, so on a laptop screen it
+     is the width that stops it, at 94% of it) */
+  --pu: max(0.5px, min(calc(94vw / 1328), calc(60svh / 520)));
   --bleed: calc(50vw - 50cqw + var(--gutter));
   position: relative;
   height: 300vh;
@@ -1822,6 +1826,7 @@ html:has(.case-zoom[open]) {
   left: 50%;
   top: 50%;
   width: calc(1328 * var(--u));
+  --u: var(--pu);
   height: calc(520 * var(--u));
   transform: translate(-50%, -52%);
   color: var(--green-950);
@@ -2133,6 +2138,7 @@ html:has(.case-zoom[open]) {
   opacity: var(--light, 0);
 }
 .cp-skel {
+  --u: var(--pu);
   position: absolute;
   inset: 0;
   z-index: 2;
@@ -2182,7 +2188,7 @@ html:has(.case-zoom[open]) {
   align-items: center;
   gap: 6px;
   padding: 8px 14px;
-  border: 1px solid color-mix(in srgb, var(--green-950) 20%, transparent);
+  border: 0;
   border-radius: 999px;
   background: transparent;
   color: var(--green-950);
@@ -2269,4 +2275,10 @@ html:has(.case-zoom[open]) {
     height: 44px;
     padding: 0;
   }
+}
+
+/* the pointer on the closed portal plays the first stretch of the opening
+   motion (CasePortal.tsx), so it needs to reach the board */
+.cm-stage:not(.is-landed) .cp {
+  pointer-events: auto;
 }
