@@ -78,6 +78,43 @@ function Skeleton({ name }: { name?: string }) {
   );
 }
 
+/** The portal as a still picture, stacked, for phones and tablets (and
+ *  reduced motion): the workspace, the shared data joining it, and the
+ *  portal's stages as rows of cards. Hidden on desktop, where the scroll
+ *  opens the real one. */
+function PortalStill({ steps }: { steps: PortalStep[] }) {
+  return (
+    <div className="cps" aria-hidden="true">
+      <div className="cps-ws">
+        <span className="cp-tag">Daily operations workspace</span>
+        <CaseWorkspace />
+      </div>
+      <div className="cps-link">
+        <svg viewBox="0 0 60 88">
+          <path d="M24 0C6 24 6 64 24 88" />
+          <path d="M38 0C20 24 20 64 38 88" />
+        </svg>
+        <span>Shared data</span>
+      </div>
+      <div className="cps-panel">
+        <span className="cps-tag">Client portal</span>
+        {COLS.map((c) => (
+          <div className="cps-stage" key={c.name}>
+            <span className="cps-head">{c.name}</span>
+            <div className="cps-row">
+              {c.cards.map((key, i) => (
+                <div className="cps-card" key={i}>
+                  <Skeleton name={steps.find((s) => s.key === key)?.name} />
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function CasePortal({
   steps,
   landing,
@@ -94,6 +131,7 @@ export default function CasePortal({
   const stage = useRef<HTMLDivElement>(null);
   const land = useRef<HTMLDivElement>(null);
   const slots = useRef<Record<string, HTMLDivElement | null>>({});
+  const slotsPhone = useRef<Record<string, HTMLDivElement | null>>({});
   const flyers = useRef<(HTMLDivElement | null)[]>([]);
   const hovered = useRef(false);
   const [landed, setLanded] = useState(false);
@@ -106,8 +144,9 @@ export default function CasePortal({
     const sec = section.current!;
     const stg = stage.current!;
     const still = matchMedia("(prefers-reduced-motion: reduce)");
-    const narrow = matchMedia("(max-width: 899.98px)");
-    const flat = () => still.matches || narrow.matches;
+    // phones have the portal stacked, with its own cards to start from
+    const phone = matchMedia("(max-width: 640px)");
+    const flat = () => still.matches;
 
     let shown = 0;
     let peek = 0; // the pointer on the portal, easing 0→1
@@ -130,7 +169,7 @@ export default function CasePortal({
     const measure = () => {
       const o = stg.getBoundingClientRect();
       starts = steps.map((s) => {
-        const el = slots.current[s.key];
+        const el = (phone.matches ? slotsPhone.current : slots.current)[s.key];
         return el ? rel(el.getBoundingClientRect(), o) : { x: 0, y: 0, w: 0, h: 0 };
       });
       const decks = land.current?.querySelectorAll<HTMLElement>(".gc-deck");
@@ -237,6 +276,7 @@ export default function CasePortal({
 
   return (
     <div ref={section} className="cm-scene">
+      <PortalStill steps={steps} />
       <div ref={stage} className="cm-stage">
         <div ref={land} className="cm-view" inert={!landed}>
           {landing}
@@ -293,6 +333,42 @@ export default function CasePortal({
                 </div>
               )),
             )}
+          </div>
+          <div className="cpp">
+            <div className="cpp-ws">
+              <span className="cp-tag">Daily operations workspace</span>
+              <CaseWorkspace />
+            </div>
+            <div className="cpp-link">
+              <svg viewBox="0 0 60 56">
+                <path d="M24 0C10 16 10 40 24 56" />
+                <path d="M38 0C24 16 24 40 38 56" />
+              </svg>
+              <span>Shared data</span>
+            </div>
+            <div className="cpp-panel">
+              <span className="cp-tag">Client portal</span>
+              {COLS.map((c) => (
+                <div className="cpp-stage" key={c.name}>
+                  <span className="cpp-head">{c.name}</span>
+                  <div className="cpp-row">
+                    {c.cards.map((key, i) => (
+                      <div
+                        key={i}
+                        ref={(el) => {
+                          if (key) slotsPhone.current[key] = el;
+                        }}
+                        className={`cpp-card${key ? " is-named" : ""}`}
+                      >
+                        <Skeleton
+                          name={steps.find((s) => s.key === key)?.name}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
