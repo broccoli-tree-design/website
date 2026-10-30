@@ -31,6 +31,7 @@ export type GlassDeck = {
 /** Sizes in the artboard's units, matching cases.css: the side card, the one
  *  in focus and the gap */
 const SIZES = { sm: 590, big: 965, gap: 24 };
+export type GlassSizes = typeof SIZES;
 const FRAME = 1384;
 /** the caption under the focused card (the gap, the name and a line of
  *  description) */
@@ -43,6 +44,7 @@ export default function GlassCarousel({
   onFocus,
   noun,
   zoomClass,
+  sizes,
 }: {
   decks: GlassDeck[];
   /** the screens' width over height */
@@ -52,7 +54,12 @@ export default function GlassCarousel({
   /** for the zoom dialog's label: "step", "module" */
   noun: string;
   zoomClass: string;
+  /** smaller cards, the focused one centred with a side card cut off on
+   *  each side and the arrows on its edges (case 2); the default is the
+   *  wide card of case 1 */
+  sizes?: GlassSizes;
 }) {
+  const sz = sizes ?? SIZES;
   const phone = usePhone();
   const zoom = useZoom();
   const n = decks.length;
@@ -70,12 +77,15 @@ export default function GlassCarousel({
 
   // the row slides so the focused card sits in the middle of the frame, the
   // ones before and after it on either side
-  const tx = (FRAME - SIZES.big) / 2 - foc * (SIZES.sm + SIZES.gap);
+  const tx = (FRAME - sz.big) / 2 - foc * (sz.sm + sz.gap);
 
   const style = {
     "--foc": foc,
     "--tx": tx,
-    "--gc-h": SIZES.big / ratio + CAPTION,
+    "--gc-h": sz.big / ratio + CAPTION,
+    "--gc-big": sz.big,
+    "--gc-sm": sz.sm,
+    "--gc-gap": sz.gap,
     "--ratio": ratio,
   } as CSSProperties;
 
@@ -93,7 +103,7 @@ export default function GlassCarousel({
   return (
     <div
       ref={frame}
-      className="gc is-card"
+      className={`gc is-card${sizes ? " gc-centered" : ""}`}
       style={style}
     >
       <div className="gc-track">

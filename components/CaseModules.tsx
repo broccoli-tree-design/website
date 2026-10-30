@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import CasePortal, { type PortalStep } from "./CasePortal";
 import { CaseTail, MODULES } from "./CaseParts";
@@ -29,9 +28,9 @@ const CLIENTS: Record<"new" | "return", Client> = {
     label: "Sales’ demo",
     prefix: "new-client",
     eyebrow: "For new client",
-    em: "new client",
+    em: "prospective client",
     title: "Buddhist art exhibition campaign Spring 2027",
-    desc: "Sales walks a prospective museum client through a sample exhibition campaign, from brief to channel mix.",
+    desc: "A sample exhibition campaign, from ideation to channel",
     tint: "var(--green-800)",
     dark: true,
     steps: [
@@ -60,7 +59,7 @@ const CLIENTS: Record<"new" | "return", Client> = {
     eyebrow: "For returning client",
     em: "returning client",
     title: "Outdoor backpack\nFall 2027\nChannel Plan",
-    desc: "A backpack brand returns after its spring campaign with results in hand.\nThe strategy and audience are already set, so Planners update attention targets and rebalance channels for the next flight.",
+    desc: "An existing retail campaign that only needs tweaks",
     tint: "var(--neutral-100)",
     dark: false,
     steps: [
@@ -76,17 +75,12 @@ const CLIENTS: Record<"new" | "return", Client> = {
   },
 };
 
+/** the carousel's card sizes: the focused card 55% of the screen, the sides
+ *  cut off on both sides */
+const CARD_SIZES = { sm: 461, big: 770, gap: 29 };
+
 type ClientKey = keyof typeof CLIENTS;
 const CLIENT_KEYS = ["new", "return"] as const;
-
-/** The map's columns: every module either workflow uses, in order */
-const MAP_COLS: ModuleKey[] = [
-  "ideation",
-  "opportunity",
-  "audience",
-  "attention",
-  "channel",
-];
 
 const screen = (c: Client, key: ModuleKey) => ({
   src: `/case2/screens/${c.prefix}-${key}.webp`,
@@ -129,11 +123,6 @@ export default function CaseModules({ brief }: { brief: ReactNode }) {
     return: null,
   });
 
-  const open = (client: ClientKey, card: number) => {
-    setFocus((f) => ({ ...f, [client]: card }));
-    setView(client);
-  };
-
   // arrow keys (either axis, the tabs stack on desktop and sit in a row on
   // phones), Home and End move between the tabs and open the one they land on
   const onTabKey = (e: KeyboardEvent) => {
@@ -157,29 +146,6 @@ export default function CaseModules({ brief }: { brief: ReactNode }) {
   const client = CLIENTS[view];
   const landing = (
     <div className="cm-landing">
-      <div
-        id="cm-panel"
-        role="tabpanel"
-        aria-labelledby={`cm-tab-${view}`}
-        className="cm-panel"
-      >
-        <div className="cm-head">
-          <h3 className="cm-title">
-            For a <em className={`is-${view}`}>{client.em}</em>
-          </h3>
-          <p className="cm-lede">{client.desc.replace("\n", " ")}</p>
-        </div>
-        <GlassCarousel
-          key={view}
-          decks={decksFor(client)}
-          ratio={2144 / 1064}
-          focus={focus[view]}
-          onFocus={(i) => setFocus((f) => ({ ...f, [view]: i }))}
-          noun="module"
-          zoomClass="gc-zoom gc-zoom-card"
-        />
-      </div>
-
       <div className="cm-nav">
         <div
           role="tablist"
@@ -206,48 +172,29 @@ export default function CaseModules({ brief }: { brief: ReactNode }) {
             </button>
           ))}
         </div>
-        {/* the map: a column per module, a row per workflow; each thumbnail
-            jumps to its card */}
-        <div className="cm-map">
-          {MAP_COLS.map((key) => (
-            <span key={key} className="cm-map-head" aria-hidden="true">
-              {MODULES[key]}
-            </span>
-          ))}
-          {CLIENT_KEYS.flatMap((k) =>
-            MAP_COLS.map((key) => {
-              const at = CLIENTS[k].steps.findIndex(([m]) => m === key);
-              const cls = `cm-thumb${k === view ? "" : " is-dim"}${
-                at >= 0 && k === view && at === focus[k] ? " is-here" : ""
-              }`;
-              if (at < 0)
-                return (
-                  <span
-                    key={`${k}-${key}`}
-                    className="cm-thumb is-empty"
-                    aria-hidden="true"
-                  />
-                );
-              return (
-                <button
-                  key={`${k}-${key}`}
-                  type="button"
-                  className={cls}
-                  onClick={() => open(k, at)}
-                  aria-label={`${MODULES[key]}, ${CLIENTS[k].label}`}
-                >
-                  <Image
-                    src={`/case2/thumbs/${CLIENTS[k].prefix}-${key}.webp`}
-                    alt=""
-                    width={360}
-                    height={179}
-                    sizes="88px"
-                  />
-                </button>
-              );
-            }),
-          )}
+      </div>
+      <div
+        id="cm-panel"
+        role="tabpanel"
+        aria-labelledby={`cm-tab-${view}`}
+        className="cm-panel"
+      >
+        <div className="cm-head">
+          <h3 className="cm-title">
+            For a <em className={`is-${view}`}>{client.em}</em>
+          </h3>
+          <p className="cm-lede">{client.desc.replace("\n", " ")}</p>
         </div>
+        <GlassCarousel
+          key={view}
+          decks={decksFor(client)}
+          ratio={2144 / 1064}
+          focus={focus[view]}
+          onFocus={(i) => setFocus((f) => ({ ...f, [view]: i }))}
+          noun="module"
+          zoomClass="gc-zoom gc-zoom-card"
+          sizes={CARD_SIZES}
+        />
       </div>
     </div>
   );
