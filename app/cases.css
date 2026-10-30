@@ -1597,7 +1597,7 @@ html:has(.case-zoom[open]) {
     0.5px,
     min(
       calc((100cqw - 2 * var(--gutter)) / 1384),
-      calc((100svh - 360px) / 474)
+      calc((100svh - 280px) / 531)
     )
   );
   /* the portal board alone is bigger, about 60% of the screen's height like
@@ -1628,7 +1628,7 @@ html:has(.case-zoom[open]) {
   flex-direction: column;
   justify-content: center;
   /* clear of the site's header */
-  padding-top: 56px;
+  padding-top: 40px;
 }
 .cm-landing {
   display: flex;
@@ -2212,6 +2212,33 @@ html:has(.case-zoom[open]) {
    motion (CasePortal.tsx), so it needs to reach the board */
 .cm-stage:not(.is-landed) .cp {
   pointer-events: auto;
+}
+
+/* case 2's captions: larger, and closer under the card. The landing cards
+   (.cp-cap) are the same, so they hand over without a jump */
+.cm-view .gc-caption,
+.cp-cap .gc-caption {
+  gap: calc(18 * var(--u));
+}
+.cm-view .gc-caption .gc-num,
+.cp-cap .gc-caption .gc-num {
+  font-size: calc(42 * var(--u));
+}
+.cm-view .gc-caption .gc-text b,
+.cp-cap .gc-caption .gc-text b {
+  font-size: calc(21 * var(--u));
+}
+.cm-view .gc-deck.is-focus .gc-caption .gc-text b,
+.cp-cap .gc-caption .gc-text b {
+  font-size: calc(26 * var(--u));
+}
+.cm-view .gc-caption .gc-text p,
+.cm-view .gc-deck.is-focus .gc-caption .gc-text p,
+.cp-cap .gc-caption .gc-text p {
+  font-size: calc(19 * var(--u));
+}
+.cm-view .gc.is-card .gc-deck {
+  gap: calc(12 * var(--u));
 }
 
 /* case 2's cards are smaller, the focused one centred with the arrows on its

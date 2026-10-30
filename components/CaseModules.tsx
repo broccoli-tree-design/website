@@ -75,9 +75,9 @@ const CLIENTS: Record<"new" | "return", Client> = {
   },
 };
 
-/** the carousel's card sizes: the focused card 55% of the screen, the sides
+/** the carousel's card sizes: the focused card 60% of the screen, the sides
  *  cut off on both sides */
-const CARD_SIZES = { sm: 461, big: 770, gap: 29 };
+const CARD_SIZES = { sm: 520, big: 860, gap: 32 };
 
 type ClientKey = keyof typeof CLIENTS;
 const CLIENT_KEYS = ["new", "return"] as const;
