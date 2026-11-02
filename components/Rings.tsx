@@ -8,7 +8,7 @@ const EASE = "cubic-bezier(.2,.7,.2,1)"; // --ease-out in globals.css
 export default function Rings() {
   useEffect(() => {
     const reduce = matchMedia("(prefers-reduced-motion: reduce)");
-    const desktop = matchMedia("(min-width: 641px) and (hover: hover)");
+    const desktop = matchMedia("(width > 640px) and (hover: hover)");
     let teardown: (() => void) | null = null;
 
     const setup = () => {

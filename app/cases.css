@@ -61,7 +61,7 @@
 }
 
 /* below 900px the case studies stack */
-@media (max-width: 899.98px) {
+@media (width < 900px) {
   .case {
     --gutter: 24px;
     padding-top: 14vh;
@@ -182,7 +182,7 @@
 }
 
 /* stacked */
-@media (max-width: 899.98px) {
+@media (width < 900px) {
   .case-title,
   .case-problem,
   .case-solution {
@@ -325,7 +325,7 @@ html:has(.case-zoom[open]) {
 }
 
 /* the narrowest phones: smaller tab labels so all three fit */
-@media (max-width: 374.98px) {
+@media (width < 375px) {
   .view-tab {
     padding: 0 4px;
     font-size: var(--text-xs);
@@ -709,14 +709,14 @@ html:has(.case-zoom[open]) {
 
 /* only the decks either side of the focused one show; the rest wait out of
    sight (phones scroll through all of them, below) */
-@media (min-width: 641px) {
+@media (width > 640px) {
   .gc-deck.is-far {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
   }
 }
-@media (min-width: 641px) and (prefers-reduced-motion: no-preference) {
+@media (width > 640px) and (prefers-reduced-motion: no-preference) {
   .gc-deck {
     transition: width 0.7s var(--ease-out), min-height 0.7s var(--ease-out),
       opacity 0.5s ease, visibility 0.5s;
@@ -1007,7 +1007,7 @@ html:has(.case-zoom[open]) {
 /* the frame leaves 60u above the tallest deck for its shadow; pull it up so
    the focused deck sits as far below the tabs as the architecture board
    does, which keeps the tab bar on screen when a deck fills the viewport */
-@media (min-width: 641px) {
+@media (width > 640px) {
   .gc-panel .gc {
     margin-top: calc(-60 * var(--u));
   }
@@ -1505,7 +1505,7 @@ html:has(.case-zoom[open]) {
 .bb-stage:not(.is-landed) .bb-landing .gc-deck {
   transition: none;
 }
-@media (min-width: 641px) {
+@media (width > 640px) {
   /* the height-capped units, and the row recentred: the carousel lays its
      decks out on a 1384-unit frame, now narrower than the screen */
   .bb-landing .gc {
@@ -1687,7 +1687,7 @@ html:has(.case-zoom[open]) {
 .cm-view .gc.is-card .gc-track {
   padding-top: calc(20 * var(--u));
 }
-@media (min-width: 641px) {
+@media (width > 640px) {
   /* the row recentred: the carousel lays its cards out on a 1384-unit frame,
      now narrower than the screen */
   .cm-view .gc-track {
@@ -2227,7 +2227,7 @@ html:has(.case-zoom[open]) {
 
 /* case 2's cards are smaller, the focused one centred with the arrows on its
    two edges, level with its middle (the sizes are GlassCarousel's `sizes`) */
-@media (min-width: 641px) {
+@media (width > 640px) {
   .cm-view .gc.gc-centered .gc-arrow {
     top: calc((20 + var(--gc-big) / var(--ratio) / 2) * var(--u));
   }
