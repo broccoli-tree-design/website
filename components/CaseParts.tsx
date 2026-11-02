@@ -46,7 +46,7 @@ export const MODULES = {
  *  open full size in a dialog to be read); 641 to 899 a tablet (the carousel
  *  as on desktop, the text stacked, no scroll-driven portal); 900 and up the
  *  full version. The CSS media queries use the same 640 / 900 */
-const DESKTOP = "(min-width: 641px)";
+const DESKTOP = "(width > 640px)";
 
 /** The page's phone breakpoint, the same 640px as the CSS media queries
  *  (Rings.tsx combines it with hover, as its inverse) */

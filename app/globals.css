@@ -174,7 +174,7 @@ button:focus-visible {
 /* Breakpoints (media queries can't read custom properties, so they are
    written out):
    - phone, max-width 640px: page layout and the display scale
-   - case frame, max-width 899.98px: the deck and modules stack. They need
+   - case frame, width under 900px: the deck and modules stack. They need
      it sooner than the page: at 700px the deck's tabs would be ~26px wide,
      too narrow for their 18px vertical names, while everything else still
      scales with the column. Between the two, only the case frames are
