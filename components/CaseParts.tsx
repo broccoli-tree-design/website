@@ -310,7 +310,9 @@ export function CaseTail({
     <>
       <div className="grid case-brief">{children}</div>
       <BriefFlow result={ref} />
-      <CaseResult ref={ref} {...result} />
+      <div className="grid">
+        <CaseResult ref={ref} {...result} />
+      </div>
     </>
   );
 }
