@@ -171,11 +171,13 @@
   outline-offset: 3px;
 }
 
-/* hugs the 400% at the right edge; label sits on its left edge, where the
-   curves meet */
+/* the result sits on the 12-column grid: case 1 from column 5, case 2 from
+   column 9 */
+.deck-result {
+  grid-column: 5 / -1;
+}
 .mod-result {
-  width: max-content;
-  margin: 0 0 0 auto;
+  grid-column: 9 / -1;
   gap: 18px;
 }
 
@@ -185,6 +187,11 @@
   .case-problem,
   .case-solution {
     grid-column: 1 / -1;
+  }
+  /* indented to column 5 when stacked */
+  .deck-result,
+  .mod-result {
+    grid-column: 5 / -1;
   }
   .case-title {
     gap: 16px;
@@ -299,16 +306,6 @@ html:has(.case-zoom[open]) {
   height: calc(24 * var(--px));
   font-family: var(--serif), serif;
   image-rendering: pixelated;
-}
-
-.deck-result {
-  margin: 0 0 0 calc(480 * var(--u));
-}
-
-@media (max-width: 899.98px) {
-  .deck-result {
-    margin: 0 0 0 34.7%;
-  }
 }
 
 @media (max-width: 640px) {
