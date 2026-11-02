@@ -1353,7 +1353,6 @@ html:has(.case-zoom[open]) {
   height: 300vh;
   margin: 24px calc(-1 * var(--bleed)) 0;
   padding-inline: var(--bleed);
-  overflow-x: clip;
 }
 .bb-stage {
   position: sticky;
@@ -1632,7 +1631,6 @@ html:has(.case-zoom[open]) {
   height: 300vh;
   margin: 48px calc(-1 * var(--bleed)) 0;
   padding-inline: var(--bleed);
-  overflow-x: clip;
 }
 .cm-stage {
   position: sticky;
