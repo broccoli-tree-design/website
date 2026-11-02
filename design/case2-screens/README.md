@@ -1,10 +1,10 @@
 # Campaign case study: module screens
 
 Sources for the product screens in the second case study
-(`public/case2/*.webp`). They are HTML prototypes from the design
+(`public/case2/screens/*.webp`). They are HTML prototypes from the design
 handoff. The site uses only the captured images, not these files.
 
-Each `<name>.dc.html` here makes `public/case2/<name>.webp`:
+Each `<name>.dc.html` here makes `public/case2/screens/<name>.webp`:
 `new-client-ideation`, `-opportunity`, `-audience`, `-attention` and
 `-channel`, then `return-client-attention` and `-channel`.
 
@@ -26,11 +26,9 @@ Each `<name>.dc.html` here makes `public/case2/<name>.webp`:
    `sharp` comes with Next, so only `playwright-core` is installed here;
    if `sharp` goes missing, `npm i --no-save sharp`.
 
-   This saves the white card and its drop shadow at 2× (2400×1320: the
-   1072×532 card plus 64px of transparent room on each side) as WebP in
-   `public/case2/`. Keep that size, because `CaseModules.tsx` sets the
-   images' dimensions and `.mod-figure img` in `app/cases.css` overflows
-   the figure by the 64px so the card itself fills it.
+   This saves the white card alone at 2× (2144×1064: the 1072×532 card, no
+   padding or shadow) as WebP in `public/case2/screens/`. Keep that size,
+   because `CaseModules.tsx` sets the images' dimensions.
 
 The Opportunity screen shows two images from `images/`, named after their
 captions: `bodhisattva-avalokitesvara-11th-c.jpeg` and
