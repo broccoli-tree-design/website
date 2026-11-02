@@ -1,6 +1,8 @@
 /* The two case studies (page.tsx, CaseDeck.tsx, CaseModules.tsx). Loaded
    after globals.css (layout.tsx), so it builds on its tokens and type
-   classes: .result-label's roman, for one, overrides .text-sub's italic. */
+   classes: .result-label's roman, for one, overrides .text-sub's italic.
+   Font sizes use the --text-* tokens; raw px (11, 13, 20, 28, 30, 46, 54)
+   are off-scale or display sizes on purpose. */
 
 /* ── CASES ──
    shared by both case studies: section spacing, screenshot captions,
@@ -784,7 +786,7 @@ html:has(.case-zoom[open]) {
   }
   .gc-text p,
   .gc-deck.is-focus .gc-text p {
-    font-size: 14px;
+    font-size: var(--text-sm);
   }
   .gc-body {
     gap: 14px;
@@ -804,7 +806,7 @@ html:has(.case-zoom[open]) {
   }
   .gc-client-desc,
   .gc-deck.is-focus .gc-client-desc {
-    font-size: 14px;
+    font-size: var(--text-sm);
   }
   .gc-arrow-next {
     right: 8px;
@@ -982,14 +984,14 @@ html:has(.case-zoom[open]) {
   .bb-card.is-front .gc-caption .gc-text b,
   .cp-fly.is-first .gc-caption .gc-text b {
     margin-bottom: 4px;
-    font-size: 18px;
+    font-size: var(--text-lg);
   }
   .gc-caption .gc-text p,
   .gc-deck.is-focus .gc-caption .gc-text p,
   .gc-deck:not(.is-focus) .gc-caption .gc-text p,
   .cp-fly:not(.is-first) .gc-caption .gc-text p {
     display: block;
-    font-size: 14px;
+    font-size: var(--text-sm);
   }
   /* the screen's button fills the card */
   .gc-glass .gc-enlarge {
@@ -1293,7 +1295,7 @@ html:has(.case-zoom[open]) {
     width: 132px;
     height: 30px;
     border-radius: var(--radius-md);
-    font-size: 14px;
+    font-size: var(--text-sm);
   }
   .gc-thumb {
     padding: 5px;
@@ -1323,7 +1325,7 @@ html:has(.case-zoom[open]) {
     position: static;
     height: 30px;
     padding: 0 12px;
-    font-size: 12px;
+    font-size: var(--text-xs);
     -webkit-mask-image: none;
     mask-image: none;
   }
@@ -1458,7 +1460,7 @@ html:has(.case-zoom[open]) {
    together */
 .bb-question {
   margin-top: 14px;
-  font-size: 16px;
+  font-size: var(--text-md);
   text-align: center;
   color: var(--orange-400);
 }
