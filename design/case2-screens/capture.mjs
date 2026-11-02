@@ -1,6 +1,6 @@
 // Captures each module screen as the image the case study shows:
-// the white product card and its drop shadow, at 2×, saved as WebP in
-// public/case2/.
+// the white product card alone, at 2× (2144×1064), saved as WebP in
+// public/case2/screens/.
 //
 //   npm i --no-save playwright-core
 //   node design/case2-screens/capture.mjs            (all screens)
@@ -13,11 +13,11 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const OUT = path.join(HERE, "../../public/case2");
-/** transparent room around the card for its shadow, in CSS px; matches .mod-figure img */
-const PAD = 64;
+const OUT = path.join(HERE, "../../public/case2/screens");
+/** transparent room around the card, in CSS px; 0 = the card alone */
+const PAD = 0;
 
-/** each <name>.dc.html here becomes public/case2/<name>.webp */
+/** each <name>.dc.html here becomes public/case2/screens/<name>.webp */
 const SCREENS = [
   "new-client-ideation",
   "new-client-opportunity",

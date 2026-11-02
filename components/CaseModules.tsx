@@ -11,7 +11,6 @@ type Client = {
   label: string;
   /** the screens' file prefix */
   prefix: "new-client" | "return-client";
-  eyebrow: string;
   /** the heading's emphasised words: "For a <em>new client</em>" */
   em: string;
   title: string;
@@ -27,7 +26,6 @@ const CLIENTS: Record<"new" | "return", Client> = {
   new: {
     label: "Sales’ demo",
     prefix: "new-client",
-    eyebrow: "For new client",
     em: "prospective client",
     title: "Buddhist art exhibition campaign Spring 2027",
     desc: "A sample exhibition campaign, from ideation to channel",
@@ -56,7 +54,6 @@ const CLIENTS: Record<"new" | "return", Client> = {
   return: {
     label: "Planners’ work",
     prefix: "return-client",
-    eyebrow: "For returning client",
     em: "returning client",
     title: "Outdoor backpack\nFall 2027\nChannel Plan",
     desc: "An existing retail campaign that only needs tweaks",
