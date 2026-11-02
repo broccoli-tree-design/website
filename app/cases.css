@@ -2225,16 +2225,19 @@ html:has(.case-zoom[open]) {
   pointer-events: auto;
 }
 
-/* case 2's cards are smaller, the focused one centred with the arrows on its
-   two edges, level with its middle (the sizes are GlassCarousel's `sizes`) */
+/* both cases: the arrows on the focused card's two edges, level with its
+   middle (the 20 units are the track's padding above the card) */
 @media (width > 640px) {
-  .cm-view .gc.gc-centered .gc-arrow {
+  .cm-view .gc.is-card .gc-arrow,
+  .bb-landing .gc.is-card .gc-arrow {
     top: calc((20 + var(--gc-big) / var(--ratio) / 2) * var(--u));
   }
-  .cm-view .gc.gc-centered .gc-arrow-prev {
+  .cm-view .gc.is-card .gc-arrow-prev,
+  .bb-landing .gc.is-card .gc-arrow-prev {
     left: calc(50% - var(--gc-big) / 2 * var(--u) - 24px);
   }
-  .cm-view .gc.gc-centered .gc-arrow-next {
+  .cm-view .gc.is-card .gc-arrow-next,
+  .bb-landing .gc.is-card .gc-arrow-next {
     right: auto;
     left: calc(50% + var(--gc-big) / 2 * var(--u) - 24px);
   }
