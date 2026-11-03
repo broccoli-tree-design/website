@@ -28,7 +28,7 @@ const CLIENTS: Record<"new" | "return", Client> = {
     prefix: "new-client",
     em: "prospective client",
     title: "Buddhist art exhibition campaign Spring 2027",
-    desc: "A sample exhibition campaign, from ideation to channel",
+    desc: "Sales demos a sample exhibition campaign, from ideation to channel",
     tint: "var(--green-800)",
     dark: true,
     steps: [
@@ -56,7 +56,7 @@ const CLIENTS: Record<"new" | "return", Client> = {
     prefix: "return-client",
     em: "returning client",
     title: "Outdoor backpack\nFall 2027\nChannel Plan",
-    desc: "An existing retail campaign that only needs tweaks",
+    desc: "Planner tweaks an existing retail campaign based on performance",
     tint: "var(--neutral-100)",
     dark: false,
     steps: [
