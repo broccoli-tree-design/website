@@ -6,7 +6,7 @@ import CaseWorkspace, { u } from "./CaseWorkspace";
 
 /** Case 2's first view: the client portal, abstracted. A dark "Daily
  *  operations workspace" holds the apps and the loose work around them,
- *  joined by two dotted arcs ("Shared data") to the "Client portal", whose
+ *  joined by two dotted lines ("Shared data") to the "Client portal", whose
  *  stage columns hold the modules as skeleton cards. Only five carry names (the ones Sales' demo
  *  walks through), so it shows how many modules there are without giving the
  *  screens away.
@@ -91,8 +91,8 @@ function PortalStill({ steps }: { steps: PortalStep[] }) {
       </div>
       <div className="cps-link">
         <svg viewBox="0 0 60 88">
-          <path d="M24 0C6 24 6 64 24 88" />
-          <path d="M38 0C20 24 20 64 38 88" />
+          <path d="M24 0V88" />
+          <path d="M38 0V88" />
         </svg>
         <span>Shared data</span>
       </div>
@@ -292,8 +292,8 @@ export default function CasePortal({
             <div className="cp-link">
               <span className="cp-link-label">Shared data</span>
               <svg viewBox="0 0 264 160">
-                <path d="M32 140A100 120 0 0 1 232 140" />
-                <path d="M32 154A100 120 0 0 1 232 154" />
+                <path d="M0 20H264" />
+                <path d="M0 34H264" />
               </svg>
             </div>
             <div className="cp-ws">
@@ -341,8 +341,8 @@ export default function CasePortal({
             </div>
             <div className="cpp-link">
               <svg viewBox="0 0 60 56">
-                <path d="M24 0C10 16 10 40 24 56" />
-                <path d="M38 0C24 16 24 40 38 56" />
+                <path d="M24 0V56" />
+                <path d="M38 0V56" />
               </svg>
               <span>Shared data</span>
             </div>
