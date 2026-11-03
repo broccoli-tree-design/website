@@ -184,7 +184,6 @@
 }
 .mod-result {
   grid-column: 7 / -1;
-  gap: 18px;
 }
 
 /* stacked */
@@ -208,9 +207,6 @@
 
   .view-tabs {
     margin-top: 56px;
-  }
-  .mod-result {
-    gap: 14px;
   }
 }
 
@@ -1355,7 +1351,8 @@ html:has(.case-zoom[open]) {
   --bleed: calc(50vw - 50cqw + var(--gutter));
   position: relative;
   height: 300vh;
-  margin: 24px calc(-1 * var(--bleed)) 0;
+  /* 48px under the title, as case 2's .cm-scene */
+  margin: 48px calc(-1 * var(--bleed)) 0;
   padding-inline: var(--bleed);
 }
 .bb-stage {
@@ -1581,6 +1578,16 @@ html:has(.case-zoom[open]) {
 .bb-cue button:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
+}
+/* phones: the card starts where case 2's carousel does. That one is
+   centred under the header's 40px (.cm-view) and about 512px tall on a
+   phone, so its top is at 50% + 20px - 256px; case 1's shorter card centred
+   would sit ~70px lower */
+@media (max-width: 640px) and (prefers-reduced-motion: no-preference) {
+  .bb-landing .gc {
+    top: max(40px, calc(50% - 236px));
+    transform: none;
+  }
 }
 /* phones: the carousel's own phone glass (px sizes) */
 @media (max-width: 640px) {
