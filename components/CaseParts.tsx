@@ -215,23 +215,53 @@ const LEAVES = [
   [0.65, 50],
 ];
 
+/** How long the stem takes to draw, s; the leaves and bud follow its tip */
+const DRAW = 0.9;
+
 /** A vine, to go inside an <svg>: the curve, two outlined leaves, and a
- *  filled bud at the end pointing on along the curve */
+ *  filled bud at the end pointing on along the curve. Once its <svg> is
+ *  `.is-shown` it grows from the curve's start: the stem draws, each leaf
+ *  opens as the line reaches it, then the bud (cases.css). */
 export function FlowLine({ curve }: { curve: Curve }) {
+  const delay = (d: number) => ({ "--d": `${d.toFixed(2)}s` }) as CSSProperties;
   return (
     <>
-      <path d={curvePath(curve)} />
+      <path className="vine-stem" d={curvePath(curve)} pathLength={1} />
       {LEAVES.map(([t, lean]) => (
-        <path
-          key={t}
-          className="case-leaf"
-          d={LEAF}
-          style={placeAt(curve, t, lean, SCALE)}
-        />
+        <g key={t} style={placeAt(curve, t, lean, SCALE)}>
+          <path
+            className="case-leaf vine-grow"
+            d={LEAF}
+            style={delay(t * DRAW)}
+          />
+        </g>
       ))}
-      <path className="case-bud" d={BUD} style={placeAt(curve, 1, 0, SCALE)} />
+      <g style={placeAt(curve, 1, 0, SCALE)}>
+        <path className="case-bud vine-grow" d={BUD} style={delay(DRAW)} />
+      </g>
     </>
   );
+}
+
+/** True once the element has come into view (and stays true), so what's
+ *  in it can play its entrance once */
+export function useShown(ref: RefObject<Element | null>) {
+  const [shown, setShown] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        setShown(true);
+        io.disconnect();
+      },
+      { rootMargin: "0px 0px -15% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [ref]);
+  return shown;
 }
 
 /** The horizontal middle of an element's text, in viewport px */
@@ -256,7 +286,13 @@ function textMid(el: Element) {
 /** The connector from the Solution down to the result label: from the
  *  middle of the Solution's text (the brief sits just above) to the middle
  *  of the result's text, in px of its own box. */
-function BriefFlow({ result }: { result: RefObject<HTMLElement | null> }) {
+function BriefFlow({
+  result,
+  shown,
+}: {
+  result: RefObject<HTMLElement | null>;
+  shown: boolean;
+}) {
   const svg = useRef<SVGSVGElement>(null);
   const [box, setBox] = useState({ w: 0, h: 0, sx: 0, ex: 0 });
   useResize([svg, result], () => {
@@ -285,7 +321,7 @@ function BriefFlow({ result }: { result: RefObject<HTMLElement | null> }) {
     <svg
       ref={svg}
       aria-hidden="true"
-      className="case-flow case-brief-flow"
+      className={`case-flow case-brief-flow${shown ? " is-shown" : ""}`}
       viewBox={`0 0 ${w} ${h}`}
     >
       {w > 0 && <FlowLine curve={curve} />}
@@ -320,10 +356,12 @@ export function CaseTail({
   ...result
 }: { children: ReactNode } & Omit<ComponentProps<typeof CaseResult>, "ref">) {
   const ref = useRef<HTMLDivElement>(null);
+  // the vine grows once the result is in view
+  const shown = useShown(ref);
   return (
     <>
       <div className="grid case-brief">{children}</div>
-      <BriefFlow result={ref} />
+      <BriefFlow result={ref} shown={shown} />
       <div className="grid">
         <CaseResult ref={ref} {...result} />
       </div>
