@@ -2012,8 +2012,9 @@ html:has(.case-zoom[open]) {
   white-space: nowrap;
 }
 
-/* the shared-data link: two dotted arcs that run in behind the workspace
-   and the panel, so only their shallow middle shows, and a label above */
+/* the shared-data link: two straight dotted lines that run in behind the
+   workspace and the panel, at the height the old arcs' tops showed, and a
+   label above */
 .cp-link {
   position: absolute;
   left: calc(350 * var(--u));
@@ -2038,7 +2039,9 @@ html:has(.case-zoom[open]) {
   position: absolute;
   left: calc(72 * var(--u));
   width: calc(120 * var(--u));
-  top: 0;
+  /* sits just above the upper line (32 units down) and grows upwards, so on
+     narrow screens, where the 10px floor wraps it, it stays clear of them */
+  bottom: calc(144 * var(--u) + 6px);
   text-align: center;
   font-size: max(10px, calc(11 * var(--u)));
   font-weight: 500;
