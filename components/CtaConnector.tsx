@@ -1,6 +1,12 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { BUD_LENGTH, FlowLine, PHONE, type Curve } from "./CaseParts";
+import {
+  BUD_LENGTH,
+  FlowLine,
+  PHONE,
+  useShown,
+  type Curve,
+} from "./CaseParts";
 
 /** The case connectors' vine, from above the heading's first line up to
  *  the nav's Let's chat button. The button is fixed at the top of the
@@ -14,6 +20,8 @@ const PAD = 14; // room for the leaf past the curve's start
 export default function CtaConnector() {
   const ref = useRef<SVGSVGElement>(null);
   const [shape, setShape] = useState<Shape | null>(null);
+  // grows like the case vines, from the heading up to the button
+  const shown = useShown(ref);
 
   useEffect(() => {
     const heading = ref.current?.parentElement;
@@ -83,7 +91,7 @@ export default function CtaConnector() {
   return (
     <svg
       ref={ref}
-      className="cta-connector"
+      className={`cta-connector${shown ? " is-shown" : ""}`}
       width={shape?.w}
       height={shape?.h}
       viewBox={shape ? `0 0 ${shape.w} ${shape.h}` : undefined}

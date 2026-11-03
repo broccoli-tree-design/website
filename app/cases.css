@@ -48,6 +48,32 @@
   margin-top: 20px;
 }
 
+/* the vines grow in once in view (FlowLine, with useShown): the stem
+   draws, each leaf and the bud open from their base as its tip passes
+   (--d). Static under reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  .vine-stem {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    transition: stroke-dashoffset 0.9s cubic-bezier(0.2, 0.7, 0.2, 1)
+      var(--d, 0s);
+  }
+  .vine-grow {
+    opacity: 0;
+    transform: scale(0.2);
+    transform-origin: 0 0;
+    transition: opacity 0.4s ease var(--d, 0s),
+      transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s);
+  }
+  .is-shown .vine-stem {
+    stroke-dashoffset: 0;
+  }
+  .is-shown .vine-grow {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* a roman subtitle over an italic number */
 .case-result {
   display: flex;
