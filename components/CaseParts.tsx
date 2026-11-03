@@ -174,51 +174,62 @@ function curvePath([a, b, c, e]: Curve) {
   return `M ${f(a)} C ${f(b)}, ${f(c)}, ${f(e)}`;
 }
 
-/** Leaf positions along the curve (fractions of the parameter) */
-const LEAVES = [0.3, 0.55, 0.8];
-/** How far a leaf's tip leans away from the stem, degrees */
-const LEAF_LEAN = 50;
-
-/** Three small leaves on a connector, alternating sides. Each sits on the
- *  curve, base on the stem. */
-function FlowLeaves({ curve }: { curve: Curve }) {
-  const [a, b, c, e] = curve;
-  return LEAVES.map((t, i) => {
-    const u = 1 - t;
-    const at = (k: 0 | 1) =>
-      u ** 3 * a[k] +
-      3 * u * u * t * b[k] +
-      3 * u * t * t * c[k] +
-      t ** 3 * e[k];
-    const slope = (k: 0 | 1) =>
-      3 * u * u * (b[k] - a[k]) +
-      6 * u * t * (c[k] - b[k]) +
-      3 * t * t * (e[k] - c[k]);
-    const heading = (Math.atan2(slope(1), slope(0)) * 180) / Math.PI;
-    const lean = i % 2 ? -LEAF_LEAN : LEAF_LEAN;
-    return (
-      <path
-        key={t}
-        className="case-leaf"
-        d="M 0 0 C 5 -9, 17 -9, 24 0 C 17 9, 5 9, 0 0 Z"
-        style={
-          {
-            transform: `translate(${at(0).toFixed(1)}px, ${at(1).toFixed(
-              1,
-            )}px) rotate(${(heading + lean).toFixed(1)}deg)`,
-          } as CSSProperties
-        }
-      />
-    );
-  });
+/** A point on a curve at parameter t, and the heading there in degrees */
+function curveAt([a, b, c, e]: Curve, t: number) {
+  const u = 1 - t;
+  const at = (k: 0 | 1) =>
+    u ** 3 * a[k] + 3 * u * u * t * b[k] + 3 * u * t * t * c[k] + t ** 3 * e[k];
+  const slope = (k: 0 | 1) =>
+    3 * u * u * (b[k] - a[k]) +
+    6 * u * t * (c[k] - b[k]) +
+    3 * t * t * (e[k] - c[k]);
+  return {
+    x: at(0),
+    y: at(1),
+    heading: (Math.atan2(slope(1), slope(0)) * 180) / Math.PI,
+  };
 }
 
-/** A connector's curve and the leaves along it, to go inside an <svg> */
+/** A transform that puts a local shape (axis along +x) on the curve */
+function placeAt(curve: Curve, t: number, turn = 0, scale = 1) {
+  const { x, y, heading } = curveAt(curve, t);
+  return {
+    transform: `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px) rotate(${(
+      heading + turn
+    ).toFixed(1)}deg)${scale === 1 ? "" : ` scale(${scale})`}`,
+  } as CSSProperties;
+}
+
+/** A leaf, base at the origin, 24 long and 13.5 wide */
+const LEAF = "M 0 0 C 5 -9, 17 -9, 24 0 C 17 9, 5 9, 0 0 Z";
+/** The bud: a teardrop the leaf's size, base at the origin */
+const BUD = "M 0 0 q 13 13.5 24 0 q -11 -13.5 -24 0 z";
+/** Leaf and bud, scaled down to sit lightly on the stem */
+const SCALE = 0.75;
+/** How far the bud reaches past the curve's end, px */
+export const BUD_LENGTH = 24 * SCALE;
+/** The leaves: where each sits on the curve (a fraction of the parameter)
+ *  and how far its tip leans away from the stem, degrees; one each side */
+const LEAVES = [
+  [0.25, -50],
+  [0.65, 50],
+];
+
+/** A vine, to go inside an <svg>: the curve, two outlined leaves, and a
+ *  filled bud at the end pointing on along the curve */
 export function FlowLine({ curve }: { curve: Curve }) {
   return (
     <>
       <path d={curvePath(curve)} />
-      <FlowLeaves curve={curve} />
+      {LEAVES.map(([t, lean]) => (
+        <path
+          key={t}
+          className="case-leaf"
+          d={LEAF}
+          style={placeAt(curve, t, lean, SCALE)}
+        />
+      ))}
+      <path className="case-bud" d={BUD} style={placeAt(curve, 1, 0, SCALE)} />
     </>
   );
 }
@@ -261,11 +272,14 @@ function BriefFlow({ result }: { result: RefObject<HTMLElement | null> }) {
     });
   });
   const { w, h, sx, ex } = box;
+  // the curve stops short so the bud, pointing on down, ends at the box's
+  // bottom, just above the result
+  const end = h - BUD_LENGTH;
   const curve: Curve = [
     [sx, 0],
-    [sx, h * 0.6],
-    [ex, h * 0.4],
-    [ex, h],
+    [sx, end * 0.6],
+    [ex, end * 0.4],
+    [ex, end],
   ];
   return (
     <svg

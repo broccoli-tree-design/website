@@ -32,10 +32,16 @@
   stroke-width: 1.25;
   stroke-linecap: round;
 }
-/* small leaves on the connector, alternating sides */
+/* the vine's leaf: scaled up, its line stays 1.25px */
 .case-leaf {
   fill: none;
   stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+/* the filled bud at the vine's end, above the result */
+.case-bud {
+  fill: var(--accent);
+  stroke: none;
 }
 .case-brief-flow {
   height: 120px;
