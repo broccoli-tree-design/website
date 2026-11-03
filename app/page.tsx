@@ -329,8 +329,14 @@ export default function Home() {
         </section>
 
         {/* QUESTION */}
-        <section className="grid section-body question" data-gate="light">
-          <p className="text-label question-label">RECENT THOUGHTS</p>
+        <section className="grid section-body question" data-gate="dark">
+          <p className="text-label question-label">
+            {/* About's eye returns as the bridge's marker */}
+            <span className="question-eye" aria-hidden="true">
+              <Eye />
+            </span>
+            RECENT THOUGHTS
+          </p>
           <p className="text-sub question-p">
             How Legora builds trust by visualizing legal AI via Jude Law
           </p>
