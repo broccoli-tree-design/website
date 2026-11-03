@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { FlowLine, PHONE, type Curve } from "./CaseParts";
+import { BUD_LENGTH, FlowLine, PHONE, type Curve } from "./CaseParts";
 
 /** The case connectors' vine, from above the heading's first line up to
  *  the nav's Let's chat button. The button is fixed at the top of the
@@ -9,7 +9,7 @@ import { FlowLine, PHONE, type Curve } from "./CaseParts";
  *  the leaves keep their shape. Lives in the heading (positioned). */
 type Shape = { left: number; top: number; w: number; h: number; curve: Curve };
 
-const PAD = 14; // room for the leaves past the curve's ends
+const PAD = 14; // room for the leaf past the curve's start
 
 export default function CtaConnector() {
   const ref = useRef<SVGSVGElement>(null);
@@ -58,12 +58,13 @@ export default function CtaConnector() {
         w,
         h,
         // vertical at both ends, the controls crossing so it whips like the
-        // case connectors
+        // case connectors; it stops short so the bud, pointing on up, ends
+        // where the curve used to
         curve: [
           [PAD, h - PAD],
-          [PAD, h - PAD - (h - 2 * PAD) * 0.65],
-          [w - PAD, h - PAD - (h - 2 * PAD) * 0.35],
-          [w - PAD, PAD],
+          [PAD, h - PAD - (h - 2 * PAD - BUD_LENGTH) * 0.65],
+          [w - PAD, h - PAD - (h - 2 * PAD - BUD_LENGTH) * 0.35],
+          [w - PAD, PAD + BUD_LENGTH],
         ],
       });
     };

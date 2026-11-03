@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="24 0 106 160" width="212" height="320" fill="none" stroke="#476f33" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+  <!-- stem: from the Solution down to just above the result number -->
+  <path d="M40 0 C 30 60, 110 70, 120 130"/>
+  <!-- one outlined leaf, base on the stem at t≈0.39 -->
+  <path d="M62 52 q 14 -14 28 -2 q -14 12 -28 2z"/>
+  <!-- filled bud at the stem's end, pointing at the number -->
+  <path d="M120 130 q -10 14 0 26 q 10 -12 0 -26z" fill="#476f33"/>
+</svg>
