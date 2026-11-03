@@ -201,7 +201,9 @@ export default function Home() {
             </h1>
             <p className="text-sub hero-slogan">
               <span className="hero-s1">I design</span>{" "}
-              <span className="hero-s2">what efficiency misses</span>{" "}
+              <span className="hero-s2">
+                what <em>efficiency</em> misses
+              </span>{" "}
               <span className="hero-s3">in legal tech</span>
             </p>
           </div>

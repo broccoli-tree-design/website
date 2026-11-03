@@ -506,6 +506,10 @@ button:focus-visible {
   margin-top: 0.2em;
   font-style: normal;
 }
+.hero-s2 em {
+  font-style: italic;
+  color: var(--accent);
+}
 .hero-s3 {
   grid-area: 5 / 6 / auto / span 4;
   margin-top: 0.2em;
