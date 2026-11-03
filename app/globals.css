@@ -646,8 +646,23 @@ button:focus-visible {
   grid-column: 6 / -1;
 }
 .question-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
   margin: 0 0 12px;
-  color: var(--warm);
+  color: var(--ink);
+}
+/* the live eye before the label, in the theme's ink and ground (the logo's
+   ivory white would vanish on the light ground) */
+.question-eye {
+  flex: none;
+  width: 44px;
+}
+.question-eye .eye-white {
+  background: var(--ink);
+}
+.question-eye .eye-pupil {
+  background: var(--bg);
 }
 .question-p {
   max-width: 18ch;
