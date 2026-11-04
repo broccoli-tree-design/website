@@ -34,7 +34,7 @@ const JSON_LD = {
       name: "Aiqi Li",
       jobTitle: "UX Designer",
       description:
-        "Paralegal-turned UX designer who designs what efficiency misses in legal tech, drawing on first-hand experience inside legal systems in the U.S. and China.",
+        "Paralegal-turned UX designer who designs UX beyond efficiency for legal tech, drawing on first-hand experience inside legal systems in the U.S. and China.",
       url: SITE_URL,
       image: `${SITE_URL}/profile.jpg`,
       sameAs: [LINKEDIN_URL],
@@ -218,9 +218,9 @@ export default function Home() {
             <p className="text-sub hero-slogan">
               <span className="hero-s1">I design</span>{" "}
               <span className="hero-s2">
-                what <em>efficiency</em> misses
+                UX <em>beyond</em> efficiency
               </span>{" "}
-              <span className="hero-s3">in legal tech</span>
+              <span className="hero-s3">for legal tech</span>
             </p>
           </div>
         </section>
