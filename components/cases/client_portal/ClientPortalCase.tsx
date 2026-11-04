@@ -1,8 +1,9 @@
 "use client";
 import { useRef, useState, type KeyboardEvent, type ReactNode } from "react";
-import CasePortal, { type PortalStep } from "./CasePortal";
-import { CaseTail, MODULES } from "./CaseParts";
-import GlassCarousel, { type GlassDeck } from "./GlassCarousel";
+import { CaseTail } from "../shared/CaseTail";
+import GlassCarousel, { type GlassDeck } from "../shared/GlassCarousel";
+import ClientPortal, { type PortalStep } from "./ClientPortal";
+import { MODULES } from "./modules";
 
 type ModuleKey = keyof typeof MODULES;
 
@@ -111,7 +112,7 @@ function decksFor(c: Client): GlassDeck[] {
   }));
 }
 
-export default function CaseModules({ brief }: { brief: ReactNode }) {
+export default function ClientPortalCase({ brief }: { brief: ReactNode }) {
   const [view, setView] = useState<ClientKey>("new");
   // the card in focus per client, kept while switching tabs
   const [focus, setFocus] = useState({ new: 0, return: 0 });
@@ -198,7 +199,7 @@ export default function CaseModules({ brief }: { brief: ReactNode }) {
 
   return (
     <>
-      <CasePortal
+      <ClientPortal
         steps={PORTAL_STEPS}
         landing={landing}
         onLanded={(on) => {

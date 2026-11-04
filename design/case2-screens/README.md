@@ -28,7 +28,7 @@ Each `<name>.dc.html` here makes `public/case2/screens/<name>.webp`:
 
    This saves the white card alone at 2× (2144×1064: the 1072×532 card, no
    padding or shadow) as WebP in `public/case2/screens/`. Keep that size,
-   because `CaseModules.tsx` sets the images' dimensions.
+   because `components/cases/client_portal/ClientPortalCase.tsx` sets the images' dimensions.
 
 The Opportunity screen shows two images from `images/`, named after their
 captions: `bodhisattva-avalokitesvara-11th-c.jpeg` and

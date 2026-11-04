@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { frameThrottle } from "./frame";
+import { frameThrottle } from "@/lib/frame";
 
 // squash the eye shut, or just its lid when it has one (the "see" eyes,
 // whose fill must stay put)

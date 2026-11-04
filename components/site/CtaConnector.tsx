@@ -1,12 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import {
-  BUD_LENGTH,
-  FlowLine,
-  PHONE,
-  useShown,
-  type Curve,
-} from "./CaseParts";
+import { BUD_LENGTH, FlowLine, type Curve } from "@/components/cases/shared/FlowLine";
+import { PHONE, useShown } from "@/lib/hooks";
 
 /** The case connectors' vine, from above the heading's first line up to
  *  the nav's Let's chat button. The button is fixed at the top of the

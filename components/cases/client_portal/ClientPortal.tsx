@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
-import { GlassCaption } from "./GlassCarousel";
+import { GlassCaption } from "../shared/GlassCarousel";
 import CaseWorkspace, { u } from "./CaseWorkspace";
 
 /** Case 2's first view: the client portal, abstracted. A dark "Daily
@@ -115,7 +115,7 @@ function PortalStill({ steps }: { steps: PortalStep[] }) {
   );
 }
 
-export default function CasePortal({
+export default function ClientPortal({
   steps,
   landing,
   onLanded,

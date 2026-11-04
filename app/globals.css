@@ -161,7 +161,7 @@ button:focus-visible {
 }
 
 /* side gutter: 24px on phones (the case sections switch at their own
-   breakpoint, in cases.css) */
+   breakpoint, in the case stylesheets) */
 :root {
   --gutter: 28px;
 }
@@ -593,7 +593,7 @@ button:focus-visible {
   display: inline-block;
   margin-top: 0.34em;
 }
-/* "see": each counter is an eye (components/SeeEyes.tsx). The socket's
+/* "see": each counter is an eye (components/site/SeeEyes.tsx). The socket's
    position, size and mask are measured off the glyph and set in em */
 .see-e {
   position: relative;

@@ -1,7 +1,8 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, type CSSProperties, type ReactNode } from "react";
-import { CaseZoom, usePhone, useZoom, type CaseStep } from "./CaseParts";
+import { usePhone } from "@/lib/hooks";
+import { CaseZoom, useZoom, type CaseStep } from "./CaseZoom";
 
 /** Glass cards in a row, shared by both case studies: each screen fills a
  *  clear glass card of its own, with its number, name and description below.
@@ -9,7 +10,7 @@ import { CaseZoom, usePhone, useZoom, type CaseStep } from "./CaseParts";
  *  easy to read), the next peeks in at the frame's edge and a click on a side
  *  card brings it into focus. On phones one card shows at a time with the
  *  next peeking in, and a tap on the screen opens it full size (CaseZoom).
- *  All the sizes live in cases.css, on the 1384 artboard's units (--u). */
+ *  All the sizes live in shared.css, on the 1384 artboard's units (--u). */
 
 export type GlassDeck = {
   name: string;
@@ -26,7 +27,7 @@ export type GlassDeck = {
   alt?: string;
 };
 
-/** Sizes in the artboard's units, matching cases.css: the side card, the one
+/** Sizes in the artboard's units, matching shared.css: the side card, the one
  *  in focus and the gap */
 const SIZES = { sm: 590, big: 965, gap: 24 };
 export type GlassSizes = typeof SIZES;
