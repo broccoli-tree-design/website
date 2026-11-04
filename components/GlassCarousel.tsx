@@ -24,8 +24,6 @@ export type GlassDeck = {
   dark?: boolean;
   img?: { src: string; w: number; h: number; quality?: number };
   alt?: string;
-  /** a front deck's own content, in place of a number and a screen */
-  body?: ReactNode;
 };
 
 /** Sizes in the artboard's units, matching cases.css: the side card, the one
@@ -159,14 +157,8 @@ export default function GlassCarousel({
                   aria-label={`Show ${d.name}`}
                 />
               )}
-              {d.body ? (
-                <div className="gc-body">{d.body}</div>
-              ) : (
-                <>
-                  <div className="gc-glass">{screen}</div>
-                  <GlassCaption num={d.num} name={d.name} desc={d.desc} />
-                </>
-              )}
+              <div className="gc-glass">{screen}</div>
+              <GlassCaption num={d.num} name={d.name} desc={d.desc} />
             </div>
           );
         })}
