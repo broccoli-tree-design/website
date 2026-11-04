@@ -12,9 +12,9 @@ import { CaseZoom, useZoom, type CaseStep } from "./CaseZoom";
  *  next peeking in, and a tap on the screen opens it full size (CaseZoom).
  *  All the sizes live in shared.css, on the 1384 artboard's units (--u). */
 
-export type GlassDeck = {
+export type GlassSlide = {
   name: string;
-  /** "01", "02"…; empty for a front deck */
+  /** "01", "02"… */
   num: string;
   desc?: string;
   img?: { src: string; w: number; h: number; quality?: number };
@@ -31,7 +31,7 @@ const FRAME = 1384;
 const CAPTION = 80;
 
 export default function GlassCarousel({
-  decks,
+  slides,
   ratio,
   focus,
   onFocus,
@@ -39,7 +39,7 @@ export default function GlassCarousel({
   zoomClass,
   sizes,
 }: {
-  decks: GlassDeck[];
+  slides: GlassSlide[];
   /** the screens' width over height */
   ratio: number;
   focus: number;
@@ -55,17 +55,17 @@ export default function GlassCarousel({
   const sz = sizes ?? SIZES;
   const phone = usePhone();
   const zoom = useZoom();
-  const n = decks.length;
+  const n = slides.length;
   const foc = Math.min(focus, n - 1);
 
-  // phones: the frame itself scrolls, so a deck chosen from outside (the
+  // phones: the frame itself scrolls, so a slide chosen from outside (the
   // architecture board) is scrolled into view
   const frame = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const el = frame.current;
-    const deck = el?.querySelector<HTMLElement>(".gc-deck");
-    if (!el || !deck || !phone) return;
-    el.scrollTo({ left: foc * (deck.offsetWidth + 10) });
+    const slide = el?.querySelector<HTMLElement>(".gc-slide");
+    if (!el || !slide || !phone) return;
+    el.scrollTo({ left: foc * (slide.offsetWidth + 10) });
   }, [foc, phone]);
 
   // the row slides so the focused card sits in the middle of the frame, the
@@ -82,7 +82,7 @@ export default function GlassCarousel({
     "--ratio": ratio,
   } as CSSProperties;
 
-  const step = (d: GlassDeck): CaseStep => ({
+  const step = (d: GlassSlide): CaseStep => ({
     name: d.name,
     color: "",
     fg: "",
@@ -100,7 +100,7 @@ export default function GlassCarousel({
       style={style}
     >
       <div className="gc-track">
-        {decks.map((d, i) => {
+        {slides.map((d, i) => {
           const on = i === foc;
           const shot = d.img && (
             <Image
@@ -139,7 +139,7 @@ export default function GlassCarousel({
           return (
             <div
               key={d.name}
-              className={`gc-deck${on ? " is-focus" : ""}${
+              className={`gc-slide${on ? " is-focus" : ""}${
                 Math.abs(i - foc) > 1 ? " is-far" : ""
               }`}
             >
@@ -163,7 +163,7 @@ export default function GlassCarousel({
           type="button"
           className="gc-arrow gc-arrow-prev"
           onClick={() => onFocus(foc - 1)}
-          aria-label="Show the previous deck"
+          aria-label="Show the previous slide"
         >
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M15 5l-7 7 7 7" />
@@ -175,7 +175,7 @@ export default function GlassCarousel({
           type="button"
           className="gc-arrow gc-arrow-next"
           onClick={() => onFocus(foc + 1)}
-          aria-label="Show the next deck"
+          aria-label="Show the next slide"
         >
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M9 5l7 7-7 7" />

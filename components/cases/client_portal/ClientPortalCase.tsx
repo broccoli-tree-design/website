@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { CaseTail } from "../shared/CaseTail";
-import GlassCarousel, { type GlassDeck } from "../shared/GlassCarousel";
+import GlassCarousel, { type GlassSlide } from "../shared/GlassCarousel";
 import ClientPortal, { type PortalStep } from "./ClientPortal";
 import { MODULES } from "./modules";
 
@@ -90,7 +90,7 @@ const PORTAL_STEPS: PortalStep[] = CLIENTS.new.steps.map(([key, desc], i) => ({
 }));
 
 /** A client's cards: one per module */
-function decksFor(c: Client): GlassDeck[] {
+function slidesFor(c: Client): GlassSlide[] {
   return c.steps.map(([key, desc], i) => ({
     name: MODULES[key],
     num: `0${i + 1}`,
@@ -178,7 +178,7 @@ export default function ClientPortalCase({ brief }: { brief: ReactNode }) {
         </div>
         <GlassCarousel
           key={view}
-          decks={decksFor(client)}
+          slides={slidesFor(client)}
           ratio={2144 / 1064}
           focus={focus[view]}
           onFocus={(i) => setFocus((f) => ({ ...f, [view]: i }))}
@@ -205,7 +205,7 @@ export default function ClientPortalCase({ brief }: { brief: ReactNode }) {
         }}
       />
 
-      <CaseTail className="mod-result" label="User base grew" stat="400%">
+      <CaseTail className="cm-result" label="User base grew" stat="400%">
         {brief}
       </CaseTail>
     </>

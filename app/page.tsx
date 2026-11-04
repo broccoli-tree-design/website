@@ -263,8 +263,8 @@ export default function Home() {
           </p>
         </section>
 
-        {/* CASE — black-box deck; the four steps sit behind the answer */}
-        <section className="case case-deck" data-gate="light">
+        {/* CASE — the black box; the four steps sit behind the answer */}
+        <section className="case case-blackbox" data-gate="light">
           <div className="grid">
             <div className="case-title">
               <span className="text-label case-eyebrow">

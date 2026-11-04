@@ -172,8 +172,8 @@ export default function ClientPortal({
         const el = (phone.matches ? slotsPhone.current : slots.current)[s.key];
         return el ? rel(el.getBoundingClientRect(), o) : { x: 0, y: 0, w: 0, h: 0 };
       });
-      const decks = land.current?.querySelectorAll<HTMLElement>(".gc-deck");
-      ends = [...(decks ?? [])].map((d) => {
+      const slides = land.current?.querySelectorAll<HTMLElement>(".gc-slide");
+      ends = [...(slides ?? [])].map((d) => {
         const g = d.querySelector<HTMLElement>(".gc-glass") ?? d;
         return {
           ...rel(g.getBoundingClientRect(), o),

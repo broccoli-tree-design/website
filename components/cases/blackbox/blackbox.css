@@ -133,7 +133,7 @@
 }
 /* the carousel the faces land in: centred on the stage, shown once they
    have (the script sets .is-landed); until then nothing in it animates, so
-   the faces can measure where its decks sit */
+   the faces can measure where its slides sit */
 .bb-landing {
   position: absolute;
   inset: 0;
@@ -173,12 +173,12 @@
   padding-top: calc(20 * var(--u));
 }
 .bb-stage:not(.is-landed) .bb-landing .gc-track,
-.bb-stage:not(.is-landed) .bb-landing .gc-deck {
+.bb-stage:not(.is-landed) .bb-landing .gc-slide {
   transition: none;
 }
 @media (width > 640px) {
   /* the height-capped units, and the row recentred: the carousel lays its
-     decks out on a 1384-unit frame, now narrower than the screen */
+     slides out on a 1384-unit frame, now narrower than the screen */
   .bb-landing .gc {
     --u: inherit;
   }

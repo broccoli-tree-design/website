@@ -151,10 +151,10 @@
 
 /* the result sits on the 12-column grid, at every width: case 1 from
    column 5, case 2 from column 7 (1 on phones) */
-.deck-result {
+.bb-result {
   grid-column: 5 / -1;
 }
-.mod-result {
+.cm-result {
   grid-column: 7 / -1;
 }
 
@@ -249,9 +249,9 @@ html:has(.case-zoom[open]) {
   color: var(--neutral-700);
 }
 
-/* The cases are laid out on a 1384-wide artboard in --u units (the decks and
-   the glass carousel). GlassCarousel.tsx's FRAME mirrors it. */
-.case-deck,
+/* The cases are laid out on a 1384-wide artboard in --u units (case 1's
+   section and the glass carousel). GlassCarousel.tsx's FRAME mirrors it. */
+.case-blackbox,
 .gc {
   --u: calc((100cqw - 2 * var(--gutter)) / 1384);
 }
@@ -261,7 +261,7 @@ html:has(.case-zoom[open]) {
     font-size: var(--display-6);
   }
   /* "400%" needs the room on phones */
-  .mod-result {
+  .cm-result {
     grid-column: 1 / -1;
   }
 }
@@ -301,7 +301,7 @@ html:has(.case-zoom[open]) {
   transform: translateX(calc(var(--tx) * var(--u)));
 }
 /* a slide: the glass card and its caption, stacked */
-.gc-deck {
+.gc-slide {
   position: relative;
   flex: none;
   box-sizing: border-box;
@@ -312,20 +312,20 @@ html:has(.case-zoom[open]) {
   gap: calc(22 * var(--u));
   color: var(--ink);
 }
-.gc-deck.is-focus {
+.gc-slide.is-focus {
   width: calc(var(--gc-big, 965) * var(--u));
 }
-.gc-deck:not(.is-focus) {
+.gc-slide:not(.is-focus) {
   margin-top: calc(
     (var(--gc-big, 965) - var(--gc-sm, 590)) / 2 / var(--ratio) * var(--u)
   );
 }
-.gc-deck > *,
+.gc-slide > *,
 .gc-glass > * {
   position: relative;
   z-index: 1;
 }
-.gc-deck > .gc-pick {
+.gc-slide > .gc-pick {
   position: absolute;
   z-index: 3;
 }
@@ -418,7 +418,7 @@ html:has(.case-zoom[open]) {
   line-height: 1.2;
   white-space: nowrap;
 }
-.gc-deck.is-focus .gc-text b {
+.gc-slide.is-focus .gc-text b {
   font-size: max(var(--text-md), calc(22 * var(--u)));
 }
 .gc-text p {
@@ -428,7 +428,7 @@ html:has(.case-zoom[open]) {
   color: var(--muted);
 }
 /* the sides show a number and a name only */
-.gc-deck:not(.is-focus) .gc-text p {
+.gc-slide:not(.is-focus) .gc-text p {
   display: none;
 }
 
@@ -512,7 +512,7 @@ html:has(.case-zoom[open]) {
   .gc-track {
     transition: transform 0.7s var(--ease-out);
   }
-  .gc-deck {
+  .gc-slide {
     transition: width 0.7s var(--ease-out), min-height 0.7s var(--ease-out);
   }
   .gc-caption {
@@ -523,14 +523,14 @@ html:has(.case-zoom[open]) {
 /* only the cards either side of the focused one show; the rest wait out of
    sight (phones scroll through all of them, below) */
 @media (width > 640px) {
-  .gc-deck.is-far {
+  .gc-slide.is-far {
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
   }
 }
 @media (width > 640px) and (prefers-reduced-motion: no-preference) {
-  .gc-deck {
+  .gc-slide {
     transition: width 0.7s var(--ease-out), min-height 0.7s var(--ease-out),
       opacity 0.5s ease, visibility 0.5s;
   }
@@ -559,13 +559,13 @@ html:has(.case-zoom[open]) {
     padding-top: 0;
     transform: none;
   }
-  .gc-deck,
-  .gc-deck.is-focus {
+  .gc-slide,
+  .gc-slide.is-focus {
     width: var(--dw);
     gap: 14px;
     scroll-snap-align: start;
   }
-  .gc-deck:not(.is-focus) {
+  .gc-slide:not(.is-focus) {
     margin-top: 0;
   }
   .gc-pick,
@@ -586,14 +586,14 @@ html:has(.case-zoom[open]) {
     font-size: 30px;
   }
   .gc-text b,
-  .gc-deck.is-focus .gc-text b,
+  .gc-slide.is-focus .gc-text b,
   .bb-card.is-front .gc-caption .gc-text b,
   .cp-fly.is-first .gc-caption .gc-text b {
     margin-bottom: 4px;
     font-size: var(--text-lg);
   }
   .gc-text p,
-  .gc-deck:not(.is-focus) .gc-text p,
+  .gc-slide:not(.is-focus) .gc-text p,
   .cp-fly:not(.is-first) .gc-caption .gc-text p {
     display: block;
     font-size: var(--text-sm);

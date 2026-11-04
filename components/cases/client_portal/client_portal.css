@@ -68,7 +68,7 @@
   transition: opacity 0.3s ease, visibility 0s 0.3s;
 }
 .cm-stage:not(.is-landed) .cm-view .gc-track,
-.cm-stage:not(.is-landed) .cm-view .gc-deck {
+.cm-stage:not(.is-landed) .cm-view .gc-slide {
   transition: none;
 }
 .cm-view .gc {
