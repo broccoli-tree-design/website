@@ -1,5 +1,11 @@
-/* Case 1, from black box to co-creation (components/cases/blackbox). Loads
-   after shared.css. */
+/* Case 1, from black box to co-creation (components/cases/blackbox).
+
+   Variables
+   - defined here: --u on .bb (fits both the screen's width and height),
+     inherited by .bb-landing .gc on desktop; --bleed, as on the carousel.
+   - set by BlackBox.tsx as the page scrolls: --sx, --sy (a face's stretch,
+     undone on its print), --light (0 → 1 as a face turns to glass),
+     --print (the cities and question fading), --cue (the scroll cue). */
 @layer cases {
   /* The black box (BlackBox.tsx): a tall section with a sticky stage, so the
      page's scroll takes the box apart. The cards are placed from the scene's

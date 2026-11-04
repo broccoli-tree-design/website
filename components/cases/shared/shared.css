@@ -1,11 +1,21 @@
 /* The two case studies' shared parts: section spacing, the result and its
    vine, the full-size screen dialog, and the glass carousel
-   (components/cases/shared). Each case adds its own file after this one
-   (blackbox.css, client_portal.css; the order is set in layout.tsx). All
-   three load after globals.css, so they build on its tokens and type
-   classes: .result-label's roman, for one, overrides .text-sub's italic.
-   Font sizes use the --text-* tokens; raw px (11, 13, 20, 28, 30, 46, 54)
-   are off-scale or display sizes on purpose. */
+   (components/cases/shared). Each case adds its own file (blackbox.css,
+   client_portal.css). All three sit in the cases layer, after tokens.css,
+   base.css and site.css, so they can adjust the type classes:
+   .result-label's roman, for one, overrides .text-sub's italic. Font sizes
+   use the --text-* tokens; raw px (11, 13, 20, 28, 30, 46, 54) are
+   off-scale or display sizes on purpose.
+
+   Variables
+   - defined here: --u (one unit of the 1384 artboard, on .case-blackbox
+     and .gc), --bleed (how far the carousel reaches past the gutters),
+     --dw (a phone slide's width). A case's stage may redefine --u and
+     --bleed; its carousel then takes them with `--u: inherit`.
+   - overridden here: --gutter drops to 24px on .case below 900px.
+   - set by GlassCarousel.tsx: --tx (the track's offset), --gc-sm,
+     --gc-big, --gc-gap, --gc-h, --ratio (slide sizes, in --u).
+   - set by LeafConnector.tsx: --d (each leaf's grow delay). */
 @layer cases {
   /* ── CASES ──
      shared by both case studies: section spacing, screenshot captions,

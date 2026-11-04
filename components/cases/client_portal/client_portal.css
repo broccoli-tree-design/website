@@ -1,5 +1,16 @@
-/* Case 2, the client portal (components/cases/client_portal). Loads after
-   blackbox.css; .cm-cue reuses its bb-nudge keyframes. */
+/* Case 2, the client portal (components/cases/client_portal). .cm-cue
+   reuses blackbox.css's bb-nudge keyframes.
+
+   Variables
+   - defined here: --u on .cm-scene (fits the width and a 527-unit height),
+     inherited by .cm-view .gc; --pu, the 1328×520 board's unit, used as
+     --u on .cp and .cp-skel; the still and phone versions (.cps, .cpp)
+     set their own --u.
+   - set by ClientPortal.tsx as the page scrolls, each 0 → 1: --ws (the
+     workspace sliding away), --link (the shared-data link fading), --rest
+     (the unnamed cards fading), --panel (the portal panel clearing),
+     --chrome (the heading and tabs fading in), --light (a card turning to
+     glass); --cue (the scroll cue) runs 1 → 0. */
 @layer cases {
   /* ── CASE 2: THE PORTAL, THEN SALES' DEMO AND PLANNERS' WORK ──
      ClientPortal.tsx / ClientPortalCase.tsx. A tall section with a sticky stage, as

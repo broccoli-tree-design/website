@@ -73,7 +73,6 @@ export default function GlassCarousel({
   const tx = (FRAME - sz.big) / 2 - foc * (sz.sm + sz.gap);
 
   const style = {
-    "--foc": foc,
     "--tx": tx,
     "--gc-h": sz.big / ratio + CAPTION,
     "--gc-big": sz.big,
