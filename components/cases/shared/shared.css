@@ -1,775 +1,643 @@
 /* The two case studies' shared parts: section spacing, the result and its
    vine, the full-size screen dialog, and the glass carousel
-   (components/cases/shared). Each case adds its own file after this one
-   (blackbox.css, client_portal.css; the order is set in layout.tsx). All
-   three load after globals.css, so they build on its tokens and type
-   classes: .result-label's roman, for one, overrides .text-sub's italic.
-   Font sizes use the --text-* tokens; raw px (11, 13, 20, 28, 30, 46, 54)
-   are off-scale or display sizes on purpose. */
+   (components/cases/shared). Each case adds its own file (blackbox.css,
+   client_portal.css). All three sit in the cases layer, after tokens.css,
+   base.css and site.css, so they can adjust the type classes:
+   .result-label's roman, for one, overrides .text-sub's italic. Font sizes
+   use the --text-* tokens; raw px (11, 13, 20, 28, 30, 46, 54) are
+   off-scale or display sizes on purpose.
 
-/* ── CASES ──
-   shared by both case studies: section spacing, screenshot captions,
-   connectors, result and the full-size screen dialog */
-.case {
-  position: relative;
-  padding: 20vh var(--gutter) 8vh;
-}
-.case-eyebrow {
-  color: var(--warm);
-}
-
-.case-name {
-  writing-mode: vertical-rl;
-  font-size: var(--text-lg);
-  font-weight: 600;
-  white-space: nowrap;
-}
-
-/* connector from the Solution to the result */
-.case-flow {
-  display: block;
-  width: 100%;
-  overflow: visible;
-  fill: none;
-  stroke: var(--accent);
-  stroke-width: 1.25;
-  stroke-linecap: round;
-}
-/* the vine's leaf: scaled up, its line stays 1.25px */
-.case-leaf {
-  fill: none;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-}
-/* the filled bud at the vine's end, above the result */
-.case-bud {
-  fill: var(--accent);
-  stroke: none;
-}
-.case-brief-flow {
-  height: 120px;
-  margin-top: 20px;
-}
-
-/* the vines grow in once in view (LeafConnector, with useShown): the stem
-   draws, each leaf and the bud open from their base as its tip passes
-   (--d). Static under reduced motion */
-@media (prefers-reduced-motion: no-preference) {
-  .vine-stem {
-    stroke-dasharray: 1;
-    stroke-dashoffset: 1;
-    transition: stroke-dashoffset 0.9s cubic-bezier(0.2, 0.7, 0.2, 1)
-      var(--d, 0s);
-  }
-  .vine-grow {
-    opacity: 0;
-    transform: scale(0.2);
-    transform-origin: 0 0;
-    transition: opacity 0.4s ease var(--d, 0s),
-      transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s);
-  }
-  .is-shown .vine-stem {
-    stroke-dashoffset: 0;
-  }
-  .is-shown .vine-grow {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-/* a roman subtitle over an italic number */
-.case-result {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 14px;
-  padding-top: 20px;
-}
-.result-label {
-  max-width: 20ch;
-  font-style: normal;
-  text-wrap: balance;
-}
-.result-stat {
-  font-size: var(--display-4);
-  color: var(--accent);
-}
-
-/* below 900px the case studies stack */
-@media (width < 900px) {
+   Variables
+   - defined here: --u (one unit of the 1384 artboard, on .case-blackbox
+     and .gc), --bleed (how far the carousel reaches past the gutters),
+     --dw (a phone slide's width). A case's stage may redefine --u and
+     --bleed; its carousel then takes them with `--u: inherit`.
+   - overridden here: --gutter drops to 24px on .case below 900px.
+   - set by GlassCarousel.tsx: --tx (the track's offset), --gc-sm,
+     --gc-big, --gc-gap, --gc-h, --ratio (slide sizes, in --u).
+   - set by LeafConnector.tsx: --d (each leaf's grow delay). */
+@layer cases {
+  /* ── CASES ──
+     shared by both case studies: section spacing, screenshot captions,
+     connectors, result and the full-size screen dialog */
   .case {
-    --gutter: 24px;
-    padding-top: 14vh;
-  }
-  .case-name {
-    writing-mode: horizontal-tb;
-    font-size: var(--text-md);
-  }
-  .case-brief-flow {
-    height: 90px;
-  }
-  .case-result {
-    padding-top: 14px;
-  }
-}
-
-/* case — title and brief */
-.case-title {
-  grid-column: 1 / span 8;
-  display: flex;
-  flex-direction: column;
-  gap: 22px;
-}
-/* roomier than .text-display's 0.85, so the apostrophes in "Sales’" and
-   "Planners’" clear the descenders above (as .about-h2) */
-.case-h3 {
-  font-size: var(--display-2);
-  line-height: 1.1;
-  text-wrap: balance;
-}
-.case-brief {
-  margin-top: 96px;
-}
-.case-problem,
-.case-solution {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.case-problem {
-  grid-column: 1 / span 4;
-}
-.case-solution {
-  grid-column: 6 / span 4;
-}
-.case-problem .text-label {
-  color: var(--warm);
-}
-.case-solution .text-label {
-  color: var(--accent);
-}
-
-/* the result sits on the 12-column grid, at every width: case 1 from
-   column 5, case 2 from column 7 (1 on phones) */
-.deck-result {
-  grid-column: 5 / -1;
-}
-.mod-result {
-  grid-column: 7 / -1;
-}
-
-/* stacked */
-@media (width < 900px) {
-  .case-title,
-  .case-problem,
-  .case-solution {
-    grid-column: 1 / -1;
-  }
-  .case-title {
-    gap: 16px;
-  }
-  .case-brief {
-    margin-top: 56px;
-    row-gap: 28px;
-  }
-  .case-problem,
-  .case-solution {
-    gap: 10px;
-  }
-}
-
-/* phones: the enlarged screen in a dialog */
-.case-zoom {
-  width: 100%;
-  height: 100dvh;
-  max-width: none;
-  max-height: none;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  background: var(--neutral-100);
-  color: var(--green-900);
-}
-.case-zoom[open] {
-  display: flex;
-  flex-direction: column;
-}
-.case-zoom::backdrop {
-  background: var(--green-950);
-}
-html:has(.case-zoom[open]) {
-  overflow: hidden;
-}
-.case-zoom-bar {
-  flex: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px 6px 6px 20px;
-  border-bottom: 1px solid var(--green-900);
-}
-.case-zoom-bar .case-name {
-  writing-mode: horizontal-tb;
-  font-size: var(--text-md);
-}
-.case-zoom-close {
-  appearance: none;
-  width: 44px;
-  height: 44px;
-  border: 0;
-  background: none;
-  color: inherit;
-  font: inherit;
-  font-size: 28px;
-  line-height: 1;
-  cursor: pointer;
-}
-/* the screen at its real size; scroll sideways to read across */
-.case-zoom-scroll {
-  flex: 1;
-  min-height: 0;
-  overflow: auto;
-  display: flex;
-  /* safe: a screen taller than the dialog scrolls from its top */
-  align-items: safe center;
-  padding: 16px;
-}
-.case-zoom-scroll img {
-  flex: none;
-  display: block;
-  max-width: none;
-  height: auto;
-}
-.case-zoom-desc {
-  flex: none;
-  margin: 0;
-  padding: 0 20px 28px;
-  font-size: var(--text-md);
-  line-height: 1.6;
-  color: var(--neutral-700);
-}
-
-/* The cases are laid out on a 1384-wide artboard in --u units (the decks and
-   the glass carousel). GlassCarousel.tsx's FRAME mirrors it. */
-.case-deck,
-.gc {
-  --u: calc((100cqw - 2 * var(--gutter)) / 1384);
-}
-
-@media (max-width: 640px) {
-  .result-stat {
-    font-size: var(--display-6);
-  }
-  /* "400%" needs the room on phones */
-  .mod-result {
-    grid-column: 1 / -1;
-  }
-}
-
-/* ── GLASS DECKS ──
-   Both cases' workflows (GlassCarousel.tsx): flat glass decks in a row. On
-   desktop the deck in focus is wide and the next is cut off by the frame's
-   edge, with an arrow over it; on phones one deck shows at a time with the
-   next peeking in. Sized on the 1384 artboard in --u units, like the old
-   deck; phones use px. */
-.gc {
-  --dw: calc(100cqw - 2 * var(--gutter) - 44px);
-  /* how far the frame reaches past the gutters to the edge of the screen */
-  --bleed: calc(50vw - 50cqw + var(--gutter));
-  position: relative;
-  /* the frame runs to the screen's edges and the track starts back at the
-     gutter, so neighbouring decks and the shadows are cut by the screen,
-     not by a margin. The shadows still spill out of the top and bottom
-     (phones scroll it instead, below) */
-  margin-inline: calc(-1 * var(--bleed));
-  padding-inline: var(--bleed);
-  overflow-x: clip;
-  overflow-y: visible;
-  /* the tallest deck plus room above and below it for its shadow */
-  height: calc((var(--gc-h) + 120) * var(--u));
-  margin-top: 56px;
-}
-.gc-track {
-  display: flex;
-  align-items: center;
-  gap: calc(var(--gc-gap, 24) * var(--u));
-  height: 100%;
-  transform: translateX(calc(var(--tx) * var(--u)));
-}
-.gc-deck {
-  --ink: var(--green-950);
-  position: relative;
-  flex: none;
-  box-sizing: border-box;
-  width: calc(400 * var(--u));
-  min-height: calc(var(--gc-sm-h) * var(--u));
-  display: flex;
-  flex-direction: column;
-  gap: calc(12 * var(--u));
-  padding: calc(16 * var(--u)) calc(20 * var(--u)) calc(24 * var(--u));
-  border: 0;
-  border-radius: calc(28 * var(--u));
-  background: linear-gradient(var(--tint), var(--tint)),
-    color-mix(in srgb, var(--neutral-100) 42%, transparent);
-  color: var(--ink);
-  /* a faint ring and a soft shadow below, as on the glass tiles */
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25),
-    0 calc(50 * var(--u)) calc(90 * var(--u)) calc(-40 * var(--u))
-      color-mix(in srgb, var(--green-900) 35%, transparent);
-}
-.gc-deck.is-focus {
-  width: calc(1020 * var(--u));
-  min-height: calc(var(--gc-h) * var(--u));
-  padding-inline: calc(22 * var(--u));
-  border-radius: calc(32 * var(--u));
-}
-.gc-deck.is-solid {
-  background: var(--green-950);
-}
-.gc-deck.is-dark {
-  --ink: var(--neutral-100);
-}
-/* the lit rim and the sweep of light sit under the screens and text */
-.gc-deck::before,
-.gc-deck::after,
-.gc-glass::before,
-.gc-glass::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-}
-.gc-deck::before,
-.gc-glass::before {
-  background: linear-gradient(
-      112deg,
-      rgba(255, 255, 255, 0.35) 0%,
-      rgba(255, 255, 255, 0.12) 20%,
-      rgba(255, 255, 255, 0) 42%
-    ),
-    linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.22) 0%,
-      rgba(255, 255, 255, 0) 14%
-    );
-}
-.gc-deck::after,
-.gc-glass::after {
-  padding: 3px;
-  background: linear-gradient(
-    135deg,
-    #fff 0%,
-    rgba(255, 255, 255, 0.2) 26%,
-    rgba(255, 255, 255, 0) 50%,
-    rgba(255, 255, 255, 0.25) 76%,
-    rgba(255, 255, 255, 0.9) 100%
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-}
-.gc-deck > *,
-.gc-glass > * {
-  position: relative;
-  z-index: 1;
-}
-.gc-deck > .gc-pick {
-  position: absolute;
-  z-index: 3;
-}
-
-.gc-num {
-  font-family: var(--serif), serif;
-  font-weight: 700;
-  font-size: calc(54 * var(--u));
-  line-height: 1;
-  letter-spacing: -0.01em;
-  /* keeps its height on the front deck's number-less line */
-  min-height: calc(54 * var(--u));
-}
-.gc-text {
-  min-height: calc(112 * var(--u));
-}
-.gc-deck.is-focus .gc-text {
-  min-height: calc(78 * var(--u));
-}
-.gc-text b {
-  display: block;
-  margin-bottom: calc(6 * var(--u));
-  font-size: calc(22 * var(--u));
-  font-weight: 600;
-  line-height: 1.2;
-  white-space: nowrap;
-}
-.gc-text p {
-  margin: 0;
-  font-size: calc(15 * var(--u));
-  line-height: 1.5;
-}
-.gc-deck.is-focus .gc-text b {
-  font-size: calc(30 * var(--u));
-}
-.gc-deck.is-focus .gc-text p {
-  font-size: calc(17 * var(--u));
-}
-.gc-shot {
-  line-height: 0;
-}
-.gc-shot img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius-md);
-  background: #fff;
-}
-.gc-pick {
-  appearance: none;
-  inset: 0;
-  margin: 0;
-  padding: 0;
-  border: 0;
-  border-radius: inherit;
-  background: transparent;
-  cursor: pointer;
-}
-.gc-pick:focus-visible,
-.gc-arrow:focus-visible,
-.gc-enlarge:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-.gc-arrow {
-  appearance: none;
-  position: absolute;
-  top: 50%;
-  z-index: 5;
-  width: max(44px, calc(56 * var(--u)));
-  height: max(44px, calc(56 * var(--u)));
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 0;
-  border-radius: 50%;
-  /* liquid glass, as the cards: clear fill with a blur, a white ring and a
-     lit rim */
-  background: color-mix(in srgb, #fff 34%, transparent);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  backdrop-filter: blur(14px) saturate(1.4);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6),
-    inset 0 2px 1px rgba(255, 255, 255, 0.85),
-    inset 0 -2px 1px rgba(255, 255, 255, 0.3),
-    inset 0 0 14px rgba(255, 255, 255, 0.28),
-    0 10px 20px -10px color-mix(in srgb, var(--green-900) 38%, transparent);
-  transform: translateY(-50%);
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.gc-arrow:hover {
-  background: color-mix(in srgb, #fff 55%, transparent);
-}
-.gc-arrow-next {
-  right: calc(var(--bleed) + 20 * var(--u));
-}
-.gc-arrow-prev {
-  left: calc(var(--bleed) + 20 * var(--u));
-}
-.gc-arrow svg {
-  width: 40%;
-  height: 40%;
-  fill: none;
-  stroke: var(--ink);
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-/* the enlarged screen: the whole 1440px capture, or case 2's 1072px card */
-.gc-zoom-screen .case-zoom-scroll img {
-  width: 1440px;
-  border-radius: var(--radius-md);
-  box-shadow: var(--screen-shadow);
-}
-.gc-zoom-card .case-zoom-scroll img {
-  width: 1072px;
-  border-radius: 12px;
-  box-shadow: var(--screen-shadow);
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .gc-track {
-    transition: transform 0.7s var(--ease-out);
-  }
-  .gc-deck {
-    transition: width 0.7s var(--ease-out), min-height 0.7s var(--ease-out);
-  }
-}
-
-/* only the decks either side of the focused one show; the rest wait out of
-   sight (phones scroll through all of them, below) */
-@media (width > 640px) {
-  .gc-deck.is-far {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-}
-@media (width > 640px) and (prefers-reduced-motion: no-preference) {
-  .gc-deck {
-    transition: width 0.7s var(--ease-out), min-height 0.7s var(--ease-out),
-      opacity 0.5s ease, visibility 0.5s;
-  }
-}
-
-/* phones: one deck at a time, the next peeking in */
-@media (max-width: 640px) {
-  /* the frame scrolls sideways and snaps to a deck, the next peeking in */
-  .gc {
-    height: auto;
-    margin-top: 32px;
-    padding-block: 24px 36px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    overscroll-behavior-x: contain;
-    scroll-padding-inline: var(--bleed);
-  }
-  .gc::-webkit-scrollbar {
-    display: none;
-  }
-  .gc-track {
-    width: max-content;
-    align-items: stretch;
-    gap: 10px;
-    transform: none;
-  }
-  .gc-deck {
-    scroll-snap-align: start;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25),
-      0 24px 40px -24px color-mix(in srgb, var(--green-900) 35%, transparent);
-  }
-  .gc-pick,
-  .gc-arrow {
-    display: none;
-  }
-  .gc-deck,
-  .gc-deck.is-focus {
-    width: var(--dw);
-    min-height: 0;
-    gap: 10px;
-    padding: 14px 16px 20px;
-    border-radius: var(--radius-lg);
-  }
-  .gc-num {
-    font-size: 46px;
-    min-height: 46px;
-  }
-  .gc-text,
-  .gc-deck.is-focus .gc-text {
-    min-height: 84px;
-  }
-  .gc-text b,
-  .gc-deck.is-focus .gc-text b {
-    margin-bottom: 4px;
-    font-size: 20px;
-  }
-  .gc-text p,
-  .gc-deck.is-focus .gc-text p {
-    font-size: var(--text-sm);
-  }
-  .gc-arrow-next {
-    right: 8px;
-  }
-  .gc-arrow-prev {
-    left: 8px;
-  }
-  /* the screen is a button that opens it full size */
-  .gc-enlarge {
-    appearance: none;
     position: relative;
+    padding: 20vh var(--gutter) 8vh;
+  }
+  .case-eyebrow {
+    color: var(--warm);
+  }
+
+  .case-name {
+    writing-mode: vertical-rl;
+    font-size: var(--text-lg);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* connector from the Solution to the result */
+  .case-flow {
     display: block;
     width: 100%;
+    overflow: visible;
+    fill: none;
+    stroke: var(--accent);
+    stroke-width: 1.25;
+    stroke-linecap: round;
+  }
+  /* the vine's leaf: scaled up, its line stays 1.25px */
+  .case-leaf {
+    fill: none;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+  /* the filled bud at the vine's end, above the result */
+  .case-bud {
+    fill: var(--accent);
+    stroke: none;
+  }
+  .case-brief-flow {
+    height: 120px;
+    margin-top: 20px;
+  }
+
+  /* the vines grow in once in view (LeafConnector, with useShown): the stem
+     draws, each leaf and the bud open from their base as its tip passes
+     (--d). Static under reduced motion */
+  @media (prefers-reduced-motion: no-preference) {
+    .vine-stem {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      transition: stroke-dashoffset 0.9s cubic-bezier(0.2, 0.7, 0.2, 1)
+        var(--d, 0s);
+    }
+    .vine-grow {
+      opacity: 0;
+      transform: scale(0.2);
+      transform-origin: 0 0;
+      transition: opacity 0.4s ease var(--d, 0s),
+        transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s);
+    }
+    .is-shown .vine-stem {
+      stroke-dashoffset: 0;
+    }
+    .is-shown .vine-grow {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* a roman subtitle over an italic number */
+  .case-result {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding-top: 20px;
+  }
+  .result-label {
+    max-width: 20ch;
+    font-style: normal;
+    text-wrap: balance;
+  }
+  .result-stat {
+    font-size: var(--display-4);
+    color: var(--accent);
+  }
+
+  /* below 900px the case studies stack */
+  @media (width < 900px) {
+    .case {
+      --gutter: 24px;
+      padding-top: 14vh;
+    }
+    .case-name {
+      writing-mode: horizontal-tb;
+      font-size: var(--text-md);
+    }
+    .case-brief-flow {
+      height: 90px;
+    }
+    .case-result {
+      padding-top: 14px;
+    }
+  }
+
+  /* case — title and brief */
+  .case-title {
+    grid-column: 1 / span 8;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  /* roomier than .text-display's 0.85, so the apostrophes in "Sales’" and
+     "Planners’" clear the descenders above (as .about-h2) */
+  .case-h3 {
+    font-size: var(--display-2);
+    line-height: 1.1;
+    text-wrap: balance;
+  }
+  .case-brief {
+    margin-top: 96px;
+  }
+  .case-problem,
+  .case-solution {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .case-problem {
+    grid-column: 1 / span 4;
+  }
+  .case-solution {
+    grid-column: 6 / span 4;
+  }
+  .case-problem .text-label {
+    color: var(--warm);
+  }
+  .case-solution .text-label {
+    color: var(--accent);
+  }
+
+  /* the result sits on the 12-column grid, at every width: case 1 from
+     column 5, case 2 from column 7 (1 on phones) */
+  .bb-result {
+    grid-column: 5 / -1;
+  }
+  .cm-result {
+    grid-column: 7 / -1;
+  }
+
+  /* stacked */
+  @media (width < 900px) {
+    .case-title,
+    .case-problem,
+    .case-solution {
+      grid-column: 1 / -1;
+    }
+    .case-title {
+      gap: 16px;
+    }
+    .case-brief {
+      margin-top: 56px;
+      row-gap: 28px;
+    }
+    .case-problem,
+    .case-solution {
+      gap: 10px;
+    }
+  }
+
+  /* phones: the enlarged screen in a dialog */
+  .case-zoom {
+    width: 100%;
+    height: 100dvh;
+    max-width: none;
+    max-height: none;
     margin: 0;
     padding: 0;
     border: 0;
+    background: var(--neutral-100);
+    color: var(--green-900);
+  }
+  .case-zoom[open] {
+    display: flex;
+    flex-direction: column;
+  }
+  .case-zoom::backdrop {
+    background: var(--green-950);
+  }
+  html:has(.case-zoom[open]) {
+    overflow: hidden;
+  }
+  .case-zoom-bar {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 6px 6px 6px 20px;
+    border-bottom: 1px solid var(--green-900);
+  }
+  .case-zoom-bar .case-name {
+    writing-mode: horizontal-tb;
+    font-size: var(--text-md);
+  }
+  .case-zoom-close {
+    appearance: none;
+    width: 44px;
+    height: 44px;
+    border: 0;
     background: none;
-    line-height: 0;
-    cursor: zoom-in;
+    color: inherit;
+    font: inherit;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
   }
-  .gc-enlarge-hint {
-    position: absolute;
-    right: 8px;
-    bottom: 8px;
-    padding: 4px 10px;
-    border-radius: 999px;
-    background: var(--green-900);
-    color: var(--neutral-100);
-    font-size: var(--text-xs);
-    font-weight: 500;
-    line-height: 1.4;
+  /* the screen at its real size; scroll sideways to read across */
+  .case-zoom-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    display: flex;
+    /* safe: a screen taller than the dialog scrolls from its top */
+    align-items: safe center;
+    padding: 16px;
   }
-}
-
-/* glass cards (both cases): each screen fills a clear glass card of its own,
-   its number, name and description below. The deck is just the column holding
-   the two: the focused one 965 wide (67% of a 1440 screen), the sides 590, on the 1384 artboard
-   (GlassCarousel.tsx, SIZES). The sides sit on the focused card's centre line. */
-.gc.is-card .gc-track {
-  box-sizing: border-box;
-  align-items: flex-start;
-  padding-top: calc(60 * var(--u));
-}
-.gc.is-card .gc-deck,
-.gc.is-card .gc-deck.is-focus {
-  --ink: inherit;
-  width: calc(var(--gc-sm, 590) * var(--u));
-  min-height: 0;
-  gap: calc(22 * var(--u));
-  padding: 0;
-  border-radius: 0;
-  background: none;
-  box-shadow: none;
-}
-.gc.is-card .gc-deck.is-focus {
-  width: calc(var(--gc-big, 965) * var(--u));
-}
-.gc.is-card .gc-deck:not(.is-focus) {
-  margin-top: calc(
-    (var(--gc-big, 965) - var(--gc-sm, 590)) / 2 / var(--ratio) * var(--u)
-  );
-}
-.gc.is-card .gc-deck::before,
-.gc.is-card .gc-deck::after {
-  content: none;
-}
-/* the card: clear glass with a blur, a 1px white ring, a lit rim and a soft
-   sheen over the screen, which fills it to the edge */
-.gc-glass {
-  position: relative;
-  box-sizing: border-box;
-  border-radius: var(--radius-md);
-  background: color-mix(in srgb, #fff 34%, transparent);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  backdrop-filter: blur(14px) saturate(1.4);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6),
-    0 calc(40 * var(--u)) calc(70 * var(--u)) calc(-34 * var(--u))
-      color-mix(in srgb, var(--green-900) 38%, transparent),
-    0 calc(8 * var(--u)) calc(18 * var(--u)) calc(-10 * var(--u))
-      color-mix(in srgb, var(--green-900) 18%, transparent);
-}
-.gc.is-card .gc-glass {
-  aspect-ratio: var(--ratio);
-}
-.gc-glass::before {
-  z-index: 1;
-  background: linear-gradient(
-    112deg,
-    rgba(255, 255, 255, 0.3) 0%,
-    rgba(255, 255, 255, 0.08) 22%,
-    rgba(255, 255, 255, 0) 44%
-  );
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55),
-    inset 0 2px 1px rgba(255, 255, 255, 0.85),
-    inset 0 -2px 1px rgba(255, 255, 255, 0.3),
-    inset 0 0 22px rgba(255, 255, 255, 0.28);
-}
-.gc-glass::after {
-  content: none;
-}
-.gc-glass > .gc-shot {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  border-radius: inherit;
-  overflow: hidden;
-}
-.gc-glass .gc-shot img {
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0;
-}
-.gc-caption {
-  display: flex;
-  gap: calc(18 * var(--u));
-  align-items: flex-start;
-  padding-inline: calc(6 * var(--u));
-  /* the page's own text colours, not the screens' near-black: the number and
-     name in the ink, the description in the body copy's muted tone */
-  color: var(--ink);
-}
-.gc-caption .gc-num {
-  flex: none;
-  min-height: 0;
-  font-size: max(24px, calc(34 * var(--u)));
-}
-.gc-caption .gc-text,
-.gc-deck.is-focus .gc-caption .gc-text {
-  min-height: 0;
-}
-.gc-caption .gc-text b {
-  margin-bottom: calc(4 * var(--u));
-  font-size: max(var(--text-sm), calc(18 * var(--u)));
-}
-.gc-deck.is-focus .gc-caption .gc-text b {
-  margin-bottom: calc(4 * var(--u));
-  font-size: max(var(--text-md), calc(22 * var(--u)));
-}
-.gc-caption .gc-text p,
-.gc-deck.is-focus .gc-caption .gc-text p {
-  font-size: max(var(--text-sm), calc(16 * var(--u)));
-  color: var(--muted);
-}
-/* the sides show a number and a name only */
-.gc-deck:not(.is-focus) .gc-caption .gc-text p {
-  display: none;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .gc-caption {
-    transition: opacity 0.5s ease;
-  }
-}
-@media (max-width: 640px) {
-  .gc.is-card .gc-track {
-    padding-top: 0;
-  }
-  .gc.is-card .gc-deck,
-  .gc.is-card .gc-deck.is-focus {
-    width: var(--dw);
-    gap: 14px;
-    padding: 0;
-  }
-  .gc.is-card .gc-deck:not(.is-focus) {
-    margin-top: 0;
-  }
-  .gc-caption {
-    gap: 12px;
-    padding-inline: 4px;
-  }
-  .gc-caption .gc-num {
-    font-size: 30px;
-  }
-  .gc-caption .gc-text b,
-  .gc-deck.is-focus .gc-caption .gc-text b,
-  .bb-card.is-front .gc-caption .gc-text b,
-  .cp-fly.is-first .gc-caption .gc-text b {
-    margin-bottom: 4px;
-    font-size: var(--text-lg);
-  }
-  .gc-caption .gc-text p,
-  .gc-deck.is-focus .gc-caption .gc-text p,
-  .gc-deck:not(.is-focus) .gc-caption .gc-text p,
-  .cp-fly:not(.is-first) .gc-caption .gc-text p {
+  .case-zoom-scroll img {
+    flex: none;
     display: block;
-    font-size: var(--text-sm);
+    max-width: none;
+    height: auto;
   }
-  /* the screen's button fills the card */
-  .gc-glass .gc-enlarge {
+  .case-zoom-desc {
+    flex: none;
+    margin: 0;
+    padding: 0 20px 28px;
+    font-size: var(--text-md);
+    line-height: 1.6;
+    color: var(--neutral-700);
+  }
+
+  /* The cases are laid out on a 1384-wide artboard in --u units (case 1's
+     section and the glass carousel). GlassCarousel.tsx's FRAME mirrors it. */
+  .case-blackbox,
+  .gc {
+    --u: calc((100cqw - 2 * var(--gutter)) / 1384);
+  }
+
+  @media (max-width: 640px) {
+    .result-stat {
+      font-size: var(--display-6);
+    }
+    /* "400%" needs the room on phones */
+    .cm-result {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* ── GLASS CAROUSEL ──
+     Both cases (GlassCarousel.tsx): each screen fills a clear glass card of
+     its own, its number, name and description below. On desktop the focused
+     card is centred and wide (965 units, 67% of a 1440 screen), the sides 590
+     sit on its centre line, the next one cut off by the frame's edge with an
+     arrow over it; on phones one card shows at a time with the next peeking
+     in. Sized on the 1384 artboard in --u units (GlassCarousel.tsx, SIZES);
+     phones use px. */
+  .gc {
+    --dw: calc(100cqw - 2 * var(--gutter) - 44px);
+    /* how far the frame reaches past the gutters to the edge of the screen */
+    --bleed: calc(50vw - 50cqw + var(--gutter));
+    position: relative;
+    /* the frame runs to the screen's edges and the track starts back at the
+       gutter, so neighbouring cards and the shadows are cut by the screen,
+       not by a margin. The shadows still spill out of the top and bottom
+       (phones scroll it instead, below) */
+    margin-inline: calc(-1 * var(--bleed));
+    padding-inline: var(--bleed);
+    overflow-x: clip;
+    overflow-y: visible;
+    /* the tallest card plus room above and below it for its shadow */
+    height: calc((var(--gc-h) + 120) * var(--u));
+    margin-top: 56px;
+  }
+  .gc-track {
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    gap: calc(var(--gc-gap, 24) * var(--u));
+    height: 100%;
+    padding-top: calc(60 * var(--u));
+    transform: translateX(calc(var(--tx) * var(--u)));
+  }
+  /* a slide: the glass card and its caption, stacked */
+  .gc-slide {
+    position: relative;
+    flex: none;
+    box-sizing: border-box;
+    width: calc(var(--gc-sm, 590) * var(--u));
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: calc(22 * var(--u));
+    color: var(--ink);
+  }
+  .gc-slide.is-focus {
+    width: calc(var(--gc-big, 965) * var(--u));
+  }
+  .gc-slide:not(.is-focus) {
+    margin-top: calc(
+      (var(--gc-big, 965) - var(--gc-sm, 590)) / 2 / var(--ratio) * var(--u)
+    );
+  }
+  .gc-slide > *,
+  .gc-glass > * {
+    position: relative;
+    z-index: 1;
+  }
+  .gc-slide > .gc-pick {
+    position: absolute;
+    z-index: 3;
+  }
+
+  /* the card: clear glass with a blur, a 1px white ring, a lit rim and a soft
+     sheen over the screen, which fills it to the edge */
+  .gc-glass {
+    position: relative;
+    box-sizing: border-box;
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, #fff 34%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    backdrop-filter: blur(14px) saturate(1.4);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6),
+      0 calc(40 * var(--u)) calc(70 * var(--u)) calc(-34 * var(--u))
+        color-mix(in srgb, var(--green-900) 38%, transparent),
+      0 calc(8 * var(--u)) calc(18 * var(--u)) calc(-10 * var(--u))
+        color-mix(in srgb, var(--green-900) 18%, transparent);
+  }
+  .gc .gc-glass {
+    aspect-ratio: var(--ratio);
+  }
+  .gc-glass::before {
+    content: "";
     position: absolute;
     inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(
+      112deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.08) 22%,
+      rgba(255, 255, 255, 0) 44%
+    );
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55),
+      inset 0 2px 1px rgba(255, 255, 255, 0.85),
+      inset 0 -2px 1px rgba(255, 255, 255, 0.3),
+      inset 0 0 22px rgba(255, 255, 255, 0.28);
+  }
+  .gc-shot {
+    line-height: 0;
+  }
+  .gc-shot img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    background: #fff;
+  }
+  .gc-glass > .gc-shot {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    border-radius: inherit;
+    overflow: hidden;
+  }
+  .gc-glass .gc-shot img {
     height: 100%;
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  /* the caption: the page's own text colours, not the screens' near-black: the
+     number and name in the ink, the description in the body copy's muted tone */
+  .gc-caption {
+    display: flex;
+    gap: calc(18 * var(--u));
+    align-items: flex-start;
+    padding-inline: calc(6 * var(--u));
+    color: var(--ink);
+  }
+  .gc-num {
+    flex: none;
+    min-height: 0;
+    font-family: var(--serif), serif;
+    font-weight: 700;
+    font-size: max(24px, calc(34 * var(--u)));
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .gc-text {
+    min-height: 0;
+  }
+  .gc-text b {
+    display: block;
+    margin-bottom: calc(4 * var(--u));
+    font-size: max(var(--text-sm), calc(18 * var(--u)));
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .gc-slide.is-focus .gc-text b {
+    font-size: max(var(--text-md), calc(22 * var(--u)));
+  }
+  .gc-text p {
+    margin: 0;
+    font-size: max(var(--text-sm), calc(16 * var(--u)));
+    line-height: 1.5;
+    color: var(--muted);
+  }
+  /* the sides show a number and a name only */
+  .gc-slide:not(.is-focus) .gc-text p {
+    display: none;
+  }
+
+  .gc-pick {
+    appearance: none;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: inherit;
+    background: transparent;
+    cursor: pointer;
+  }
+  .gc-pick:focus-visible,
+  .gc-arrow:focus-visible,
+  .gc-enlarge:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .gc-arrow {
+    appearance: none;
+    position: absolute;
+    top: 50%;
+    z-index: 5;
+    width: max(44px, calc(56 * var(--u)));
+    height: max(44px, calc(56 * var(--u)));
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    border-radius: 50%;
+    /* liquid glass, as the cards: clear fill with a blur, a white ring and a
+       lit rim */
+    background: color-mix(in srgb, #fff 34%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    backdrop-filter: blur(14px) saturate(1.4);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6),
+      inset 0 2px 1px rgba(255, 255, 255, 0.85),
+      inset 0 -2px 1px rgba(255, 255, 255, 0.3),
+      inset 0 0 14px rgba(255, 255, 255, 0.28),
+      0 10px 20px -10px color-mix(in srgb, var(--green-900) 38%, transparent);
+    transform: translateY(-50%);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .gc-arrow:hover {
+    background: color-mix(in srgb, #fff 55%, transparent);
+  }
+  .gc-arrow-next {
+    right: calc(var(--bleed) + 20 * var(--u));
+  }
+  .gc-arrow-prev {
+    left: calc(var(--bleed) + 20 * var(--u));
+  }
+  .gc-arrow svg {
+    width: 40%;
+    height: 40%;
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* the enlarged screen: the whole 1440px capture, or case 2's 1072px card */
+  .gc-zoom-screen .case-zoom-scroll img {
+    width: 1440px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--screen-shadow);
+  }
+  .gc-zoom-card .case-zoom-scroll img {
+    width: 1072px;
+    border-radius: 12px;
+    box-shadow: var(--screen-shadow);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .gc-track {
+      transition: transform 0.7s var(--ease-out);
+    }
+    .gc-slide {
+      transition: width 0.7s var(--ease-out), min-height 0.7s var(--ease-out);
+    }
+    .gc-caption {
+      transition: opacity 0.5s ease;
+    }
+  }
+
+  /* only the cards either side of the focused one show; the rest wait out of
+     sight (phones scroll through all of them, below) */
+  @media (width > 640px) {
+    .gc-slide.is-far {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+  }
+  @media (width > 640px) and (prefers-reduced-motion: no-preference) {
+    .gc-slide {
+      transition: width 0.7s var(--ease-out), min-height 0.7s var(--ease-out),
+        opacity 0.5s ease, visibility 0.5s;
+    }
+  }
+
+  /* phones: one card at a time, the next peeking in */
+  @media (max-width: 640px) {
+    /* the frame scrolls sideways and snaps to a card, the next peeking in */
+    .gc {
+      height: auto;
+      margin-top: 32px;
+      padding-block: 24px 36px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      overscroll-behavior-x: contain;
+      scroll-padding-inline: var(--bleed);
+    }
+    .gc::-webkit-scrollbar {
+      display: none;
+    }
+    .gc-track {
+      width: max-content;
+      gap: 10px;
+      padding-top: 0;
+      transform: none;
+    }
+    .gc-slide,
+    .gc-slide.is-focus {
+      width: var(--dw);
+      gap: 14px;
+      scroll-snap-align: start;
+    }
+    .gc-slide:not(.is-focus) {
+      margin-top: 0;
+    }
+    .gc-pick,
+    .gc-arrow {
+      display: none;
+    }
+    .gc-arrow-next {
+      right: 8px;
+    }
+    .gc-arrow-prev {
+      left: 8px;
+    }
+    .gc-caption {
+      gap: 12px;
+      padding-inline: 4px;
+    }
+    .gc-num {
+      font-size: 30px;
+    }
+    .gc-text b,
+    .gc-slide.is-focus .gc-text b,
+    .bb-card.is-front .gc-caption .gc-text b,
+    .cp-fly.is-first .gc-caption .gc-text b {
+      margin-bottom: 4px;
+      font-size: var(--text-lg);
+    }
+    .gc-text p,
+    .gc-slide:not(.is-focus) .gc-text p,
+    .cp-fly:not(.is-first) .gc-caption .gc-text p {
+      display: block;
+      font-size: var(--text-sm);
+    }
+    /* the screen is a button that opens it full size */
+    .gc-enlarge {
+      appearance: none;
+      position: relative;
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      line-height: 0;
+      cursor: zoom-in;
+    }
+    .gc-enlarge-hint {
+      position: absolute;
+      right: 8px;
+      bottom: 8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--green-900);
+      color: var(--neutral-100);
+      font-size: var(--text-xs);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    /* the screen's button fills the card */
+    .gc-glass .gc-enlarge {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+    }
   }
 }

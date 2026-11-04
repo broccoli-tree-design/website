@@ -10,7 +10,7 @@ import { GlassCaption } from "../shared/GlassCarousel";
  *  card (a GlassCarousel one) holding a step's screen, its caption
  *  fading in below. The front is 01, the lid 02, the side 03.
  *
- *  The faces land where the carousel (`landing`) lays its decks out,
+ *  The faces land where the carousel (`landing`) lays its slides out,
  *  measured from the page, so phones and desktops get the same motion. Once
  *  they have, the carousel takes over and its arrows and swiping work;
  *  scrolling back up hands back to the faces.
@@ -222,8 +222,8 @@ export default function BlackBox({
     // (the carousel is laid out, just hidden, until the faces land)
     const measure = () => {
       const o = scn.getBoundingClientRect();
-      const decks = land.current?.querySelectorAll<HTMLElement>(".gc-deck");
-      ends = [...(decks ?? [])].map((d) => {
+      const slides = land.current?.querySelectorAll<HTMLElement>(".gc-slide");
+      ends = [...(slides ?? [])].map((d) => {
         const g = d.querySelector<HTMLElement>(".gc-glass") ?? d;
         const r = g.getBoundingClientRect();
         return {
@@ -258,7 +258,7 @@ export default function BlackBox({
           : Math.min(sw / BOARD_W, sh / BOARD_H);
       // 1 · the faces pull apart
       const apart = span(p, 0.06, 0.3);
-      // 2 · they flatten into cards and slide to the carousel's decks
+      // 2 · they flatten into cards and move to the carousel's slides
       const flat = span(p, 0.2, 0.68);
       // 3 · light gets in: the black lifts off the glass
       const light = span(p, 0.42, 0.7);
@@ -268,9 +268,9 @@ export default function BlackBox({
         const end = ends[i];
         if (!el || !end) return;
         // on the carton, parted by the pointer and the scroll, then the
-        // corners slide to the deck's: the matrix follows them
+        // corners move to the slide's: the matrix follows them
         const out = PART * (0.05 * peek + 0.28 * apart) * (1 - flat);
-        const deck: V[] = [
+        const slide: V[] = [
           [end.x, end.y],
           [end.x + end.w, end.y],
           [end.x + end.w, end.y + end.h],
@@ -278,20 +278,20 @@ export default function BlackBox({
         ];
         const at = corners(f, out).map(
           ([x, y], j): V => [
-            mix(x * k, deck[j][0], flat),
-            mix(y * k, deck[j][1], flat),
+            mix(x * k, slide[j][0], flat),
+            mix(y * k, slide[j][1], flat),
           ],
         );
         el.style.transform = quad(at, end.w, end.h);
         el.style.width = `${end.w}px`;
         el.style.height = `${end.h}px`;
-        // the carton's corner radius, the deck's own once flat
+        // the carton's corner radius, the slide's own once flat
         el.style.borderRadius = `${mix((f.r * end.w) / f.lx, end.r, flat)}px / ${mix((f.r * end.h) / f.ly, end.r, flat)}px`;
         // what is printed on the face keeps its own shape on the card
         el.style.setProperty("--sx", String(end.w / f.lx));
         el.style.setProperty("--sy", String(end.h / f.ly));
         el.style.setProperty("--light", String(light));
-        // a deck the carousel keeps out of sight fades on its way there
+        // a slide the carousel keeps out of sight fades on its way there
         el.style.opacity = end.far ? String(1 - span(p, 0.4, 0.66)) : "";
       });
 

@@ -2,7 +2,7 @@
 import { useState, type ReactNode } from "react";
 import BlackBox, { type BoxStep } from "./BlackBox";
 import { CaseTail } from "../shared/CaseTail";
-import GlassCarousel, { type GlassDeck } from "../shared/GlassCarousel";
+import GlassCarousel, { type GlassSlide } from "../shared/GlassCarousel";
 
 /** Step screens: the whole 1440×926 app screen, captured at 3× so zooming
  *  in stays sharp */
@@ -15,7 +15,7 @@ const shot = (file: string) => ({
 });
 
 /** The three steps, as glass cards in a row */
-const DECKS: GlassDeck[] = [
+const SLIDES: GlassSlide[] = [
   {
     name: "Confirm data",
     num: "01",
@@ -40,7 +40,7 @@ const DECKS: GlassDeck[] = [
 }));
 
 /** The three steps, for the black box's faces */
-const STEPS: BoxStep[] = DECKS.filter((d) => d.img).map((d) => ({
+const STEPS: BoxStep[] = SLIDES.filter((d) => d.img).map((d) => ({
   num: d.num,
   name: d.name,
   desc: d.desc ?? "",
@@ -50,9 +50,9 @@ const STEPS: BoxStep[] = DECKS.filter((d) => d.img).map((d) => ({
 
 export default function BlackBoxCase({ brief }: { brief: ReactNode }) {
   const [focus, setFocus] = useState(0);
-  const deckView = (decks: GlassDeck[]) => (
+  const carousel = (slides: GlassSlide[]) => (
     <GlassCarousel
-      decks={decks}
+      slides={slides}
       ratio={1440 / 926}
       focus={focus}
       onFocus={setFocus}
@@ -64,12 +64,12 @@ export default function BlackBoxCase({ brief }: { brief: ReactNode }) {
     <>
       <BlackBox
         steps={STEPS}
-        landing={deckView(DECKS)}
+        landing={carousel(SLIDES)}
         onLanded={(on) => !on && setFocus(0)}
       />
 
       <CaseTail
-        className="deck-result"
+        className="bb-result"
         label="Increase in funding after MVP delivery"
         stat="50%"
       >
