@@ -17,6 +17,13 @@ import {
   GITHUB_URL,
 } from "./site";
 
+/** hero photo: 400/600/800w cuts so phones don't download the desktop size */
+const PROFILE_SRCSET = (ext: string) =>
+  [400, 600, 800].map((w) => `/profile-${w}.${ext} ${w}w`).join(", ");
+/* mirrors .hero-photo's width in globals.css (vw/vh stand in for cqw/svh) */
+const PROFILE_SIZES =
+  "(max-width: 640px) min(84vw, calc((95vh - 69vw - 88px) * 0.75)), min(46vw, 72vh)";
+
 /** structured data: who Aiqi is and what the studio offers (schema.org) */
 const JSON_LD = {
   "@context": "https://schema.org",
@@ -183,7 +190,16 @@ export default function Home() {
               </div>
             ))}
             <picture>
-              <source srcSet="/profile.webp" type="image/webp" />
+              <source
+                srcSet={PROFILE_SRCSET("avif")}
+                sizes={PROFILE_SIZES}
+                type="image/avif"
+              />
+              <source
+                srcSet={PROFILE_SRCSET("webp")}
+                sizes={PROFILE_SIZES}
+                type="image/webp"
+              />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/profile.jpg"

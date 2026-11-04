@@ -404,7 +404,7 @@ button:focus-visible {
   rotate: -3deg;
   z-index: 2;
 }
-/* <picture> wrappers (webp + jpg fallback) stay out of layout */
+/* <picture> wrappers (avif/webp + jpg fallback) stay out of layout */
 .hero-photo picture {
   display: contents;
 }
