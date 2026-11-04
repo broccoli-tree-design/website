@@ -146,63 +146,6 @@
   color: var(--accent);
 }
 
-.view-tabs {
-  /* above the carousel's frame, which reaches up over the tab bar's lower
-     half (see .gc-panel .gc) */
-  position: relative;
-  z-index: 6;
-  display: flex;
-  gap: 4px;
-  width: max-content;
-  margin: 96px auto 0;
-  padding: 6px;
-  /* liquid glass, like the decks: frosted, a bright rim, light along the
-     top edge */
-  border: 1px solid rgba(255, 255, 255, 0.65);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.28);
-  -webkit-backdrop-filter: blur(18px) saturate(1.6);
-  backdrop-filter: blur(18px) saturate(1.6);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9),
-    inset 0 -10px 20px rgba(255, 255, 255, 0.2),
-    0 8px 24px color-mix(in srgb, var(--green-900) 12%, transparent);
-}
-.view-tab {
-  appearance: none;
-  height: 40px;
-  padding: 0 20px;
-  border: 1px solid transparent;
-  border-radius: 999px;
-  background: transparent;
-  color: var(--green-900);
-  font: 500 var(--text-sm) var(--sans), system-ui, sans-serif;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background 0.15s, color 0.15s, transform 0.2s, box-shadow 0.2s;
-}
-.view-tab:hover {
-  background: rgba(255, 255, 255, 0.45);
-}
-/* the open tab is the glass pill, dark */
-.view-tab[aria-selected="true"] {
-  background: var(--green-900);
-  color: var(--neutral-100);
-  border-color: rgba(255, 255, 255, 0.65);
-  -webkit-backdrop-filter: blur(14px) saturate(1.6);
-  backdrop-filter: blur(14px) saturate(1.6);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.9),
-    inset 0 -8px 16px rgba(255, 255, 255, 0.25),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.25), 0 6px 18px color-mix(in srgb, var(--green-900) 12%, transparent);
-}
-.view-tab[aria-selected="true"]:hover {
-  background: var(--green-900);
-  transform: translateY(-1px);
-}
-.view-tab:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
 /* the result sits on the 12-column grid, at every width: case 1 from
    column 5, case 2 from column 7 (1 on phones) */
 .deck-result {
@@ -229,10 +172,6 @@
   .case-problem,
   .case-solution {
     gap: 10px;
-  }
-
-  .view-tabs {
-    margin-top: 56px;
   }
 }
 
@@ -307,28 +246,11 @@ html:has(.case-zoom[open]) {
   color: var(--neutral-700);
 }
 
-/* The cases are laid out on a 1384-wide artboard in --u units (the decks, the
-   glass carousel and case 2's board). GlassCarousel.tsx's FRAME mirrors it. */
+/* The cases are laid out on a 1384-wide artboard in --u units (the decks and
+   the glass carousel). GlassCarousel.tsx's FRAME mirrors it. */
 .case-deck,
-.gc,
-.gc-arch {
+.gc {
   --u: calc((100cqw - 2 * var(--gutter)) / 1384);
-}
-
-/* the three cities in ivory dither; every pixel is a --px square */
-.deck-dither {
-  --px: calc(7.5 * var(--u));
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: calc(8 * var(--u));
-}
-.deck-dither canvas {
-  display: block;
-  width: calc(var(--cols, 80) * var(--px));
-  height: calc(24 * var(--px));
-  font-family: var(--serif), serif;
-  image-rendering: pixelated;
 }
 
 @media (max-width: 640px) {
@@ -338,25 +260,6 @@ html:has(.case-zoom[open]) {
   /* "400%" needs the room on phones */
   .mod-result {
     grid-column: 1 / -1;
-  }
-}
-
-/* the tab bar spans the phone column; tabs share it */
-@media (max-width: 640px) {
-  .view-tabs {
-    width: auto;
-  }
-  .view-tab {
-    flex: 1 1 auto;
-    padding: 0 6px;
-  }
-}
-
-/* the narrowest phones: smaller tab labels so all three fit */
-@media (width < 375px) {
-  .view-tab {
-    padding: 0 4px;
-    font-size: var(--text-xs);
   }
 }
 
@@ -448,21 +351,6 @@ html:has(.case-zoom[open]) {
       rgba(255, 255, 255, 0) 14%
     );
 }
-/* a dark brief card keeps its green behind the title: the sweep would turn it
-   grey-ivory */
-.gc-deck.is-dark:has(.gc-client)::before {
-  background: linear-gradient(
-      112deg,
-      rgba(255, 255, 255, 0.12) 0%,
-      rgba(255, 255, 255, 0.04) 20%,
-      rgba(255, 255, 255, 0) 42%
-    ),
-    linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(255, 255, 255, 0) 14%
-    );
-}
 .gc-deck::after,
 .gc-glass::after {
   padding: 3px;
@@ -549,116 +437,6 @@ html:has(.case-zoom[open]) {
   outline-offset: 3px;
 }
 
-/* the front decks: the black box's cities, a client's brief */
-.gc-body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: calc(24 * var(--u));
-  text-align: center;
-}
-.gc-deck .deck-dither {
-  --px: calc(2.8 * var(--u));
-  gap: calc(4 * var(--u));
-}
-.gc-deck.is-focus .deck-dither {
-  --px: calc(6 * var(--u));
-  gap: calc(8 * var(--u));
-}
-.gc-question {
-  color: var(--orange-400);
-}
-/* the black box card as a carton: a strip of tape down the middle, the flap's
-   fold line, and the question on a label stuck to the front */
-.gc-body:has(.gc-carton) {
-  padding: calc(124 * var(--u)) 0 calc(76 * var(--u));
-}
-.gc-carton {
-  display: contents;
-}
-.gc-fold,
-.gc-tape,
-.gc-sticker {
-  position: absolute;
-  pointer-events: none;
-}
-.gc-fold {
-  left: calc(-20 * var(--u));
-  right: calc(-20 * var(--u));
-  top: calc(104 * var(--u));
-  height: calc(14 * var(--u));
-  border-top: 1px solid rgba(255, 255, 255, 0.14);
-  background: linear-gradient(rgba(0, 0, 0, 0.7), transparent);
-}
-.gc-deck.is-focus .gc-fold {
-  left: calc(-22 * var(--u));
-  right: calc(-22 * var(--u));
-}
-.gc-tape {
-  left: 50%;
-  top: calc(-16 * var(--u));
-  width: calc(64 * var(--u));
-  height: calc(190 * var(--u));
-  transform: translateX(-50%);
-  border-bottom: 2px solid color-mix(in srgb, var(--neutral-200) 40%, transparent);
-  background: linear-gradient(
-    90deg,
-    color-mix(in srgb, var(--neutral-200) 20%, transparent),
-    color-mix(in srgb, var(--neutral-200) 30%, transparent) 50%,
-    color-mix(in srgb, var(--neutral-200) 20%, transparent)
-  );
-}
-.gc-sticker {
-  left: calc(16 * var(--u));
-  right: calc(16 * var(--u));
-  bottom: calc(4 * var(--u));
-  padding: calc(14 * var(--u)) calc(16 * var(--u));
-  border: 1px solid var(--neutral-200);
-  border-radius: 6px;
-  background: var(--neutral-100);
-  text-align: center;
-  transform: rotate(-1.5deg);
-  box-shadow: 0 calc(6 * var(--u)) calc(10 * var(--u)) calc(-4 * var(--u))
-    rgba(0, 0, 0, 0.6);
-}
-.gc-sticker .gc-question {
-  color: var(--orange-800);
-}
-.gc-client {
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: calc(14 * var(--u));
-  text-align: left;
-}
-.gc-client .text-label {
-  color: var(--warm);
-}
-.gc-deck.is-dark .gc-client .text-label {
-  color: var(--orange-400);
-}
-.gc-client-title {
-  font-size: calc(34 * var(--u));
-  line-height: 1.06;
-  white-space: pre-line;
-}
-.gc-deck.is-focus .gc-client-title {
-  font-size: calc(48 * var(--u));
-}
-.gc-client-desc {
-  margin: 0;
-  font-size: calc(15 * var(--u));
-  line-height: 1.55;
-  white-space: pre-line;
-}
-.gc-deck.is-focus .gc-client-desc {
-  max-width: 62ch;
-  font-size: calc(17 * var(--u));
-}
-
 .gc-arrow {
   appearance: none;
   position: absolute;
@@ -704,14 +482,6 @@ html:has(.case-zoom[open]) {
   stroke-width: 2.4;
   stroke-linecap: round;
   stroke-linejoin: round;
-}
-
-/* roomier decks (case 2): more padding around the content */
-.gc.is-roomy .gc-deck {
-  padding: calc(28 * var(--u)) calc(32 * var(--u)) calc(32 * var(--u));
-}
-.gc.is-roomy .gc-deck.is-focus {
-  padding: calc(32 * var(--u)) calc(36 * var(--u)) calc(36 * var(--u));
 }
 
 /* the enlarged screen: the whole 1440px capture, or case 2's 1072px card */
@@ -791,10 +561,6 @@ html:has(.case-zoom[open]) {
     padding: 14px 16px 20px;
     border-radius: var(--radius-lg);
   }
-  .gc.is-roomy .gc-deck,
-  .gc.is-roomy .gc-deck.is-focus {
-    padding: 22px 22px 26px;
-  }
   .gc-num {
     font-size: 46px;
     min-height: 46px;
@@ -810,26 +576,6 @@ html:has(.case-zoom[open]) {
   }
   .gc-text p,
   .gc-deck.is-focus .gc-text p {
-    font-size: var(--text-sm);
-  }
-  .gc-body {
-    gap: 14px;
-    padding-block: 12px;
-  }
-  .gc-deck .deck-dither,
-  .gc-deck.is-focus .deck-dither {
-    --px: 2.3px;
-    gap: 3px;
-  }
-  .gc-client {
-    gap: 10px;
-  }
-  .gc-client-title,
-  .gc-deck.is-focus .gc-client-title {
-    font-size: 28px;
-  }
-  .gc-client-desc,
-  .gc-deck.is-focus .gc-client-desc {
     font-size: var(--text-sm);
   }
   .gc-arrow-next {
@@ -1022,340 +768,6 @@ html:has(.case-zoom[open]) {
     position: absolute;
     inset: 0;
     height: 100%;
-  }
-}
-
-/* the tab panel holds either the architecture board or a workflow's decks */
-.view-tabs + .gc-panel {
-  margin-top: 28px;
-}
-.gc-panel .gc {
-  margin-top: 0;
-}
-/* the frame leaves 60u above the tallest deck for its shadow; pull it up so
-   the focused deck sits as far below the tabs as the architecture board
-   does, which keeps the tab bar on screen when a deck fills the viewport */
-@media (width > 640px) {
-  .gc-panel .gc {
-    margin-top: calc(-60 * var(--u));
-  }
-}
-/* stacked: the frame's own 24px of top padding is what pulls the decks away */
-@media (max-width: 640px) {
-  .gc-panel .gc {
-    margin-top: -24px;
-  }
-}
-
-/* case 2's architecture: a glass board of screens by module (a column per
-   module, a row per workflow) over the daily operations workspace */
-.gc-arch {
-  display: flex;
-  flex-direction: column;
-  gap: calc(28 * var(--u));
-}
-.gc-tile {
-  position: relative;
-  overflow: hidden;
-  box-sizing: border-box;
-  padding: calc(22 * var(--u));
-  border: 0;
-  border-radius: calc(30 * var(--u));
-  background: linear-gradient(
-      color-mix(in srgb, var(--neutral-100) 80%, transparent),
-      color-mix(in srgb, var(--neutral-100) 80%, transparent)
-    ),
-    color-mix(in srgb, var(--neutral-100) 42%, transparent);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25),
-    0 calc(50 * var(--u)) calc(90 * var(--u)) calc(-40 * var(--u))
-      color-mix(in srgb, var(--green-900) 35%, transparent);
-}
-.gc-tile::before,
-.gc-tile::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-}
-.gc-tile::before {
-  background: linear-gradient(
-    112deg,
-    rgba(255, 255, 255, 0.35) 0%,
-    rgba(255, 255, 255, 0.12) 20%,
-    rgba(255, 255, 255, 0) 42%
-  );
-}
-.gc-tile::after {
-  padding: 3px;
-  background: linear-gradient(
-    135deg,
-    #fff 0%,
-    rgba(255, 255, 255, 0.2) 26%,
-    rgba(255, 255, 255, 0) 50%,
-    rgba(255, 255, 255, 0.25) 76%,
-    rgba(255, 255, 255, 0.9) 100%
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-}
-.gc-tile > * {
-  position: relative;
-  z-index: 1;
-}
-.gc-tile-title {
-  margin: 0;
-  font-size: max(16px, calc(18 * var(--u)));
-  font-weight: 600;
-  color: var(--green-950);
-}
-.gc-board {
-  margin-top: calc(14 * var(--u));
-}
-.gc-grid {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: calc(10 * var(--u));
-}
-.gc-row {
-  position: relative;
-  display: grid;
-  grid-template-columns: calc(130 * var(--u)) repeat(9, minmax(0, 1fr));
-  gap: calc(10 * var(--u));
-  align-items: stretch;
-}
-.gc-head span {
-  text-align: center;
-  font-size: max(12px, calc(14 * var(--u)));
-  font-weight: 600;
-  color: var(--green-900);
-}
-.gc-head .is-unused {
-  font-weight: 500;
-  color: var(--neutral-700);
-}
-/* a workflow's shaded row, from its label to the last column with the same
-   6u of padding either side, clear of the tile's rim */
-.gc-band {
-  padding-block: calc(10 * var(--u));
-}
-.gc-band::before {
-  content: "";
-  position: absolute;
-  inset: 0 calc(-6 * var(--u)) 0
-    calc(130 * var(--u) + 10 * var(--u) - 6 * var(--u));
-  border-radius: var(--radius-sm);
-  background: color-mix(in srgb, var(--neutral-700) 8%, transparent);
-}
-.gc-row > * {
-  position: relative;
-}
-.gc-label {
-  appearance: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  padding: 0 8px;
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  border-radius: calc(14 * var(--u));
-  background: var(--neutral-700);
-  color: var(--neutral-100);
-  font: 600 max(13px, calc(17 * var(--u))) var(--sans), system-ui, sans-serif;
-  text-align: center;
-  cursor: pointer;
-}
-.gc-thumb {
-  appearance: none;
-  display: block;
-  margin: 0;
-  padding: calc(5 * var(--u));
-  border: 0;
-  border-radius: var(--radius-sm);
-  background: linear-gradient(var(--tint), var(--tint)),
-    color-mix(in srgb, var(--neutral-100) 42%, transparent);
-  line-height: 0;
-  cursor: pointer;
-}
-.gc-thumb img {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: var(--radius-xs);
-  background: #fff;
-}
-.gc-slot {
-  border: 1px dashed rgba(23, 63, 53, 0.4);
-  border-radius: var(--radius-sm);
-}
-.gc-label:focus-visible,
-.gc-thumb:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 2px;
-}
-.gc-link {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  margin: calc(18 * var(--u)) 0 0;
-  /* centred on the overlap with the tile behind, without moving the tile's
-     bottom edge. The caption row is a fixed size but the overlap scales
-     with --u, so the offset shrinks as --u grows (fitted at u = 0.6 to 1) */
-  top: calc(20px - 13 * var(--u));
-  font-size: max(12px, calc(14 * var(--u)));
-  color: var(--green-900);
-  text-align: center;
-}
-.gc-link svg {
-  width: 18px;
-  height: 40px;
-  flex: none;
-  fill: none;
-  stroke: var(--green-900);
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.gc-arch > .gc-tile:first-child {
-  z-index: 1;
-}
-.gc-ops {
-  /* dark green with ivory type, unlike the glass board above it */
-  background: var(--green-900);
-  z-index: 0;
-  width: calc(1140 * var(--u));
-  /* rises 40u behind the board so its "Shared data" caption sits in the
-     overlap; the apps and the height below make that up */
-  min-height: calc(420 * var(--u));
-  margin: calc(-98 * var(--u)) 0 0 calc(90 * var(--u));
-}
-.gc-apps {
-  position: relative;
-  width: calc(1096 * var(--u));
-  height: calc(275 * var(--u));
-  margin: calc(70 * var(--u)) 0 0;
-  padding: 0;
-  list-style: none;
-}
-.gc-apps li {
-  position: absolute;
-  left: calc(var(--x) * 0.855 * var(--u));
-  top: calc(var(--y) * 0.855 * var(--u));
-  display: flex;
-  align-items: center;
-  height: calc(34 * 0.855 * var(--u));
-  padding: 0 calc(14 * 0.855 * var(--u));
-  border: 1px solid var(--neutral-100);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--neutral-100) 8%, transparent);
-  font-size: max(11px, calc(14 * 0.855 * var(--u)));
-  font-weight: 500;
-  white-space: nowrap;
-  color: var(--neutral-100);
-}
-.gc-apps li.is-fade {
-  -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent);
-  mask-image: linear-gradient(90deg, #000 40%, transparent);
-}
-.gc-ops .gc-tile-title {
-  color: var(--neutral-100);
-  position: absolute;
-  left: calc(22 * var(--u));
-  bottom: calc(20 * var(--u));
-}
-
-/* phones: the board scrolls sideways, a label above each row */
-@media (max-width: 640px) {
-  .gc-arch {
-    --u: 1px;
-    gap: 16px;
-  }
-  .gc-tile {
-    padding: 18px;
-    border-radius: var(--radius-lg);
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25),
-      0 24px 40px -24px color-mix(in srgb, var(--green-900) 35%, transparent);
-  }
-  .gc-board {
-    overflow-x: auto;
-    margin-inline: -18px;
-    padding-inline: 18px;
-    scrollbar-width: none;
-  }
-  .gc-board::-webkit-scrollbar {
-    display: none;
-  }
-  .gc-grid {
-    width: max-content;
-    gap: 10px;
-  }
-  .gc-row {
-    grid-template-columns: repeat(9, 106px);
-    gap: 10px 12px;
-  }
-  .gc-head span:first-child {
-    display: none;
-  }
-  .gc-head span {
-    text-align: left;
-    padding-left: 2px;
-    font-size: 13px;
-  }
-  .gc-band {
-    padding-block: 8px 10px;
-  }
-  .gc-band::before {
-    inset: 0 -18px;
-    border-radius: var(--radius-sm);
-  }
-  .gc-label {
-    position: sticky;
-    left: 0;
-    grid-column: 1 / -1;
-    justify-self: start;
-    width: 132px;
-    height: 30px;
-    border-radius: var(--radius-md);
-    font-size: var(--text-sm);
-  }
-  .gc-thumb {
-    padding: 5px;
-  }
-  /* centred on the 64px band where the tiles overlap, one line or two */
-  .gc-link {
-    top: 6px;
-  }
-  .gc-ops {
-    width: auto;
-    min-height: 0;
-    /* rises 46px more than it used to so the caption has a band of its own
-       to sit in; the apps below make that up */
-    margin: -80px 8px 0;
-    padding-bottom: 54px;
-  }
-  .gc-apps {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    width: auto;
-    height: auto;
-    margin: 76px 0 0;
-  }
-  .gc-apps li,
-  .gc-apps li.is-fade {
-    position: static;
-    height: 30px;
-    padding: 0 12px;
-    font-size: var(--text-xs);
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-  .gc-ops .gc-tile-title {
-    left: 18px;
-    bottom: 16px;
   }
 }
 
