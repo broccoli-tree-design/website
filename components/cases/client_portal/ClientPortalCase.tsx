@@ -16,9 +16,6 @@ type Client = {
   em: string;
   title: string;
   desc: string;
-  /** the brief's fill, solid: deep green for Sales, ivory for Planners */
-  tint: string;
-  dark: boolean;
   steps: [ModuleKey, string][];
 };
 
@@ -30,8 +27,6 @@ const CLIENTS: Record<"new" | "return", Client> = {
     em: "prospective client",
     title: "Buddhist art exhibition campaign Spring 2027",
     desc: "Sales demos a sample exhibition campaign, from ideation to channel",
-    tint: "var(--green-800)",
-    dark: true,
     steps: [
       [
         "ideation",
@@ -58,8 +53,6 @@ const CLIENTS: Record<"new" | "return", Client> = {
     em: "returning client",
     title: "Outdoor backpack\nFall 2027\nChannel Plan",
     desc: "Planner tweaks an existing retail campaign based on performance",
-    tint: "var(--neutral-100)",
-    dark: false,
     steps: [
       [
         "attention",

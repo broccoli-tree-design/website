@@ -78,7 +78,7 @@
      share the screen */
   height: calc((var(--gc-h) + 20) * var(--u));
 }
-.cm-view .gc.is-card .gc-track {
+.cm-view .gc .gc-track {
   padding-top: calc(20 * var(--u));
 }
 @media (width > 640px) {
@@ -624,13 +624,13 @@
 /* the arrows on the focused card's two edges, level with its
    middle (the 20 units are the track's padding above the card) */
 @media (width > 640px) {
-  .cm-view .gc.is-card .gc-arrow {
+  .cm-view .gc .gc-arrow {
     top: calc((20 + var(--gc-big) / var(--ratio) / 2) * var(--u));
   }
-  .cm-view .gc.is-card .gc-arrow-prev {
+  .cm-view .gc .gc-arrow-prev {
     left: calc(50% - var(--gc-big) / 2 * var(--u) - 24px);
   }
-  .cm-view .gc.is-card .gc-arrow-next {
+  .cm-view .gc .gc-arrow-next {
     right: auto;
     left: calc(50% + var(--gc-big) / 2 * var(--u) - 24px);
   }
@@ -642,7 +642,7 @@
   .cm-view .gc {
     height: auto;
   }
-  .cm-view .gc.is-card .gc-track {
+  .cm-view .gc .gc-track {
     padding-top: 0;
   }
 }

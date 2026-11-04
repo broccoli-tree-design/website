@@ -169,7 +169,7 @@
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0s 0.3s;
 }
-.bb-landing .gc.is-card .gc-track {
+.bb-landing .gc .gc-track {
   padding-top: calc(20 * var(--u));
 }
 .bb-stage:not(.is-landed) .bb-landing .gc-track,
@@ -297,13 +297,13 @@
 /* the arrows on the focused card's two edges, level with its middle (the 20
    units are the track's padding above the card) */
 @media (width > 640px) {
-  .bb-landing .gc.is-card .gc-arrow {
+  .bb-landing .gc .gc-arrow {
     top: calc((20 + var(--gc-big) / var(--ratio) / 2) * var(--u));
   }
-  .bb-landing .gc.is-card .gc-arrow-prev {
+  .bb-landing .gc .gc-arrow-prev {
     left: calc(50% - var(--gc-big) / 2 * var(--u) - 24px);
   }
-  .bb-landing .gc.is-card .gc-arrow-next {
+  .bb-landing .gc .gc-arrow-next {
     right: auto;
     left: calc(50% + var(--gc-big) / 2 * var(--u) - 24px);
   }
@@ -315,7 +315,7 @@
   .bb-landing .gc {
     height: auto;
   }
-  .bb-landing .gc.is-card .gc-track {
+  .bb-landing .gc .gc-track {
     padding-top: 0;
   }
 }

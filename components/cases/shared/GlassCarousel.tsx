@@ -17,12 +17,6 @@ export type GlassDeck = {
   /** "01", "02"…; empty for a front deck */
   num: string;
   desc?: string;
-  /** the old tinted deck's glass tint over the ivory base (a colour) */
-  tint?: string;
-  /** a solid fill instead of glass (the black box) */
-  solid?: boolean;
-  /** ivory type, for the dark decks */
-  dark?: boolean;
   img?: { src: string; w: number; h: number; quality?: number };
   alt?: string;
 };
@@ -102,7 +96,7 @@ export default function GlassCarousel({
   return (
     <div
       ref={frame}
-      className={`gc is-card${sizes ? " gc-centered" : ""}`}
+      className="gc"
       style={style}
     >
       <div className="gc-track">
@@ -147,8 +141,7 @@ export default function GlassCarousel({
               key={d.name}
               className={`gc-deck${on ? " is-focus" : ""}${
                 Math.abs(i - foc) > 1 ? " is-far" : ""
-              }${d.solid ? " is-solid" : ""}${d.dark ? " is-dark" : ""}`}
-              style={d.tint ? ({ "--tint": d.tint } as CSSProperties) : undefined}
+              }`}
             >
               {!on && (
                 <button

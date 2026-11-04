@@ -266,108 +266,59 @@ html:has(.case-zoom[open]) {
   }
 }
 
-/* ── GLASS DECKS ──
-   Both cases' workflows (GlassCarousel.tsx): flat glass decks in a row. On
-   desktop the deck in focus is wide and the next is cut off by the frame's
-   edge, with an arrow over it; on phones one deck shows at a time with the
-   next peeking in. Sized on the 1384 artboard in --u units, like the old
-   deck; phones use px. */
+/* ── GLASS CAROUSEL ──
+   Both cases (GlassCarousel.tsx): each screen fills a clear glass card of
+   its own, its number, name and description below. On desktop the focused
+   card is centred and wide (965 units, 67% of a 1440 screen), the sides 590
+   sit on its centre line, the next one cut off by the frame's edge with an
+   arrow over it; on phones one card shows at a time with the next peeking
+   in. Sized on the 1384 artboard in --u units (GlassCarousel.tsx, SIZES);
+   phones use px. */
 .gc {
   --dw: calc(100cqw - 2 * var(--gutter) - 44px);
   /* how far the frame reaches past the gutters to the edge of the screen */
   --bleed: calc(50vw - 50cqw + var(--gutter));
   position: relative;
   /* the frame runs to the screen's edges and the track starts back at the
-     gutter, so neighbouring decks and the shadows are cut by the screen,
+     gutter, so neighbouring cards and the shadows are cut by the screen,
      not by a margin. The shadows still spill out of the top and bottom
      (phones scroll it instead, below) */
   margin-inline: calc(-1 * var(--bleed));
   padding-inline: var(--bleed);
   overflow-x: clip;
   overflow-y: visible;
-  /* the tallest deck plus room above and below it for its shadow */
+  /* the tallest card plus room above and below it for its shadow */
   height: calc((var(--gc-h) + 120) * var(--u));
   margin-top: 56px;
 }
 .gc-track {
+  box-sizing: border-box;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: calc(var(--gc-gap, 24) * var(--u));
   height: 100%;
+  padding-top: calc(60 * var(--u));
   transform: translateX(calc(var(--tx) * var(--u)));
 }
+/* a slide: the glass card and its caption, stacked */
 .gc-deck {
-  --ink: var(--green-950);
   position: relative;
   flex: none;
   box-sizing: border-box;
-  width: calc(400 * var(--u));
-  min-height: calc(var(--gc-sm-h) * var(--u));
+  width: calc(var(--gc-sm, 590) * var(--u));
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  gap: calc(12 * var(--u));
-  padding: calc(16 * var(--u)) calc(20 * var(--u)) calc(24 * var(--u));
-  border: 0;
-  border-radius: calc(28 * var(--u));
-  background: linear-gradient(var(--tint), var(--tint)),
-    color-mix(in srgb, var(--neutral-100) 42%, transparent);
+  gap: calc(22 * var(--u));
   color: var(--ink);
-  /* a faint ring and a soft shadow below, as on the glass tiles */
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25),
-    0 calc(50 * var(--u)) calc(90 * var(--u)) calc(-40 * var(--u))
-      color-mix(in srgb, var(--green-900) 35%, transparent);
 }
 .gc-deck.is-focus {
-  width: calc(1020 * var(--u));
-  min-height: calc(var(--gc-h) * var(--u));
-  padding-inline: calc(22 * var(--u));
-  border-radius: calc(32 * var(--u));
+  width: calc(var(--gc-big, 965) * var(--u));
 }
-.gc-deck.is-solid {
-  background: var(--green-950);
-}
-.gc-deck.is-dark {
-  --ink: var(--neutral-100);
-}
-/* the lit rim and the sweep of light sit under the screens and text */
-.gc-deck::before,
-.gc-deck::after,
-.gc-glass::before,
-.gc-glass::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-}
-.gc-deck::before,
-.gc-glass::before {
-  background: linear-gradient(
-      112deg,
-      rgba(255, 255, 255, 0.35) 0%,
-      rgba(255, 255, 255, 0.12) 20%,
-      rgba(255, 255, 255, 0) 42%
-    ),
-    linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.22) 0%,
-      rgba(255, 255, 255, 0) 14%
-    );
-}
-.gc-deck::after,
-.gc-glass::after {
-  padding: 3px;
-  background: linear-gradient(
-    135deg,
-    #fff 0%,
-    rgba(255, 255, 255, 0.2) 26%,
-    rgba(255, 255, 255, 0) 50%,
-    rgba(255, 255, 255, 0.25) 76%,
-    rgba(255, 255, 255, 0.9) 100%
+.gc-deck:not(.is-focus) {
+  margin-top: calc(
+    (var(--gc-big, 965) - var(--gc-sm, 590)) / 2 / var(--ratio) * var(--u)
   );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
 }
 .gc-deck > *,
 .gc-glass > * {
@@ -379,39 +330,41 @@ html:has(.case-zoom[open]) {
   z-index: 3;
 }
 
-.gc-num {
-  font-family: var(--serif), serif;
-  font-weight: 700;
-  font-size: calc(54 * var(--u));
-  line-height: 1;
-  letter-spacing: -0.01em;
-  /* keeps its height on the front deck's number-less line */
-  min-height: calc(54 * var(--u));
+/* the card: clear glass with a blur, a 1px white ring, a lit rim and a soft
+   sheen over the screen, which fills it to the edge */
+.gc-glass {
+  position: relative;
+  box-sizing: border-box;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, #fff 34%, transparent);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6),
+    0 calc(40 * var(--u)) calc(70 * var(--u)) calc(-34 * var(--u))
+      color-mix(in srgb, var(--green-900) 38%, transparent),
+    0 calc(8 * var(--u)) calc(18 * var(--u)) calc(-10 * var(--u))
+      color-mix(in srgb, var(--green-900) 18%, transparent);
 }
-.gc-text {
-  min-height: calc(112 * var(--u));
+.gc .gc-glass {
+  aspect-ratio: var(--ratio);
 }
-.gc-deck.is-focus .gc-text {
-  min-height: calc(78 * var(--u));
-}
-.gc-text b {
-  display: block;
-  margin-bottom: calc(6 * var(--u));
-  font-size: calc(22 * var(--u));
-  font-weight: 600;
-  line-height: 1.2;
-  white-space: nowrap;
-}
-.gc-text p {
-  margin: 0;
-  font-size: calc(15 * var(--u));
-  line-height: 1.5;
-}
-.gc-deck.is-focus .gc-text b {
-  font-size: calc(30 * var(--u));
-}
-.gc-deck.is-focus .gc-text p {
-  font-size: calc(17 * var(--u));
+.gc-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(
+    112deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.08) 22%,
+    rgba(255, 255, 255, 0) 44%
+  );
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55),
+    inset 0 2px 1px rgba(255, 255, 255, 0.85),
+    inset 0 -2px 1px rgba(255, 255, 255, 0.3),
+    inset 0 0 22px rgba(255, 255, 255, 0.28);
 }
 .gc-shot {
   line-height: 0;
@@ -423,6 +376,62 @@ html:has(.case-zoom[open]) {
   border-radius: var(--radius-md);
   background: #fff;
 }
+.gc-glass > .gc-shot {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  overflow: hidden;
+}
+.gc-glass .gc-shot img {
+  height: 100%;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+/* the caption: the page's own text colours, not the screens' near-black: the
+   number and name in the ink, the description in the body copy's muted tone */
+.gc-caption {
+  display: flex;
+  gap: calc(18 * var(--u));
+  align-items: flex-start;
+  padding-inline: calc(6 * var(--u));
+  color: var(--ink);
+}
+.gc-num {
+  flex: none;
+  min-height: 0;
+  font-family: var(--serif), serif;
+  font-weight: 700;
+  font-size: max(24px, calc(34 * var(--u)));
+  line-height: 1;
+  letter-spacing: -0.01em;
+}
+.gc-text {
+  min-height: 0;
+}
+.gc-text b {
+  display: block;
+  margin-bottom: calc(4 * var(--u));
+  font-size: max(var(--text-sm), calc(18 * var(--u)));
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.gc-deck.is-focus .gc-text b {
+  font-size: max(var(--text-md), calc(22 * var(--u)));
+}
+.gc-text p {
+  margin: 0;
+  font-size: max(var(--text-sm), calc(16 * var(--u)));
+  line-height: 1.5;
+  color: var(--muted);
+}
+/* the sides show a number and a name only */
+.gc-deck:not(.is-focus) .gc-text p {
+  display: none;
+}
+
 .gc-pick {
   appearance: none;
   inset: 0;
@@ -506,9 +515,12 @@ html:has(.case-zoom[open]) {
   .gc-deck {
     transition: width 0.7s var(--ease-out), min-height 0.7s var(--ease-out);
   }
+  .gc-caption {
+    transition: opacity 0.5s ease;
+  }
 }
 
-/* only the decks either side of the focused one show; the rest wait out of
+/* only the cards either side of the focused one show; the rest wait out of
    sight (phones scroll through all of them, below) */
 @media (width > 640px) {
   .gc-deck.is-far {
@@ -524,9 +536,9 @@ html:has(.case-zoom[open]) {
   }
 }
 
-/* phones: one deck at a time, the next peeking in */
+/* phones: one card at a time, the next peeking in */
 @media (max-width: 640px) {
-  /* the frame scrolls sideways and snaps to a deck, the next peeking in */
+  /* the frame scrolls sideways and snaps to a card, the next peeking in */
   .gc {
     height: auto;
     margin-top: 32px;
@@ -543,49 +555,48 @@ html:has(.case-zoom[open]) {
   }
   .gc-track {
     width: max-content;
-    align-items: stretch;
     gap: 10px;
+    padding-top: 0;
     transform: none;
-  }
-  .gc-deck {
-    scroll-snap-align: start;
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25),
-      0 24px 40px -24px color-mix(in srgb, var(--green-900) 35%, transparent);
-  }
-  .gc-pick,
-  .gc-arrow {
-    display: none;
   }
   .gc-deck,
   .gc-deck.is-focus {
     width: var(--dw);
-    min-height: 0;
-    gap: 10px;
-    padding: 14px 16px 20px;
-    border-radius: var(--radius-lg);
+    gap: 14px;
+    scroll-snap-align: start;
   }
-  .gc-num {
-    font-size: 46px;
-    min-height: 46px;
+  .gc-deck:not(.is-focus) {
+    margin-top: 0;
   }
-  .gc-text,
-  .gc-deck.is-focus .gc-text {
-    min-height: 84px;
-  }
-  .gc-text b,
-  .gc-deck.is-focus .gc-text b {
-    margin-bottom: 4px;
-    font-size: 20px;
-  }
-  .gc-text p,
-  .gc-deck.is-focus .gc-text p {
-    font-size: var(--text-sm);
+  .gc-pick,
+  .gc-arrow {
+    display: none;
   }
   .gc-arrow-next {
     right: 8px;
   }
   .gc-arrow-prev {
     left: 8px;
+  }
+  .gc-caption {
+    gap: 12px;
+    padding-inline: 4px;
+  }
+  .gc-num {
+    font-size: 30px;
+  }
+  .gc-text b,
+  .gc-deck.is-focus .gc-text b,
+  .bb-card.is-front .gc-caption .gc-text b,
+  .cp-fly.is-first .gc-caption .gc-text b {
+    margin-bottom: 4px;
+    font-size: var(--text-lg);
+  }
+  .gc-text p,
+  .gc-deck:not(.is-focus) .gc-text p,
+  .cp-fly:not(.is-first) .gc-caption .gc-text p {
+    display: block;
+    font-size: var(--text-sm);
   }
   /* the screen is a button that opens it full size */
   .gc-enlarge {
@@ -611,160 +622,6 @@ html:has(.case-zoom[open]) {
     font-size: var(--text-xs);
     font-weight: 500;
     line-height: 1.4;
-  }
-}
-
-/* glass cards (both cases): each screen fills a clear glass card of its own,
-   its number, name and description below. The deck is just the column holding
-   the two: the focused one 965 wide (67% of a 1440 screen), the sides 590, on the 1384 artboard
-   (GlassCarousel.tsx, SIZES). The sides sit on the focused card's centre line. */
-.gc.is-card .gc-track {
-  box-sizing: border-box;
-  align-items: flex-start;
-  padding-top: calc(60 * var(--u));
-}
-.gc.is-card .gc-deck,
-.gc.is-card .gc-deck.is-focus {
-  --ink: inherit;
-  width: calc(var(--gc-sm, 590) * var(--u));
-  min-height: 0;
-  gap: calc(22 * var(--u));
-  padding: 0;
-  border-radius: 0;
-  background: none;
-  box-shadow: none;
-}
-.gc.is-card .gc-deck.is-focus {
-  width: calc(var(--gc-big, 965) * var(--u));
-}
-.gc.is-card .gc-deck:not(.is-focus) {
-  margin-top: calc(
-    (var(--gc-big, 965) - var(--gc-sm, 590)) / 2 / var(--ratio) * var(--u)
-  );
-}
-.gc.is-card .gc-deck::before,
-.gc.is-card .gc-deck::after {
-  content: none;
-}
-/* the card: clear glass with a blur, a 1px white ring, a lit rim and a soft
-   sheen over the screen, which fills it to the edge */
-.gc-glass {
-  position: relative;
-  box-sizing: border-box;
-  border-radius: var(--radius-md);
-  background: color-mix(in srgb, #fff 34%, transparent);
-  -webkit-backdrop-filter: blur(14px) saturate(1.4);
-  backdrop-filter: blur(14px) saturate(1.4);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.6),
-    0 calc(40 * var(--u)) calc(70 * var(--u)) calc(-34 * var(--u))
-      color-mix(in srgb, var(--green-900) 38%, transparent),
-    0 calc(8 * var(--u)) calc(18 * var(--u)) calc(-10 * var(--u))
-      color-mix(in srgb, var(--green-900) 18%, transparent);
-}
-.gc.is-card .gc-glass {
-  aspect-ratio: var(--ratio);
-}
-.gc-glass::before {
-  z-index: 1;
-  background: linear-gradient(
-    112deg,
-    rgba(255, 255, 255, 0.3) 0%,
-    rgba(255, 255, 255, 0.08) 22%,
-    rgba(255, 255, 255, 0) 44%
-  );
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55),
-    inset 0 2px 1px rgba(255, 255, 255, 0.85),
-    inset 0 -2px 1px rgba(255, 255, 255, 0.3),
-    inset 0 0 22px rgba(255, 255, 255, 0.28);
-}
-.gc-glass::after {
-  content: none;
-}
-.gc-glass > .gc-shot {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  border-radius: inherit;
-  overflow: hidden;
-}
-.gc-glass .gc-shot img {
-  height: 100%;
-  object-fit: cover;
-  border-radius: 0;
-}
-.gc-caption {
-  display: flex;
-  gap: calc(18 * var(--u));
-  align-items: flex-start;
-  padding-inline: calc(6 * var(--u));
-  /* the page's own text colours, not the screens' near-black: the number and
-     name in the ink, the description in the body copy's muted tone */
-  color: var(--ink);
-}
-.gc-caption .gc-num {
-  flex: none;
-  min-height: 0;
-  font-size: max(24px, calc(34 * var(--u)));
-}
-.gc-caption .gc-text,
-.gc-deck.is-focus .gc-caption .gc-text {
-  min-height: 0;
-}
-.gc-caption .gc-text b {
-  margin-bottom: calc(4 * var(--u));
-  font-size: max(var(--text-sm), calc(18 * var(--u)));
-}
-.gc-deck.is-focus .gc-caption .gc-text b {
-  margin-bottom: calc(4 * var(--u));
-  font-size: max(var(--text-md), calc(22 * var(--u)));
-}
-.gc-caption .gc-text p,
-.gc-deck.is-focus .gc-caption .gc-text p {
-  font-size: max(var(--text-sm), calc(16 * var(--u)));
-  color: var(--muted);
-}
-/* the sides show a number and a name only */
-.gc-deck:not(.is-focus) .gc-caption .gc-text p {
-  display: none;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .gc-caption {
-    transition: opacity 0.5s ease;
-  }
-}
-@media (max-width: 640px) {
-  .gc.is-card .gc-track {
-    padding-top: 0;
-  }
-  .gc.is-card .gc-deck,
-  .gc.is-card .gc-deck.is-focus {
-    width: var(--dw);
-    gap: 14px;
-    padding: 0;
-  }
-  .gc.is-card .gc-deck:not(.is-focus) {
-    margin-top: 0;
-  }
-  .gc-caption {
-    gap: 12px;
-    padding-inline: 4px;
-  }
-  .gc-caption .gc-num {
-    font-size: 30px;
-  }
-  .gc-caption .gc-text b,
-  .gc-deck.is-focus .gc-caption .gc-text b,
-  .bb-card.is-front .gc-caption .gc-text b,
-  .cp-fly.is-first .gc-caption .gc-text b {
-    margin-bottom: 4px;
-    font-size: var(--text-lg);
-  }
-  .gc-caption .gc-text p,
-  .gc-deck.is-focus .gc-caption .gc-text p,
-  .gc-deck:not(.is-focus) .gc-caption .gc-text p,
-  .cp-fly:not(.is-first) .gc-caption .gc-text p {
-    display: block;
-    font-size: var(--text-sm);
   }
   /* the screen's button fills the card */
   .gc-glass .gc-enlarge {
