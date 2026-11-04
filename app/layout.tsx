@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'Aiqi Li', url: SITE_URL }],
   creator: 'Aiqi Li',
   alternates: { canonical: '/' },
-  icons: { icon: '/logo-text.svg', apple: '/apple-icon.png' },
+  icons: { icon: '/favicon.svg', apple: '/apple-icon.png' },
   openGraph: {
     type: 'website',
     url: '/',
