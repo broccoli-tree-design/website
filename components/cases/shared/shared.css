@@ -51,7 +51,7 @@
   margin-top: 20px;
 }
 
-/* the vines grow in once in view (FlowLine, with useShown): the stem
+/* the vines grow in once in view (LeafConnector, with useShown): the stem
    draws, each leaf and the bud open from their base as its tip passes
    (--d). Static under reduced motion */
 @media (prefers-reduced-motion: no-preference) {

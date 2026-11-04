@@ -62,7 +62,7 @@ const DRAW = 0.9;
  *  filled bud at the end pointing on along the curve. Once its <svg> is
  *  `.is-shown` it grows from the curve's start: the stem draws, each leaf
  *  opens as the line reaches it, then the bud (shared.css). */
-export function FlowLine({ curve }: { curve: Curve }) {
+export function LeafConnector({ curve }: { curve: Curve }) {
   const delay = (d: number) => ({ "--d": `${d.toFixed(2)}s` }) as CSSProperties;
   return (
     <>

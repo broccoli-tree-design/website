@@ -7,7 +7,7 @@ import {
   type RefObject,
 } from "react";
 import { useResize, useShown } from "@/lib/hooks";
-import { BUD_LENGTH, FlowLine, type Curve } from "./FlowLine";
+import { BUD_LENGTH, LeafConnector, type Curve } from "./LeafConnector";
 
 /** The horizontal middle of an element's text, in viewport px */
 function textMid(el: Element) {
@@ -69,7 +69,7 @@ function BriefFlow({
       className={`case-flow case-brief-flow${shown ? " is-shown" : ""}`}
       viewBox={`0 0 ${w} ${h}`}
     >
-      {w > 0 && <FlowLine curve={curve} />}
+      {w > 0 && <LeafConnector curve={curve} />}
     </svg>
   );
 }

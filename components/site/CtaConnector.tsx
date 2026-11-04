@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { BUD_LENGTH, FlowLine, type Curve } from "@/components/cases/shared/FlowLine";
+import { BUD_LENGTH, LeafConnector, type Curve } from "@/components/cases/shared/LeafConnector";
 import { PHONE, useShown } from "@/lib/hooks";
 
 /** The case connectors' vine, from above the heading's first line up to
@@ -97,7 +97,7 @@ export default function CtaConnector() {
       }
       aria-hidden="true"
     >
-      {shape && <FlowLine curve={shape.curve} />}
+      {shape && <LeafConnector curve={shape.curve} />}
     </svg>
   );
 }
