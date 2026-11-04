@@ -55,7 +55,7 @@
 
 @layer tokens {
   /* ── COLOUR ──
-     Palette: every colour on the page. (The logo SVGs also use #5b8c42,
+     Palette: every colour on the page. (The logo SVGs also use #609546,
      and layout.tsx repeats --green-800 for the browser bar.) */
   :root {
     --green-950: #050d0a;
