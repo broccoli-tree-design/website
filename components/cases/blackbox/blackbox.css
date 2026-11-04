@@ -1,321 +1,322 @@
 /* Case 1, from black box to co-creation (components/cases/blackbox). Loads
    after shared.css. */
-
-/* The black box (BlackBox.tsx): a tall section with a sticky stage, so the
-   page's scroll takes the box apart. The cards are placed from the scene's
-   centre by the script, each pinned at its top-left corner; they land on
-   the carousel laid out (hidden) beneath them. */
-.bb {
-  /* the carousel here is sized so the whole row (the focus, both sides and
-     their gaps: ~1624 units) fits the screen's width with some air, and to
-     its height, so 01 in focus with its caption takes about two thirds of
-     it (~540 units tall) */
-  --u: min(
-    calc((100cqw - 2 * var(--gutter)) / 1384),
-    calc((100svh - 130px) / 720)
-  );
-  /* reaches the screen's edges like the carousel, so a card landing past the
-     gutter is cut by the screen, not the margin */
-  --bleed: calc(50vw - 50cqw + var(--gutter));
-  position: relative;
-  height: 300vh;
-  /* 48px under the title, as case 2's .cm-scene */
-  margin: 48px calc(-1 * var(--bleed)) 0;
-  padding-inline: var(--bleed);
-}
-.bb-stage {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100svh;
-}
-.bb-scene {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-}
-.bb-card {
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform-origin: 0 0;
-  transition: none;
-  will-change: transform;
-  /* the glass (its fill, rim and shadow) comes in with the light, so the
-     carton's black faces stand clean */
-  background: color-mix(in srgb, #fff calc(34% * var(--light, 0)), transparent);
-  box-shadow: 0 0 0 1px rgb(255 255 255 / calc(0.6 * var(--light, 0))),
-    0 calc(40 * var(--u)) calc(70 * var(--u)) calc(-34 * var(--u))
-      color-mix(in srgb, var(--green-900) calc(38% * var(--light, 0)), transparent),
-    0 calc(8 * var(--u)) calc(18 * var(--u)) calc(-10 * var(--u))
-      color-mix(in srgb, var(--green-900) calc(18% * var(--light, 0)), transparent);
-}
-/* a face's caption hangs under it, as on the carousel, and fades in with the
-   light */
-.bb-caption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% + 22 * var(--u));
-  opacity: var(--light, 0);
-  pointer-events: none;
-}
-.bb-card:not(.is-front) .gc-text p {
-  display: none;
-}
-/* the black over the glass, lifting as light gets in; flat shades, one per
-   face, lit from above like the logo */
-.bb-skin {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  border-radius: inherit;
-  opacity: calc(1 - var(--light, 0));
-  pointer-events: none;
-}
-.bb-card.is-lid .bb-skin {
-  background: #2b302d;
-}
-.bb-card.is-front .bb-skin {
-  background: #070e0b;
-}
-.bb-card.is-side .bb-skin {
-  background: linear-gradient(90deg, #070e0b, #0b1612);
-}
-/* the carton's shadow on the ground, soft like the logo's */
-.bb-shadow {
-  position: absolute;
-  left: 0;
-  top: 0;
-  border-radius: 50%;
-  background: radial-gradient(
-    ellipse,
-    color-mix(in srgb, var(--green-900) 40%, transparent),
-    color-mix(in srgb, var(--green-900) 0%, transparent) 70%
-  );
-}
-/* printed on the front: the cities and the question, sized to the card */
-.bb-print {
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 3;
-  /* the front's own size, 534×304, undone from the card's (--sx, --sy) so
-     the type is not stretched */
-  width: 534px;
-  height: 304px;
-  transform-origin: 0 0;
-  transform: scale(var(--sx, 1), var(--sy, 1));
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  opacity: var(--print, 1);
-  pointer-events: none;
-}
-.bb-city {
-  font-family: var(--serif), serif;
-  font-style: italic;
-  font-weight: 700;
-  font-size: 54px;
-  line-height: 1;
-  letter-spacing: -0.01em;
-  color: var(--neutral-100);
-}
-/* the question, centred under the cities, the two sitting centred on the face
-   together */
-.bb-question {
-  margin-top: 14px;
-  font-size: var(--text-md);
-  text-align: center;
-  color: var(--orange-400);
-}
-/* the carousel the faces land in: centred on the stage, shown once they
-   have (the script sets .is-landed); until then nothing in it animates, so
-   the faces can measure where its slides sit */
-.bb-landing {
-  position: absolute;
-  inset: 0;
-}
-.bb-landing .gc {
-  height: calc((var(--gc-h) + 20) * var(--u));
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  margin-top: 0;
-  /* the image itself is centred on the screen, its caption under it: the
-     26 units are half of the caption and the frame's padding */
-  transform: translateY(calc(-50% + 26 * var(--u)));
-}
-/* the hand-over is a crossfade between two cards that look the same: the
-   carousel fades in over the faces while they fade out */
-.bb-landing {
-  z-index: 2;
-  transition: opacity 0.3s ease;
-}
-.bb-stage:not(.is-landed) .bb-landing {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0s 0.3s;
-}
-.bb-scene {
-  z-index: 1;
-  transition: opacity 0.3s ease;
-}
-.bb-stage.is-landed .bb-scene {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0s 0.3s;
-}
-.bb-landing .gc .gc-track {
-  padding-top: calc(20 * var(--u));
-}
-.bb-stage:not(.is-landed) .bb-landing .gc-track,
-.bb-stage:not(.is-landed) .bb-landing .gc-slide {
-  transition: none;
-}
-@media (width > 640px) {
-  /* the height-capped units, and the row recentred: the carousel lays its
-     slides out on a 1384-unit frame, now narrower than the screen */
-  .bb-landing .gc {
-    --u: inherit;
-  }
-  .bb-landing .gc-track {
-    transform: translateX(
-      calc(
-        var(--tx) * var(--u) +
-          (100cqw - 2 * var(--gutter) - 1384 * var(--u)) / 2
-      )
+@layer cases {
+  /* The black box (BlackBox.tsx): a tall section with a sticky stage, so the
+     page's scroll takes the box apart. The cards are placed from the scene's
+     centre by the script, each pinned at its top-left corner; they land on
+     the carousel laid out (hidden) beneath them. */
+  .bb {
+    /* the carousel here is sized so the whole row (the focus, both sides and
+       their gaps: ~1624 units) fits the screen's width with some air, and to
+       its height, so 01 in focus with its caption takes about two thirds of
+       it (~540 units tall) */
+    --u: min(
+      calc((100cqw - 2 * var(--gutter)) / 1384),
+      calc((100svh - 130px) / 720)
     );
+    /* reaches the screen's edges like the carousel, so a card landing past the
+       gutter is cut by the screen, not the margin */
+    --bleed: calc(50vw - 50cqw + var(--gutter));
+    position: relative;
+    height: 300vh;
+    /* 48px under the title, as case 2's .cm-scene */
+    margin: 48px calc(-1 * var(--bleed)) 0;
+    padding-inline: var(--bleed);
   }
-}
-.bb-sr {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-.bb-cue {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 6%;
-  display: flex;
-  justify-content: center;
-  opacity: var(--cue, 1);
-}
-.bb-stage.is-moving .bb-cue {
-  pointer-events: none;
-}
-.bb-cue button {
-  appearance: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0 0 4px;
-  border: 0;
-  border-bottom: 1px solid currentColor;
-  border-radius: 0;
-  background: transparent;
-  /* the site's own link: the label type, the warm colour, an underline (as
-     "Read the article") */
-  color: var(--warm);
-  font: inherit;
-  font-size: var(--text-sm);
-  font-weight: 500;
-  letter-spacing: 0.03em;
-  cursor: pointer;
-}
-.bb-cue svg {
-  width: 16px;
-  height: 16px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2;
-  animation: bb-nudge 1.6s ease-in-out infinite;
-}
-@keyframes bb-nudge {
-  50% {
-    transform: translateY(3px);
+  .bb-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
   }
-}
-.bb-cue button:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-/* phones: the card starts where case 2's carousel does. That one is
-   centred under the header's 40px (.cm-view) and about 512px tall on a
-   phone, so its top is at 50% + 20px - 256px; case 1's shorter card centred
-   would sit ~70px lower */
-@media (max-width: 640px) and (prefers-reduced-motion: no-preference) {
-  .bb-landing .gc {
-    top: max(40px, calc(50% - 236px));
-    transform: none;
+  .bb-scene {
+    position: absolute;
+    left: 50%;
+    top: 50%;
   }
-}
-/* phones: the carousel's own phone glass (px sizes) */
-@media (max-width: 640px) {
+  .bb-card {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-origin: 0 0;
+    transition: none;
+    will-change: transform;
+    /* the glass (its fill, rim and shadow) comes in with the light, so the
+       carton's black faces stand clean */
+    background: color-mix(in srgb, #fff calc(34% * var(--light, 0)), transparent);
+    box-shadow: 0 0 0 1px rgb(255 255 255 / calc(0.6 * var(--light, 0))),
+      0 calc(40 * var(--u)) calc(70 * var(--u)) calc(-34 * var(--u))
+        color-mix(in srgb, var(--green-900) calc(38% * var(--light, 0)), transparent),
+      0 calc(8 * var(--u)) calc(18 * var(--u)) calc(-10 * var(--u))
+        color-mix(in srgb, var(--green-900) calc(18% * var(--light, 0)), transparent);
+  }
+  /* a face's caption hangs under it, as on the carousel, and fades in with the
+     light */
   .bb-caption {
-    top: calc(100% + 14px);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: calc(100% + 22 * var(--u));
+    opacity: var(--light, 0);
+    pointer-events: none;
   }
   .bb-card:not(.is-front) .gc-text p {
-    display: block;
-  }
-}
-/* reduced motion: no tall section and no box, just the carousel */
-@media (prefers-reduced-motion: reduce) {
-  .bb {
-    height: auto;
-  }
-  .bb-stage,
-  .bb-landing,
-  .bb-landing .gc {
-    position: relative;
-    height: auto;
-    inset: auto;
-    transform: none;
-  }
-  .bb-stage .bb-landing {
-    visibility: visible;
-  }
-  .bb-scene,
-  .bb-cue {
     display: none;
   }
-}
-
-/* the front card's caption is the focused one's size, so the hand-over to
-   the carousel does not change it */
-.bb-card.is-front .gc-text b {
-  font-size: max(var(--text-md), calc(22 * var(--u)));
-}
-
-/* the arrows on the focused card's two edges, level with its middle (the 20
-   units are the track's padding above the card) */
-@media (width > 640px) {
-  .bb-landing .gc .gc-arrow {
-    top: calc((20 + var(--gc-big) / var(--ratio) / 2) * var(--u));
+  /* the black over the glass, lifting as light gets in; flat shades, one per
+     face, lit from above like the logo */
+  .bb-skin {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+    opacity: calc(1 - var(--light, 0));
+    pointer-events: none;
   }
-  .bb-landing .gc .gc-arrow-prev {
-    left: calc(50% - var(--gc-big) / 2 * var(--u) - 24px);
+  .bb-card.is-lid .bb-skin {
+    background: #2b302d;
   }
-  .bb-landing .gc .gc-arrow-next {
-    right: auto;
-    left: calc(50% + var(--gc-big) / 2 * var(--u) - 24px);
+  .bb-card.is-front .bb-skin {
+    background: #070e0b;
   }
-}
-
-/* phones: the carousel is as tall as its card and caption, not the desktop's
-   fixed height, which cut the caption off */
-@media (max-width: 640px) {
+  .bb-card.is-side .bb-skin {
+    background: linear-gradient(90deg, #070e0b, #0b1612);
+  }
+  /* the carton's shadow on the ground, soft like the logo's */
+  .bb-shadow {
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-radius: 50%;
+    background: radial-gradient(
+      ellipse,
+      color-mix(in srgb, var(--green-900) 40%, transparent),
+      color-mix(in srgb, var(--green-900) 0%, transparent) 70%
+    );
+  }
+  /* printed on the front: the cities and the question, sized to the card */
+  .bb-print {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 3;
+    /* the front's own size, 534×304, undone from the card's (--sx, --sy) so
+       the type is not stretched */
+    width: 534px;
+    height: 304px;
+    transform-origin: 0 0;
+    transform: scale(var(--sx, 1), var(--sy, 1));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    opacity: var(--print, 1);
+    pointer-events: none;
+  }
+  .bb-city {
+    font-family: var(--serif), serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 54px;
+    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--neutral-100);
+  }
+  /* the question, centred under the cities, the two sitting centred on the face
+     together */
+  .bb-question {
+    margin-top: 14px;
+    font-size: var(--text-md);
+    text-align: center;
+    color: var(--orange-400);
+  }
+  /* the carousel the faces land in: centred on the stage, shown once they
+     have (the script sets .is-landed); until then nothing in it animates, so
+     the faces can measure where its slides sit */
+  .bb-landing {
+    position: absolute;
+    inset: 0;
+  }
   .bb-landing .gc {
-    height: auto;
+    height: calc((var(--gc-h) + 20) * var(--u));
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    margin-top: 0;
+    /* the image itself is centred on the screen, its caption under it: the
+       26 units are half of the caption and the frame's padding */
+    transform: translateY(calc(-50% + 26 * var(--u)));
+  }
+  /* the hand-over is a crossfade between two cards that look the same: the
+     carousel fades in over the faces while they fade out */
+  .bb-landing {
+    z-index: 2;
+    transition: opacity 0.3s ease;
+  }
+  .bb-stage:not(.is-landed) .bb-landing {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s 0.3s;
+  }
+  .bb-scene {
+    z-index: 1;
+    transition: opacity 0.3s ease;
+  }
+  .bb-stage.is-landed .bb-scene {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s 0.3s;
   }
   .bb-landing .gc .gc-track {
-    padding-top: 0;
+    padding-top: calc(20 * var(--u));
+  }
+  .bb-stage:not(.is-landed) .bb-landing .gc-track,
+  .bb-stage:not(.is-landed) .bb-landing .gc-slide {
+    transition: none;
+  }
+  @media (width > 640px) {
+    /* the height-capped units, and the row recentred: the carousel lays its
+       slides out on a 1384-unit frame, now narrower than the screen */
+    .bb-landing .gc {
+      --u: inherit;
+    }
+    .bb-landing .gc-track {
+      transform: translateX(
+        calc(
+          var(--tx) * var(--u) +
+            (100cqw - 2 * var(--gutter) - 1384 * var(--u)) / 2
+        )
+      );
+    }
+  }
+  .bb-sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .bb-cue {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 6%;
+    display: flex;
+    justify-content: center;
+    opacity: var(--cue, 1);
+  }
+  .bb-stage.is-moving .bb-cue {
+    pointer-events: none;
+  }
+  .bb-cue button {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 0 4px;
+    border: 0;
+    border-bottom: 1px solid currentColor;
+    border-radius: 0;
+    background: transparent;
+    /* the site's own link: the label type, the warm colour, an underline (as
+       "Read the article") */
+    color: var(--warm);
+    font: inherit;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+  }
+  .bb-cue svg {
+    width: 16px;
+    height: 16px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    animation: bb-nudge 1.6s ease-in-out infinite;
+  }
+  @keyframes bb-nudge {
+    50% {
+      transform: translateY(3px);
+    }
+  }
+  .bb-cue button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+  /* phones: the card starts where case 2's carousel does. That one is
+     centred under the header's 40px (.cm-view) and about 512px tall on a
+     phone, so its top is at 50% + 20px - 256px; case 1's shorter card centred
+     would sit ~70px lower */
+  @media (max-width: 640px) and (prefers-reduced-motion: no-preference) {
+    .bb-landing .gc {
+      top: max(40px, calc(50% - 236px));
+      transform: none;
+    }
+  }
+  /* phones: the carousel's own phone glass (px sizes) */
+  @media (max-width: 640px) {
+    .bb-caption {
+      top: calc(100% + 14px);
+    }
+    .bb-card:not(.is-front) .gc-text p {
+      display: block;
+    }
+  }
+  /* reduced motion: no tall section and no box, just the carousel */
+  @media (prefers-reduced-motion: reduce) {
+    .bb {
+      height: auto;
+    }
+    .bb-stage,
+    .bb-landing,
+    .bb-landing .gc {
+      position: relative;
+      height: auto;
+      inset: auto;
+      transform: none;
+    }
+    .bb-stage .bb-landing {
+      visibility: visible;
+    }
+    .bb-scene,
+    .bb-cue {
+      display: none;
+    }
+  }
+
+  /* the front card's caption is the focused one's size, so the hand-over to
+     the carousel does not change it */
+  .bb-card.is-front .gc-text b {
+    font-size: max(var(--text-md), calc(22 * var(--u)));
+  }
+
+  /* the arrows on the focused card's two edges, level with its middle (the 20
+     units are the track's padding above the card) */
+  @media (width > 640px) {
+    .bb-landing .gc .gc-arrow {
+      top: calc((20 + var(--gc-big) / var(--ratio) / 2) * var(--u));
+    }
+    .bb-landing .gc .gc-arrow-prev {
+      left: calc(50% - var(--gc-big) / 2 * var(--u) - 24px);
+    }
+    .bb-landing .gc .gc-arrow-next {
+      right: auto;
+      left: calc(50% + var(--gc-big) / 2 * var(--u) - 24px);
+    }
+  }
+
+  /* phones: the carousel is as tall as its card and caption, not the desktop's
+     fixed height, which cut the caption off */
+  @media (max-width: 640px) {
+    .bb-landing .gc {
+      height: auto;
+    }
+    .bb-landing .gc .gc-track {
+      padding-top: 0;
+    }
   }
 }

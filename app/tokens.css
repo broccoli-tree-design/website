@@ -1,0 +1,169 @@
+/* Design tokens: every colour, size and curve on the page, and the theme
+   roles ThemeGates.tsx swaps. Loaded first (layout.tsx), so this file also
+   names the cascade layers. A later layer wins over an earlier one whatever
+   the selectors' specificity, so the case stylesheets can adjust the type
+   classes without depending on import order. */
+@layer tokens, base, site, cases;
+
+/* Roles: swapped per section by ThemeGates.tsx (dark → light from Case
+   studies through Services → dark again at the footer). Registered so they
+   fade, which needs literal initial values: the dark theme's. */
+@property --bg {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #173f35;
+}
+@property --ink {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #efeede;
+}
+@property --muted {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #d7dccb;
+}
+@property --accent {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #a8cf8a;
+}
+@property --warm {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fb7e4f;
+}
+/* the Let's chat button: bright orange with dark ink on the dark theme
+   (ink 5:1), deep orange with ivory ink on the light one (5.5:1). It
+   changes in 0.3s, not the page's 1.1s, so the ink never lingers on the
+   wrong colour */
+@property --button {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fb7e4f;
+}
+@property --button-hover {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #fd976f;
+}
+@property --button-ink {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #102e27;
+}
+
+@layer tokens {
+  /* ── COLOUR ──
+     Palette: every colour on the page. (The logo SVGs also use #5b8c42,
+     and layout.tsx repeats --green-800 for the browser bar.) */
+  :root {
+    --green-950: #050d0a;
+    --green-900: #102e27;
+    --green-800: #173f35;
+    --green-600: #476f33;
+    --green-300: #a8cf8a;
+    --neutral-700: #3c4a3f;
+    --neutral-200: #d7dccb;
+    --neutral-100: #efeede;
+    --radius-xs: 4px;
+    --radius-sm: 8px;
+    --radius-md: 10px;
+    --radius-lg: 24px;
+    --orange-800: #742f15; /* --orange-700 20% toward black (oklab) */
+    --orange-700: #9e4220;
+    --orange-400: #fb7e4f;
+
+    --leaf-radius: 4px 62% 4px 62% / 4px 62% 4px 62%;
+  }
+
+  :root {
+    --bg: var(--green-800);
+    --ink: var(--neutral-100);
+    --muted: var(--neutral-200);
+    --accent: var(--green-300);
+    --warm: var(--orange-400);
+    --button: var(--orange-400);
+    --button-hover: #fd976f;
+    --button-ink: var(--green-900);
+    --screen-shadow: 0 10px 60px -5px
+      color-mix(in srgb, var(--neutral-700) 8%, transparent);
+    /* darker and stronger than the light theme's, so the bright button still
+       lifts off the dark green */
+    --button-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: --bg 1.1s ease, --ink 1.1s ease, --muted 1.1s ease,
+      --accent 1.1s ease, --warm 1.1s ease, --button 0.3s ease-out,
+      --button-hover 0.3s ease-out, --button-ink 0.3s ease-out;
+  }
+  :root[data-theme="light"] {
+    --bg: var(--neutral-100);
+    --ink: var(--green-800);
+    --muted: var(--neutral-700);
+    --accent: var(--green-600);
+    --warm: var(--orange-700);
+    --button: var(--orange-700);
+    --button-hover: var(--orange-800);
+    --button-ink: var(--neutral-100);
+    --button-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* side gutter: 24px on phones (the case sections switch at their own
+     breakpoint, in the case stylesheets) */
+  :root {
+    --gutter: 28px;
+  }
+  @media (max-width: 640px) {
+    :root {
+      --gutter: 24px;
+    }
+  }
+
+  /* Breakpoints (media queries can't read custom properties, so they are
+     written out):
+     - phone, max-width 640px: page layout and the display scale
+     - case frame, width under 900px: the case studies stack. They need it
+       sooner than the page, while everything else still scales with the
+       column. Between the two, only the case sections are stacked, on
+       purpose. */
+
+  /* ── MOTION ── one ease-out for entrances and layout moves (Rings.tsx
+     repeats it: Web Animations easing can't read custom properties) */
+  :root {
+    --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  }
+
+  /* ── TYPE ──
+     UI text sits on four even sizes. Display text sits on a √2 scale in
+     column widths; phones enlarge the four smallest steps, while the big
+     words already span the screen. Classes carry font, weight, spacing and
+     leading; each use sets only its size (and colour). */
+  :root {
+    --text-xs: 12px;
+    --text-sm: 14px;
+    --text-md: 16px;
+    --text-lg: 18px;
+
+    /* card titles sit between the UI sizes and the display scale */
+    --title-card: clamp(20px, 2cqw, 32px);
+
+    --display-0: 2.5cqw;
+    --display-1: 3.5cqw;
+    --display-2: 5cqw;
+    --display-3: 7cqw;
+    --display-4: 10cqw;
+    --display-5: 14cqw;
+    --display-6: 20cqw;
+    --display-7: 28cqw;
+    --display-8: 40cqw;
+  }
+  @media (max-width: 640px) {
+    :root {
+      --display-0: 6vw;
+      --display-1: 6vw;
+      --display-2: 9vw;
+      --display-3: 13vw;
+      --display-4: 14vw;
+      --display-7: 38vw;
+    }
+  }
+}

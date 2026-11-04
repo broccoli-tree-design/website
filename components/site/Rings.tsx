@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 
-const EASE = "cubic-bezier(.2,.7,.2,1)"; // --ease-out in globals.css
+const EASE = "cubic-bezier(.2,.7,.2,1)"; // --ease-out in tokens.css
 
 /** Growth-ring motion: hero rings breathe and follow the pointer. Everything
  *  is off under prefers-reduced-motion. */

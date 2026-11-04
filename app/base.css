@@ -1,0 +1,122 @@
+/* Base: the reset, the page-wide element styles, the 12-column grid and
+   the type classes. Everything here reads tokens.css; the sections (site.css)
+   and the case studies (components/cases) build on it. */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--sans), system-ui, sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background: var(--green-300);
+    color: var(--green-800);
+  }
+
+  a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+  a:hover {
+    color: var(--ink);
+  }
+  /* one ring for links and buttons, readable on both themes (accent is
+     6.65:1 on dark, 5:1 on light); the case tabs keep their inset ring */
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  /* headlines bleed past the edges on purpose */
+  .page {
+    overflow-x: clip;
+  }
+
+  /* 1440 cap; most sizes below are cqw of this column */
+  .column {
+    max-width: 1440px;
+    margin: 0 auto;
+    container-type: inline-size;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    column-gap: 2cqw;
+  }
+  /* body copy sits on the same columns as the cases and services; the
+     display headlines above it stay off the grid so they can bleed */
+  .section-body {
+    padding-inline: var(--gutter);
+  }
+
+  .body {
+    margin: 0;
+    font-size: var(--text-md);
+    line-height: 1.7;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+
+  /* roman headlines; their italic accents are .text-stat */
+  .text-display {
+    margin: 0;
+    font-family: var(--serif), serif;
+    font-weight: 600;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+  }
+  .text-display em {
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .text-title {
+    margin: 0;
+    font-family: var(--serif), serif;
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.025em;
+  }
+  .text-sub {
+    margin: 0;
+    font-family: var(--serif), serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: var(--display-1);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  /* italic accents: big numbers and the giant words */
+  .text-stat {
+    font-family: var(--serif), serif;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  /* small uppercase labels — colour is set per use */
+  .text-label {
+    font-family: var(--sans), system-ui, sans-serif;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    line-height: 1.35;
+    text-transform: uppercase;
+  }
+}

@@ -20,7 +20,7 @@ import {
 /** hero photo: 400/600/800w cuts so phones don't download the desktop size */
 const PROFILE_SRCSET = (ext: string) =>
   [400, 600, 800].map((w) => `/profile-${w}.${ext} ${w}w`).join(", ");
-/* mirrors .hero-photo's width in globals.css (vw/vh stand in for cqw/svh) */
+/* mirrors .hero-photo's width in site.css (vw/vh stand in for cqw/svh) */
 const PROFILE_SIZES =
   "(max-width: 640px) min(84vw, calc((95vh - 69vw - 88px) * 0.75)), min(46vw, 72vh)";
 
