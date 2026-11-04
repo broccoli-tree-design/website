@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useRef, type ReactNode } from "react";
-import { GlassCaption } from "./GlassCarousel";
+import { GlassCaption } from "../shared/GlassCarousel";
 
 /** The black box: a cartoon carton, flat-shaded like the logo, three black
  *  faces with the cities it picked and the question printed on its front.

@@ -1,7 +1,7 @@
 # Leaf connector (vine → bud)
 
-Replaces the current Solution → result connector (`FlowLine` in
-`components/CaseParts.tsx`) in both case studies. Exported from the
+Replaces the current Solution → result connector (`FlowLine`, now `LeafConnector` in
+`components/cases/shared/LeafConnector.tsx`) in both case studies. Exported from the
 "Website as a song" Design canvas (Logo motifs board, Ripple · first version).
 Only the connector is in scope: no rings, layout or copy changes.
 

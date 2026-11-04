@@ -1,14 +1,14 @@
 import type { CSSProperties } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import Eye from "@/components/Eye";
-import EyeTracker from "@/components/EyeTracker";
-import SeeEyes from "@/components/SeeEyes";
-import CaseDeck from "@/components/CaseDeck";
-import CaseModules from "@/components/CaseModules";
-import CtaConnector from "@/components/CtaConnector";
-import Rings from "@/components/Rings";
-import ThemeGates from "@/components/ThemeGates";
+import Eye from "@/components/site/Eye";
+import EyeTracker from "@/components/site/EyeTracker";
+import SeeEyes from "@/components/site/SeeEyes";
+import CtaConnector from "@/components/site/CtaConnector";
+import Rings from "@/components/site/Rings";
+import ThemeGates from "@/components/site/ThemeGates";
+import BlackBoxCase from "@/components/cases/blackbox/BlackBoxCase";
+import ClientPortalCase from "@/components/cases/client_portal/ClientPortalCase";
 import {
   SITE_URL,
   SITE_NAME,
@@ -277,7 +277,7 @@ export default function Home() {
               </h3>
             </div>
           </div>
-          <CaseDeck
+          <BlackBoxCase
             brief={
               <>
                 <div className="case-problem">
@@ -315,7 +315,7 @@ export default function Home() {
               </h3>
             </div>
           </div>
-          <CaseModules
+          <ClientPortalCase
             brief={
               <>
                 <div className="case-problem">

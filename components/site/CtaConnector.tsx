@@ -1,12 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import {
-  BUD_LENGTH,
-  FlowLine,
-  PHONE,
-  useShown,
-  type Curve,
-} from "./CaseParts";
+import { BUD_LENGTH, LeafConnector, type Curve } from "@/components/cases/shared/LeafConnector";
+import { PHONE, useShown } from "@/lib/hooks";
 
 /** The case connectors' vine, from above the heading's first line up to
  *  the nav's Let's chat button. The button is fixed at the top of the
@@ -102,7 +97,7 @@ export default function CtaConnector() {
       }
       aria-hidden="true"
     >
-      {shape && <FlowLine curve={shape.curve} />}
+      {shape && <LeafConnector curve={shape.curve} />}
     </svg>
   );
 }

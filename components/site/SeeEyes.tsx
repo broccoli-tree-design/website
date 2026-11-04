@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef } from "react";
-import { frameThrottle } from "./frame";
+import { frameThrottle } from "@/lib/frame";
 
 /** "see" whose two "e"s look back: each counter (the arch above the
  *  crossbar) is filled with the letter's colour and holds the logo's pupil.

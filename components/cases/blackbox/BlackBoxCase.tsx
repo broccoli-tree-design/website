@@ -1,8 +1,8 @@
 "use client";
 import { useState, type ReactNode } from "react";
 import BlackBox, { type BoxStep } from "./BlackBox";
-import { CaseTail } from "./CaseParts";
-import GlassCarousel, { type GlassDeck } from "./GlassCarousel";
+import { CaseTail } from "../shared/CaseTail";
+import GlassCarousel, { type GlassDeck } from "../shared/GlassCarousel";
 
 /** Step screens: the whole 1440×926 app screen, captured at 3× so zooming
  *  in stays sharp */
@@ -48,7 +48,7 @@ const STEPS: BoxStep[] = DECKS.filter((d) => d.img).map((d) => ({
   alt: d.alt ?? "",
 }));
 
-export default function CaseDeck({ brief }: { brief: ReactNode }) {
+export default function BlackBoxCase({ brief }: { brief: ReactNode }) {
   const [focus, setFocus] = useState(0);
   const deckView = (decks: GlassDeck[]) => (
     <GlassCarousel
