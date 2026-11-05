@@ -354,7 +354,7 @@ export default function Home() {
             RECENT THOUGHTS
           </p>
           <p className="text-sub question-p">
-            How Legora builds trust by visualizing legal AI via Jude Law
+            Visualizing Law: Legora as a cult object
           </p>
           <a
             href="https://lnkd.in/p/eH3XTXzj"
