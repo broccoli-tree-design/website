@@ -3,7 +3,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "brand": "node brand/build.mjs",
+    "brand:share": "node brand/share.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

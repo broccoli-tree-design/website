@@ -1,4 +1,5 @@
 "use client";
+import { PUPIL_HEIGHT } from "@/app/brand";
 import { useEffect, useRef } from "react";
 import { frameThrottle } from "@/lib/frame";
 
@@ -144,11 +145,12 @@ export default function SeeEyes() {
           webkitMaskImage: s.url,
           visibility: "visible",
         });
-        // the logo's pupil, 2:5, as tall as the arch allows
+        // the logo's pupil: 2:5 of the arch's height wide, PUPIL_HEIGHT of
+        // it tall (brand/tokens.json)
         const ph = Math.min(s.h * 0.72, s.w * 1.2);
         const pupil = sock.querySelector<HTMLElement>("[data-pupil]")!;
         pupil.style.width = `${ph * 0.4}em`;
-        pupil.style.height = `${ph}em`;
+        pupil.style.height = `${ph * PUPIL_HEIGHT}em`;
       });
       // let EyeTracker aim the pupils now they have a size
       dispatchEvent(new Event("eyes:layout"));
