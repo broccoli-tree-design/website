@@ -37,14 +37,27 @@ It also checks every pair in `tokens.json` → `contrast` on both themes and
 exits with an error if one drops below its minimum (4.5:1 for text, 3:1 for
 graphics), so a colour change can't quietly break legibility.
 
+## Share images
+
+`app/opengraph-image.jpg` and `twitter-image.jpg` are 1200 × 630 captures of
+the hero (nav links and button hidden), so they need the site running. After
+a colour or logo change:
+
+```sh
+npm run dev            # in one terminal
+npm run brand:share    # in another; uses Google Chrome, headless
+```
+
 ## What it can't update
 
-- **Share images** (`app/opengraph-image.jpg`, `twitter-image.jpg`) are
-  captures of the hero. Re-capture them after a ground or logo change.
 - **The Claude Design system** ("Broccoli Tree Design",
   https://claude.ai/artifact/U16yBPDVbDVmimqBSmrQs6) and the design canvases
-  live on claude.ai. Refresh the design system from this folder after a
-  change so new boards use the current values.
+  live on claude.ai. After a change, update the design system's
+  `tokens.json` (palette values and role usages) and its Logos group from
+  this folder, then re-copy its `tokens.json` into each canvas's
+  `project/ds/broccoli-tree-design/` so the canvases' Theme menu offers the
+  current values. Canvas boards themselves are past explorations and keep
+  the colours they were drawn in.
 
 This folder is in `.vercelignore`: the site only needs the generated files in
 `app/` and `public/`, which are committed.

@@ -245,5 +245,6 @@ portal cards), `--radius-md` 10 (glass cards and screens) and `--radius-lg`
    this page, and fails if a contrast check drops below its minimum.
 2. **Anything else:** change the value in `app/tokens.css` (or the class in
    `app/base.css`) and update this page and `brand/guidelines/CLAUDE-DESIGN.md`.
-3. Re-capture the share images (`app/opengraph-image.jpg`,
-   `twitter-image.jpg`) if the hero's look changed.
+3. If the hero's look changed, re-capture the share images
+   (`app/opengraph-image.jpg`, `twitter-image.jpg`) with `npm run
+   brand:share` while `npm run dev` is running.
