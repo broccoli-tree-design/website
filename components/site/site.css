@@ -106,9 +106,9 @@
   .eye-pupil {
     position: absolute;
     left: 40%;
-    top: 0;
+    top: var(--pupil-top); /* the logo's pupil (brand/tokens.json) */
     width: 20%;
-    height: 100%;
+    height: var(--pupil-height);
     border-radius: 50%;
     background: var(--green-800);
   }

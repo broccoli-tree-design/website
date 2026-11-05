@@ -2,8 +2,8 @@
 
 How to design new boards for Broccoli Tree Design (the "Website as a song"
 canvas, or any new design) so they can ship without being redrawn. The
-system itself is in `DESIGN.md` at the repo root, and its values come from
-`app/tokens.css`. This page covers what to do with them.
+system itself is in `DESIGN.md` beside this page, and its values come from
+`brand/tokens.json` (colour, logo) and `app/tokens.css` (everything else). This page covers what to do with them.
 
 ## Before you start
 
@@ -47,7 +47,7 @@ system itself is in `DESIGN.md` at the repo root, and its values come from
   or icons as decoration.
 - Don't use the old V1 system: Work Sans, Source Serif, IBM Plex Mono,
   terracotta `#c4562a`, botanical `#5b8c42` as an accent, or a 1140px max
-  width. The logo's own green, `#609546`, is for the logo only.
+  width. The logo's green, `green-500` (`#609546`), is for the logo and graphics that sit on both grounds, never text.
 - Don't let the warm orange compete with the button: use it for eyebrows,
   text links and the odd number, never for large fills.
 
@@ -70,7 +70,8 @@ source and a `capture.mjs` that writes WebP into `public/`.
 
 ## Keeping this current
 
-When `tokens.css` or `base.css` changes, update `DESIGN.md` and this page in
-the same commit, and refresh the "Broccoli Tree Design" design system
+When `brand/tokens.json` changes, run `npm run brand` (it regenerates the
+colour tables in `DESIGN.md`). When `tokens.css` or `base.css` changes, update
+`DESIGN.md` and this page in the same commit. Either way, refresh the "Broccoli Tree Design" design system
 (https://claude.ai/artifact/U16yBPDVbDVmimqBSmrQs6: its `README.md`,
 `tokens.json` and component cards) so Claude Design reads the current values.

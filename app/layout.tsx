@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Bodoni_Moda, Montserrat, Montserrat_Alternates } from 'next/font/google'
+import './brand.css'
 import './tokens.css'
 import './base.css'
 import '@/components/site/site.css'
@@ -7,6 +8,7 @@ import '@/components/cases/shared/shared.css'
 import '@/components/cases/blackbox/blackbox.css'
 import '@/components/cases/client_portal/client_portal.css'
 import { SITE_URL, SITE_NAME, SITE_TITLE, SITE_DESCRIPTION } from './site'
+import { BROWSER_BAR } from './brand'
 
 const serif = Bodoni_Moda({
   subsets: ['latin'],
@@ -53,7 +55,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#173f35', // --green-800; meta tags can't read CSS variables
+  themeColor: BROWSER_BAR, // meta tags can't read CSS variables
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

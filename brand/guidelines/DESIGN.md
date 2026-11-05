@@ -2,12 +2,13 @@
 
 The visual language of broccolitree.design as it ships today (V6,
 `v6_case_study_animation`; see `VERSIONS.md`). The code is the source of
-truth: every value here comes from `app/tokens.css` and `app/base.css`, and
-those files' comments explain the reasoning in place. If this page and the
-code disagree, the code wins. Fix this page.
+truth: colours and the logo come from `brand/tokens.json` (the tables below
+marked `brand:` are generated from it by `npm run brand`), everything else
+from `app/tokens.css` and `app/base.css`, whose comments explain the
+reasoning in place. If this page and the code disagree, the code wins.
 
 Guidance for designing new boards in Claude Design is in
-`design/CLAUDE-DESIGN.md`. Claude Design reads the same system from the
+`brand/guidelines/CLAUDE-DESIGN.md`. Claude Design reads the same system from the
 "Broccoli Tree Design" design system
 (https://claude.ai/artifact/U16yBPDVbDVmimqBSmrQs6), which mirrors this page
 with live component previews.
@@ -41,30 +42,38 @@ with live component previews.
 
 ### Palette
 
-Every colour on the page. Use roles (next section) in components, never
-palette values directly.
+Every colour on the page, in three families: green, neutral and orange. The
+number is a lightness step shared across families, so the same number reads
+about as light in any family (green-600 and orange-600 are both OKLCH L 0.50).
+The steps are not evenly spaced: each value is tuned for a contrast pair below.
+Use roles (next section) in components, never palette values directly.
 
-| Token | Hex | |
+<!-- brand:palette -->
+| Token | Hex | Used for |
 |---|---|---|
-| `--green-950` | `#050d0a` | near-black |
-| `--green-900` | `#102e27` | button ink on dark, shadow tint |
-| `--green-800` | `#173f35` | dark ground, light ink, browser bar |
+| `--green-950` | `#050d0a` | near-black: the black box's dark faces, darkest strokes |
+| `--green-900` | `#102e27` | button ink on dark, shadow tint, the black box's lid |
+| `--green-800` | `#0e372d` | dark ground, light ink, browser bar, logo tile and pupil |
 | `--green-600` | `#476f33` | light-theme accent |
+| `--green-500` | `#609546` | the logo; any graphic that sits on both grounds |
 | `--green-300` | `#a8cf8a` | dark-theme accent, text selection |
 | `--neutral-700` | `#3c4a3f` | light-theme muted text |
 | `--neutral-200` | `#d7dccb` | dark-theme muted text |
-| `--neutral-100` | `#efeede` | light ground, dark ink, eye white |
+| `--neutral-100` | `#f6f5e5` | light ground, dark ink, eye white |
 | `--orange-800` | `#742f15` | light-theme button hover |
-| `--orange-700` | `#9e4220` | light-theme warm and button |
+| `--orange-600` | `#9e4220` | light-theme warm and button |
 | `--orange-400` | `#fb7e4f` | dark-theme warm and button |
+| `--orange-300` | `#fd976f` | dark-theme button hover |
+<!-- /brand:palette -->
 
-The logo uses `#609546`, and nothing else does. It is the brightest green of
-its hue that holds 3:1 on both grounds (3.27:1 on green-800, 3.05:1 on
-neutral-100), since the nav logo stays on screen through both themes. Change
-it in `public/logo-text.svg`, then run `node design/logo/render.mjs` to
-remake the favicons, the apple icon, `logo.png` and the PNG/GIF exports (see
-`design/logo/README.md`). The share images are hero captures and need their
-nav mark redrawn separately.
+<!-- brand:logo -->
+The logo is drawn in `green-500` (`#609546`), with a `neutral-100` eye and a `green-800` pupil (rx 6.25, ry 13: 83.2% of the eye's height). The tile is `green-800`.
+<!-- /brand:logo -->
+
+It is the one green that holds 3:1 on both grounds, since the nav logo stays
+on screen through both themes; use it for any graphic that must too. All logo
+files are made from `brand/logo/logo.svg` (see `brand/README.md`). The share
+images are hero captures and need re-capturing after a logo or ground change.
 
 ### Roles and themes
 
@@ -72,21 +81,38 @@ nav mark redrawn separately.
 section has crossed 55% of the viewport. The roles fade in 1.1s; the button
 roles fade in 0.3s, so the button's ink never sits on the wrong colour.
 
+<!-- brand:roles -->
 | Role | Dark (default) | Light | Used for |
 |---|---|---|---|
 | `--bg` | green-800 | neutral-100 | page ground |
 | `--ink` | neutral-100 | green-800 | headlines, nav, captions |
 | `--muted` | neutral-200 | neutral-700 | body copy, descriptions |
 | `--accent` | green-300 | green-600 | links, italic emphasis, stats, rings, vines, focus ring |
-| `--warm` | orange-400 | orange-700 | eyebrows, alternate service numbers, text links, the CTA's emphasis |
-| `--button` / `--button-hover` | orange-400 / `#fd976f` | orange-700 / orange-800 | the Let's chat button |
+| `--warm` | orange-400 | orange-600 | eyebrows, alternate service numbers, text links, the CTA's emphasis |
+| `--button` | orange-400 | orange-600 | the Let's chat button |
+| `--button-hover` | orange-300 | orange-800 | the button on hover |
 | `--button-ink` | green-900 | neutral-100 | text on the button |
+<!-- /brand:roles -->
 
 Section themes, top to bottom: hero and about **dark** → case studies
 **light** → the question **dark** → services **light** → CTA footer **dark**.
 
-Contrast: the accent is 6.65:1 on dark and 5:1 on light; the button ink is
-5:1 on dark and 5.5:1 on light.
+Contrast, checked by every `npm run brand` (it fails below a minimum):
+
+<!-- brand:contrast -->
+| Check | Dark | Light | Minimum |
+|---|---|---|---|
+| Ink on ground | 11.92 | 11.92 | 4.5 |
+| Muted text | 9.35 | 8.52 | 4.5 |
+| Accent | 7.46 | 5.32 | 4.5 |
+| Warm | 5.11 | 5.87 | 4.5 |
+| Button label | 5.69 | 5.87 | 4.5 |
+| Button hover | 6.82 | 8.85 | 4.5 |
+| Logo on ground | 3.67 | 3.25 | 3 |
+<!-- /brand:contrast -->
+
+The two grounds were pushed apart on 2026-11-05 (green-800 from `#173f35`,
+neutral-100 from `#efeede`) to raise every pair.
 
 ## Typography
 
@@ -212,8 +238,12 @@ portal cards), `--radius-md` 10 (glass cards and screens) and `--radius-lg`
 
 ## Changing the system
 
-1. Change the value in `app/tokens.css` (or the class in `app/base.css`).
-2. If the change is a palette value, also check the places that repeat it:
-   the `@property` initial values at the top of `tokens.css` and
-   `themeColor` in `layout.tsx`.
-3. Update this page and `design/CLAUDE-DESIGN.md`.
+1. **Colour or logo:** edit `brand/tokens.json` (or the logo's shape in
+   `brand/logo/logo.svg`), then run `npm run brand`. It rewrites
+   `app/brand.css`, `app/brand.ts`, the logo and icon files, the exports in
+   `brand/exports/` (logo PNG/GIFs, LinkedIn cover) and the generated tables on
+   this page, and fails if a contrast check drops below its minimum.
+2. **Anything else:** change the value in `app/tokens.css` (or the class in
+   `app/base.css`) and update this page and `brand/guidelines/CLAUDE-DESIGN.md`.
+3. Re-capture the share images (`app/opengraph-image.jpg`,
+   `twitter-image.jpg`) if the hero's look changed.
