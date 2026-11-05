@@ -51,8 +51,8 @@ Use roles (next section) in components, never palette values directly.
 <!-- brand:palette -->
 | Token | Hex | Used for |
 |---|---|---|
-| `--green-950` | `#050d0a` | near-black: the black box's dark faces, darkest strokes |
-| `--green-900` | `#102e27` | button ink on dark, shadow tint, the black box's lid |
+| `--green-950` | `#050d0a` | near-black: the black box's faces, darkest strokes |
+| `--green-900` | `#102e27` | button ink on dark, shadow tint |
 | `--green-800` | `#0e372d` | dark ground, light ink, browser bar, logo tile and pupil |
 | `--green-600` | `#476f33` | light-theme accent |
 | `--green-500` | `#609546` | the logo; any graphic that sits on both grounds |

@@ -80,13 +80,13 @@
     pointer-events: none;
   }
   .bb-card.is-lid .bb-skin {
-    background: var(--green-900);
+    background: var(--green-950);
   }
   .bb-card.is-front .bb-skin {
     background: var(--green-950);
   }
   .bb-card.is-side .bb-skin {
-    background: linear-gradient(90deg, var(--green-950), var(--green-900));
+    background: var(--green-950);
   }
   /* the carton's shadow on the ground, soft like the logo's */
   .bb-shadow {
