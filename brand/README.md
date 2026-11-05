@@ -18,6 +18,7 @@ npm run brand
 | `guidelines/DESIGN.md` | The design system: principles, colour, type, layout, motion, components. Its `<!-- brand:… -->` tables are generated | Yes, outside the generated tables |
 | `guidelines/CLAUDE-DESIGN.md` | How to design new boards in Claude Design so they ship as drawn | Yes |
 | `exports/` | Files for use outside the site (profiles, decks, email, LinkedIn). Generated | No |
+| `signature/gmail-signature.html` | The Gmail signature, hand-written with inline colours from the dark theme (email ignores stylesheets); its photo is `public/signature-photo.png`. After a palette change, update its hexes by hand | Yes |
 
 ## What `npm run brand` writes
 
