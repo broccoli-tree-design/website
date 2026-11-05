@@ -31,7 +31,7 @@ npm run brand
 | `public/logo.png` | The bare logo at 512px, transparent; named in the structured data |
 | `exports/logo-dark.png`, `logo-light.png` | 1024 × 1024 tiles on the dark and light grounds |
 | `exports/logo-dark.gif`, `logo-light.gif` | 512 × 512, 5s loop: the eye glances left, right, back, then blinks, as `EyeTracker.tsx` moves it on the site |
-| `exports/linkedin-company-cover.png`, `.svg` | The company page cover, 2256 × 382 (LinkedIn's 1128 × 191 at 2×): the vine with connector leaves, buds and the logo's eye |
+| `exports/linkedin-company-cover.png`, `.svg` | The company page cover, 2256 × 382 (LinkedIn's 1128 × 191 at 2×): the vine with connector leaves, buds (one in `warmBud` orange) and the logo's eye |
 | `guidelines/DESIGN.md` | The palette, roles, contrast and logo blocks |
 
 It also checks every pair in `tokens.json` → `contrast` on both themes and
@@ -41,7 +41,7 @@ graphics), so a colour change can't quietly break legibility.
 ## Share images
 
 `app/opengraph-image.jpg` and `twitter-image.jpg` are 1200 × 630 captures of
-the hero (nav links and button hidden), so they need the site running. After
+the hero (nav links hidden; the logo and the orange Let's chat button stay), so they need the site running. After
 a colour or logo change:
 
 ```sh

@@ -222,14 +222,14 @@ function cover() {
     return { x: c(0), y: c(1), a: (Math.atan2(d(1), d(0)) * 180) / Math.PI };
   };
   const stems = [
-    { p: [[360, 300], [400, 150], [560, 40], [780, 34]], end: "bud" },
+    { p: [[360, 300], [400, 150], [560, 40], [780, 34]], end: "bud", fill: L.warmBud }, // the one touch of warm
     { p: [[700, -30], [860, 110], [880, 250], [1130, 196]], end: "eye" },
     { p: [[1620, 236], [1470, 200], [1440, 40], [1250, 64]], end: "bud" },
   ];
   const s = L.leafSize / 26; // leaf units → px
   const vine = hex(L.vine);
   let body = "";
-  for (const { p, end } of stems) {
+  for (const { p, end, fill = L.bud } of stems) {
     body += `<path d="M ${p[0]} C ${p[1]}, ${p[2]}, ${p[3]}" fill="none" stroke="${vine}" stroke-width="${L.strokeWidth}" stroke-linecap="round"/>`;
     for (let i = 0; i < L.leavesPerStem; i++) {
       const q = at(p, 0.18 + (0.68 * (i + 0.5)) / L.leavesPerStem);
@@ -237,7 +237,7 @@ function cover() {
     }
     const e = at(p, 1);
     if (end === "bud") {
-      body += `<path d="${bud}" transform="translate(${e.x.toFixed(1)} ${e.y.toFixed(1)}) rotate(${e.a.toFixed(1)}) scale(${s.toFixed(3)})" fill="${hex(L.bud)}"/>`;
+      body += `<path d="${bud}" transform="translate(${e.x.toFixed(1)} ${e.y.toFixed(1)}) rotate(${e.a.toFixed(1)}) scale(${s.toFixed(3)})" fill="${hex(fill)}"/>`;
     } else {
       // the logo's eye, its back tip on the stem's end, turned along the stem
       const k = L.eyeSize / 68;

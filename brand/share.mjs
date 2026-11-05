@@ -1,5 +1,5 @@
 // Captures the share images (app/opengraph-image.jpg, app/twitter-image.jpg)
-// from the hero, 1200 × 630, with only the logo and wordmark in the nav.
+// from the hero, 1200 × 630, with the logo, wordmark and Let's chat button in the nav.
 // Needs the site running (npm run dev) and Google Chrome installed:
 //   npm run brand:share            (captures http://localhost:3000)
 //   npm run brand:share -- <url>
@@ -14,8 +14,8 @@ const CHROME =
 const PORT = 9333;
 const W = 1200;
 const H = 630;
-// the share image shows the hero as a poster: no nav links or button, no dev overlay
-const HIDE = `.nav-links, nextjs-portal { display: none !important; }`;
+// the share image shows the hero as a poster: the logo and the Let's chat button, no nav links, no dev overlay
+const HIDE = `.nav-links li:not(:has(.nav-cta)), nextjs-portal { display: none !important; }`;
 
 const profile = mkdtempSync(join(tmpdir(), "brand-share-"));
 const chrome = spawn(CHROME, [
