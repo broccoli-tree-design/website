@@ -79,10 +79,10 @@ function Skeleton({ name }: { name?: string }) {
   );
 }
 
-/** The portal as a still picture, stacked, for phones and tablets (and
- *  reduced motion): the workspace, the shared data joining it, and the
- *  portal's stages as rows of cards. Hidden on desktop, where the scroll
- *  opens the real one. */
+/** The portal as a still picture, stacked, for reduced motion (at every
+ *  width): the workspace, the shared data joining it, and the portal's
+ *  stages as rows of cards. Hidden otherwise, where the scroll opens the
+ *  real one. */
 function PortalStill({ steps }: { steps: PortalStep[] }) {
   return (
     <div className="cps" aria-hidden="true">

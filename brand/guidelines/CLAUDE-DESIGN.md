@@ -12,7 +12,9 @@ system itself is in `DESIGN.md` beside this page, and its values come from
   Recent thoughts (the question) is the deep-orange **bridge**. If a
   component appears on more than one, show it on each of those themes.
 - Work at 1440 wide (the column cap) and check at 375 (phone). If a board
-  touches the case studies, also check below 900, where they stack.
+  touches the case studies, also check below 900, where they stack. If it
+  touches the hero or case 2's portal, also check a short phone (375 × 667)
+  and a tall window (such as 1000 × 1100): both follow the screen's shape.
 
 ## Do
 

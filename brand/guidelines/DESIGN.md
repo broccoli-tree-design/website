@@ -178,6 +178,10 @@ Phones enlarge the smallest steps. The biggest words already span the screen.
   - `max-width: 640px`: phone layout and the phone display scale.
   - `width < 900px`: the case studies stack. Between 640 and 900px only the
     case sections are stacked, on purpose.
+  - Two layouts also follow the screen's shape. The phone hero needs a tall
+    screen (aspect ratio 2/3 or narrower); a phone-width window that isn't
+    tall keeps the wide hero. Case 2's portal is stacked under 900px and on
+    any portrait screen.
 - **Rhythm:** sections are tall and airy and are measured in viewport units
   (for example services is `190vh`, the question `95vh`, and case padding is
   `20vh` on top). Service cards zigzag across the grid with staggered `vh`
@@ -219,7 +223,10 @@ portal cards), `--radius-md` 10 (glass cards and screens) and `--radius-lg`
   it full size.
 - **Case scenes:** case 1's black box carton opens on scroll; case 2's
   client portal opens on scroll. Both fall back to a still picture under
-  reduced motion.
+  reduced motion. Stacked, the portal sits between the nav and the scroll
+  cue, at least 24px from each: the workspace takes the height that's left
+  (up to its full size), and on screens under 800px tall the cards drop to
+  a name and one line.
 
 ## Motion
 

@@ -844,9 +844,6 @@
       box-shadow: 0 14px 24px -18px
         color-mix(in srgb, var(--green-900) calc(30% * (1 - var(--panel, 0))), transparent);
     }
-    .cpp-ws .cp-tag {
-      white-space: nowrap;
-    }
     .cpp-panel .cp-tag {
       position: static;
       display: block;
