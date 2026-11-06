@@ -342,9 +342,9 @@ export default function ClientPortal({
               <CaseWorkspace />
             </div>
             <div className="cpp-link">
-              <svg viewBox="0 0 60 56">
-                <path d="M24 0V56" />
-                <path d="M38 0V56" />
+              <svg viewBox="0 0 60 36">
+                <path d="M24 0V36" />
+                <path d="M38 0V36" />
               </svg>
               <span>Shared data</span>
             </div>
