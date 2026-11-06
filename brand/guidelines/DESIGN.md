@@ -21,8 +21,10 @@ with live component previews.
 - **Botanical, never geometric.** Shapes come from the leaf, the eye, growth
   rings and vines. There are no hard-cornered panels and no icons for
   decoration.
-- **Two themes, one page.** The page fades between a dark forest theme and a
-  light ivory theme as you scroll. Every colour is a role that works on both.
+- **Two themes and a bridge, one page.** The page fades between a dark forest
+  theme and a light ivory theme as you scroll, with one deep-orange bridge
+  (Recent thoughts) between the case studies and services, like the bridge
+  of a song. Every colour is a role that works on all three.
 - **Quiet motion.** Things grow, rise and fade in with one ease-out curve.
   Under reduced motion, everything is still and complete.
 
@@ -82,33 +84,38 @@ section has crossed 55% of the viewport. The roles fade in 1.1s; the button
 roles fade in 0.3s, so the button's ink never sits on the wrong colour.
 
 <!-- brand:roles -->
-| Role | Dark (default) | Light | Used for |
-|---|---|---|---|
-| `--bg` | green-800 | neutral-100 | page ground |
-| `--ink` | neutral-100 | green-800 | headlines, nav, captions |
-| `--muted` | neutral-200 | neutral-700 | body copy, descriptions |
-| `--accent` | green-300 | green-600 | links, italic emphasis, stats, rings, vines, focus ring |
-| `--warm` | orange-400 | orange-600 | eyebrows, alternate service numbers, text links, the CTA's emphasis |
-| `--button` | orange-400 | orange-600 | the Let's chat button |
-| `--button-hover` | orange-300 | orange-800 | the button on hover |
-| `--button-ink` | green-900 | neutral-100 | text on the button |
+| Role | Dark (default) | Light | Bridge | Used for |
+|---|---|---|---|---|
+| `--bg` | green-800 | neutral-100 | orange-600 | page ground |
+| `--ink` | neutral-100 | green-800 | neutral-100 | headlines, nav, captions |
+| `--muted` | neutral-200 | neutral-700 | neutral-200 | body copy, descriptions |
+| `--accent` | green-300 | green-600 | neutral-200 | links, italic emphasis, stats, rings, vines, focus ring |
+| `--warm` | orange-400 | orange-600 | neutral-100 | eyebrows, alternate service numbers, text links, the CTA's emphasis |
+| `--button` | orange-400 | orange-600 | green-800 | the Let's chat button |
+| `--button-hover` | orange-300 | orange-800 | green-950 | the button on hover |
+| `--button-ink` | green-900 | neutral-100 | neutral-100 | text on the button |
+| `--logo-tile` | green-800 | neutral-100 | green-800 | the tile behind the nav logo: the ground itself on dark and light, so it only shows on the bridge |
 <!-- /brand:roles -->
 
 Section themes, top to bottom: hero and about **dark** → case studies
-**light** → the question **dark** → services **light** → CTA footer **dark**.
+**light** → the question (Recent thoughts) **bridge** → services **light** →
+CTA footer **dark**. On the bridge the nav turns orange too: its button goes
+`green-800` with ivory ink, and the logo sits on its `green-800` tile
+(`--logo-tile`, invisible on the other themes), since the green leaf alone is
+under 3:1 on orange.
 
 Contrast, checked by every `npm run brand` (it fails below a minimum):
 
 <!-- brand:contrast -->
-| Check | Dark | Light | Minimum |
-|---|---|---|---|
-| Ink on ground | 11.92 | 11.92 | 4.5 |
-| Muted text | 9.35 | 8.52 | 4.5 |
-| Accent | 7.46 | 5.32 | 4.5 |
-| Warm | 5.11 | 5.87 | 4.5 |
-| Button label | 5.69 | 5.87 | 4.5 |
-| Button hover | 6.82 | 8.85 | 4.5 |
-| Logo on ground | 3.67 | 3.25 | 3 |
+| Check | Dark | Light | Bridge | Minimum |
+|---|---|---|---|---|
+| Ink on ground | 11.92 | 11.92 | 5.87 | 4.5 |
+| Muted text | 9.35 | 8.52 | 4.61 | 4.5 |
+| Accent | 7.46 | 5.32 | 4.61 | 4.5 |
+| Warm | 5.11 | 5.87 | 5.87 | 4.5 |
+| Button label | 5.69 | 5.87 | 11.92 | 4.5 |
+| Button hover | 6.82 | 8.85 | 17.89 | 4.5 |
+| Logo on its tile | 3.67 | 3.25 | 3.67 | 3 |
 <!-- /brand:contrast -->
 
 The two grounds were pushed apart on 2026-11-05 (green-800 from `#173f35`,
@@ -234,7 +241,8 @@ portal cards), `--radius-md` 10 (glass cards and screens) and `--radius-lg`
 
 - One focus ring for links and buttons: 2px accent, 3px offset (readable on
   both themes).
-- Text colours keep at least 5:1 contrast on their theme's ground.
+- Text colours keep at least 4.5:1 contrast on their theme's ground (5:1 or
+  more on dark and light; muted and accent are 4.61:1 on the bridge).
 - On phones, small controls get invisible hit areas up to 44px.
 - Decorative SVG (vines, rings) is `aria-hidden` and `pointer-events: none`.
 

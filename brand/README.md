@@ -24,7 +24,7 @@ npm run brand
 
 | Output | What |
 |---|---|
-| `app/brand.css` | The palette, the theme roles ThemeGates.tsx swaps (dark and light), their `@property` registrations, and the pupil's size for the site's eyes |
+| `app/brand.css` | The palette, the theme roles ThemeGates.tsx swaps (dark, light and the orange bridge), their `@property` registrations, and the pupil's size for the site's eyes |
 | `app/brand.ts` | The browser-bar colour (`layout.tsx`) and the pupil's height (`SeeEyes.tsx`) |
 | `public/logo-text.svg` | The nav logo |
 | `public/favicon.svg`, `app/favicon.ico`, `app/apple-icon.png` | The dark tile, still: SVG icon, .ico at 16/32/48px, 180px apple icon |

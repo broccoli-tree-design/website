@@ -42,6 +42,11 @@
   inherits: true;
   initial-value: #102e27;
 }
+@property --logo-tile {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #0e372d;
+}
 
 @layer tokens {
   :root {
@@ -72,6 +77,7 @@
     --button: var(--orange-400);
     --button-hover: var(--orange-300);
     --button-ink: var(--green-900);
+    --logo-tile: var(--green-800);
   }
   :root[data-theme="light"] {
     --bg: var(--neutral-100);
@@ -82,5 +88,17 @@
     --button: var(--orange-600);
     --button-hover: var(--orange-800);
     --button-ink: var(--neutral-100);
+    --logo-tile: var(--neutral-100);
+  }
+  :root[data-theme="bridge"] {
+    --bg: var(--orange-600);
+    --ink: var(--neutral-100);
+    --muted: var(--neutral-200);
+    --accent: var(--neutral-200);
+    --warm: var(--neutral-100);
+    --button: var(--green-800);
+    --button-hover: var(--green-950);
+    --button-ink: var(--neutral-100);
+    --logo-tile: var(--green-800);
   }
 }

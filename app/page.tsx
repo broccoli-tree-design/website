@@ -348,7 +348,8 @@ export default function Home() {
         </section>
 
         {/* QUESTION */}
-        <section className="grid section-body question" data-gate="dark">
+        {/* the bridge: deep orange between the light case studies and services */}
+        <section className="grid section-body question" data-gate="bridge">
           <p className="text-label question-label">
             {/* About's eye returns as the bridge's marker */}
             <span className="question-eye" aria-hidden="true">

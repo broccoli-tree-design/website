@@ -4,7 +4,7 @@ import { frameThrottle } from "@/lib/frame";
 
 /** Page colour follows the scroll: the active gate is the last [data-gate]
  *  whose top has passed 55% of the viewport, and its value names the theme
- *  (dark | light). Sets <html data-theme>; the
+ *  (dark | light | bridge). Sets <html data-theme>; the
  *  themes and their fade live in tokens.css. */
 export default function ThemeGates() {
   useEffect(() => {

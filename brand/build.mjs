@@ -43,13 +43,17 @@ const swatches = Object.entries(T.color).flatMap(([fam, steps]) =>
     .map(([step, c]) => ({ name: `${fam}-${step}`, ...c })),
 );
 
+// the themes every role is given, in tokens.json's order: dark first (the
+// default), then light, then any others (the bridge)
+const THEMES = Object.keys(Object.values(T.roles)[0]).filter((k) => k !== "use");
+const title = (t) => t[0].toUpperCase() + t.slice(1);
+
 // ── contrast checks ──
 const checks = T.contrast.map((c) => ({
   ...c,
-  dark: ratio(resolve(c.fg, "dark"), resolve(c.bg, "dark")),
-  light: ratio(resolve(c.fg, "light"), resolve(c.bg, "light")),
+  ...Object.fromEntries(THEMES.map((t) => [t, ratio(resolve(c.fg, t), resolve(c.bg, t))])),
 }));
-const failed = checks.filter((c) => c.dark < c.min || c.light < c.min);
+const failed = checks.filter((c) => THEMES.some((t) => c[t] < c.min));
 
 // ── app/brand.css and app/brand.ts ──
 const pupilH = T.logo.pupilRy / T.logo.eyeRy;
@@ -70,12 +74,12 @@ ${swatches.map((s) => `    --${s.name}: ${s.hex}; /* ${s.use} */`).join("\n")}
     --pupil-height: ${pct(pupilH)};
     --pupil-top: ${pct((1 - pupilH) / 2)};
   }
-  :root {
-${Object.entries(T.roles).map(([r, v]) => `    --${r}: var(--${v.dark});`).join("\n")}
-  }
-  :root[data-theme="light"] {
-${Object.entries(T.roles).map(([r, v]) => `    --${r}: var(--${v.light});`).join("\n")}
-  }
+${THEMES.map(
+  (t, i) =>
+    `  ${i ? `:root[data-theme="${t}"]` : ":root"} {\n${Object.entries(T.roles)
+      .map(([r, v]) => `    --${r}: var(--${v[t]});`)
+      .join("\n")}\n  }`,
+).join("\n")}
 }
 `;
 writeFileSync("app/brand.css", css);
@@ -259,14 +263,14 @@ const blocks = {
     ...swatches.map((s) => `| \`--${s.name}\` | \`${s.hex}\` | ${s.use} |`),
   ].join("\n"),
   roles: [
-    "| Role | Dark (default) | Light | Used for |",
-    "|---|---|---|---|",
-    ...Object.entries(T.roles).map(([r, v]) => `| \`--${r}\` | ${v.dark} | ${v.light} | ${v.use} |`),
+    `| Role | ${THEMES.map((t, i) => title(t) + (i ? "" : " (default)")).join(" | ")} | Used for |`,
+    `|---|${THEMES.map(() => "---|").join("")}---|`,
+    ...Object.entries(T.roles).map(([r, v]) => `| \`--${r}\` | ${THEMES.map((t) => v[t]).join(" | ")} | ${v.use} |`),
   ].join("\n"),
   contrast: [
-    "| Check | Dark | Light | Minimum |",
-    "|---|---|---|---|",
-    ...checks.map((c) => `| ${c.name} | ${f2(c.dark)} | ${f2(c.light)} | ${c.min} |`),
+    `| Check | ${THEMES.map(title).join(" | ")} | Minimum |`,
+    `|---|${THEMES.map(() => "---|").join("")}---|`,
+    ...checks.map((c) => `| ${c.name} | ${THEMES.map((t) => f2(c[t])).join(" | ")} | ${c.min} |`),
   ].join("\n"),
   logo: `The logo is drawn in \`${T.logo.leaf}\` (\`${hex(T.logo.leaf)}\`), with a \`${T.logo.eye}\` eye and a \`${T.logo.pupil}\` pupil (rx ${T.logo.pupilRx}, ry ${T.logo.pupilRy}: ${pct(pupilH)} of the eye's height). The tile is \`${T.logo.tile}\`.`,
 };
@@ -281,7 +285,9 @@ writeFileSync(DOC, doc);
 
 // ── report ──
 for (const c of checks)
-  console.log(`${c.dark < c.min || c.light < c.min ? "✗" : "✓"} ${c.name}: ${f2(c.dark)} dark, ${f2(c.light)} light (min ${c.min})`);
+  console.log(
+    `${THEMES.some((t) => c[t] < c.min) ? "✗" : "✓"} ${c.name}: ${THEMES.map((t) => `${f2(c[t])} ${t}`).join(", ")} (min ${c.min})`,
+  );
 if (failed.length) {
   console.error(`\n${failed.length} contrast check(s) below minimum. Outputs were written; fix tokens.json and rerun.`);
   process.exit(1);
