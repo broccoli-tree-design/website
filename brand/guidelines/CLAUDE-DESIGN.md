@@ -8,8 +8,9 @@ system itself is in `DESIGN.md` beside this page, and its values come from
 ## Before you start
 
 - Ask which section the board is for. Its theme follows from that: hero,
-  about, the question and the CTA are **dark**; case studies and services
-  are **light**. If a component appears in both, show it on both themes.
+  about and the CTA are **dark**; case studies and services are **light**;
+  Recent thoughts (the question) is the deep-orange **bridge**. If a
+  component appears on more than one, show it on each of those themes.
 - Work at 1440 wide (the column cap) and check at 375 (phone). If a board
   touches the case studies, also check below 900, where they stack.
 
@@ -40,7 +41,8 @@ system itself is in `DESIGN.md` beside this page, and its values come from
 
 - Don't add a colour, font, radius or easing that isn't in `tokens.css`. If
   a board truly needs one, call it out as a **new token** with a name and
-  both theme values, so it can be added on purpose.
+  a value for every theme (dark, light, bridge), so it can be added on
+  purpose.
 - Don't use pure white or black for text or grounds. Product screens inside
   glass cards are the exception.
 - Don't use hard-cornered panels, drop-shadowed cards on the page ground,
@@ -49,7 +51,8 @@ system itself is in `DESIGN.md` beside this page, and its values come from
   terracotta `#c4562a`, botanical `#5b8c42` as an accent, or a 1140px max
   width. The logo's green, `green-500` (`#609546`), is for the logo and graphics that sit on both grounds, never text.
 - Don't let the warm orange compete with the button: use it for eyebrows,
-  text links and the odd number, never for large fills.
+  text links and the odd number, never for large fills. The one exception is
+  the bridge, a whole section of deep `orange-600`; don't add a second.
 
 ## Handoff
 
@@ -60,7 +63,7 @@ spec, as `design/leaf-connector/` does:
 2. **Anatomy:** a table of each part, its shape, and its paint by role.
 3. **Geometry:** reference coordinates, plus which parts are computed from
    the layout.
-4. **Theming and states:** both themes, hover/focus, reduced motion, and
+4. **Theming and states:** every theme it appears on, hover/focus, reduced motion, and
    `aria`.
 5. **Done when:** checks at desktop, below 900 and on phone.
 

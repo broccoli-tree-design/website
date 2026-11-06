@@ -29,6 +29,18 @@
     width: 26px;
     height: 26px;
   }
+  /* the logo's tile: the ground itself on dark and light, green-800 on the
+     orange bridge, where the green leaf alone falls under 3:1. Drawn behind
+     the mark so it moves nothing, and the eye's % offsets still map onto the
+     logo's 26px box */
+  .nav-logo-mark::before {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    z-index: -1;
+    border-radius: var(--radius-sm);
+    background: var(--logo-tile);
+  }
   .nav-logo-mark img {
     display: block;
     width: 100%;
@@ -380,9 +392,11 @@
   }
   /* the live eye before the label, in the theme's ink and ground (the logo's
      ivory white would vanish on the light ground) */
+  /* as tall as the label's text (1.2em, 17px at 14px), so the eye reads as
+     part of the line */
   .question-eye {
     flex: none;
-    width: 44px;
+    width: 2.4em;
   }
   .question-eye .eye-white {
     background: var(--ink);
