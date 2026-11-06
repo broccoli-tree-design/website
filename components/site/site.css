@@ -554,14 +554,22 @@
 
   /* ── MOBILE ── */
   @media (max-width: 640px) {
+    /* four items + the button: tighter gaps and no ↗ icon so they fit wider phones */
     .nav {
       padding-block: 16px;
+      gap: 16px;
     }
     .nav-logo-text {
       display: none;
     }
     .nav-links {
-      gap: 16px;
+      gap: 14px;
+    }
+    .nav-links .nav-cta {
+      padding-inline: 14px;
+    }
+    .nav-cta-icon {
+      display: none;
     }
     /* invisible hit areas reach 44px without moving anything */
     .nav-logo,
@@ -690,6 +698,14 @@
     }
     .cta-h2 em {
       color: var(--warm);
+    }
+  }
+
+  /* at 375px and under, About drops out to give the rest room; it's the
+     section right under the hero, so it's one scroll away */
+  @media (max-width: 375px) {
+    .nav-about {
+      display: none;
     }
   }
 }

@@ -139,11 +139,14 @@ export default function Home() {
           <span className="nav-logo-text">Broccoli Tree Design</span>
         </a>
         <ul className="nav-links">
-          <li>
+          <li className="nav-about">
             <a href="#about">About</a>
           </li>
           <li>
             <a href="#work">Work</a>
+          </li>
+          <li>
+            <a href="#services">Services</a>
           </li>
           <li>
             <a
@@ -367,7 +370,7 @@ export default function Home() {
         </section>
 
         {/* SERVICES */}
-        <section className="services" data-gate="light">
+        <section className="services" id="services" data-gate="light">
           <h2 className="text-display">
             <span className="services-title">Where I help</span>{" "}
             <span className="text-stat services-sub">legal tech teams</span>
