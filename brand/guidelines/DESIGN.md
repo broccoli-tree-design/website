@@ -195,9 +195,11 @@ portal cards), `--radius-md` 10 (glass cards and screens) and `--radius-lg`
 ## Components
 
 - **Nav:** fixed, on `--bg`. It has the logo mark with a live eye, the
-  Montserrat Alternates wordmark, 14px links in `--ink` (hover: accent) and
-  the **Let's chat** button: pill, `--button` fill, 600 weight,
-  `--button-shadow`.
+  Montserrat Alternates wordmark, 14px links in `--ink` (hover: accent):
+  About, Work and Services, and the **Let's chat** button: pill, `--button`
+  fill, 600 weight, `--button-shadow`. On phones the wordmark and the
+  button's ↗ icon drop and the gaps tighten; at 375px and under, About
+  drops too.
 - **Text link:** `.text-label` in `--warm` with a 1px underline, 4px below.
 - **Service card:** an italic `.text-stat` number (alternating `--display-4`
   in accent and `--display-2` in warm), a `.text-title`, and a 14px muted
