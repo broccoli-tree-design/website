@@ -368,11 +368,19 @@
     background: var(--bg);
   }
   .about-body {
-    margin-top: 12vh;
+    margin-top: 6vh;
   }
   .about-p {
-    grid-column: 7 / span 5;
+    grid-column: 8 / span 5;
     margin: 0;
+  }
+  /* styled like "Read the article" (.question-link): warm, underlined; kept
+     at body size so it sits in the sentence */
+  .about-link {
+    color: var(--warm);
+    font-weight: 500;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
   }
 
   /* ── QUESTION ── */
@@ -529,13 +537,13 @@
 
     white-space: nowrap;
   }
-  .cs-sub {
-    display: block;
-    margin: 2vh 0 0 51cqw;
-    font-style: normal;
+  /* spaced like the case eyebrows above their titles */
+  .cs-eyebrow {
+    margin: 0 0 16px;
   }
+  /* ends where "studies" ends */
   .cs-p {
-    grid-column: 7 / span 4;
+    grid-column: 9 / span 4;
     margin: 6vh 0 0;
   }
 
@@ -616,7 +624,7 @@
       margin-top: 0.1em;
     }
     .about-body {
-      margin-top: 8vh;
+      margin-top: 5vh;
     }
     .about-p {
       grid-column: 1 / -1;
@@ -662,11 +670,8 @@
       min-height: auto;
       padding: 16vh var(--gutter) 4vh;
     }
-    .cs-sub {
-      margin: 2vh 0 0 20vw;
-    }
     .cs-p {
-      grid-column: 1 / span 10;
+      grid-column: 1 / -1;
       margin-top: 8vh;
     }
 
