@@ -239,16 +239,11 @@ export default function Home() {
           </h2>
           <div className="grid section-body about-body">
             <p className="body about-p">
-              As a Paralegal turned Designer, I’ve experienced first-hand the
-              stress and fulfillment operating within legal systems in the U.S.
-              and China — from working late nights alongside attorneys on urgent
-              trademark prosecution, to negotiating with county clerks for the
-              records behind an insurance litigation, to translating for
-              immigrant families fighting for their children's right to go to
-              school.
+              As a Paralegal turned Designer, I’ve worked inside legal systems
+              in the U.S. and China, then designed data-heavy tools in MarTech.
               <br />
-              <br />I know when technology can make law more accessible, and
-              when human should take the lead.
+              <br />I know when technology can make systems more accessible, and
+              when humans should take the lead.
             </p>
           </div>
         </section>
@@ -257,13 +252,19 @@ export default function Home() {
         <section className="grid cs" id="work" data-gate="light">
           <h2 className="text-display cs-h2">
             <span className="text-stat cs-case">Case</span>{" "}
-            <span className="cs-studies">studies</span>{" "}
-            <span className="text-sub cs-sub"></span>
+            <span className="cs-studies">studies</span>
           </h2>
-          <p className="body cs-p">
-            How to make complex enterprise systems visible and trustworthy to
-            teams and clients?
-          </p>
+          <div className="cs-p">
+            <p className="text-label case-eyebrow cs-eyebrow">
+              From MarTech, for legal tech
+            </p>
+            <p className="body">
+              Different industries, same question:
+              <br />
+              how to make complex, data-heavy systems visible and trustworthy
+              to teams and clients?
+            </p>
+          </div>
         </section>
 
         {/* CASE — the black box; the four steps sit behind the answer */}
