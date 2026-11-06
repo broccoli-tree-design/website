@@ -16,8 +16,9 @@ import CaseWorkspace, { u } from "./CaseWorkspace";
  *  scrolled back): the workspace slides away, the unnamed cards fade, and the
  *  five named cards lift out of their columns and become the carousel's glass
  *  cards, measured from the carousel (`landing`) laid out, hidden, beneath
- *  them. Once they have landed the carousel takes over. Reduced motion, and
- *  phones for now, show the carousel with no portal. */
+ *  them. Once they have landed the carousel takes over. Under 900px and
+ *  on portrait screens the portal is stacked (the .cpp tree); reduced motion
+ *  shows it still. */
 
 export type PortalStep = {
   /** a module's key in MODULES */
@@ -78,10 +79,10 @@ function Skeleton({ name }: { name?: string }) {
   );
 }
 
-/** The portal as a still picture, stacked, for phones and tablets (and
- *  reduced motion): the workspace, the shared data joining it, and the
- *  portal's stages as rows of cards. Hidden on desktop, where the scroll
- *  opens the real one. */
+/** The portal as a still picture, stacked, for reduced motion (at every
+ *  width): the workspace, the shared data joining it, and the portal's
+ *  stages as rows of cards. Hidden otherwise, where the scroll opens the
+ *  real one. */
 function PortalStill({ steps }: { steps: PortalStep[] }) {
   return (
     <div className="cps" aria-hidden="true">
@@ -144,8 +145,9 @@ export default function ClientPortal({
     const sec = section.current!;
     const stg = stage.current!;
     const still = matchMedia("(prefers-reduced-motion: reduce)");
-    // phones have the portal stacked, with its own cards to start from
-    const phone = matchMedia("(max-width: 640px)");
+    // under 900px the portal is stacked, with its own cards to start from
+    // (the case frame's stacked tier, and portrait screens; client_portal.css)
+    const phone = matchMedia("(width < 900px), (orientation: portrait)");
     const flat = () => still.matches;
 
     let shown = 0;
@@ -340,9 +342,9 @@ export default function ClientPortal({
               <CaseWorkspace />
             </div>
             <div className="cpp-link">
-              <svg viewBox="0 0 60 56">
-                <path d="M24 0V56" />
-                <path d="M38 0V56" />
+              <svg viewBox="0 0 60 36">
+                <path d="M24 0V36" />
+                <path d="M38 0V36" />
               </svg>
               <span>Shared data</span>
             </div>

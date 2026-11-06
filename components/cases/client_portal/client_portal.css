@@ -198,7 +198,10 @@
   .cp {
     position: absolute;
     left: 50%;
-    top: 50%;
+    /* centred, unless the width stops the board first (a tall screen): then
+       it rises to sit 20svh under the top, as it does when the height
+       stops it, instead of floating in the middle of a gap */
+    top: min(50%, calc(260 * var(--u) + 20svh));
     width: calc(1328 * var(--u));
     --u: var(--pu);
     height: calc(520 * var(--u));
@@ -746,25 +749,41 @@
     }
   }
 
-  /* phones: the portal opens on scroll as on desktop, but stacked to fit the
-     screen: the workspace's top, the shared data, then the stages as rows
-     (ClientPortal.tsx, the .cpp tree). The same variables drive it. */
+  /* under 900px (the case frame's stacked tier) and on any portrait screen,
+     where the wide board would float in a gap: the portal opens on scroll
+     as on desktop, but stacked to fit the screen: the workspace, the shared
+     data, then the stages as rows (ClientPortal.tsx, the .cpp tree). The
+     same variables drive it. */
   .cpp {
     display: none;
   }
-  @media (max-width: 640px) {
+  @media (width < 900px), (orientation: portrait) {
     .cp {
       display: none;
     }
     .cpp {
-      --u: calc((100cqw - 2 * var(--gutter)) / 420);
+      --cpp-u: calc(min(100cqw - 2 * var(--gutter), 560px) / 420);
+      --u: var(--cpp-u);
+      /* every height around the workspace, so it can take what's left:
+         the fixed nav (16px or 20px above and below the 36px button), the
+         panel's card rows (tighter on short screens), and the cue (23px
+         tall, 6svh off the stage's bottom) */
+      --nav-h: 76px;
+      --cpp-link: 36px;
+      --cpp-card: 50px;
+      --cpp-gap: 8px;
+      --cpp-panel-h: calc(
+        26px + 16px + 4px + 5 * (var(--cpp-card) + var(--cpp-gap))
+      );
       display: flex;
       flex-direction: column;
       position: absolute;
       left: 50%;
-      top: 50%;
+      /* centred in the band between the nav and the cue (whose top is 94%
+         of the stage less its 23px), not on the stage */
+      top: calc((var(--nav-h) + 94% - 23px) / 2);
       width: calc(420 * var(--u));
-      transform: translate(-50%, -52%);
+      transform: translate(-50%, -50%);
       color: var(--ink);
     }
     .cpp-ws,
@@ -773,8 +792,19 @@
       border-radius: var(--radius-md);
       box-shadow: 0 14px 24px -18px color-mix(in srgb, var(--green-900) 30%, transparent);
     }
+    /* as wide as the panel; on a short screen it takes whatever the band
+       between the nav and the cue leaves, less 24px at either end, the
+       shared data and the panel (its collage cut off at the bottom). On a
+       taller one it stops at its full 280 units and the band's extra room
+       splits evenly above and below */
     .cpp-ws {
-      height: calc(280 * var(--u));
+      height: max(
+        0px,
+        min(
+          calc(280 * var(--u)),
+          94svh - 23px - var(--nav-h) - 48px - var(--cpp-link) - var(--cpp-panel-h)
+        )
+      );
       overflow: hidden;
       background: var(--green-800);
       transform: translateY(calc(var(--ws, 0) * -40px));
@@ -785,13 +815,13 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      height: 56px;
+      height: var(--cpp-link);
       color: var(--accent);
       opacity: calc(1 - var(--link, 0));
     }
     .cpp-link svg {
       width: 60px;
-      height: 56px;
+      height: var(--cpp-link);
       fill: none;
       stroke: currentColor;
       stroke-width: 3;
@@ -817,6 +847,7 @@
     .cpp-panel .cp-tag {
       position: static;
       display: block;
+      line-height: 16px;
       margin-bottom: 4px;
       color: var(--neutral-700);
       font-size: var(--text-xs);
@@ -826,7 +857,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-top: 8px;
+      margin-top: var(--cpp-gap);
     }
     .cpp-head {
       flex: none;
@@ -845,7 +876,11 @@
     .cpp-card {
       --u: 0.7px;
       box-sizing: border-box;
-      height: 50px;
+      /* content centred, so the space above and below it matches */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: var(--cpp-card);
       padding: 8px 7px;
       overflow: hidden;
       border-radius: var(--radius-sm);
@@ -858,8 +893,51 @@
     .cp-skel .cp-ico {
       display: none;
     }
+    /* a blank card's name bar sits in a row as tall as a name, so blank and
+       named cards line up */
+    .cpp-card .cp-top {
+      min-height: calc(12 * var(--u) * 1.2);
+    }
+    /* a blank card's name bar reads as its title: a little thicker than the
+       line under it */
+    .cpp-card .cp-bar.is-name {
+      height: calc(8 * var(--u));
+    }
+    /* the line sits close under the title (the board's 14 units are roomier) */
+    .cpp-card .cp-bars,
+    .cp-skel .cp-bars {
+      margin-top: calc(6 * var(--u));
+    }
+    /* the flying copies start centred as the cards they lift off */
+    .cp-skel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-block: 0;
+    }
     .cp-skel {
       --u: 0.7px;
+    }
+  }
+  @media (max-width: 640px) {
+    .cpp {
+      --nav-h: 68px;
+    }
+  }
+  /* short screens: the panel's five rows tighten too, their cards one line */
+  @media (width < 900px) and (height < 800px) {
+    .cpp {
+      --cpp-card: 36px;
+      --cpp-gap: 6px;
+    }
+    .cpp-card {
+      padding-block: 6px;
+    }
+    /* each card down to its name and one line (the flying copies too, so
+       they don't change shape as they lift off) */
+    .cpp-card .cp-bars .cp-bar:nth-child(2),
+    .cp-skel .cp-bars .cp-bar:nth-child(2) {
+      display: none;
     }
   }
 
