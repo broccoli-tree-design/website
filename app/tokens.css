@@ -52,7 +52,12 @@
      - case frame, width under 900px: the case studies stack. They need it
        sooner than the page, while everything else still scales with the
        column. Between the two, only the case sections are stacked, on
-       purpose. */
+       purpose.
+     Two layouts also depend on the screen's shape, not just its width:
+     - the phone hero needs a tall screen (aspect ratio 2/3 or narrower);
+       a phone-width window that isn't tall keeps the wide hero (site.css)
+     - case 2's portal is stacked under 900px and on any portrait screen
+       (client_portal.css, and ClientPortal.tsx's matchMedia) */
 
   /* ── MOTION ── one ease-out for entrances and layout moves (Rings.tsx
      repeats it: Web Animations easing can't read custom properties) */

@@ -198,7 +198,10 @@
   .cp {
     position: absolute;
     left: 50%;
-    top: 50%;
+    /* centred, unless the width stops the board first (a tall screen): then
+       it rises to sit 20svh under the top, as it does when the height
+       stops it, instead of floating in the middle of a gap */
+    top: min(50%, calc(260 * var(--u) + 20svh));
     width: calc(1328 * var(--u));
     --u: var(--pu);
     height: calc(520 * var(--u));
@@ -746,25 +749,29 @@
     }
   }
 
-  /* phones: the portal opens on scroll as on desktop, but stacked to fit the
-     screen: the workspace's top, the shared data, then the stages as rows
-     (ClientPortal.tsx, the .cpp tree). The same variables drive it. */
+  /* under 900px (the case frame's stacked tier) and on any portrait screen,
+     where the wide board would float in a gap: the portal opens on scroll
+     as on desktop, but stacked to fit the screen: the workspace, the shared
+     data, then the stages as rows (ClientPortal.tsx, the .cpp tree). The
+     same variables drive it. */
   .cpp {
     display: none;
   }
-  @media (max-width: 640px) {
+  @media (width < 900px), (orientation: portrait) {
     .cp {
       display: none;
     }
     .cpp {
-      --u: calc((100cqw - 2 * var(--gutter)) / 420);
+      --cpp-u: calc(min(100cqw - 2 * var(--gutter), 560px) / 420);
+      --u: var(--cpp-u);
       display: flex;
       flex-direction: column;
       position: absolute;
       left: 50%;
       top: 50%;
       width: calc(420 * var(--u));
-      transform: translate(-50%, -52%);
+      /* centred: the nav above and the cue below take about the same room */
+      transform: translate(-50%, -50%);
       color: var(--ink);
     }
     .cpp-ws,
@@ -773,8 +780,16 @@
       border-radius: var(--radius-md);
       box-shadow: 0 14px 24px -18px color-mix(in srgb, var(--green-900) 30%, transparent);
     }
+    /* as wide as the panel, but shorter on a short screen (its collage cut
+       off at the bottom) so the scroll cue clears the panel. The 620px is
+       the nav, the shared data, the panel's five rows, the cue and room
+       around them */
     .cpp-ws {
-      height: calc(280 * var(--u));
+      height: clamp(
+        calc(160 * var(--u)),
+        100svh - 620px,
+        calc(280 * var(--u))
+      );
       overflow: hidden;
       background: var(--green-800);
       transform: translateY(calc(var(--ws, 0) * -40px));
@@ -813,6 +828,9 @@
       );
       box-shadow: 0 14px 24px -18px
         color-mix(in srgb, var(--green-900) calc(30% * (1 - var(--panel, 0))), transparent);
+    }
+    .cpp-ws .cp-tag {
+      white-space: nowrap;
     }
     .cpp-panel .cp-tag {
       position: static;
@@ -860,6 +878,16 @@
     }
     .cp-skel {
       --u: 0.7px;
+    }
+  }
+  /* short screens: the panel's five rows tighten too */
+  @media (width < 900px) and (height < 800px) {
+    .cpp-stage {
+      margin-top: 6px;
+    }
+    .cpp-card {
+      height: 42px;
+      padding-block: 6px;
     }
   }
 
