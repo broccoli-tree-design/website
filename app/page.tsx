@@ -239,8 +239,17 @@ export default function Home() {
           </h2>
           <div className="grid section-body about-body">
             <p className="body about-p">
-              As a Paralegal turned Designer, I’ve worked inside legal systems
-              in the U.S. and China, then designed data-heavy tools in MarTech.
+              As a{" "}
+              <a
+                href={LINKEDIN_URL}
+                target="_blank"
+                rel="noopener"
+                className="about-link"
+              >
+                Paralegal turned Designer
+              </a>
+              , I’ve worked inside legal systems in the U.S. and China, then
+              designed data-heavy tools in MarTech.
               <br />
               <br />I know when technology can make systems more accessible, and
               when humans should take the lead.

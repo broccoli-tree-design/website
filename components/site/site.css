@@ -374,6 +374,14 @@
     grid-column: 8 / span 5;
     margin: 0;
   }
+  /* styled like "Read the article" (.question-link): warm, underlined; kept
+     at body size so it sits in the sentence */
+  .about-link {
+    color: var(--warm);
+    font-weight: 500;
+    border-bottom: 1px solid currentColor;
+    padding-bottom: 2px;
+  }
 
   /* ── QUESTION ── */
   .question {
