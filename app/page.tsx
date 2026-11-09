@@ -251,6 +251,19 @@ export default function Home() {
               , I’ve worked inside legal systems in the U.S. and China, then
               designed data-heavy tools in MarTech.
               <br />
+              <br />I’ve experienced first-hand the stress and fulfillment on
+              both sides of law and technology, from protecting client brands
+              from infringement in trademark prosecution, to designing{" "}
+              <a
+                href="https://www.omc.com/omni/"
+                target="_blank"
+                rel="noopener"
+                className="about-link"
+              >
+                Marketing OS
+              </a>{" "}
+              that bring clients into co-creation.
+              <br />
               <br />I know when technology can make systems more accessible, and
               when humans should take the lead.
             </p>
