@@ -264,29 +264,19 @@ export default function Home() {
               </a>{" "}
               that bring clients into co-creation.
               <br />
-              <br />I know when technology can make systems more accessible, and
-              when humans should take the lead.
+              <br />I&rsquo;ve seen how much work stays invisible to the client
+              who pays for it, and how much their trust depends on seeing it.
             </p>
           </div>
         </section>
 
-        {/* CASE STUDIES — header */}
+        {/* CASE STUDIES — header: the question, with "visible" as the giant word */}
         <section className="grid cs" id="work" data-gate="light">
           <h2 className="text-display cs-h2">
-            <span className="text-stat cs-case">Case</span>{" "}
-            <span className="cs-studies">studies</span>
+            <span className="cs-l1">How to make complex systems</span>{" "}
+            <em className="text-stat cs-visible">visible</em>{" "}
+            <span className="cs-l3">to teams and clients?</span>
           </h2>
-          <div className="cs-p">
-            <p className="text-label case-eyebrow cs-eyebrow">
-              From MarTech, for legal tech
-            </p>
-            <p className="body">
-              Different industries, same question:
-              <br />
-              how to make complex, data-heavy systems visible and trustworthy
-              to teams and clients?
-            </p>
-          </div>
         </section>
 
         {/* CASE — the black box; the four steps sit behind the answer */}
@@ -294,7 +284,7 @@ export default function Home() {
           <div className="grid">
             <div className="case-title">
               <span className="text-label case-eyebrow">
-                0&rarr;1 Product design
+                Case study: 0&rarr;1 product design
               </span>
               <h3 className="text-display case-h3">
                 From black box to
@@ -334,7 +324,7 @@ export default function Home() {
           <div className="grid">
             <div className="case-title">
               <span className="text-label case-eyebrow">
-                REDESIGN LEGACY APP
+                Case study: Redesign legacy app
               </span>
               <h3 className="text-display case-h3">
                 Bridging the gap between Sales’ demo and Planners’ work

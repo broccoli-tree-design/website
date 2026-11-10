@@ -505,7 +505,7 @@
   /* ── CASE STUDIES — header ── */
   .cs {
     position: relative;
-    padding: 20vh var(--gutter) 0;
+    padding: 20vh var(--gutter) 10vh;
     align-content: start;
   }
   /* the headline spans every column, inside the gutters. Its cqw sizes are
@@ -516,35 +516,33 @@
     grid-column: 1 / -1;
     min-width: 0;
   }
-  .cs-case {
+  /* line 1 starts on column 4, like the other section headlines' zigzag */
+  .cs-l1 {
     display: block;
-    font-size: var(--display-8);
-    letter-spacing: -0.05em;
-    /* the "C" has side bearing; pull its ink onto the gutter line */
-    margin-left: -0.052em;
+    font-size: var(--display-2);
+    line-height: 1;
+    padding-left: 25.5cqw;
   }
-  /* overlaps "Case" on purpose */
-  .cs-studies {
+  /* the giant word takes the place "Case" had: bleeds off the left edge */
+  .cs-visible {
+    display: block;
+    font-size: var(--display-7);
+    letter-spacing: -0.05em;
+    margin-top: -0.04em;
+    /* the "v" has side bearing; pull its ink onto the gutter line */
+    margin-left: -0.05em;
+  }
+  /* overlaps "visible" on purpose, pinned to the right edge (as "studies" did) */
+  .cs-l3 {
     display: block;
     position: relative;
     z-index: 2;
-    font-size: var(--display-5);
-    letter-spacing: 0.02em;
-    /* pinned to the right edge */
     width: fit-content;
-    margin-top: -14cqw;
     margin-left: auto;
-
+    margin-top: -1.55em;
+    font-size: var(--display-2);
+    line-height: 1;
     white-space: nowrap;
-  }
-  /* spaced like the case eyebrows above their titles */
-  .cs-eyebrow {
-    margin: 0 0 16px;
-  }
-  /* ends where "studies" ends */
-  .cs-p {
-    grid-column: 9 / span 4;
-    margin: 6vh 0 0;
   }
 
   /* ── CTA ── */
@@ -668,11 +666,22 @@
 
     .cs {
       min-height: auto;
-      padding: 16vh var(--gutter) 4vh;
+      padding: 16vh var(--gutter) 12vh;
     }
-    .cs-p {
-      grid-column: 1 / -1;
-      margin-top: 8vh;
+    /* the small lines wrap on phones, so give them room to breathe */
+    .cs-l1 {
+      padding-left: 0;
+      line-height: 1.2;
+    }
+    /* still the giant word: fills the column edge to edge */
+    .cs-visible {
+      font-size: 34vw;
+      line-height: 1;
+      margin-top: 0.06em;
+    }
+    .cs-l3 {
+      margin-top: 0.1em;
+      line-height: 1.2;
     }
 
     .cta {
