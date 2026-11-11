@@ -67,10 +67,10 @@ if [ -f "$MARK" ]; then
   synced=$(cat "$MARK")
   if git cat-file -e "$synced^{commit}" 2>/dev/null; then
     n=$(git rev-list --count "$synced..origin/main" -- app components brand 2>/dev/null)
-    [ "${n:-0}" -gt 0 ] && note "The Claude Design system is behind main: $n commit(s) since its last sync ($(git rev-parse --short "$synced")) touch app/, components/ or brand/. Offer to sync it as brand/README.md describes."
+    [ "${n:-0}" -gt 0 ] && note "The Claude Design system is behind main: $n commit(s) since its last sync ($(git rev-parse --short "$synced")) touch app/, components/ or brand/. Remind the user to run the design-system sync (brand/README.md) and offer to do it now."
   fi
 else
-  note "No record of the Claude Design system's last sync. Offer to sync it as brand/README.md describes."
+  note "No record of the Claude Design system's last sync. Remind the user to run the design-system sync (brand/README.md) and offer to do it now."
 fi
 
 [ ${#notes[@]} -gt 0 ] && printf 'Repo sync check:\n%s\n' "${notes[@]}"
