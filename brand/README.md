@@ -18,6 +18,7 @@ npm run brand
 | `guidelines/DESIGN.md` | The design system: principles, colour, type, layout, motion, components. Its `<!-- brand:… -->` tables are generated | Yes, outside the generated tables |
 | `guidelines/CLAUDE-DESIGN.md` | How to design new boards in Claude Design so they ship as drawn | Yes |
 | `exports/` | Files for use outside the site (profiles, decks, email, LinkedIn). Generated | No |
+| `site-copy.mjs` | `npm run site-copy`: the live homepage's words → `exports/site-copy.md`, for the Claude Design system (below) | Only to change what it reads |
 | `signature/gmail-signature.html` | The Gmail signature, hand-written with inline colours from the dark theme (email ignores stylesheets); its photo is `public/signature-photo.png`. After a palette change, update its hexes by hand | Yes |
 
 ## What `npm run brand` writes
@@ -49,16 +50,42 @@ npm run dev            # in one terminal
 npm run brand:share    # in another; uses Google Chrome, headless
 ```
 
-## What it can't update
+## The Claude Design system
 
-- **The Claude Design system** ("Broccoli Tree Design",
-  https://claude.ai/artifact/U16yBPDVbDVmimqBSmrQs6) and the design canvases
-  live on claude.ai. After a change, update the design system's
-  `tokens.json` (palette values and role usages) and its Logos group from
-  this folder, then re-copy its `tokens.json` into each canvas's
-  `project/ds/broccoli-tree-design/` so the canvases' Theme menu offers the
-  current values. Canvas boards themselves are past explorations and keep
-  the colours they were drawn in.
+The design system ("Broccoli Tree Design",
+https://claude.ai/artifact/U16yBPDVbDVmimqBSmrQs6) and the design canvases
+live on claude.ai, outside this repo, so they don't update on their own.
+Claude Design reads the design system when it draws, so it should always
+match `main`.
+
+**When.** After any PR that touches `app/`, `components/` or `brand/` merges.
+Every Claude Code session here starts with a check
+(`.claude/hooks/session-sync.sh`) that says when the design system is behind
+`main`, and editing the brand source adds a reminder.
+
+**How** (Claude does this with its artifact tools, after the merge):
+
+1. `npm run site-copy` writes `exports/site-copy.md`: the live homepage's
+   words, section by section, read from production (so they match `main`).
+   It's not committed; it is the design system's **Site copy** section, and the
+   reason new boards show today's copy instead of an old board's.
+2. Read the design system's `project/README.md`, `project/tokens.json` and any
+   component card the merged change affects, and edit only what changed:
+   palette values and role usages after a colour change; layout, type and
+   usage notes after a layout change. Upload new logo files to its Logos group
+   after a logo change.
+3. Publish `project/site-copy.md` from `exports/site-copy.md` and the edited
+   files, then, last, the index `project/design-system.json` with a
+   `lastChange` that names the commit.
+4. After a palette change, re-copy its `tokens.json` into each canvas's
+   `project/ds/broccoli-tree-design/` so the canvases' Theme menu offers the
+   current values.
+5. Record the sync, so the session check knows:
+   `git rev-parse origin/main > ~/.claude/website-design-system-synced`
+
+Canvas boards are drawings: they keep the words and colours they were drawn
+with. To bring a board up to date, ask Claude Design to redo its words from
+the design system's Site copy.
 
 This folder is in `.vercelignore`: the site only needs the generated files in
 `app/` and `public/`, which are committed.

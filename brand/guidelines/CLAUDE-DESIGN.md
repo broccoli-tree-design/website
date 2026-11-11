@@ -80,3 +80,5 @@ colour tables in `DESIGN.md`). When `tokens.css` or `base.css` changes, update
 `DESIGN.md` and this page in the same commit. Either way, refresh the "Broccoli Tree Design" design system
 (https://claude.ai/artifact/U16yBPDVbDVmimqBSmrQs6: its `README.md`,
 `tokens.json` and component cards) so Claude Design reads the current values.
+The design system's Site copy section (`npm run site-copy`) carries the live
+page's words; `brand/README.md` → "The Claude Design system" has the routine.
