@@ -5,7 +5,8 @@
     "build": "next build",
     "start": "next start",
     "brand": "node brand/build.mjs",
-    "brand:share": "node brand/share.mjs"
+    "brand:share": "node brand/share.mjs",
+    "site-copy": "node brand/site-copy.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

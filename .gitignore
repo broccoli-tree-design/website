@@ -5,3 +5,6 @@ node_modules/
 *.tsbuildinfo
 .DS_Store
 next-env.d.ts
+
+# generated from the live site for the Claude Design system; see brand/README.md
+brand/exports/site-copy.md
