@@ -6,5 +6,7 @@ node_modules/
 .DS_Store
 next-env.d.ts
 
-# generated from the live site for the Claude Design system; see brand/README.md
-brand/exports/site-copy.md
+# brand sources, exports and resume: kept on this Mac only, not on GitHub.
+# The site doesn't need them to build: `npm run brand` writes its outputs
+# (app/brand.css, app/brand.ts, public/...) and those stay tracked.
+brand/
