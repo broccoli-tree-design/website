@@ -10,3 +10,6 @@ next-env.d.ts
 # The site doesn't need them to build: `npm run brand` writes its outputs
 # (app/brand.css, app/brand.ts, public/...) and those stay tracked.
 brand/
+
+# design prototypes: kept on this Mac only, not on GitHub.
+/design/
