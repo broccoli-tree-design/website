@@ -103,22 +103,22 @@ const SERVICES = [
   {
     num: "01",
     title: "0→1 product design",
-    desc: "Translating complex real-life workflows into prototypes to test with real users, before investing in development",
+    desc: "Translate complex real-life legal workflows into prototypes, from contract drafting to outside counsel management",
   },
   {
     num: "02",
     title: "Redesign & consolidation",
-    desc: "Merging legacy & third-party tools into a coherent platform, without breaking the existing system users are familiar with",
+    desc: "Consolidate fragmented legacy and third-party tools into coherent workflows or platform",
   },
   {
     num: "03",
     title: "Research & strategy",
-    desc: "User research, testing, roadmap, and monetization strategy for teams still finding product-market fit",
+    desc: "Research what’s worth building and shape brand positioning to find product-market fit",
   },
   {
     num: "04",
     title: "Branding & Design system",
-    desc: "A unique visual identity from brand assets to component library that articulates your product value, built to scale",
+    desc: "Build visual identities around distinctive features to differentiate from competitors and transform product into brand over time",
   },
 ];
 
