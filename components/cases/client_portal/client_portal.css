@@ -362,18 +362,12 @@
     align-items: center;
     gap: calc(8 * var(--u));
   }
-  .cp-note-row .cp-bar-sk {
-    flex: none;
-  }
   .cp-note-row i {
     flex: none;
     box-sizing: border-box;
     width: calc(9 * var(--u));
     height: calc(9 * var(--u));
     border: 1.25px solid var(--green-950);
-  }
-  .cp-note-row i.is-done {
-    background: var(--orange-400);
   }
   .cp-sticky {
     padding: calc(11 * var(--u));
@@ -814,7 +808,7 @@
       --u: var(--cpp-u);
       /* every height around the workspace, so it can take what's left:
          the fixed nav (16px or 20px above and below the 36px button), the
-         panel's card rows (tighter on short screens), and the cue (23px
+         panel's card rows, and the cue (23px
          tall, 6svh off the stage's bottom) */
       --nav-h: 76px;
       --cpp-link: 36px;
@@ -967,11 +961,6 @@
     .cpp-card .cp-ico,
     .cp-skel .cp-ico {
       display: none;
-    }
-    /* a blank card's name bar sits in a row as tall as a name, so blank and
-       named cards line up */
-    .cpp-card .cp-top {
-      height: round(calc(15 * var(--u)), 1px);
     }
     /* the line sits close under the title (the board's 14 units are roomier) */
     .cpp-card .cp-bars,

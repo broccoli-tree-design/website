@@ -132,7 +132,7 @@ export default function CaseWorkspace() {
         call ACME re: deck version
       </div>
 
-      <span className="cp-pill is-top" style={at({ l: 160, t: 96, r: 2 })}>
+      <span className="cp-pill" style={at({ l: 160, t: 96, r: 2 })}>
         deck_FINAL(2).pptx
       </span>
       <span className="cp-pill is-low" style={at({ l: 168, t: 452, r: -1 })}>
