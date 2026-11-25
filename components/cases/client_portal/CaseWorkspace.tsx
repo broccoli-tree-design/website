@@ -2,6 +2,8 @@ import type { CSSProperties, ReactNode } from "react";
 
 /** a length in the portal's artboard units */
 export const u = (n: number) => `calc(${n} * var(--u))`;
+/** the same, snapped to whole pixels, for things that must draw alike */
+export const ur = (n: number) => `round(calc(${n} * var(--u)), 1px)`;
 
 type Pos = { l: number; t: number; w?: number; h?: number; r: number };
 const at = ({ l, t, w, h, r }: Pos): CSSProperties => ({
@@ -28,13 +30,33 @@ function App({ name, pos, children }: { name: string; pos: Pos; children: ReactN
   );
 }
 
-function Mail({ pos, subject, bars }: { pos: Pos; subject: string; bars: number[] }) {
+function Mail({
+  pos,
+  from,
+  to,
+  subject,
+  bars,
+  className = "",
+}: {
+  pos: Pos;
+  /** extra classes, for the stacked layouts' spacing */
+  className?: string;
+  from: string;
+  to: string;
+  subject: string;
+  /** line widths, in artboard units, so both emails draw the same lines */
+  bars: number[];
+}) {
   return (
-    <div className="cp-mail" style={at(pos)}>
-      <span className="cp-bar-sk" style={{ width: "26%" }} />
+    <div className={`cp-mail ${className}`.trim()} style={at(pos)}>
+      <span className="cp-route">
+        From: {from}
+        <br />
+        To: {to}
+      </span>
       <b>{subject}</b>
       {bars.map((w, i) => (
-        <span key={i} className="cp-bar-sk" style={{ width: `${w}%` }} />
+        <span key={i} className="cp-bar-sk" style={{ width: u(w) }} />
       ))}
     </div>
   );
@@ -79,27 +101,31 @@ export default function CaseWorkspace() {
       </App>
 
       <Mail
-        pos={{ l: 248, t: 178, w: 150, h: 66, r: -3 }}
+        pos={{ l: 248, t: 166, w: 150, h: 102, r: -3 }}
+        from="ACME"
+        to="Sales"
         subject="can you resend the deck?"
-        bars={[80, 52]}
+        bars={[104, 68]}
       />
       <Mail
-        pos={{ l: 150, t: 318, w: 170, h: 74, r: 1 }}
-        subject="Fwd: planner sent excel AGAIN"
-        bars={[88, 60]}
+        pos={{ l: 150, t: 318, w: 170, h: 90, r: 1 }}
+        className="is-low"
+        from="ACME"
+        to="Planner"
+        subject="Fwd: PLS stop sending Excel"
+        bars={[104, 68]}
       />
 
-      <div className="cp-note" style={at({ l: 18, t: 366, w: 140, h: 150, r: -2 })}>
+      <div className="cp-note is-low" style={at({ l: 18, t: 366, w: 140, h: 112, r: -2 })}>
         <b>Planner x ACME Weekly sync</b>
         <span className="cp-note-row">
           <i />
-          <span className="cp-bar-sk" style={{ width: "70%" }} />
+          <span>discuss new mode of report delivery</span>
         </span>
         <span className="cp-note-row">
-          <i className="is-done" />
-          <span className="cp-bar-sk" style={{ width: "48%" }} />
+          <i />
+          <span className="cp-bar-sk" style={{ width: "80%" }} />
         </span>
-        <span className="cp-bar-sk" style={{ width: "86%" }} />
       </div>
 
       <div className="cp-sticky" style={at({ l: 112, t: 150, w: 92, h: 92, r: 4 })}>
@@ -109,7 +135,7 @@ export default function CaseWorkspace() {
       <span className="cp-pill" style={at({ l: 160, t: 96, r: 2 })}>
         deck_FINAL(2).pptx
       </span>
-      <span className="cp-pill" style={at({ l: 168, t: 452, r: -1 })}>
+      <span className="cp-pill is-low" style={at({ l: 168, t: 452, r: -1 })}>
         ACME_Plan_v7_Final_FINAL2.xlsx
       </span>
     </>

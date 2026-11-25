@@ -223,7 +223,7 @@
     /* the loose work is cut off by the card's edge, as if spilling out of it */
     overflow: hidden;
     background: var(--green-800);
-    transform: translateX(calc(var(--ws, 0) * -140 * var(--u)));
+    transform: translateX(calc(var(--ws, 0) * 140 * var(--u)));
     opacity: calc(1 - var(--ws, 0));
   }
   .cp-panel {
@@ -327,10 +327,18 @@
     margin-top: calc(4 * var(--u));
     font-weight: 600;
   }
-  .cp-bar-sk {
+  /* who it is between: sender → recipient */
+  .cp-route {
     display: block;
-    height: calc(5 * var(--u));
-    min-height: 2px;
+    font-size: max(6px, calc(8.5 * var(--u)));
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    opacity: 0.65;
+  }
+  .cp-bar-sk {
+    flex: none;
+    display: block;
+    height: 3px;
     border-radius: 3px;
     background: var(--green-950);
     opacity: 0.28;
@@ -354,17 +362,12 @@
     align-items: center;
     gap: calc(8 * var(--u));
   }
-  .cp-note-row .cp-bar-sk {
-    flex: none;
-  }
   .cp-note-row i {
     flex: none;
+    box-sizing: border-box;
     width: calc(9 * var(--u));
     height: calc(9 * var(--u));
     border: 1.25px solid var(--green-950);
-  }
-  .cp-note-row i.is-done {
-    background: var(--orange-400);
   }
   .cp-sticky {
     padding: calc(11 * var(--u));
@@ -429,7 +432,7 @@
   .cp-card,
   .cp-skel {
     box-sizing: border-box;
-    padding: calc(12 * var(--u)) calc(11 * var(--u));
+    padding: round(calc(12 * var(--u)), 1px) round(calc(11 * var(--u)), 1px);
     border-radius: var(--radius-sm);
     background: #fff;
     box-shadow: 0 0 0 1px color-mix(in srgb, var(--green-900) 10%, transparent),
@@ -449,6 +452,8 @@
     display: flex;
     align-items: center;
     gap: calc(8 * var(--u));
+    /* whole pixels, so every card's lines land on the same pixel rows */
+    height: round(calc(15 * var(--u)), 1px);
   }
   .cp-top b {
     min-width: 0;
@@ -468,17 +473,17 @@
   .cp-bars {
     display: flex;
     flex-direction: column;
-    gap: calc(7 * var(--u));
-    margin-top: calc(14 * var(--u));
+    gap: round(calc(7 * var(--u)), 1px);
+    margin-top: round(calc(14 * var(--u)), 1px);
   }
   .cp-bar {
     display: block;
-    height: calc(6 * var(--u));
-    min-height: 3px;
+    height: 3px;
     border-radius: 3px;
     background: var(--neutral-200);
   }
   .cp-bar.is-name {
+    height: 5px;
     width: 56%;
   }
 
@@ -629,6 +634,43 @@
     }
   }
 
+  /* shared data flows both ways: the two dotted lines drift in opposite
+     directions (the first towards the portal, the second back towards the
+     workspace), their dots swelling and fading out of step. One dash period
+     (0.5 + 6) per loop, so it repeats without a jump. Still for reduced motion. */
+  @keyframes cp-flow-out {
+    to {
+      stroke-dashoffset: -6.5;
+    }
+  }
+  @keyframes cp-flow-back {
+    to {
+      stroke-dashoffset: 6.5;
+    }
+  }
+  @keyframes cp-glint {
+    0%,
+    100% {
+      stroke-opacity: 0.45;
+    }
+    50% {
+      stroke-opacity: 1;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .cp-link svg path,
+    .cpp-link svg path {
+      animation:
+        cp-flow-out 1.1s linear infinite,
+        cp-glint 2.4s ease-in-out infinite;
+    }
+    .cp-link svg path:nth-child(2),
+    .cpp-link svg path:nth-child(2) {
+      animation-name: cp-flow-back, cp-glint;
+      animation-delay: 0s, -1.2s;
+    }
+  }
+
   /* the pointer on the closed portal plays the first stretch of the opening
      motion (ClientPortal.tsx), so it needs to reach the board */
   .cm-stage:not(.is-landed) .cp {
@@ -766,12 +808,12 @@
       --u: var(--cpp-u);
       /* every height around the workspace, so it can take what's left:
          the fixed nav (16px or 20px above and below the 36px button), the
-         panel's card rows (tighter on short screens), and the cue (23px
+         panel's card rows, and the cue (23px
          tall, 6svh off the stage's bottom) */
       --nav-h: 76px;
       --cpp-link: 36px;
-      --cpp-card: 50px;
-      --cpp-gap: 8px;
+      --cpp-card: 36px;
+      --cpp-gap: 6px;
       --cpp-panel-h: calc(
         26px + 16px + 4px + 5 * (var(--cpp-card) + var(--cpp-gap))
       );
@@ -798,17 +840,44 @@
        taller one it stops at its full 280 units and the band's extra room
        splits evenly above and below */
     .cpp-ws {
-      height: max(
+      --ws-h: max(
         0px,
         min(
-          calc(280 * var(--u)),
+          calc(520 * var(--u)),
           94svh - 23px - var(--nav-h) - 48px - var(--cpp-link) - var(--cpp-panel-h)
         )
       );
+      height: var(--ws-h);
       overflow: hidden;
       background: var(--green-800);
-      transform: translateY(calc(var(--ws, 0) * -40px));
+      transform: translateY(calc(var(--ws, 0) * 40px));
       opacity: calc(1 - var(--ws, 0));
+    }
+    /* the loose work (emails, notes, files) floats up by however much the
+       workspace is cut short, so it all stays in view (its lowest edge sits
+       at 492 units; the shift stops at 110). The top three (the deck file,
+       the sticky, the Sales email) move at most 46, so the file stays clear
+       of the label; the lower three (the Planner email, the note, the Excel
+       file) move on to close up on them, leaving a gap of 22 to 10 units
+       between the groups rather than the board's 50 */
+    .cpp-ws {
+      --shift: clamp(0px, 492 * var(--u) - var(--ws-h), 110 * var(--u));
+      --up: min(var(--shift), 46 * var(--u));
+    }
+    .cpp-ws .cp-mail,
+    .cpp-ws .cp-note,
+    .cpp-ws .cp-sticky,
+    .cpp-ws .cp-pill {
+      translate: 0 calc(-1 * var(--up));
+    }
+    .cpp-ws .is-low {
+      translate: 0
+        calc(
+          -1 * min(
+              max(var(--shift), var(--up) + 28 * var(--u)),
+              var(--up) + 40 * var(--u)
+            )
+        );
     }
     .cpp-link {
       display: flex;
@@ -881,7 +950,7 @@
       flex-direction: column;
       justify-content: center;
       height: var(--cpp-card);
-      padding: 8px 7px;
+      padding: 6px 7px;
       overflow: hidden;
       border-radius: var(--radius-sm);
       background: #fff;
@@ -893,20 +962,27 @@
     .cp-skel .cp-ico {
       display: none;
     }
-    /* a blank card's name bar sits in a row as tall as a name, so blank and
-       named cards line up */
-    .cpp-card .cp-top {
-      min-height: calc(12 * var(--u) * 1.2);
-    }
-    /* a blank card's name bar reads as its title: a little thicker than the
-       line under it */
-    .cpp-card .cp-bar.is-name {
-      height: calc(8 * var(--u));
-    }
     /* the line sits close under the title (the board's 14 units are roomier) */
     .cpp-card .cp-bars,
     .cp-skel .cp-bars {
-      margin-top: calc(6 * var(--u));
+      margin-top: round(calc(6 * var(--u)), 1px);
+    }
+    /* each card is its name and one line (the flying copies too, so they
+       don't change shape as they lift off) */
+    .cpp-card .cp-bars .cp-bar:nth-child(2),
+    .cp-skel .cp-bars .cp-bar:nth-child(2) {
+      display: none;
+    }
+    /* the two labels are one size, whatever the width, and sit at the same
+       inset in their boxes */
+    .cpp-ws .cp-tag,
+    .cpp-panel .cp-tag {
+      font-size: var(--text-xs);
+      line-height: 16px;
+    }
+    .cpp-ws .cp-tag {
+      left: 12px;
+      top: 14px;
     }
     /* the flying copies start centred as the cards they lift off */
     .cp-skel {
@@ -924,23 +1000,6 @@
       --nav-h: 68px;
     }
   }
-  /* short screens: the panel's five rows tighten too, their cards one line */
-  @media (width < 900px) and (height < 800px) {
-    .cpp {
-      --cpp-card: 36px;
-      --cpp-gap: 6px;
-    }
-    .cpp-card {
-      padding-block: 6px;
-    }
-    /* each card down to its name and one line (the flying copies too, so
-       they don't change shape as they lift off) */
-    .cpp-card .cp-bars .cp-bar:nth-child(2),
-    .cp-skel .cp-bars .cp-bar:nth-child(2) {
-      display: none;
-    }
-  }
-
   /* phones: a flying card's caption hangs the carousel's 14px under it */
   @media (max-width: 640px) {
     .cp-cap {

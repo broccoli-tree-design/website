@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { GlassCaption } from "../shared/GlassCarousel";
-import CaseWorkspace, { u } from "./CaseWorkspace";
+import CaseWorkspace, { u, ur } from "./CaseWorkspace";
 
 /** Case 2's first view: the client portal, abstracted. A dark "Daily
  *  operations workspace" holds the apps and the loose work around them,
@@ -324,9 +324,9 @@ export default function ClientPortal({
                   className={`cp-card${key ? " is-named" : ""}`}
                   style={{
                     left: u(COL_X + ci * COL_PITCH),
-                    top: u(110 + ri * CARD_PITCH),
+                    top: ur(110 + ri * CARD_PITCH),
                     width: u(COL_W),
-                    height: u(CARD_H),
+                    height: ur(CARD_H),
                   }}
                 >
                   <Skeleton

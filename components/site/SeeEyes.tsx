@@ -19,7 +19,7 @@ const PAD = 40;
 const SPREAD = 8; // grow the counter well under the glyph's soft edge, px
 const cache = new Map<string, Socket>();
 
-function measure(font: string): Socket {
+function measure(font: string): Socket | null {
   const hit = cache.get(font);
   if (hit) return hit;
   const c = document.createElement("canvas");
@@ -31,6 +31,9 @@ function measure(font: string): Socket {
   ctx.font = font;
   const W = Math.ceil(ctx.measureText("e").width * k + PAD * 2);
   const H = R + PAD * 3;
+  // before the font (or layout) has settled the size can come out as NaN or
+  // Infinity, which getImageData throws on: wait for the next layout instead
+  if (!Number.isFinite(W) || W <= PAD * 2 || !Number.isFinite(k)) return null;
   c.width = W;
   c.height = H;
   ctx.scale(k, k);
@@ -132,6 +135,7 @@ export default function SeeEyes() {
       const s = measure(
         `${cs.fontStyle} ${cs.fontWeight} ${fs}px ${cs.fontFamily}`,
       );
+      if (!s) return;
       em.querySelectorAll<HTMLElement>(".see-e").forEach((e) => {
         const base = e.querySelector(".see-base")!.getBoundingClientRect();
         const top = (base.bottom - e.getBoundingClientRect().top) / fs + s.t;
